@@ -1,9 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 import {  } from './reducers'
 
-export const configureStore = () => {
+const configureStore = () => {
     return createStore (
         combineReducers( {
         })
     )
 };
+
+export  { configureStore }
