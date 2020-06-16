@@ -1,5 +1,5 @@
-const SET_SETTINGS = 'SET_SETTINGS';
-const LOAD_SETTINGS = 'LOAD_SETTINGS';
+export  const SET_SETTINGS = 'SET_SETTINGS';
+export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 
 export const setSettings = () => {
   return ({
