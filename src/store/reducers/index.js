@@ -1,5 +1,12 @@
-import { } from './appSettingsReducer';
-import { } from './appStateReducer';
-import { } from './wordsReducer';
+import AppStateReducer from './appStateReducer';
+import WordsReducer from './wordsReducer';
+import { combineReducers } from 'redux'
 
-export { };
+const app = combineReducers(
+  {
+    AppStateReducer,
+    WordsReducer
+  }
+)
+
+export default app
