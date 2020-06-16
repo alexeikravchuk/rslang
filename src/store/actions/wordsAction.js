@@ -1,12 +1,13 @@
-const LOAD_WORDS = 'LOAD-WORDS';
+const REQUEST_WORDS = 'REQUEST-WORDS';
 const DELETE_WORD = 'DELETE-WORD';
 const SET_HARD_WORD = 'SET_HARD_WORD';
 const SET_LEARNED = 'SET_LEARNED';
 
-export const loadWords = (load) => {
+// async fetch words from server
+export const loadWords = (requestWords) => {
   return ({
-    type: LOAD_WORDS,
-    load,
+    type: REQUEST_WORDS,
+    requestWords,
   })
 };
 
