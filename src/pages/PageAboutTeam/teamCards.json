@@ -1,12 +1,5 @@
 [
         {
-            "title": "Anatoli Kuzmiankou",
-            "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-            "image": "/images/team/anatoli-kuzmiankou.jpg",
-            "id": "1",
-            "role": "Mentor"
-        },
-        {
             "title": "Alexei Kravchuk",
             "description": "I’m hard-working individual with proficiency in HTML, JavaScript, and CSS, as well as ability to communicate effectively in a team setting. I studied on my own, as well as in 'Educational Center for Programming and High Tech' on the course 'Web applications development in JavaScript'. I’m ready to further develop my knowledge and skills in web development.",
             "image": "/images/team/alexei-kravchuk.jpg",
