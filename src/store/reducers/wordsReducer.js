@@ -1,4 +1,4 @@
-import { SET_HARD_WORD, DELETE_WORD, REQUEST_WORDS, SET_LEARNED} from '../actions/wordsAction'
+import { SET_HARD_WORD, DELETE_WORD, REQUEST_WORDS, SET_LEARNED} from '../actions'
 
 const defaultState = {
   hardWords: [],

@@ -1,5 +1,4 @@
-import { RESET_DAY_COUNTER, ADD_DAY_COUNTER} from '../actions/appStateAction'
-import { SET_SETTINGS, LOAD_SETTINGS} from  '../actions/appSettingsAction'
+import { RESET_DAY_COUNTER, ADD_DAY_COUNTER, SET_SETTINGS, LOAD_SETTINGS} from '../actions';
 
 const defaultState = {
   wordDayCounter: 5,
