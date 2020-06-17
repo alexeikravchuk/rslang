@@ -30,4 +30,3 @@ export const setLearned = () => {
     type: SET_LEARNED,
   })
 }
-
