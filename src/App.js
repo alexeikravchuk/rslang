@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.scss';
-import PageAboutTeam from './pages/PageAboutTeam/index'
+import Button from '@material-ui/core/Button';
 
 function App() {
   return (
-    <PageAboutTeam />
+    <Button variant="contained" color="primary">
+      Hello World
+    </Button>
   );
 }
 
