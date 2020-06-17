@@ -19,6 +19,9 @@ import './TeamCard.scss'
           <Typography gutterBottom variant="h5" component="h2">
              { card.title }
           </Typography>
+          <Typography gutterBottom variant="subtitle1">
+             { card.role }
+          </Typography>
           <Typography variant="body2">
             { card.description }
           </Typography>
