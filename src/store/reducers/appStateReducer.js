@@ -7,23 +7,21 @@ const defaultState = {
 const appStateReducer = ( state = defaultState, action) => {
   switch (action.type) {
     case RESET_DAY_COUNTER: {
-      return state
+      return {...state};
     }
     case ADD_DAY_COUNTER:{
-      return state
+      return {...state};
     }
     case LOAD_SETTINGS: {
-      return state
+      return {...state};
     }
     case SET_SETTINGS: {
-      return state
+      return {...state};
     }
     default: {
-      return state
+      return {...state};
     }
   }
 }
 
-export default {
-  appStateReducer,
-}
+export default appStateReducer

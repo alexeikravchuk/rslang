@@ -10,23 +10,21 @@ const defaultState = {
 const wordReducer = ( state = defaultState, action) => {
   switch (action.type) {
     case SET_HARD_WORD: {
-      return state
+      return {...state};
     }
     case DELETE_WORD:{
-      return state
+      return {...state};
     }
     case REQUEST_WORDS: {
-      return state
+      return {...state};
     }
     case SET_LEARNED: {
-      return state
+      return {...state};
     }
     default: {
-      return state
+      return {...state};
     }
   }
 }
 
-export default {
-  wordReducer,
-}
+export default wordReducer;
