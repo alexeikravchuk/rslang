@@ -2,7 +2,7 @@ import { LOAD_SETTINGS, SET_SETTINGS} from './appSettingsAction';
 import  { SET_LEARNED, REQUEST_WORDS, DELETE_WORD, SET_HARD_WORD } from './wordsAction';
 import { ADD_DAY_COUNTER, RESET_DAY_COUNTER} from './appStateAction'
 
-export {
+export default {
   LOAD_SETTINGS,
   SET_SETTINGS,
   SET_LEARNED,
