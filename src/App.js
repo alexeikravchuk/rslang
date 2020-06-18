@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.scss';
-
-import Button from '@material-ui/core/Button';
+import SignUp from './components/Registration/SignUp.js'
+import SignIn from './components/Registration/SignIn.js'
 
 function App() {
   return (
-    <Button variant="contained" color="primary">
-      Hello World
-    </Button>
+    <div className='App'>
+      <SignIn />
+      <SignUp />
+    </div>
   );
 }
 
