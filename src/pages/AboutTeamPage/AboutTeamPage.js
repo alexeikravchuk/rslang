@@ -1,9 +1,11 @@
 import React from 'react';
-import TeamCardsList from './components/TeamCardsList/index'
+import { TeamCardsList } from './components/index'
 import teamCards from './teamCards.json'
 
-export default function AboutTeam() {
+function AboutTeamPage() {
   return (
     <TeamCardsList teamCards={teamCards} />
   );
 }
+
+export { AboutTeamPage }
