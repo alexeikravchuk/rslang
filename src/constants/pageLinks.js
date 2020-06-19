@@ -22,37 +22,37 @@ export const pageLinks = [
   {
     title: 'Vocabulary',
     link: '/vocabulary',
-    icon: <MenuBook color='primary'/>,
+    icon: <MenuBook color='primary' />,
     type: 'primary',
   },
   {
     title: 'Statistics',
     link: '/statistics',
-    icon: <Timeline color='primary'/>,
+    icon: <Timeline color='primary' />,
     type: 'primary',
   },
   {
     title: 'SpeakIt',
     link: '/speakit',
-    icon: <RecordVoiceOver color="secondary"/>,
+    icon: <RecordVoiceOver color='secondary' />,
     type: 'game',
   },
   {
     title: 'English puzzle',
     link: '/puzzle',
-    icon: <Extension color="secondary"/>,
+    icon: <Extension color='secondary' />,
     type: 'game',
   },
   {
     title: 'Savannah',
     link: '/savannah',
-    icon: <Pets color="secondary"/>,
+    icon: <Pets color='secondary' />,
     type: 'game',
   },
   {
     title: 'Audio call',
     link: '/audiocall',
-    icon: <Hearing color="secondary"/>,
+    icon: <Hearing color='secondary' />,
     type: 'game',
   },
   {
