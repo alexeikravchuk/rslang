@@ -1,5 +1,3 @@
-import AppBar from './AppBar';
+import PrimaryAppBar from './AppBar';
 
-import './AppBar.scss';
-
-export default AppBar;
+export default PrimaryAppBar;
