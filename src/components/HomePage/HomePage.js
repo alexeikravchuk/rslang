@@ -27,4 +27,4 @@ function HomePage() {
     </Container>
   );
 }
-export default HomePage;
+export { HomePage };
