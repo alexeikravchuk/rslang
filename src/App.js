@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.scss';
-import AppBar from './components/AppBar';
-
+import Button from '@material-ui/core/Button';
 
 function App() {
   return (
-    <AppBar />
+    <Button variant='contained' color='primary'>
+      Hello World
+    </Button>
   );
 }
 
