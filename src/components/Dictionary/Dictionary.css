@@ -1,0 +1,133 @@
+* {
+	margin: 0;
+    padding: 0;
+}
+
+html {
+    position: relative;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: #ddfaff;
+    /* overflow: hidden; */
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover { 
+    text-decoration: underline;
+    cursor: pointer;
+} 
+
+#wrapper {
+    padding: 30px 28%;
+}
+
+#category {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 2em;
+    grid-row-gap: 2em; 
+    padding-bottom: 50px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 36px;
+    color: #1d2a57;
+    letter-spacing: 4px;
+    word-spacing: 5px;
+    padding: 80px 0 50px 0;
+}
+
+.select-category {
+    text-align: center;
+    font-size: 14px;
+    color: #1d2a57;
+    margin-bottom: 50px;
+}
+
+#category a {
+    text-align: center;
+    font-size: 14px;
+    color: #1d2a57;
+    padding: 10px 0;
+    text-transform: uppercase;
+    border: 2px solid green;
+    border-radius: 5px;
+}
+
+#dictionaryPage {
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    grid-template-rows: repeat(1, 100px);
+    grid-column-gap: 1em;
+    grid-row-gap: 0em; 
+    border: 1px solid darkgreen;
+    /* padding: 0 26%; */
+}
+
+#dictionaryPage div {
+    display: flex;
+    font-size: 14px;
+    color: #1d2a57;
+    padding: 40px 50px;
+    border: 1px solid green;
+}
+
+#dictionaryPage span {
+    width: 30%;
+}
+
+#dictionaryPage button {
+    width: 100px;
+    height: 30px;
+    color: #ddfaff;
+    text-align: center;
+    background-color: #1d2a57;;
+    border: 1px solid darkgreen;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#more {
+    color: #ddfaff;
+    text-align: center;
+    cursor: pointer;
+}
+
+.show {
+    width: 150px;
+    height: 50px;
+    color: #ddfaff;
+    text-align: center;
+    background-color: #1d2a57;;
+    border: 1px solid darkgreen;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5% 40%;
+}
+/* .word-sound {
+    width: 30px;
+    height: 30px;
+    padding-top: 30px;
+} */
+
+/* .word-line p {
+    font-size: 14px;
+    color: #1d2a57;
+    padding: 40px 50px;
+} */
+
+/* .word-image {
+    width: 150px;
+    height: 100px;
+    padding-top: 30px;
+} */
+

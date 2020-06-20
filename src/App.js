@@ -1,13 +1,11 @@
 import React from 'react';
-import './App.scss';
-
-import Button from '@material-ui/core/Button';
+import Dictionary from './components/Dictionary/Dictionary.js';
 
 function App() {
   return (
-    <Button variant="contained" color="primary">
-      Hello World
-    </Button>
+    <div className="App">
+      <Dictionary />
+    </div>
   );
 }
 
