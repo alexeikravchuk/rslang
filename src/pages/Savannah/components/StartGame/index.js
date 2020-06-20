@@ -1,3 +1,3 @@
-import {StartGame} from "./StartGame";
+import StartGame from "./StartGame";
 
 export { StartGame }
