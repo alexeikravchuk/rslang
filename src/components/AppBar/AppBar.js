@@ -4,16 +4,12 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Drawer,
-  Divider,
   withStyles,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import SideMenuList from './SideMenuList';
 import UserMenu from './UserMenu';
 import Logo from './Logo';
+import SideBar from './SideBar';
 
 class PrimaryAppBar extends Component {
   constructor(props) {
@@ -52,30 +48,7 @@ class PrimaryAppBar extends Component {
             <UserMenu />
           </Toolbar>
         </AppBar>
-        <Drawer
-          variant='permanent'
-          className={clsx(this.props.classes.drawer, {
-            [this.props.classes.drawerOpen]: this.state.drawerOpen,
-            [this.props.classes.drawerClose]: !this.state.drawerOpen,
-          })}
-          classes={{
-            paper: clsx({
-              [this.props.classes.drawerOpen]: this.state.drawerOpen,
-              [this.props.classes.drawerClose]: !this.state.drawerOpen,
-            }),
-          }}>
-          <div className={this.props.classes.chevron}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {this.state.drawerOpen ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
-          <SideMenuList />
-        </Drawer>
+        <SideBar open={this.state.drawerOpen} onShewronClick={() => this.handleDrawerClose()}/>
       </React.Fragment>
     );
   }
@@ -100,13 +73,6 @@ function createStyles(theme) {
       alignItems: 'center',
       transition: '0.3s ease-in',
     },
-    chevron: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-    },
     menuButton: {
       marginLeft: theme.spacing(2),
       color: '#005',
@@ -122,34 +88,6 @@ function createStyles(theme) {
     hide: {
       opacity: 0,
       pointerEvents: 'none',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: 'nowrap',
-    },
-    drawerOpen: {
-      width: drawerWidth,
-      backgroundColor: 'rgba(243,245,255,1)',
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerClose: {
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(7) + 1,
-      },
-      backgroundColor: 'rgba(243,245,255,1)',
-    },
-    paper: {
-      marginLeft: theme.spacing(2),
     },
   };
 }
