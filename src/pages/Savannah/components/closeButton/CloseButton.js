@@ -1,9 +1,12 @@
 import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import {IconButton} from "@material-ui/core";
+import './style.scss'
+
+
 
 export default () => (
-  <IconButton edge={"end"} className={'close-button'} color="secondary" aria-label="close">
+  <IconButton className={'close-button'} color="secondary" aria-label="close">
     <CloseIcon />
   </IconButton>
 )
