@@ -1,12 +1,14 @@
 import React  from "react";
-// import ReactDom from "react-dom";
-
-import StartGame from './components/StartGame/StartGame'
+import { Container } from '@material-ui/core';
+import Background from "./components/background/Background";
+import { StartGame} from './components/StartGame'
+import { Statistics } from "./components/Statistics";
 import './Savannah.scss'
 
 function Savannah () {
   return (
     <div>
+      <Background />
       <StartGame />
     </div>
   )
