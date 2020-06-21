@@ -7,11 +7,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function Alert(props) {
+
+  const signURL = 'https://afternoon-falls-25894.herokuapp.com/signin';
+  const createURL = 'https://afternoon-falls-25894.herokuapp.com/users';
+
   function getResponse(emailInput, passwordInput){
 
     if(props.action === 'login'){
       const loginUser = async user => {
-        const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/signin', {
+        const rawResponse = await fetch(signURL, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -40,7 +44,7 @@ export default function Alert(props) {
     }
     if(props.action === 'register'){
       const createUser = async user => {
-        const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/users', {
+        const rawResponse = await fetch(createURL, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
