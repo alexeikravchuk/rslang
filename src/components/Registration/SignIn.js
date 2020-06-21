@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,20 +9,20 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from './logo.png';
-import { useState } from 'react';
+import Login from './Login'
 import { Link as RouterLink } from 'react-router-dom';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://app.rs.school/">
-        Team19
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+function Copyright () {
+    return (
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://app.rs.school/">
+          Team19
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -48,69 +45,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-function validateInput(check, input){
-    if(check){  
-        input.style.color = "#303F9F";
-    } else {
-        input.style.color = "red";
-    }
-}
-
-function handleEmail(e){
-    const emailField = document.getElementById('email');
-    const emailCheck = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const check = emailCheck.test(e.target.value);
-    validateInput(check, emailField);
-}
-
-function handlePassword(e){
-    let passwordField = document.getElementById('password');
-    const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\+\-_@$!%*?&#\.,;\:\[\]\{\}])[A-Za-z\d\+\-_@$!%*?&#\.,;\:\[\]\{\}]{8,}$/;
-    console.log(e.target.value)
-    const check = passwordCheck.test(e.target.value);
-    validateInput(check, passwordField);
-}
-
-
-function getResponse(emailInput, passwordInput){
-    
-    const loginUser = async user => {
-      const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/signin', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-      });
-        if(rawResponse.status === 404){  
-          alert('Please, check the fields')
-        }
-        if(rawResponse.status === 403){
-            console.log(rawResponse)
-            alert('Incorrect entry data')
-        }
-      const content = await rawResponse.json();
-      return content;
-    
-    };
-    
-    loginUser({ "email": emailInput, "password": passwordInput }).then((res) => {
-          console.log(res)
-      })
-}
-
-
 export default function SignIn() {
-  function handleSubmit(e){ 
-      getResponse(emailInput, passwordInput)
-      e.preventDefault();
-  }
 
-  const classes = useStyles();
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+  const [emailError, checkEmail] = useState(false);
+  const [passwordError, checkPassword] = useState(false);
+  const classes = useStyles();
+
+  function emailValid(value){
+    const emailCheck = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const check = emailCheck.test(value);
+    return check;
+  }
+
+  function passwordValid(value){
+    const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\+\-_@$!%*?&#\.,;\:\[\]\{\}])[A-Za-z\d\+\-_@$!%*?&#\.,;\:\[\]\{\}]{8,}$/;
+    const check = passwordCheck.test(value);
+    return check;
+}
+  
+  const handleEmail = () => {
+    const check = emailValid(emailInput)
+    if(check){
+      checkEmail(false);
+    } else {
+      checkEmail(true);
+    } 
+  };
+
+  const handlePassword = () => {
+    const check = passwordValid(passwordInput)
+    if(check){
+      checkPassword(false);
+    } else {
+      checkPassword(true);
+    } 
+  };
   
   return (
     <Container component="main" maxWidth="xs">
@@ -120,8 +91,9 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate>
           <TextField
+            error={emailError}
             variant="outlined"
             margin="normal"
             required
@@ -133,9 +105,9 @@ export default function SignIn() {
             autoFocus
             onInput={e => setEmailInput(e.target.value)}
             onBlur={handleEmail}
-            onChange={handleEmail}
           />
           <TextField
+            error={passwordError}
             variant="outlined"
             margin="normal"
             required
@@ -147,33 +119,23 @@ export default function SignIn() {
             autoComplete="current-password"
             onInput={e => setPasswordInput(e.target.value)}
             onBlur={handlePassword}
-            onChange={handlePassword}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+          <Login 
+            emailInput = {emailInput}
+            passwordInput = {passwordInput}
+            email={emailError}
+            password={passwordError}
+            action='login'
           >
             Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+          </Login>
+          <Grid container justify="flex-end">
             <Grid item>
               <Link 
-                component={RouterLink}
-                to='/signup'
+                component={RouterLink} 
+                to="/signup"
                 variant="body2">
-                {"Don't have an account? Sign Up"}
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
