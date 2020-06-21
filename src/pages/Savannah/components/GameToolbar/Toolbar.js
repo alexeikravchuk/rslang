@@ -1,10 +1,8 @@
 import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import {withStyles} from "@material-ui/core/styles";
 import {CloseButton} from "../closeButton";
-import {connect} from "react-redux";
 
 const styles = {
   toolBar:{
@@ -18,12 +16,6 @@ const styles = {
   }
 }
 
-function lifeCounterFunction(lifeCounter) {
-  return Array(lifeCounter).fill(1).map(( el ,index) =>
-    <FavoriteIcon key={index}/>
-  )
-}
-
 function GameToolbar(props){
   const { classes } = props;
   return (
@@ -31,17 +23,9 @@ function GameToolbar(props){
       <Typography variant={'h4'} className={classes.title}>
         {props.title}
       </Typography>
-      {props.gameStarted &&
-        lifeCounterFunction(props.lifeCounter)
-      }
-      <CloseButton onClick={props.onClose}/>
+      <CloseButton />
     </Toolbar>
   )
 }
 
-const mapStateToProps = (store) => {
-  return { lifeCounter: store.savannahReducer.lifeCounter,
-  gameStarted: store.savannahReducer.gameStarted}
-}
-
-export default connect(mapStateToProps)(withStyles(styles)(GameToolbar))
+export default withStyles(styles)(GameToolbar)
