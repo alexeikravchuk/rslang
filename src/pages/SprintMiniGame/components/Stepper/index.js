@@ -1,3 +1,3 @@
-import { TeamCard } from './TeamCard'
+import { Stepper } from './Stepper'
 
-export { TeamCard }
+export { Stepper }

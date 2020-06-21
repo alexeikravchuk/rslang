@@ -1,3 +1,3 @@
-import { AboutTeamPage } from './AboutTeamPage'
+import { SprintMiniGame } from './SprintMiniGame'
 
-export  { AboutTeamPage }
+export  { SprintMiniGame }

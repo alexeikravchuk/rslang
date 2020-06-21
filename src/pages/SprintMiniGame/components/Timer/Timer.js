@@ -22,10 +22,13 @@ const useStyles = makeStyles((theme) => ({
 export function Timer() {
   const classes = useStyles();
   const [progress, setProgress] = React.useState(0);
+  const fullProgress = 99;
+  const progressPerSecond = 1.666666666666667;
+  const roundDuration = 60;
 
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 99 ? 0 : prevProgress + 1.66666666666666));
+      setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + progressPerSecond));
     }, 1000);
 
     return () => {
@@ -37,7 +40,7 @@ export function Timer() {
     <div className={classes.timer}>
       <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 100 } />
       <Typography variant="h4" component="h4" className={classes.timerValue}>
-        {60 - Math.round(progress/1.66666666666666)}
+        {roundDuration - Math.round(progress/progressPerSecond)}
       </Typography>
     </div>
   );
