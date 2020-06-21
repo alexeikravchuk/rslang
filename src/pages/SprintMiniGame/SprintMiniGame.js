@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Timer, Score, GameCard } from './components/index';
+import { Timer, Score, GameCard, WelcomeDialog } from './components/index';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
@@ -27,6 +27,7 @@ export function SprintMiniGame() {
 
   return (
     <div className={classes.container}>
+      <WelcomeDialog />
       <Timer />
       <Score />
       <GameCard />
