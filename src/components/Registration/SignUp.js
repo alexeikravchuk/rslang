@@ -45,8 +45,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 function validateInput(check, input){
     if(check){  
         input.style.color = "#303F9F";
