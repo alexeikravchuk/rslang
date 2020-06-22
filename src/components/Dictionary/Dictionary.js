@@ -31,7 +31,7 @@ class Dictionary extends React.Component {
   }
 
   newWord = (category) => {
-    let categoryWords = category.slice(0, 19)
+    let categoryWords = category.slice(0, 20)
     let words = categoryWords.map(el => el.word)
     let transcriptions = categoryWords.map(el => el.transcription)
     let translations = categoryWords.map(el => el.wordTranslate)
@@ -46,19 +46,29 @@ class Dictionary extends React.Component {
   };
 
   nextWord = (category, counter) => {
-    let categoryWords = category.slice((counter) * 20, (counter + 1) * 20 - 1)
-    // if (0 < counter < 30) {
-    //   кнопка не нажимайся;
-    // }
-    let words = categoryWords.map(el => el.word)
-    let transcriptions = categoryWords.map(el => el.transcription)
-    let translations = categoryWords.map(el => el.wordTranslate)
-    let audios = categoryWords.map(el => el.audio)
-    words = words.map((item, index) => 
-    <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.audioWords(`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
-    this.setState({
-      content: words
-    });
+    if(this.state.count < 1){
+      this.setState({
+        count: 0
+      });
+    }
+    else if (this.state.count < 30) {
+      let categoryWords = category.slice((counter) * 20, (counter + 1) * 20)
+      let words = categoryWords.map(el => el.word)
+      let transcriptions = categoryWords.map(el => el.transcription)
+      let translations = categoryWords.map(el => el.wordTranslate)
+      let audios = categoryWords.map(el => el.audio)
+      words = words.map((item, index) => 
+      <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.audioWords (`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
+      this.setState({
+        content: words,
+        count: counter + 1
+      });
+    }
+    else {
+      this.setState({
+        count: 30
+      });
+    }
   };  
  
   render(){
@@ -77,9 +87,7 @@ class Dictionary extends React.Component {
         <h2 id="anchor">Essential english words</h2>
         <div id="dictionaryPage">{this.state.content}</div>
         <button className="show">
-          <p onClick={() => this.setState({ count: this.state.count + 1 })}>
-            <a onClick={()=>this.nextWord(this.state.category, this.state.count)} id="more" href="#anchor">Show more words</a>
-          </p>
+          <a onClick={()=>this.nextWord(this.state.category, this.state.count)} id="more" href="#anchor">Show more words</a>
         </button>
         <p className="page">Results page {this.state.count}</p>
       </div>
