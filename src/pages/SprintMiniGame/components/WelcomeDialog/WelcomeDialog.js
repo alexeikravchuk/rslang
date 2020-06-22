@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { userWords, changeDifficulty, loadGame } from '../../../../store/actions/sprintActions';
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -25,56 +27,37 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export function WelcomeDialog() {
-  const [state, setState] = React.useState({
-    useUsersWords: false,
-    open: true,
-    disabled: false,
-  });
-
-  const handleClose = () => {
-    setState({ ...state, open: !state.open });
-  };
-
-  const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked,
-      disabled: !state.disabled,
-     });
-  };
+function WelcomeDialog(props) {
 
   return (
     <div>
       <Dialog
-       onClose={handleClose}
-       fullWidth="true"
+       fullWidth={true}
        maxWidth="sm"
-       open={state.open}>
-        <MuiDialogTitle>
-          <Typography variant="h4">RS Sprint</Typography>
-        </MuiDialogTitle>
+       open={props.sprintState.open}>
+        <MuiDialogTitle>RS Sprint</MuiDialogTitle>
         <DialogContent dividers>
-        <Typography id="discrete-slider" gutterBottom>
-          Choose your difficulty level, please
-        </Typography>
-        <Slider
-          defaultValue={2}
-          aria-labelledby="discrete-slider"
-          valueLabelDisplay="auto"
-          step={1}
-          marks
-          min={1}
-          max={6}
-          disabled={state.disabled}
-        />
+          <Typography variant="h5" id="discrete-slider" gutterBottom style={{marginBottom: '2.35em'}}>
+            Choose your difficulty level, please
+          </Typography>
+          <Slider
+            defaultValue={4}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="on"
+            step={1}
+            marks
+            min={1}
+            max={6}
+            disabled={props.sprintState.disabled}
+            onChange={(event, value) => props.changeDifficulty(value)}
+          />
         </DialogContent>
         <DialogActions>
           <FormControlLabel
-            control={<Checkbox checked={state.useUsersWords} onChange={handleChange} name="useUsersWords" />}
+            control={<Checkbox checked={props.sprintState.checked} onChange={props.handleChange} />}
             label="Use my dictionary"
           />
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button autoFocus onClick={props.loadGame} color="primary">
             Start game!
           </Button>
         </DialogActions>
@@ -82,3 +65,20 @@ export function WelcomeDialog() {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    sprintState: state.sprintReducer
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleChange: () => dispatch(userWords()),
+    changeDifficulty: (value) => dispatch(changeDifficulty(value)),
+    loadGame: () => dispatch(loadGame())
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeDialog)

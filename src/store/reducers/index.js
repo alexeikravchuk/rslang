@@ -1,5 +1,6 @@
 import appStateReducer from './appStateReducer';
 import wordsReducer from './wordsReducer';
-import { combineReducers } from 'redux'
+import sprintReducer from './sprintReducer';
+import { combineReducers } from 'redux';
 
-export default combineReducers({ appStateReducer, wordsReducer })
+export default combineReducers({ appStateReducer, wordsReducer, sprintReducer })
