@@ -1,0 +1,109 @@
+$color-nav-text: #fff899;
+$color-train: #90add3;
+$color-train-2: #e274fd;
+$color-background: #ccddff;
+
+$mobile-big-width: 414px;
+$mobile-small-width: 320px;
+
+* {
+  box-sizing: border-box;
+}
+
+.status-bar {
+  position: relative;
+  font-size: 10px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 20px auto 80px;
+  .score {
+    display: flex;
+    justify-content: flex-end;
+    width: auto;
+    overflow: hidden;
+    height: 40px;
+    .star {
+      width: 40px;
+      height: 40px;
+      background-image: url(../../../../assets/star.svg);
+      background-size: contain;
+      @media (max-width: $mobile-big-width) {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+  @media (max-width: $mobile-big-width) {
+    justify-content: center;
+    margin: 10px auto;
+    .score {
+      width: 90%;
+    }
+  }
+}
+.points {
+  list-style: none;
+  display: flex;
+  padding: 15px 15px 0px;
+  margin: 0;
+  .point {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4em;
+    color: $color-nav-text;
+    text-shadow: 1px 1px 3px $color-train-2;
+    width: 22px;
+    height: 22px;
+    padding: 22px;
+    margin-top: -15px;
+    border-radius: 50%;
+    background-color: $color-train;
+    background: radial-gradient($color-train 0%, $color-train 46%, $color-train-2 51% , transparent 59%, transparent 100%);
+    margin-right: 20px;
+    box-shadow: 0 0 0 2px rgba($color-background, 0.4);
+    cursor: pointer;
+    transition: .5s;
+    &:nth-child(n+2):before {
+      content: "";
+      width: 40px;
+      height: 4px;
+      position: absolute;
+      top: 20px;
+      left: -28px;
+      background-color: $color-train;
+    }
+    &-active, &:hover {
+      box-shadow: 0 0 3px 2px $color-train, inset 0 0 0 2px $color-background, inset 0 0 1px 3px $color-train-2;
+    }
+  }
+  
+  @media (max-width: $mobile-big-width) {
+    padding: 15px 0px 0px 10px;
+    .point {
+      width: 15px;
+      height: 15px;
+      padding: 15px;
+      font-size: 1.6em;
+      margin-right: 15px;
+      &:nth-child(n+2):before {
+        content: "";
+        width: 25px;
+        height: 3px;
+        position: absolute;
+        top: 14px;
+        left: -21px;
+        background-color: $color-train;
+      }
+    }
+    .star {
+      width: 30px;
+      height: 30px;
+      background-size: contain;
+    }
+  }
+}

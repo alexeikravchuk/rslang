@@ -1,0 +1,57 @@
+$color-train: #90add3;
+$mobile-big-width: 414px;
+
+.img {
+  width: 390px;
+  max-width: 100%;
+  height: 260px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 25px rgba(118,118,118,.25);
+  border: 10px solid rgba(55,97,151,0.2);
+}
+
+.translation {
+  color: rgba(14, 30, 37, .7);
+  text-align: center;
+  min-height: 30px;
+  margin-bottom: 20px;
+}
+
+.word, .translation {
+  color: #0e1e25;
+  font-size: 2.8rem;
+  padding: 0px 5px;
+  margin: 0;
+}
+
+.input {
+  display: block;
+  border: 0;
+  box-shadow: 0 2px 3px $color-train;
+  background-color: #ffffff3f;
+  border-radius: 5px;
+  padding: 5px 20px;
+  margin: 0 auto;
+  margin-bottom: 14px;
+  width: 100%;
+  height: 50px;
+  max-width: 1140px;
+  font-size: 20px;
+  line-height: 40px;
+  color: rgba(14, 30, 37, .7);
+  text-align: center;
+  font-size: 22px;
+  background-image: url(../../../../assets/microphone.svg);
+  background-repeat: no-repeat;
+  background-size: 26px;
+  background-position: 10px 7px;
+  @media (max-width: $mobile-big-width) {
+    width: 95%;
+  }
+}
+
+.none {
+  display: none;
+}

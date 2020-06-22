@@ -1,0 +1,33 @@
+$tablet-width: 768px;
+$mobile-big-width: 414px;
+
+.main-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1140px;
+  min-height: calc(100vh - 56px);
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 30px;
+    margin-bottom: 20px;
+    .card .translation {
+      display: none;
+    }
+
+    @media (max-width: $tablet-width) {
+      padding: 0;
+      justify-content: space-around;
+    }
+    @media (max-width: $mobile-big-width) {
+      justify-content: center;
+    }
+  }
+}

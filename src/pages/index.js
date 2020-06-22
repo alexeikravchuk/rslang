@@ -1,4 +1,4 @@
 import { AboutTeamPage } from './AboutTeamPage/index';
-import { SpeakIt } from './SpeakIt/SpeakIt';
+import { SpeakIt } from './SpeakIt';
 
 export { AboutTeamPage, SpeakIt };
