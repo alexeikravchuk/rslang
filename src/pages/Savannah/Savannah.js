@@ -4,6 +4,7 @@ import { StartGame } from './components/StartGame'
 import { Statistics } from "./components/Statistics";
 import './Savannah.scss'
 
+
 function Savannah () {
   return (
     <div>
