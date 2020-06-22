@@ -1,6 +1,12 @@
-import { ADD_NEW_WORDS, ADD_LEARNED_WORDS, ADD_MISSED_WORDS } from '../actions';
+import { ADD_NEW_WORDS,
+  ADD_LEARNED_WORDS,
+  ADD_MISSED_WORDS,
+  LOAD_WORDS,
+  LOAD_WORDS_SUCCESS } from '../actions/savannahAction';
 
 const defaultState = {
+  loading: false,
+  error: null,
   newWords: [],
   learnedWords: [],
   missedWords: [],
@@ -12,6 +18,12 @@ const defaultState = {
 
 const savannahReducer = ( state = defaultState, action) => {
   switch (action.type) {
+    case LOAD_WORDS: {
+      return { ...state, loading: true, error: null}
+    }
+    case LOAD_WORDS_SUCCESS: {
+      return { ...state, newWords: action.words , loading: false, error: null}
+    }
     case ADD_NEW_WORDS: {
       return {...state};
     }
