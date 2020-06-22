@@ -5,6 +5,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function Alert(props) {
 
@@ -14,6 +16,7 @@ export default function Alert(props) {
   function getResponse(emailInput, passwordInput){
 
     if(props.action === 'login'){
+      doTransition('/signin')
       const loginUser = async user => {
         const rawResponse = await fetch(signURL, {
           method: 'POST',
@@ -34,15 +37,13 @@ export default function Alert(props) {
         
       };
       loginUser({ "email": emailInput, "password": passwordInput }).then((entryData) => {
-        if(entryData.error.status === 'failed'){
-          setTitle('Login failed')
-        } else {
           setTitle('Login success')
+          doTransition('/appbar')
           console.log(entryData)
-        }
       })
     }
     if(props.action === 'register'){
+      doTransition('/signup')
       const createUser = async user => {
         const rawResponse = await fetch(createURL, {
           method: 'POST',
@@ -56,18 +57,18 @@ export default function Alert(props) {
             setTitle('Please, check the fields')
         }
         if(rawResponse.status === 417){
-            setTitle('Entered user exist')
+            setTitle('Entered email already exist')
         }
         const content = await rawResponse.json();
         return content;
       };
       createUser({ "email": emailInput, "password": passwordInput }).then((regData) => {
-        console.log(regData.status)
-        if(regData.error.status === 'failed'){
-          setTitle('Registration failed')
-        } else {
-          setTitle('Registration success')
-          console.log(regData)
+        if('error' in regData){
+          setTitle('Registration error')
+        }else{
+          setTitle('Registration successful')
+          doTransition('/signin')
+          console.log(regData);
         }
       }) 
   }
@@ -76,6 +77,7 @@ export default function Alert(props) {
   const [title, setTitle] = useState('');
   const [emailTitle, setEmailStatus] = useState('');
   const [passwordTitle, setPasswordStatus] = useState('');
+  const [transition, doTransition] = useState('');
 
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -126,9 +128,17 @@ export default function Alert(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+        <Link 
+          component={RouterLink}
+          to={transition}
+        >
           <Button onClick={handleClose} color="primary" autoFocus>
-            OK
+              OK
           </Button>
+   
+        </Link> 
+
+
         </DialogActions>
       </Dialog>
     </div>
