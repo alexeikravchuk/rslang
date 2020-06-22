@@ -6,6 +6,11 @@ export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 
 
+export const hideWelcomeDialog = () => {
+  return ({
+    type: HIDE_WELCOME_DIALOG,
+  })
+}
 
 export const userWords = () => {
   return ({
@@ -20,12 +25,29 @@ export const changeDifficulty = (difficulty) => {
   })
 }
 
+export const showLoader = () => {
+  return ({
+    type: SHOW_LOADER,
+  })
+}
+
+export const hideLoader = () => {
+  return ({
+    type: HIDE_LOADER,
+  })
+}
+
 export const loadGame = () => {
   return async dispatch => {
+    dispatch(hideWelcomeDialog())
+    dispatch(showLoader())
     const url = 'https://afternoon-falls-25894.herokuapp.com/words?page=2&group=0'
     const response = await fetch(url)
     const words = await response.json()
-    dispatch({ type: LOAD_GAME, payload: words, })
+    setTimeout(() => {
+      dispatch({ type: LOAD_GAME, payload: words, })
+      dispatch(hideLoader())
+    }, 2000)
   }
 }
 

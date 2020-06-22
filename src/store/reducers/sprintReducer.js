@@ -1,4 +1,4 @@
-import { USER_WORDS, CHANGE_DIFFICULTY, LOAD_GAME, SHOW_LOADER, HIDE_LOADER } from '../actions';
+import { HIDE_WELCOME_DIALOG, USER_WORDS, CHANGE_DIFFICULTY, LOAD_GAME, SHOW_LOADER, HIDE_LOADER } from '../actions';
 
 const defaultState = {
   checked: false,
@@ -11,6 +11,9 @@ const defaultState = {
 
 const sprintReducer = ( state = defaultState, action) => {
   switch (action.type) {
+    case HIDE_WELCOME_DIALOG: {
+      return {...state, open: false};
+    }
     case USER_WORDS: {
       return {...state, checked: !state.checked, disabled: !state.disabled};
     }
@@ -18,7 +21,7 @@ const sprintReducer = ( state = defaultState, action) => {
       return {...state, difficulty: action.payload};
     }
     case LOAD_GAME: {
-      return {...state, open: !state.open, gameWords: action.payload};
+      return {...state, gameWords: action.payload};
     }
     case SHOW_LOADER: {
       return {...state, gameLoading: true};

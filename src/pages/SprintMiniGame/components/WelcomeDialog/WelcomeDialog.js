@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Loader } from '../Loader/Loader'
 import { userWords, changeDifficulty, loadGame } from '../../../../store/actions/sprintActions';
 
 const DialogContent = withStyles((theme) => ({
@@ -28,6 +29,12 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 function WelcomeDialog(props) {
+
+  if (props.sprintState.gameLoading) {
+    return (
+      <Loader />
+    )
+  }
 
   return (
     <div>

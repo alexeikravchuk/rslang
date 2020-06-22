@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Timer, Score, GameCard, WelcomeDialog } from './components/index';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,18 +23,39 @@ const useStyles = makeStyles({
   }
 });
 
-export function SprintMiniGame() {
+function SprintMiniGame(props) {
   const classes = useStyles();
+
+  if (props.sprintState.gameLoaded) {
+    return (
+      <div className={classes.container}>
+        <Timer />
+        <Score />
+        <GameCard />
+        <IconButton>
+          <VolumeUpIcon style={{ fontSize: 60 }} />
+        </IconButton>
+      </div>
+    )
+  }
 
   return (
     <div className={classes.container}>
       <WelcomeDialog />
-      <Timer />
-      <Score />
-      <GameCard />
-      <IconButton>
-        <VolumeUpIcon style={{ fontSize: 60 }} />
-      </IconButton>
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    sprintState: state.sprintReducer
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SprintMiniGame)
