@@ -90,7 +90,7 @@ h2 {
     height: 30px;
     color: #ddfaff;
     text-align: center;
-    background-color: #1d2a57;;
+    background-color: #1d2a57;
     border: 1px solid darkgreen;
     border-radius: 5px;
     cursor: pointer;
@@ -100,6 +100,7 @@ h2 {
     color: #ddfaff;
     text-align: center;
     cursor: pointer;
+    padding: 0 20.6px;
 }
 
 .show {
@@ -107,27 +108,14 @@ h2 {
     height: 50px;
     color: #ddfaff;
     text-align: center;
-    background-color: #1d2a57;;
+    background-color: #1d2a57;
     border: 1px solid darkgreen;
     border-radius: 5px;
     cursor: pointer;
-    margin: 5% 40%;
+    margin: 5% 39%;
 }
-/* .word-sound {
-    width: 30px;
-    height: 30px;
-    padding-top: 30px;
-} */
 
-/* .word-line p {
-    font-size: 14px;
+.page {
     color: #1d2a57;
-    padding: 40px 50px;
-} */
-
-/* .word-image {
-    width: 150px;
-    height: 100px;
-    padding-top: 30px;
-} */
-
+    text-align: center;
+}

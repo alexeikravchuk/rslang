@@ -1,5 +1,4 @@
 import React from 'react';
-// import sound from './sound.png';
 import './Dictionary.css';
 import Category1 from './Category1.js';
 import Category2 from './Category2.js';
@@ -13,36 +12,54 @@ class Dictionary extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      content: 'Please select a category'
+      content: 'Please select a category',
+      category: 1,
+      count: 0
     }
-    // this.category = category
   }
 
+  componentDidMount() {
+    document.title = `Results page ${this.state.count}`;
+  }
+  componentDidUpdate() {
+    document.title = `Results page ${this.state.count}`;
+  }
 
+  audioWords(audioSrc) {
+    const audio = new Audio(audioSrc);
+    audio.play();
+  }
 
   newWord = (category) => {
-    let categoryFirst = category.slice(0, 19);
-    let words = categoryFirst.map(el => el.word)
-    let transcriptions = categoryFirst.map(el => el.transcription)
-    let translations = categoryFirst.map(el => el.wordTranslate)
+    let categoryWords = category.slice(0, 19)
+    let words = categoryWords.map(el => el.word)
+    let transcriptions = categoryWords.map(el => el.transcription)
+    let translations = categoryWords.map(el => el.wordTranslate)
+    let audios = categoryWords.map(el => el.audio)
     words = words.map((item, index) => 
-    <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button>Spell IT</button></div>)
+    <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.audioWords(`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
     this.setState({
-      content: words
+      content: words,
+      category: category,
+      count: 1
     });
   };
 
-  nextWord = (category) => {
-    let categoryFirst = category.slice(20, 39);
-    let words = categoryFirst.map(el => el.word)
-    let transcriptions = categoryFirst.map(el => el.transcription)
-    let translations = categoryFirst.map(el => el.wordTranslate)
+  nextWord = (category, counter) => {
+    let categoryWords = category.slice((counter) * 20, (counter + 1) * 20 - 1)
+    // if (0 < counter < 30) {
+    //   кнопка не нажимайся;
+    // }
+    let words = categoryWords.map(el => el.word)
+    let transcriptions = categoryWords.map(el => el.transcription)
+    let translations = categoryWords.map(el => el.wordTranslate)
+    let audios = categoryWords.map(el => el.audio)
     words = words.map((item, index) => 
-    <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button>Spell IT</button></div>)
+    <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.audioWords(`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
     this.setState({
       content: words
     });
-  };
+  };  
  
   render(){
     return (
@@ -59,7 +76,12 @@ class Dictionary extends React.Component {
         </div>
         <h2 id="anchor">Essential english words</h2>
         <div id="dictionaryPage">{this.state.content}</div>
-        <button className="show" onClick={()=>this.nextWord(Category1)}><a id="more" href="#anchor">Show more words</a></button>
+        <button className="show">
+          <p onClick={() => this.setState({ count: this.state.count + 1 })}>
+            <a onClick={()=>this.nextWord(this.state.category, this.state.count)} id="more" href="#anchor">Show more words</a>
+          </p>
+        </button>
+        <p className="page">Results page {this.state.count}</p>
       </div>
     )
   }
