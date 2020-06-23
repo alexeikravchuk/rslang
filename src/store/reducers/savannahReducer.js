@@ -5,11 +5,13 @@ import {
   LOAD_WORDS,
   LOAD_WORDS_SUCCESS,
   GAME_STARTING,
-  LIFE_DECREASE
+  LIFE_DECREASE,
+  GAME_END
 } from '../actions/savannahAction';
 
 const defaultState = {
   gameStarted: false,
+  gameEnd:false,
   loading: false,
   error: null,
   lifeCounter: 5,
@@ -27,6 +29,9 @@ const savannahReducer = ( state = defaultState, action) => {
   switch (action.type) {
     case GAME_STARTING: {
       return {...state, gameStarted: true}
+    }
+    case GAME_END: {
+      return {...state, gameEnd: true}
     }
     case LOAD_WORDS: {
       return { ...state, loading: true, error: null}
