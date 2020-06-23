@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import GameToolbar from "../GameToolbar/Toolbar";
 import Background from "../background/Background";
-import {loadWords, loadWordsSuccess} from "../../../../store/actions/savannahAction";
+import {LIFE_DECREASE, loadWords, loadWordsSuccess} from "../../../../store/actions/savannahAction";
 import {getWords} from "../../utils/wordRequest";
 
 const styles ={
@@ -31,13 +31,12 @@ class MainGame extends Component{
 
   render() {
     const { classes } = this.props;
-    console.log(`my props ${this.props}`)
     return (
       <div>
         <GameToolbar title={'Savannah game'} />
         <Container className={classes.root}>
-          <Button variant={'contained'} color={'primary'}>
-            i am a big button
+          <Button variant={'contained'} color={'primary'} onClick={this.props.onMiss}>
+            {this.props.gameStarted ? 'Game is started': 'Game not started'}
           </Button>
         </Container>
         <Background />
@@ -56,6 +55,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(loadWords())
     getWords(page, category)
       .then(json => dispatch(loadWordsSuccess(json)))
+  },
+  onMiss: () => {
+    dispatch({type: LIFE_DECREASE})
   }
 })
 
