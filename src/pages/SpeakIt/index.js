@@ -1,3 +1,3 @@
-import SpeakIt from './components/GameContainer';
+import SpeakIt from './components/Game';
 
 export { SpeakIt };
