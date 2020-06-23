@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import './HomePage.scss';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import background from './HomePageImg/homepagebg.png'
 
 const useStyles = makeStyles({
   homePage: {
@@ -13,6 +14,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundImage: "url(" + background + ")"
   },
 });
 
@@ -25,7 +27,7 @@ export default function HomePage() {
     <Container className={classes.homePage}>
       <Link 
           component={RouterLink} 
-          to="/signin">
+          to="/choosegame">
       <Button variant='contained' color='primary' size='large' onClick={ handlePLayClick }>
         Let's Play RsLang
       </Button>

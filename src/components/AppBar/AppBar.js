@@ -11,6 +11,10 @@ import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
+import HomePage from '../Home/HomePage'
+import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
+import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
+
 class PrimaryAppBar extends Component {
   constructor(props) {
     super(props);

@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 
 import { pageLinks } from '../../constants/pageLinks.js';
+import { Link as RouterLink } from 'react-router-dom';
 
 class SideMenuList extends Component {
   render() {
@@ -22,7 +23,8 @@ class SideMenuList extends Component {
               <Divider />
             )}
             <Link
-              href={item.link}
+              component={RouterLink}
+              to={item.link}
               title={item.title}
               className={this.props.classes.link}>
               <ListItem button>

@@ -38,7 +38,7 @@ export default function Alert(props) {
       };
       loginUser({ "email": emailInput, "password": passwordInput }).then((entryData) => {
           setTitle('Login success')
-          doTransition('/appbar')
+          doTransition('/main')
           console.log(entryData)
       })
     }

@@ -57,7 +57,7 @@ import {
     },
     {
       title: 'About us',
-      link: '#about',
+      link: './aboutteampage',
       icon: <People />,
       type: 'addition',
     },
