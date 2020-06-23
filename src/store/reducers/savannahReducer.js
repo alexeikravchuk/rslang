@@ -6,7 +6,8 @@ import {
   LOAD_WORDS_SUCCESS,
   GAME_STARTING,
   LIFE_DECREASE,
-  GAME_END
+  GAME_END,
+  RESET_GAME,
 } from '../actions/savannahAction';
 
 const defaultState = {
@@ -18,7 +19,6 @@ const defaultState = {
   newWords: [],
   learnedWords: [],
   missedWords: [],
-
   currentWord:{
     word: '',
     translate: '',
@@ -51,6 +51,9 @@ const savannahReducer = ( state = defaultState, action) => {
     }
     case ADD_MISSED_WORDS: {
       return {...state}
+    }
+    case RESET_GAME: {
+      return defaultState;
     }
     default: {
       return {...state};
