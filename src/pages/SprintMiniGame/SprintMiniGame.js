@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Timer, Score, GameCard, WelcomeDialog } from './components/index';
+import { Timer, Score, GameCard, WelcomeDialog, StatisticDialog } from './components/index';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
@@ -42,6 +42,7 @@ function SprintMiniGame(props) {
   return (
     <div className={classes.container}>
       <WelcomeDialog />
+      <StatisticDialog />
     </div>
   );
 }

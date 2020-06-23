@@ -56,7 +56,7 @@ function GameCard({ sprintState, checkAnswer }) {
         size="large"
         startIcon={<KeyboardArrowLeftIcon />}
         value="right"
-        onClick={(event) => checkAnswer(sprintState.wordIndex, sprintState.translateIndex, event.currentTarget.value, wordList.length, sprintState.xp)}>
+        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}>
         right
       </Button>
       <Button
@@ -65,7 +65,7 @@ function GameCard({ sprintState, checkAnswer }) {
         size="large"
         endIcon={<KeyboardArrowRightIcon />}
         value="wrong"
-        onClick={(event) => checkAnswer(sprintState.wordIndex, sprintState.translateIndex, event.currentTarget.value, wordList.length, sprintState.xp)}>
+        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}>
         wrong
       </Button>
       </CardActions>
@@ -81,7 +81,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    checkAnswer: (wordIndx, translateIndx, btnValue, wordsAmount, xp) => dispatch(checkAnswer(wordIndx, translateIndx, btnValue, wordsAmount, xp))
+    checkAnswer: (btnValue, sprintState) => dispatch(checkAnswer(btnValue, sprintState))
   }
 }
 

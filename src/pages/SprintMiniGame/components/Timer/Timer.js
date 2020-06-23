@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
+
 
 const useStyles = makeStyles((theme) => ({
   timer: {
@@ -19,12 +21,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function Timer() {
+function Timer(props) {
   const classes = useStyles();
   const [progress, setProgress] = React.useState(0);
   const fullProgress = 99;
   const progressPerSecond = 1.666666666666667;
-  const roundDuration = 60;
 
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -40,8 +41,22 @@ export function Timer() {
     <div className={classes.timer}>
       <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 100 } />
       <Typography variant="h4" component="h4" className={classes.timerValue}>
-        {roundDuration - Math.round(progress/progressPerSecond)}
+        {props.sprintState.roundDuration}
       </Typography>
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    sprintState: state.sprintReducer
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timer)

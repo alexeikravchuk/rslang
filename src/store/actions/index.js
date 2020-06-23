@@ -11,6 +11,7 @@ import {
   HIDE_LOADER,
   SHOW_CARD,
   CHECK_ANSWER,
+  TIMER,
  } from './sprintActions';
 
 export {
@@ -30,4 +31,5 @@ export {
   HIDE_LOADER,
   SHOW_CARD,
   CHECK_ANSWER,
+  TIMER,
 }

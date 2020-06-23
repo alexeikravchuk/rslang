@@ -6,6 +6,7 @@ export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const SHOW_CARD = 'SHOW_CARD';
 export const CHECK_ANSWER = 'CHECK_ANSWER';
+export const TIMER = 'TIMER';
 
 export const hideWelcomeDialog = () => {
   return ({
@@ -73,21 +74,23 @@ export const loadGame = () => {
       dispatch({ type: LOAD_GAME, payload: words, })
       dispatch(hideLoader())
       dispatch(showCard(words.length))
-    }, 2000)
+      dispatch(timer())
+    }, 0)
   }
 }
 
-export const checkAnswer = (wordIndx, translateIndx, btnValue, wordsAmount, xp) => {
-  console.log(wordIndx, translateIndx, btnValue, wordsAmount)
+export const checkAnswer = (btnValue, sprintState) => {
+  console.log(sprintState)
+  const { wordIndex, translateIndex, gameWords, xp } = sprintState
   return dispatch => {
     if (btnValue === 'right') {
-      if (wordIndx === translateIndx) {
+      if (wordIndex === translateIndex) {
         dispatch ({
           type: CHECK_ANSWER,
           answer: true,
           xp,
         })
-      } else{
+      } else {
         dispatch ({
           type: CHECK_ANSWER,
           answer: false,
@@ -95,7 +98,7 @@ export const checkAnswer = (wordIndx, translateIndx, btnValue, wordsAmount, xp) 
         })
       }
     } else if (btnValue === 'wrong') {
-      if (wordIndx === translateIndx) {
+      if (wordIndex === translateIndex) {
         dispatch ({
           type: CHECK_ANSWER,
           answer: false,
@@ -109,6 +112,14 @@ export const checkAnswer = (wordIndx, translateIndx, btnValue, wordsAmount, xp) 
         })
       }
     }
-    dispatch(showCard(wordsAmount))
+    dispatch(showCard(gameWords.length))
+  }
+}
+
+export const timer = () => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch({ type: TIMER })
+    }, 1000)
   }
 }

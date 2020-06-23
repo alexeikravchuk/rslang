@@ -7,6 +7,7 @@ import {
   HIDE_LOADER,
   SHOW_CARD,
   CHECK_ANSWER,
+  TIMER,
  } from '../actions';
 
 const defaultState = {
@@ -23,6 +24,8 @@ const defaultState = {
   answer: null,
   score: 0,
   xp: 10,
+  roundDuration: 60,
+  showStatistic: true
 }
 
 const sprintReducer = ( state = defaultState, action) => {
@@ -49,7 +52,17 @@ const sprintReducer = ( state = defaultState, action) => {
       return {...state, showCard: true, wordIndex: action.wordIndx, translateIndex: action.translateIndx};
     }
     case CHECK_ANSWER: {
-      return {...state, answer: action.answer, score: state.score + action.xp};
+      return {
+        ...state,
+        answer: action.answer,
+        score: state.score + action.xp,
+      };
+    }
+    case TIMER: {
+      return {
+        ...state,
+        roundDuration: state.roundDuration--
+      };
     }
     default: {
       return {...state};
