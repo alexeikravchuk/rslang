@@ -1,10 +1,18 @@
 import React from 'react';
 import './App.scss';
-import Routes from './Routes/Routes.js'
-
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import PrimaryAppBar from './components/AppBar/AppBar';
+import SignIn from './components/Registration/SignIn';
+import SignUp from './components/Registration/SignUp';
 function App() {
   return (
-        <Routes/>
+    <Router>
+      <Switch>
+        <Route path='/signin' component={SignIn}/>
+        <Route path='/signup' component={SignUp}/>
+        <Route path='/' component={PrimaryAppBar}/>
+      </Switch>
+    </Router>
   );
 }
 

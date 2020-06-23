@@ -15,7 +15,7 @@ import {
   export const pageLinks = [
     {
       title: 'Main page',
-      link: '#main',
+      link: '/home',
       icon: <Home color='primary' />,
       type: 'primary',
     },
@@ -57,7 +57,7 @@ import {
     },
     {
       title: 'About us',
-      link: './aboutteampage',
+      link: './about',
       icon: <People />,
       type: 'addition',
     },

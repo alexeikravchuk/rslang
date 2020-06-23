@@ -11,8 +11,9 @@ import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
-import HomePage from '../Home/HomePage'
-import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom'
+
+import HomePage from '../../pages/Home/HomePage'
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
 
 class PrimaryAppBar extends Component {
@@ -53,6 +54,10 @@ class PrimaryAppBar extends Component {
           </Toolbar>
         </AppBar>
         <SideBar open={this.state.drawerOpen} onShewronClick={() => this.handleDrawerClose()}/>
+      <Switch>
+        <Route path='/home' component={HomePage}/>
+        <Route path='/about' component={AboutTeamPage}/>
+      </Switch>
       </React.Fragment>
     );
   }

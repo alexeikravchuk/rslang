@@ -62,10 +62,11 @@ class UserMenu extends Component {
                     id='menu-list-grow'>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
                     <MenuItem onClick={this.handleClose}>Setting</MenuItem>
-                    <MenuItem onClick={this.handleClose}
-                              component={RouterLink}
-                              to="./signin"
-                      >  
+                    <MenuItem 
+                      onClick={this.handleClose}
+                      to="/signin"
+                      component={RouterLink}
+                    >  
                         {this.state.auth ? 'Logout' : 'Login'}
                       </MenuItem>
                              

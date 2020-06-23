@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import logo from './logo.png';
+import logo from '../../assets/logo.png';
 import Login from './Login'
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -131,7 +131,7 @@ export default function SignIn() {
           </Login>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link 
+              <Link
                 component={RouterLink} 
                 to="/signup"
                 variant="body2">

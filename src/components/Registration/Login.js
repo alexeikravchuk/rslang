@@ -67,7 +67,7 @@ export default function Alert(props) {
           setTitle('Registration error')
         }else{
           setTitle('Registration successful')
-          doTransition('/signin')
+          doTransition('/home')
           console.log(regData);
         }
       }) 
