@@ -69,7 +69,6 @@ class UserMenu extends Component {
                     >  
                         {this.state.auth ? 'Logout' : 'Login'}
                       </MenuItem>
-                             
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

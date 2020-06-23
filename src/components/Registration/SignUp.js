@@ -13,6 +13,7 @@ import { useState } from 'react';
 import Login from './Login'
 import { Link as RouterLink } from 'react-router-dom';
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -83,7 +84,6 @@ export default function SignUp() {
       checkPassword(true);
     } 
   };
-  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -149,6 +149,7 @@ export default function SignUp() {
                 autoComplete="off"
                 onInput={e => setPasswordInput(e.target.value)}
                 onBlur={handlePassword}
+                onChange={handlePassword}
               />
             </Grid>
             <Grid item xs={12}>
@@ -169,6 +170,7 @@ export default function SignUp() {
               <Link 
                 component={RouterLink} 
                 to="/signin"
+
                 href="#" 
                 variant="body2">
                 Already have an account? Sign in
