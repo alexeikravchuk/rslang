@@ -3,11 +3,21 @@ const ADD_LEARNED_WORDS = 'ADD_LEARNED_WORDS'
 const ADD_MISSED_WORDS = 'ADD_MISSED_WORDS'
 const LOAD_WORDS = 'LOAD_WORDS'
 const LOAD_WORDS_SUCCESS = 'LOAD_WORDS_SUCCESS'
+const GAME_STARTING = 'GAME_STARTING'
+const LIFE_DECREASE = 'LIFE_DECREASE'
 
 const loadWords = () => {
   return (
     {
       type: LOAD_WORDS,
+    }
+  )
+}
+
+const gameStarting = () => {
+  return (
+    {
+      type: GAME_STARTING,
     }
   )
 }
@@ -21,13 +31,10 @@ const loadWordsSuccess = (words) => {
   )
 }
 
-const addWords = () => {
-  return (
-    {
-      type: ADD_NEW_WORDS,
-    }
-  )
+const lifeDecrease = () => {
+  return {type: LIFE_DECREASE}
 }
+
 
 const addLearnedWords = () => {
   return (
@@ -50,8 +57,11 @@ export { ADD_NEW_WORDS,
   ADD_MISSED_WORDS,
   LOAD_WORDS,
   LOAD_WORDS_SUCCESS,
-  addWords,
+  GAME_STARTING,
+  LIFE_DECREASE,
   addLearnedWords,
   addMissedWords,
   loadWords,
-  loadWordsSuccess}
+  loadWordsSuccess,
+  gameStarting,
+  lifeDecrease}
