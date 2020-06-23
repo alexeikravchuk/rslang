@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 function SprintMiniGame(props) {
   const classes = useStyles();
 
-  if (props.sprintState.gameLoaded) {
+  if (props.sprintState.showCard) {
     return (
       <div className={classes.container}>
         <Timer />
@@ -52,10 +52,10 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//   }
+// }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SprintMiniGame)
+export default connect(mapStateToProps, null)(SprintMiniGame)

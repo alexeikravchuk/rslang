@@ -1,4 +1,13 @@
-import { HIDE_WELCOME_DIALOG, USER_WORDS, CHANGE_DIFFICULTY, LOAD_GAME, SHOW_LOADER, HIDE_LOADER } from '../actions';
+import {
+  HIDE_WELCOME_DIALOG,
+  USER_WORDS,
+  CHANGE_DIFFICULTY,
+  LOAD_GAME,
+  SHOW_LOADER,
+  HIDE_LOADER,
+  SHOW_CARD,
+  CHECK_ANSWER,
+ } from '../actions';
 
 const defaultState = {
   checked: false,
@@ -6,7 +15,14 @@ const defaultState = {
   disabled: false,
   difficulty: null,
   gameWords: [],
+  userWords: false,
   gameLoading: false,
+  showCard: false,
+  wordIndex: 0,
+  translateIndex: 0,
+  answer: null,
+  score: 0,
+  xp: 10,
 }
 
 const sprintReducer = ( state = defaultState, action) => {
@@ -15,7 +31,7 @@ const sprintReducer = ( state = defaultState, action) => {
       return {...state, open: false};
     }
     case USER_WORDS: {
-      return {...state, checked: !state.checked, disabled: !state.disabled};
+      return {...state, checked: !state.checked, disabled: !state.disabled, userWords: !state.userWords};
     }
     case CHANGE_DIFFICULTY: {
       return {...state, difficulty: action.payload};
@@ -28,6 +44,12 @@ const sprintReducer = ( state = defaultState, action) => {
     }
     case HIDE_LOADER: {
       return {...state, gameLoading: false};
+    }
+    case SHOW_CARD: {
+      return {...state, showCard: true, wordIndex: action.wordIndx, translateIndex: action.translateIndx};
+    }
+    case CHECK_ANSWER: {
+      return {...state, answer: action.answer, score: state.score + action.xp};
     }
     default: {
       return {...state};
