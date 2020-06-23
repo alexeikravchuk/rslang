@@ -6,6 +6,9 @@ import Background from "../background/Background";
 import {GameToolbar} from "../GameToolbar";
 import {SavannahButton} from "../SavannahButton";
 import Container from "@material-ui/core/Container";
+import {gameStarting} from "../../../../store/actions/savannahAction";
+import {connect} from "react-redux";
+
 
 const styles = {
   contentDialog: {
@@ -27,6 +30,7 @@ function StartGame(props) {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => {
     setOpen(false)
+    props.gameStarting();
   };
   return (
       <Dialog
@@ -42,8 +46,18 @@ function StartGame(props) {
            <SavannahButton title={'lets begin'} onClick={handleClose}/>
          </Container>
        </Dialog>
-
   )
 }
 
-export default withStyles(styles)(StartGame)
+const mapStateToProps = store => {
+  const { savannahReducer } = store
+  return { ...savannahReducer }
+}
+
+const mapDispatchToProps = dispatch => ({
+  gameStarting: () => {
+    dispatch(gameStarting())
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StartGame))
