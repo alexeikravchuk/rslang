@@ -5,8 +5,10 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import GameToolbar from "../GameToolbar/Toolbar";
 import Background from "../background/Background";
+import {Statistics} from "../Statistics";
 import {LIFE_DECREASE,gameEnding, loadWords, loadWordsSuccess} from "../../../../store/actions/savannahAction";
 import {getWords} from "../../utils/wordRequest";
+import {StartGame} from "../StartGame";
 
 const styles ={
   root: {
@@ -31,6 +33,7 @@ class MainGame extends Component{
 
   render() {
     const { classes } = this.props;
+    console.log(this.props)
     return (
       <div>
         <GameToolbar title={'Savannah game'} />
@@ -38,6 +41,8 @@ class MainGame extends Component{
           <Button variant={'contained'} color={'primary'} onClick={() => this.props.onMiss(this.props.lifeCounter)}>
             {this.props.gameStarted ? 'Game is started': 'Game not started'}
           </Button>
+          {this.props.gameStarted === false && <StartGame />}
+          {this.props.gameEnd && <Statistics />}
         </Container>
         <Background />
       </div>
