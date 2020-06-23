@@ -10,6 +10,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
+import { Link as RouterLink } from 'react-router-dom';
 
 class UserMenu extends Component {
   constructor(props) {
@@ -61,9 +62,13 @@ class UserMenu extends Component {
                     id='menu-list-grow'>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
                     <MenuItem onClick={this.handleClose}>Setting</MenuItem>
-                    <MenuItem onClick={this.handleClose}>
-                      {this.state.auth ? 'Logout' : 'Login'}
-                    </MenuItem>
+                    <MenuItem 
+                      onClick={this.handleClose}
+                      to="/signin"
+                      component={RouterLink}
+                    >  
+                        {this.state.auth ? 'Logout' : 'Login'}
+                      </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
