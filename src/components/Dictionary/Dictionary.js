@@ -11,10 +11,12 @@ class Dictionary extends React.Component {
   
   constructor(props){
     super(props);
+    this.audio = null;
     this.state = {
       content: 'Please select a category',
       category: 1,
-      count: 0
+      count: 0,
+      
     }
   }
 
@@ -25,9 +27,12 @@ class Dictionary extends React.Component {
     document.title = `Results page ${this.state.count}`;
   }
 
-  audioWords(audioSrc) {
-    const audio = new Audio(audioSrc);
-    audio.play();
+  playAudioWords(audioSrc) {
+    if (!this.audio) {
+      this.audio = new Audio(audioSrc);
+      this.audio.play();
+      this.audio.addEventListener('ended', () => { this.audio = null; });
+    }
   }
 
   newWord = (category) => {
@@ -37,7 +42,7 @@ class Dictionary extends React.Component {
     let translations = categoryWords.map(el => el.wordTranslate)
     let audios = categoryWords.map(el => el.audio)
     words = words.map((item, index) => 
-    <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.audioWords(`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
+    <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.playAudioWords(`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
     this.setState({
       content: words,
       category: category,
@@ -58,7 +63,7 @@ class Dictionary extends React.Component {
       let translations = categoryWords.map(el => el.wordTranslate)
       let audios = categoryWords.map(el => el.audio)
       words = words.map((item, index) => 
-      <div><span> {item} </span><span> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.audioWords (`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
+      <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.audioWords (`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
       this.setState({
         content: words,
         count: counter + 1
