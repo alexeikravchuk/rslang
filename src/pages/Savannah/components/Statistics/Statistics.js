@@ -5,13 +5,16 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {connect} from "react-redux";
+import {gameReset} from "../../../../store/actions/savannahAction";
 
 
-export default function Statistics() {
+function Statistics(props) {
   const [open, setOpen] = React.useState(true);
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(false)
+    props.onReset();
   };
   return (
     <div>
@@ -36,6 +39,20 @@ export default function Statistics() {
         </DialogActions>
       </Dialog>
     </div>
-
     )
 }
+
+const mapStateToProps = store => {
+  const { savannahReducer } = store
+  return { ...savannahReducer }
+}
+
+const mapDispatchToProps = dispatch => ({
+  onReset: () => {
+    dispatch(gameReset())
+  }
+})
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Statistics);
