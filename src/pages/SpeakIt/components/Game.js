@@ -4,29 +4,13 @@ import { Intro } from './Intro';
 import { MainPage } from './MainPage';
 
 import backdropBackgroundImg from '../../../assets/game-background.jpg';
-import { getWords } from '../helpers/getWords';
 
 class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
       gameStarted: false,
-      level: {
-        current: 1,
-        maxLevel: 6,
-      },
-      words: [],
     };
-  }
-
-  componentDidMount() {
-    this.setWords();
-  }
-
-  async setWords() {
-    const page = parseInt(Math.random() * 30, 10);
-    const words = await getWords(this.state.level.current, page);
-    this.setState({ words });
   }
 
   startBtnClickHandler() {
@@ -42,9 +26,7 @@ class Game extends Component {
             onClick={() => this.startBtnClickHandler()}
           />
         )}
-        {this.state.gameStarted && (
-          <MainPage level={this.state.level} words={this.state.words} />
-        )}
+        {this.state.gameStarted && <MainPage level={this.state.level} />}
       </Backdrop>
     );
   }

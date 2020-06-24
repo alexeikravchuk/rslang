@@ -19,11 +19,12 @@ $mobile-big-width: 414px;
   background-color: #fff;
   transition: .3s;
   &:hover {
-    box-shadow: 0 0 0 1px #03011852, 0 2px 6px 0 #1232414d;
+    box-shadow: 0 0 5px #20a0eb,
+      inset 0 0 3px 2px #8d84f7;
   }
   &.active-card {
     border: 1px solid rgb(0, 173, 159);
-    background-color: rgba(0, 173, 159, .15);
+    background-color: #ccddffd0;
   }
   .audio-icon {
     position: absolute;
@@ -55,4 +56,12 @@ $mobile-big-width: 414px;
     max-width: 49%;
     margin: 5px;
   }
+}
+
+.spiner {
+  width: 100px;
+  height: 100px;
+  background: url(../../../../assets/Spin-0.7s-144px.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
 }

@@ -3,12 +3,20 @@ import Card from './Card';
 
 class CardList extends Component {
   render() {
-    const part = parseInt(Math.random() * 2, 10);
     return (
       <div className='cards'>
-        {this.props.words.splice(part * 10, 10).map((word) => (
-          <Card word={word} key={word.id}/>
-        ))}
+        {this.props.words.length ? (
+          this.props.words.map((word, i) => (
+              <Card
+                word={word}
+                isActive={this.props.activeCards.includes(i)}
+                key={word.id}
+                onClick={this.props.onCardClick}
+              />
+            ))
+        ) : (
+          <div className='spiner' />
+        )}
       </div>
     );
   }

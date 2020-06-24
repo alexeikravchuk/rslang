@@ -1,3 +1,4 @@
+$content-width: 1197px;
 $tablet-width: 768px;
 $mobile-big-width: 414px;
 
@@ -9,6 +10,7 @@ $mobile-big-width: 414px;
   align-items: center;
   margin: 0 auto;
   width: 100%;
+  max-width: $content-width;
   min-height: calc(100vh - 56px);
 
   .cards {
@@ -16,6 +18,7 @@ $mobile-big-width: 414px;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 0 30px;
+    
     margin-bottom: 20px;
     .card .translation {
       display: none;

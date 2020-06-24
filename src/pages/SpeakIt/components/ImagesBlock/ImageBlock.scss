@@ -12,46 +12,65 @@ $mobile-big-width: 414px;
   border: 10px solid rgba(55,97,151,0.2);
 }
 
-.translation {
-  color: rgba(14, 30, 37, .7);
+.input, .translation {
+  margin: 0;
+  margin-bottom: 14px;
+  padding: 5px 20px;
+  color: #2b2b2b;
+  font-size: 24px;
+  line-height: 40px;
   text-align: center;
-  min-height: 30px;
-  margin-bottom: 20px;
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  max-width: 100%;
+  box-shadow: 0 2px 3px #0009;
+  background-color: #e3e2e498;
+  transition: 0.3s ease-in;
+  opacity: 1;
 }
 
-.word, .translation {
-  color: #0e1e25;
-  font-size: 2.8rem;
-  padding: 0px 5px;
-  margin: 0;
+.translation {
+  font-weight: bold;
 }
 
 .input {
   display: block;
-  border: 0;
-  box-shadow: 0 2px 3px $color-train;
-  background-color: #ffffff3f;
-  border-radius: 5px;
-  padding: 5px 20px;
-  margin: 0 auto;
-  margin-bottom: 14px;
-  width: 100%;
-  height: 50px;
-  max-width: 1140px;
-  font-size: 20px;
-  line-height: 40px;
   color: rgba(14, 30, 37, .7);
-  text-align: center;
-  font-size: 22px;
   background-image: url(../../../../assets/microphone.svg);
-  background-repeat: no-repeat;
   background-size: 26px;
-  background-position: 10px 7px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  animation: pulse 1s infinite;
   @media (max-width: $mobile-big-width) {
     width: 95%;
   }
 }
 
 .none {
+  background-image: radial-gradient();
   display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+@keyframes pulse{
+  0% {
+    background-color: #e3e2e498;
+  }
+  25% {
+    background-color: #e0e0f3a9;
+  }
+  75% {
+    background-color: #fefeffa9;
+  }
+  100% {
+    background-color: #e3e2e498;
+  }
 }

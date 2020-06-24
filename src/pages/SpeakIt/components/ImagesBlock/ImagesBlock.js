@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
 import startImg from '../../../../assets/speak_it_start_img.jpg';
+import { DATA_LINK } from '../../constants/constants';
 
 class ImagesBlock extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      imgSrc: startImg,
-      translation: '',
-      audioInput: '',
-      isGameActive: false,
-    };
-  }
   render() {
+    const imgSrc = this.props.word
+      ? DATA_LINK + this.props.word.image
+      : startImg;
+
     return (
       <div className='images'>
-        {<img className='img' src={this.state.imgSrc} alt=''></img>}
-        <p className={'translation' + (this.state.isGameActive ? ' none' : '')}>
-          {this.state.translation}
+        {<img className='img' src={imgSrc} alt=''></img>}
+        <p
+          className={
+            'translation' +
+            (this.props.isRecognitionMode ? ' none' : '') +
+            (this.props.word ? '' : ' hidden')
+          }>
+          {this.props.word ? this.props.word.wordTranslate : ''}
         </p>
         <input
-          className={'input' + (this.state.isGameActive ? '' : ' none')}
+          className={'input' + (this.props.isRecognitionMode ? '' : ' none')}
           type='text'
           readOnly={true}
-          value={this.state.audioInput}
+          value={this.props.recognizedWord || '...'}
         />
       </div>
     );
