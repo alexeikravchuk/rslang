@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import MuiAvatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -11,7 +12,7 @@ import Slider from '@material-ui/core/Slider';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Loader } from '../Loader/Loader'
-import { userWords, changeDifficulty, loadGame } from '../../../../store/actions/sprintActions';
+import { userWords, changeDifficulty, loadGame, changeRound } from '../../../../store/actions/sprintActions';
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -28,6 +29,15 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
+const Avatar = withStyles((theme) => ({
+  root: {
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    marginRight: theme.spacing(2),
+  },
+}))(MuiAvatar);
+
+
 function WelcomeDialog(props) {
 
   if (props.sprintState.gameLoading) {
@@ -42,13 +52,16 @@ function WelcomeDialog(props) {
        fullWidth={true}
        maxWidth="sm"
        open={props.sprintState.open}>
-        <MuiDialogTitle>RS Sprint</MuiDialogTitle>
+        <MuiDialogTitle>
+          <Avatar alt="logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} />
+          RS Sprint
+        </MuiDialogTitle>
         <DialogContent dividers>
           <Typography variant="h5" id="discrete-slider" gutterBottom style={{marginBottom: '2.35em'}}>
             Choose your difficulty level, please
           </Typography>
           <Slider
-            defaultValue={4}
+            defaultValue={2}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="on"
             step={1}
@@ -58,13 +71,27 @@ function WelcomeDialog(props) {
             disabled={props.sprintState.disabled}
             onChange={(event, value) => props.changeDifficulty(value)}
           />
+          <Typography variant="h5" id="discrete-slider" gutterBottom style={{marginBottom: '2.35em'}}>
+            Choose round, please
+          </Typography>
+          <Slider
+            defaultValue={2}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="on"
+            step={1}
+            marks
+            min={1}
+            max={30}
+            disabled={props.sprintState.disabled}
+            onChange={(event, value) => props.changeRound(value)}
+          />
         </DialogContent>
         <DialogActions>
           <FormControlLabel
             control={<Checkbox checked={props.sprintState.checked} onChange={props.handleChange} />}
             label="Use my dictionary"
           />
-          <Button autoFocus onClick={props.loadGame} color="primary">
+          <Button autoFocus onClick={() => {props.loadGame(props.sprintState.difficulty, props.sprintState.round)}} color="primary">
             Start game!
           </Button>
         </DialogActions>
@@ -83,7 +110,8 @@ const mapDispatchToProps = dispatch => {
   return {
     handleChange: () => dispatch(userWords()),
     changeDifficulty: (value) => dispatch(changeDifficulty(value)),
-    loadGame: () => dispatch(loadGame())
+    changeRound: (value) => dispatch(changeRound(value)),
+    loadGame: (difficulty, round) => dispatch(loadGame(difficulty, round))
   }
 }
 

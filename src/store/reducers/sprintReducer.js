@@ -7,14 +7,18 @@ import {
   HIDE_LOADER,
   SHOW_CARD,
   CHECK_ANSWER,
-  TIMER,
+  XP_LEVEL,
+  END_GAME,
+  CHANGE_ROUND,
+  TIMER_FINISHED,
  } from '../actions';
 
 const defaultState = {
   checked: false,
   open: true,
   disabled: false,
-  difficulty: null,
+  difficulty: 2,
+  round: 1,
   gameWords: [],
   userWords: false,
   gameLoading: false,
@@ -24,8 +28,9 @@ const defaultState = {
   answer: null,
   score: 0,
   xp: 10,
-  roundDuration: 60,
-  showStatistic: true
+  xpLevel: 1,
+  xpLevelStepper: -1,
+  showStatistic: false,
 }
 
 const sprintReducer = ( state = defaultState, action) => {
@@ -37,6 +42,9 @@ const sprintReducer = ( state = defaultState, action) => {
       return {...state, checked: !state.checked, disabled: !state.disabled, userWords: !state.userWords};
     }
     case CHANGE_DIFFICULTY: {
+      return {...state, difficulty: action.payload};
+    }
+    case CHANGE_ROUND: {
       return {...state, difficulty: action.payload};
     }
     case LOAD_GAME: {
@@ -55,14 +63,18 @@ const sprintReducer = ( state = defaultState, action) => {
       return {
         ...state,
         answer: action.answer,
-        score: state.score + action.xp,
+        score: action.answer ? state.score + state.xp * state.xpLevel : state.score,
+        xpLevelStepper: (state.xpLevelStepper < 2 && action.answer) ? state.xpLevelStepper + 1 : -1,
       };
     }
-    case TIMER: {
-      return {
-        ...state,
-        roundDuration: state.roundDuration--
-      };
+    case XP_LEVEL: {
+      return {...state, xpLevel: action.payload};
+    }
+    case END_GAME: {
+      return {...state, open: true, showCard: false, showStatistic: false};
+    }
+    case TIMER_FINISHED: {
+      return {...state, showStatistic: true, showCard: false};
     }
     default: {
       return {...state};

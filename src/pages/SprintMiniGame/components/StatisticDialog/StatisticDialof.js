@@ -9,6 +9,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
+import { endGame } from '../../../../store/actions/sprintActions';
+
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -40,7 +42,7 @@ function StatisticDialog(props) {
         <MuiDialogTitle>Sprint Results</MuiDialogTitle>
         <DialogContent dividers>
           <Typography variant="h2" id="discrete-slider" gutterBottom >
-            2460 points
+            {props.sprintState.score} points
           </Typography>
           <Typography variant="h5" component="h3">
             Your record: 3830 points
@@ -51,7 +53,7 @@ function StatisticDialog(props) {
           <Rating name="game-results" value={4} readOnly style={{display: 'flex', justifyContent: 'center'}} />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={props.loadGame} color="primary">
+          <Button autoFocus onClick={props.endGame} color="primary">
             Close
           </Button>
         </DialogActions>
@@ -68,6 +70,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    endGame: () => dispatch(endGame()),
   }
 }
 

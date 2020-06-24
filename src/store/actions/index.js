@@ -11,7 +11,10 @@ import {
   HIDE_LOADER,
   SHOW_CARD,
   CHECK_ANSWER,
-  TIMER,
+  XP_LEVEL,
+  END_GAME,
+  CHANGE_ROUND,
+  TIMER_FINISHED
  } from './sprintActions';
 
 export {
@@ -31,5 +34,8 @@ export {
   HIDE_LOADER,
   SHOW_CARD,
   CHECK_ANSWER,
-  TIMER,
+  XP_LEVEL,
+  END_GAME,
+  CHANGE_ROUND,
+  TIMER_FINISHED
 }

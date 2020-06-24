@@ -26,9 +26,12 @@ const useStyles = makeStyles({
 function SprintMiniGame(props) {
   const classes = useStyles();
 
+  // const [timer, setTimer] = React.useState(true);
+
   if (props.sprintState.showCard) {
     return (
       <div className={classes.container}>
+        {/* <Timer isTimerFinished={() => setTimer(false)} /> */}
         <Timer />
         <Score />
         <GameCard />
@@ -39,12 +42,21 @@ function SprintMiniGame(props) {
     )
   }
 
-  return (
-    <div className={classes.container}>
+  if (props.sprintState.showStatistic) {
+    return (
+      <div className={classes.container}>
+        <StatisticDialog />
+      </div>
+    );
+  }
+
+  if (!props.sprintState.showCard) {
+    return (
+      <div className={classes.container}>
       <WelcomeDialog />
-      <StatisticDialog />
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {

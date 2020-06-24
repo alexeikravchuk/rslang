@@ -6,7 +6,10 @@ export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const SHOW_CARD = 'SHOW_CARD';
 export const CHECK_ANSWER = 'CHECK_ANSWER';
-export const TIMER = 'TIMER';
+export const XP_LEVEL = 'XP_LEVEL';
+export const END_GAME = 'END_GAME';
+export const CHANGE_ROUND = 'CHANGE_ROUND';
+export const TIMER_FINISHED = 'TIMER_FINISHED';
 
 export const hideWelcomeDialog = () => {
   return ({
@@ -24,6 +27,13 @@ export const changeDifficulty = (difficulty) => {
   return ({
     type: CHANGE_DIFFICULTY,
     payload: difficulty,
+  })
+}
+
+export const changeRound = (round) => {
+  return ({
+    type: CHANGE_ROUND,
+    payload: round,
   })
 }
 
@@ -47,7 +57,7 @@ export const showCard = (maxIndx) => {
     return Math.floor(Math.random() * (max - min)) + min
   }
 
-  if (Math.random() < 0.4) {
+  if (Math.random() < 0.7) {
     const index = getRandomIndex(maxIndx);
     return ({
       type: SHOW_CARD,
@@ -63,63 +73,87 @@ export const showCard = (maxIndx) => {
   })
 }
 
-export const loadGame = () => {
+export const loadGame = (difficulty, round) => {
   return async dispatch => {
     dispatch(hideWelcomeDialog())
     dispatch(showLoader())
-    const url = 'https://afternoon-falls-25894.herokuapp.com/words?page=2&group=0'
+    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${round}&group=${difficulty - 1}`
     const response = await fetch(url)
     const words = await response.json()
     setTimeout(() => {
       dispatch({ type: LOAD_GAME, payload: words, })
       dispatch(hideLoader())
       dispatch(showCard(words.length))
-      dispatch(timer())
     }, 0)
   }
 }
 
 export const checkAnswer = (btnValue, sprintState) => {
   console.log(sprintState)
-  const { wordIndex, translateIndex, gameWords, xp } = sprintState
+  const { wordIndex, translateIndex, gameWords, xpLevel, xpLevelStepper } = sprintState
   return dispatch => {
     if (btnValue === 'right') {
       if (wordIndex === translateIndex) {
         dispatch ({
           type: CHECK_ANSWER,
           answer: true,
-          xp,
         })
+        dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
           type: CHECK_ANSWER,
           answer: false,
-          xp: 0,
         })
+        dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       }
     } else if (btnValue === 'wrong') {
       if (wordIndex === translateIndex) {
         dispatch ({
           type: CHECK_ANSWER,
           answer: false,
-          xp: 0,
         })
+        dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
           type: CHECK_ANSWER,
           answer: true,
-          xp,
         })
+        dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       }
     }
     dispatch(showCard(gameWords.length))
   }
 }
 
-export const timer = () => {
-  return dispatch => {
-    setTimeout(() => {
-      dispatch({ type: TIMER })
-    }, 1000)
+export const xpLevelToggle = (answer, xpLevel, xpLevelStepper) => {
+  if (answer) {
+    if (xpLevelStepper < 2) {
+      return ({
+        type: XP_LEVEL,
+        payload: xpLevel,
+      })
+    } else {
+      return ({
+        type: XP_LEVEL,
+        payload: xpLevel < 8 ? xpLevel * 2 : xpLevel,
+      })
+    }
+  } else {
+    return ({
+      type: XP_LEVEL,
+      payload: 1,
+    })
   }
+}
+
+export const endGame = () => {
+  return ({
+    type: END_GAME,
+  })
+}
+
+export const isTimerFinished = () => {
+  return ({
+    type: TIMER_FINISHED,
+  })
 }
