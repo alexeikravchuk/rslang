@@ -9,13 +9,11 @@ const styles = {
   root: {
     width: 300,
     marginBottom: '2rem',
-
-    color: "#662246",
   },
   sliderLabel: {
     color: "#662246",
     textAlign: 'center',
-    marginBottom: '1rem'
+    marginBottom: '2rem'
   },
 };
 
@@ -38,8 +36,8 @@ function GameSlider(props){
           valueLabelDisplay="auto"
           step={1}
           marks
-          min={0}
-          max={5}
+          min={1}
+          max={6}
         />
       </div>
     );

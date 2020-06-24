@@ -8,6 +8,7 @@ import {
   LIFE_DECREASE,
   GAME_END,
   RESET_GAME,
+  DIFFICULTY_CHANGE,
 } from '../actions/savannahAction';
 
 const defaultState = {
@@ -15,6 +16,7 @@ const defaultState = {
   gameEnd:false,
   loading: false,
   error: null,
+  difficulty: 3,
   lifeCounter: 5,
   newWords: [],
   learnedWords: [],
@@ -42,6 +44,9 @@ const savannahReducer = ( state = defaultState, action) => {
     case LIFE_DECREASE: {
       return { ...state,
         lifeCounter: (state.lifeCounter === 0) ? 0 : state.lifeCounter-1}
+    }
+    case DIFFICULTY_CHANGE: {
+      return {...state, difficulty: action.difficulty}
     }
     case ADD_NEW_WORDS: {
       return {...state};

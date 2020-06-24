@@ -7,7 +7,7 @@ const GAME_STARTING = 'GAME_STARTING'
 const LIFE_DECREASE = 'LIFE_DECREASE'
 const GAME_END = 'GAME_END'
 const RESET_GAME = 'RESET_GAME'
-
+const DIFFICULTY_CHANGE = 'DIFFICULTY_CHANGE'
 const loadWords = () => {
   return (
     {
@@ -44,6 +44,14 @@ const loadWordsSuccess = (words) => {
     }
   )
 }
+const difficultyChange = (difficulty) => {
+  return(
+    {
+      type: DIFFICULTY_CHANGE,
+      difficulty
+    }
+  )
+}
 
 const lifeDecrease = () => {
   return {type: LIFE_DECREASE}
@@ -74,6 +82,7 @@ export { ADD_NEW_WORDS,
   GAME_END,
   LIFE_DECREASE,
   RESET_GAME,
+  DIFFICULTY_CHANGE,
   addLearnedWords,
   addMissedWords,
   loadWords,
@@ -81,4 +90,5 @@ export { ADD_NEW_WORDS,
   gameStarting,
   gameEnding,
   lifeDecrease,
-  gameReset}
+  gameReset,
+  difficultyChange}

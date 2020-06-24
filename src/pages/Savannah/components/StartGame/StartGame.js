@@ -1,13 +1,13 @@
 import React  from "react";
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from "@material-ui/core/Dialog";
-import Typography from "@material-ui/core/Typography";
 import Background from "../background/Background";
 import {GameToolbar} from "../GameToolbar";
 import {SavannahButton} from "../SavannahButton";
 import Container from "@material-ui/core/Container";
 import {gameStarting} from "../../../../store/actions/savannahAction";
 import {connect} from "react-redux";
+import GameSlider from "../GameSlider/GameSlider";
 
 
 const styles = {
@@ -40,10 +40,8 @@ function StartGame(props) {
           <GameToolbar title={'Savannah game'} />
           <Background />
           <Container className={classes.contentDialog}>
-            <Typography variant={'h6'} className={classes.contentText}>
-              Game must begin...
-            </Typography>
-           <SavannahButton title={'lets begin'} onClick={handleClose}/>
+            <GameSlider />
+            <SavannahButton title={'lets begin'} onClick={handleClose}/>
          </Container>
        </Dialog>
   )
