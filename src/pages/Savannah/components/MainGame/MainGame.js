@@ -27,19 +27,14 @@ const styles ={
 }
 
 class MainGame extends Component{
-  componentDidMount() {
-    this.props.fetchWords(1, 2);
-  }
-
   render() {
     const { classes } = this.props;
-    console.log(this.props)
     return (
       <div>
         <GameToolbar title={'Savannah game'} />
         <Container className={classes.root}>
           <Button variant={'contained'} color={'primary'} onClick={() => this.props.onMiss(this.props.lifeCounter)}>
-            {this.props.gameStarted ? 'Game is started': 'Game not started'}
+            {this.props.gameStarted ? 'I am missed': 'Game not started'}
           </Button>
           {this.props.gameStarted === false && <StartGame />}
           {this.props.gameEnd && <Statistics />}
