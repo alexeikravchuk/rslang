@@ -45,8 +45,18 @@ function Timer(props) {
     };
   }, []);
 
+  const playSound = (sound) => {
+    const audio = new Audio(`${process.env.PUBLIC_URL}/audio/${sound}.mp3`)
+    audio.play()
+  }
+
+  if (timerValue <= 3 && timerValue > 0) {
+    playSound('endTimer')
+  }
+
   if (timerValue <= 0) {
     props.isTimerFinished()
+    playSound('roundEnd')
   }
 
    return (

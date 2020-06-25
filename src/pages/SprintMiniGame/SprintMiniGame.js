@@ -10,8 +10,8 @@ const useStyles = makeStyles({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     background: 'url(/images/backgrounds/SprintMiniGameBackground.jpg) center no-repeat',
     backgroundSize: 'cover',
     width: '100vw',
@@ -26,12 +26,9 @@ const useStyles = makeStyles({
 function SprintMiniGame(props) {
   const classes = useStyles();
 
-  // const [timer, setTimer] = React.useState(true);
-
   if (props.sprintState.showCard) {
     return (
       <div className={classes.container}>
-        {/* <Timer isTimerFinished={() => setTimer(false)} /> */}
         <Timer />
         <Score />
         <GameCard />

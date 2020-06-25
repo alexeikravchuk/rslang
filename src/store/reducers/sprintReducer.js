@@ -45,7 +45,7 @@ const sprintReducer = ( state = defaultState, action) => {
       return {...state, difficulty: action.payload};
     }
     case CHANGE_ROUND: {
-      return {...state, difficulty: action.payload};
+      return {...state, round: action.payload};
     }
     case LOAD_GAME: {
       return {...state, gameWords: action.payload};

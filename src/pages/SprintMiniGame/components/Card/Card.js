@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import './Card.scss';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,36 +11,17 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { Stepper } from '../index';
 import { checkAnswer } from '../../../../store/actions/sprintActions';
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 475,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  hr: {
-    width: '90%',
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-
-});
-
 function GameCard({ sprintState, checkAnswer }) {
-  const classes = useStyles();
   const wordList = sprintState.gameWords;
   const word = wordList[sprintState.wordIndex].word;
   const wordTranslate = wordList[sprintState.translateIndex].wordTranslate;
 
+
+
   return (
-    <Card className={classes.root}>
+    <Card className='root'>
       <Stepper />
-      <CardContent className={classes.content}>
+      <CardContent className='content'>
         <Typography variant="h3" component="h3">
           {word}
         </Typography>
@@ -48,7 +29,7 @@ function GameCard({ sprintState, checkAnswer }) {
           {wordTranslate}
         </Typography>
       </CardContent>
-      <hr className={classes.hr}/>
+      <hr className='hr'/>
       <CardActions>
       <Button
         variant="contained"

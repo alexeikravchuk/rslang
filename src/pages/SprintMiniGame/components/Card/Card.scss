@@ -1,0 +1,52 @@
+.root {
+  min-width: 475px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hr {
+  width: 90%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center
+}
+
+.wrong {
+  background-color: red;
+  animation: right .5s ease-in-out;
+}
+
+.wrong {
+  background-color: red;
+  animation: right .5s ease-in-out;
+}
+
+@keyframes wrong{
+  from {
+    opacity: 0;
+    box-shadow: none;
+  }
+
+  to {
+    opacity: 1;
+    box-shadow: 0px 0px 30px 3px rgba(255,0,0,0.6);
+  }
+}
+
+@keyframes right{
+  from {
+    opacity: 0;
+    box-shadow: none;
+  }
+
+  to {
+    opacity: 1;
+    box-shadow: 0px 0px 30px 3px rgba(9, 255, 0, 0.747);
+  }
+}

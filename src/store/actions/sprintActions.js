@@ -83,13 +83,13 @@ export const loadGame = (difficulty, round) => {
     setTimeout(() => {
       dispatch({ type: LOAD_GAME, payload: words, })
       dispatch(hideLoader())
+      playSound('gameStart')
       dispatch(showCard(words.length))
-    }, 0)
+    }, 1200)
   }
 }
 
 export const checkAnswer = (btnValue, sprintState) => {
-  console.log(sprintState)
   const { wordIndex, translateIndex, gameWords, xpLevel, xpLevelStepper } = sprintState
   return dispatch => {
     if (btnValue === 'right') {
@@ -98,12 +98,14 @@ export const checkAnswer = (btnValue, sprintState) => {
           type: CHECK_ANSWER,
           answer: true,
         })
+        playSound('correct')
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
           type: CHECK_ANSWER,
           answer: false,
         })
+        playSound('error')
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       }
     } else if (btnValue === 'wrong') {
@@ -112,17 +114,24 @@ export const checkAnswer = (btnValue, sprintState) => {
           type: CHECK_ANSWER,
           answer: false,
         })
+        playSound('error')
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
           type: CHECK_ANSWER,
           answer: true,
         })
+        playSound('correct')
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       }
     }
     dispatch(showCard(gameWords.length))
   }
+}
+
+const playSound = (sound) => {
+  const audio = new Audio(`${process.env.PUBLIC_URL}/audio/${sound}.mp3`)
+  audio.play()
 }
 
 export const xpLevelToggle = (answer, xpLevel, xpLevelStepper) => {
@@ -133,6 +142,7 @@ export const xpLevelToggle = (answer, xpLevel, xpLevelStepper) => {
         payload: xpLevel,
       })
     } else {
+      xpLevel < 8 && playSound('levelUp')
       return ({
         type: XP_LEVEL,
         payload: xpLevel < 8 ? xpLevel * 2 : xpLevel,
@@ -157,3 +167,4 @@ export const isTimerFinished = () => {
     type: TIMER_FINISHED,
   })
 }
+

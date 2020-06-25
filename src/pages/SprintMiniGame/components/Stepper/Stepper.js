@@ -5,7 +5,6 @@ import './Stepper.scss'
 const stepperLength = [1, 2, 3]
 
 function Stepper({sprintState}) {
-  console.log(sprintState.xpLevelStepper)
   return (
     <div className='stepper'>
       {
