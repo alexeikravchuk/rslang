@@ -20,7 +20,7 @@ function Score(props) {
       <Typography variant="h2" component="h2">
         {props.sprintState.score}
       </Typography>
-      <Typography variant="h4" component="h4">
+      <Typography variant="h4" component="h4" style={{textAlign: 'center'}}>
         +{props.sprintState.xp * props.sprintState.xpLevel} points per word
       </Typography>
     </div>

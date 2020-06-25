@@ -37,7 +37,7 @@ function GameCard({ sprintState, checkAnswer }) {
         <Typography variant="h3" component="h3">
           {word}
         </Typography>
-        <Typography variant="h5" component="h3" >
+        <Typography variant="h5" component="h5">
           {wordTranslate}
         </Typography>
       </CardContent>
