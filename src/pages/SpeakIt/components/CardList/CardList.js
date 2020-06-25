@@ -11,7 +11,7 @@ class CardList extends Component {
               word={word}
               isActive={this.props.activeCards.includes(i)}
               key={word.id}
-              onClick={this.props.onCardClick}
+              onCardClick={this.props.onCardClick}
             />
           ))
         ) : (

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Card extends Component {
   handleCardClick = () => {
-    this.props.onClick(this.props.word.word);
+    this.props.onCardClick(this.props.word.word);
   };
 
   render() {

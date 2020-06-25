@@ -4,6 +4,7 @@ $color-nav-text: #fff899;
 
 $tablet-width: 768px;
 $mobile-big-width: 414px;
+$mobile-small-width: 320px;
 
 .btns {
   font-size: 10px;
@@ -23,7 +24,7 @@ $mobile-big-width: 414px;
   justify-content: center;
   margin: 0 auto 20px;
   appearance: none;
-  font-size: 28px;
+  font-size: 24px;
   text-align: center;
   padding: 10px 25px;
   text-decoration: none;
@@ -62,9 +63,13 @@ $mobile-big-width: 414px;
     padding: 10px 5px;
     white-space: pre-line;
     margin: 0px 5px 20px 5px;
-    min-width: 30%;
+    min-width: 50%;
     &.voice {
       width: 30vw;
     }
+  }
+  @media (max-width: $mobile-small-width) {
+    min-width: 80%;
+    margin-bottom: 10px;
   }
 }

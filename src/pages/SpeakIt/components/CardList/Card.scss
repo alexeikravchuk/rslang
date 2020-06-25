@@ -1,5 +1,6 @@
 $tablet-width: 768px;
 $mobile-big-width: 414px;
+$mobile-small-width: 320px;
 
 .card {
   position: relative;
@@ -7,9 +8,9 @@ $mobile-big-width: 414px;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  padding: 10px;
+  padding: 5px 10px;
   padding-left: 40px;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.4;
   min-width: 190px;
   min-height: 70px;
@@ -48,12 +49,21 @@ $mobile-big-width: 414px;
     margin: 0;
   }
   @media (max-width: $tablet-width) {
-    min-width: 28%;
+    min-width: 40%;
+    padding: 5px 0 0 30px;
+    .audio-icon {
+      left: 2px;
+    }
   }
 
   @media (max-width: $mobile-big-width) {
     min-width: 45%;
     max-width: 49%;
+    margin: 5px;
+  }
+  @media (max-width: $mobile-big-width) {
+    min-width: 80%;
+    max-width: 89%;
     margin: 5px;
   }
 }

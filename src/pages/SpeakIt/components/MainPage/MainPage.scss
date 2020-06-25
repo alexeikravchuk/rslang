@@ -25,7 +25,7 @@ $mobile-big-width: 414px;
     }
 
     @media (max-width: $tablet-width) {
-      padding: 0;
+      padding: 0 10px;
       justify-content: space-around;
     }
     @media (max-width: $mobile-big-width) {

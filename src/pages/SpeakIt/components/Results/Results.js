@@ -4,6 +4,8 @@ import { CardList } from '../CardList';
 import { Statistics } from '../Statistics';
 import { separateWords } from '../../helpers/separateWords';
 import { getSavedResult } from '../../helpers/getSavedResult';
+import { Buttons } from '../Buttons';
+import { playCardsAudio } from '../../helpers/playCardsAudio';
 
 class Results extends Component {
   constructor(props) {
@@ -15,7 +17,19 @@ class Results extends Component {
     };
   }
 
-  onClickHandler = (e) => {
+  handleCardClick = (targetWord) => {
+    playCardsAudio(targetWord, this.state.words);
+  };
+
+  playAudio = (audioSrc) => {
+    if (this.audio && this.audio.played) {
+      this.audio.pause();
+    }
+    this.audio = new Audio(audioSrc);
+    this.audio.play();
+  };
+
+  handleButtonClick = (e) => {
     if (e.target.classList.contains('btn-stat')) {
       if (e.target.classList.contains('return')) {
         return this.setState({ isShowStatistics: false });
@@ -28,42 +42,48 @@ class Results extends Component {
     this.props.onButtonClick(e);
   };
 
-  showSavedResult(target) {
+  showSavedResult = (target) => {
     const { words, succesWordIndexes } = getSavedResult(target);
     this.setState({
       isShowStatistics: false,
       words,
       succesWordIndexes,
     });
-  }
+  };
 
-  getCards(words) {
+  getCards = (words) => {
     return (
       words.length && (
         <CardList
           words={words}
           activeCards={[]}
-          onCardClick={this.props.onCardClick}
+          onCardClick={this.handleCardClick}
         />
       )
     );
-  }
+  };
 
-  render() {
+  getErrorCards = () => {
     const errorWords = separateWords(
       this.state.words,
       this.state.succesWordIndexes,
       false
     );
-    const errorCards = this.getCards(errorWords);
+    return this.getCards(errorWords);
+  };
 
+  getSuccesCards = () => {
     const succesWords = separateWords(
       this.state.words,
       this.state.succesWordIndexes,
       true
     );
-    const succesCards = this.getCards(succesWords);
+    return this.getCards(succesWords);
+  };
 
+  render() {
+    const errorCards = this.getErrorCards();
+    const succesCards = this.getSuccesCards();
     return (
       <Backdrop className='results' open={true}>
         {!this.state.isShowStatistics && (
@@ -82,27 +102,19 @@ class Results extends Component {
               </span>
             </p>
             <div className='succes-cards'>{succesCards ? succesCards : ''}</div>
-            <div className='btns btns-res'>
-              <button
-                className='btn btn-res return'
-                onClick={this.onClickHandler}>
-                Return
-              </button>
-              <button
-                className='btn btn-res new-game'
-                onClick={this.onClickHandler}>
-                New game
-              </button>
-              <button
-                className='btn btn-res btn-stat'
-                onClick={this.onClickHandler}>
-                Statistics
-              </button>
-            </div>
+            <Buttons
+              onButtonClick={this.handleButtonClick}
+              classes='btns-res'
+              btns={[
+                { classes: 'btn-res return', title: 'Return' },
+                { classes: 'btn-res new-game', title: 'New game' },
+                { classes: 'btn-res btn-stat', title: 'Statistics' },
+              ]}
+            />
           </div>
         )}
         {this.state.isShowStatistics && (
-          <Statistics onClick={this.onClickHandler} />
+          <Statistics onClick={this.handleButtonClick} />
         )}
       </Backdrop>
     );

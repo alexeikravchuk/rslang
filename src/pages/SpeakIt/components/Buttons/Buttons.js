@@ -7,16 +7,15 @@ class Buttons extends Component {
 
   render() {
     return (
-      <div className='btns'>
-        <button className='btn restart' onClick={this.onClickHandler}>
-          Restart
-        </button>
-        <button className='btn voice user-speach' onClick={this.onClickHandler}>
-          Speak please
-        </button>
-        <button className='btn result' onClick={this.onClickHandler}>
-          Results
-        </button>
+      <div className={'btns ' + (this.props.classes ? this.props.classes : '')}>
+        {this.props.btns.map((btn, i) => (
+          <button
+            className={'btn ' + btn.classes}
+            onClick={this.onClickHandler}
+            key={'button' + i}>
+            {btn.title}
+          </button>
+        ))}
       </div>
     );
   }

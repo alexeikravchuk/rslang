@@ -4,10 +4,10 @@ import { ImagesBlock } from '../ImagesBlock';
 import { CardList } from '../CardList';
 import { Buttons } from '../Buttons';
 import { getWords } from '../../helpers/getWords';
-import { DATA_LINK } from '../../constants/constants';
 import { Results } from '../Results';
 import { runSpeechRecognition } from '../../helpers/runSpeechRecognition';
 import { saveResult } from '../../helpers/saveResult';
+import { playCardsAudio } from '../../helpers/playCardsAudio';
 
 class MainPage extends Component {
   constructor(props) {
@@ -25,31 +25,19 @@ class MainPage extends Component {
       isWon: false,
       isResultsDisplayed: false,
     };
-    this.audio = null;
-    this.handleLevelChange = this.handleLevelChange.bind(this);
-    this.handleCardClick = this.handleCardClick.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setWords(this.state.level.current);
-  }
-
-  playAudio = (audioSrc) => {
-    if (this.audio && this.audio.played) {
-      this.audio.pause();
-    }
-    this.audio = new Audio(audioSrc);
-    this.audio.play();
   };
 
-  async setWords(group) {
+  setWords = async (group) => {
     const page = parseInt(Math.random() * 30, 10);
     const words = await getWords(group, page);
     this.setState({ words });
-  }
+  };
 
-  restartStudyCurrentPage() {
+  restartStudyCurrentPage = () => {
     this.setState({
       score: 0,
       activeCardIndexes: [],
@@ -57,30 +45,29 @@ class MainPage extends Component {
       recognizedWord: null,
       isResultsDisplayed: false,
     });
-  }
+  };
 
-  enableisRecognitionMode() {
+  enableisRecognitionMode = () => {
     this.setState({ activeCardIndexes: [], isRecognitionMode: true });
     this.startRecognizeSpeech();
-  }
+  };
 
-  startRecognizeSpeech() {
+  startRecognizeSpeech = () => {
     this.setState({ score: 0 });
-
-    const setRecognizedWord = (transcript) =>
-      this.setState({ recognizedWord: transcript });
-    const checkRecognitionMode = () => this.state.isRecognitionMode;
-    const activateCard = (index) => this.activateCard(index);
-
     runSpeechRecognition(
       this.state.words,
-      setRecognizedWord,
-      checkRecognitionMode,
-      activateCard
+      this.setRecognizedWord,
+      this.checkRecognitionMode,
+      this.activateCard
     );
-  }
+  };
 
-  activateCard(index) {
+  setRecognizedWord = (transcript) =>
+    this.setState({ recognizedWord: transcript });
+
+  checkRecognitionMode = () => this.state.isRecognitionMode;
+
+  activateCard = (index) => {
     if (!this.state.activeCardIndexes.includes(index)) {
       this.setState({
         activeCardIndexes: [...this.state.activeCardIndexes, index],
@@ -98,18 +85,18 @@ class MainPage extends Component {
         );
       }
     }
-  }
+  };
 
-  handleLevelChange(value) {
+  handleLevelChange = (value) => {
     this.setState({
       level: { current: value, maxLevel: 6 },
       activeCardIndexes: [],
       isRecognitionMode: false,
     });
     this.setWords(value);
-  }
+  };
 
-  handleCardClick(targetWord) {
+  handleCardClick = (targetWord) => {
     if (this.state.isRecognitionMode) {
       return;
     }
@@ -118,10 +105,10 @@ class MainPage extends Component {
     );
     !this.state.isResultsDisplayed &&
       this.setState({ activeCardIndexes: [wordIndex] });
-    this.playAudio(DATA_LINK + this.state.words[wordIndex].audio);
-  }
+    playCardsAudio(targetWord, this.state.words);
+  };
 
-  handleButtonClick(e) {
+  handleButtonClick = (e) => {
     if (e.target.classList.contains('restart')) {
       return this.restartStudyCurrentPage();
     }
@@ -146,7 +133,7 @@ class MainPage extends Component {
       this.restartStudyCurrentPage();
       return this.setWords(this.state.level.current);
     }
-  }
+  };
 
   render() {
     const activeCard = this.state.activeCardIndexes.length
@@ -171,11 +158,17 @@ class MainPage extends Component {
           activeCards={this.state.activeCardIndexes}
           onCardClick={this.handleCardClick}
         />
-        <Buttons onButtonClick={this.handleButtonClick} />
+        <Buttons
+          onButtonClick={this.handleButtonClick}
+          btns={[
+            { classes: 'restart', title: 'Restart' },
+            { classes: 'voice user-speach', title: 'Speak please' },
+            { classes: 'result', title: 'Results' },
+          ]}
+        />
         {this.state.isResultsDisplayed && (
           <Results
             onButtonClick={this.handleButtonClick}
-            onCardClick={this.handleCardClick}
             words={this.state.words}
             succesWordIndexes={this.state.activeCardIndexes}
           />
