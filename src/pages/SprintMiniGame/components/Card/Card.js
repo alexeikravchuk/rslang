@@ -16,7 +16,20 @@ function GameCard({ sprintState, checkAnswer }) {
   const word = wordList[sprintState.wordIndex].word;
   const wordTranslate = wordList[sprintState.translateIndex].wordTranslate;
 
+  React.useEffect(() => {
 
+    const onKeydown = e => {
+      if (e.keyCode === 37) {
+        checkAnswer('right', sprintState)
+      } else if (e.keyCode === 39) {
+        checkAnswer('wrong', sprintState)
+      }
+    };
+    document.addEventListener('keydown', onKeydown);
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+    };
+  }, [checkAnswer, sprintState]);
 
   return (
     <Card className='root'>
@@ -37,7 +50,8 @@ function GameCard({ sprintState, checkAnswer }) {
         size="large"
         startIcon={<KeyboardArrowLeftIcon />}
         value="right"
-        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}>
+        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
+        >
         right
       </Button>
       <Button
@@ -46,7 +60,8 @@ function GameCard({ sprintState, checkAnswer }) {
         size="large"
         endIcon={<KeyboardArrowRightIcon />}
         value="wrong"
-        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}>
+        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
+        >
         wrong
       </Button>
       </CardActions>
