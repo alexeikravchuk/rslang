@@ -17,10 +17,9 @@ $mobile-big-width: 414px;
   border: 1px solid rgb(206, 212, 218);
   border-radius: 5px;
   background-color: #fff;
-  transition: .3s;
+  transition: 0.3s;
   &:hover {
-    box-shadow: 0 0 5px #20a0eb,
-      inset 0 0 3px 2px #8d84f7;
+    box-shadow: 0 0 5px #20a0eb, inset 0 0 3px 2px #8d84f7;
   }
   &.active-card {
     border: 1px solid rgb(0, 173, 159);
@@ -35,14 +34,15 @@ $mobile-big-width: 414px;
     background-image: url(../../../../assets/audio.svg);
     background-repeat: no-repeat;
   }
-  .word, .translation {
+  .word,
+  .translation {
     color: #0e1e25;
     font-size: 22px;
     padding: 0px 5px;
     margin: 0;
   }
   .transcription {
-    color: rgba(14, 30, 37, .7);
+    color: rgba(14, 30, 37, 0.7);
     font-size: 18px;
     padding: 0px 5px;
     margin: 0;
@@ -50,7 +50,7 @@ $mobile-big-width: 414px;
   @media (max-width: $tablet-width) {
     min-width: 28%;
   }
-  
+
   @media (max-width: $mobile-big-width) {
     min-width: 45%;
     max-width: 49%;

@@ -8,11 +8,12 @@ $mobile-big-width: 414px;
   object-fit: cover;
   margin-bottom: 10px;
   border-radius: 5px;
-  box-shadow: 5px 5px 25px rgba(118,118,118,.25);
-  border: 10px solid rgba(55,97,151,0.2);
+  box-shadow: 5px 5px 25px rgba(118, 118, 118, 0.25);
+  border: 10px solid rgba(55, 97, 151, 0.2);
 }
 
-.input, .translation {
+.input,
+.translation {
   margin: 0;
   margin-bottom: 14px;
   padding: 5px 20px;
@@ -37,7 +38,7 @@ $mobile-big-width: 414px;
 
 .input {
   display: block;
-  color: rgba(14, 30, 37, .7);
+  color: rgba(14, 30, 37, 0.7);
   background-image: url(../../../../assets/microphone.svg);
   background-size: 26px;
   background-repeat: no-repeat;
@@ -60,7 +61,7 @@ $mobile-big-width: 414px;
   transition: opacity 0.3s ease-in;
 }
 
-@keyframes pulse{
+@keyframes pulse {
   0% {
     background-color: #e3e2e498;
   }

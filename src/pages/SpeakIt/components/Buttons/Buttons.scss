@@ -23,7 +23,7 @@ $mobile-big-width: 414px;
   justify-content: center;
   margin: 0 auto 20px;
   appearance: none;
-  font-size: 2.8em;
+  font-size: 28px;
   text-align: center;
   padding: 10px 25px;
   text-decoration: none;
@@ -38,6 +38,7 @@ $mobile-big-width: 414px;
   transition: 0.55s;
   box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.2),
     0 2px 4px 0 rgba(14, 30, 37, 0.4);
+  cursor: pointer;
   &:hover {
     background: $color-train-2;
     border-radius: 10px;

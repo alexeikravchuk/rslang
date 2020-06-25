@@ -6,7 +6,10 @@ class StatusBar extends Component {
   render() {
     return (
       <div className='status-bar'>
-        <LevelSwitch level={this.props.level} onLevelChange={this.props.onLevelChange}/>
+        <LevelSwitch
+          level={this.props.level}
+          onLevelChange={this.props.onLevelChange}
+        />
         <Score score={this.props.score} />
       </div>
     );

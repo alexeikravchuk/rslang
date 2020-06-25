@@ -4,8 +4,27 @@ $color-play: #6cc49c;
 $tablet-width: 768px;
 $mobile-big-width: 414px;
 
-.results-container, .stat-container {
+
+.MuiBackdrop-root.results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000a;
+  flex-direction: column;
   position: fixed;
+  top: 56px;
+  bottom: 0;
+  left: 56px;
+  right: 0;
+  text-align: center;
+  padding: 10px;
+  transition: .5s;
+  z-index: 100;
+}
+
+.results-container,
+.stat-container {
+  position: relative;
   width: 100%;
   max-width: 780px;
   max-height: 98vh;
@@ -15,7 +34,7 @@ $mobile-big-width: 414px;
   font-size: 22px;
   background-color: $color-background;
   border-radius: 8px;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 2px 4px 0 rgba(14,30,37,.12);
+  
 }
 .results-container {
   .card {
@@ -27,7 +46,7 @@ $mobile-big-width: 414px;
     padding: 0 0 0 50px;
     .audio-icon {
       top: 8px;
-    }  
+    }
   }
   .errors-num {
     background-color: #da5b4c;
@@ -38,18 +57,24 @@ $mobile-big-width: 414px;
   }
 
   .succes-num {
-    background-color: #01AF61;
+    background-color: #01af61;
     color: #fff;
     padding: 3px 14px;
     border-radius: 21px;
     margin-left: 5px;
   }
   .error-cards {
+    .cards {
+      display: block;
+    }
     .card {
       box-shadow: 0 0 3px #da5b4c;
     }
   }
   .succes-cards {
+    .cards {
+      display: block;
+    }
     margin-bottom: 40px;
     .card {
       box-shadow: 0 0 3px $color-play;
@@ -65,10 +90,10 @@ $mobile-big-width: 414px;
       width: 25%;
     }
   }
-  @include media-tablet {
+  @media (max-width: $tablet-width) {
     padding: 20px 40px;
   }
-  @include media-mobile {
+  @media (max-width: $mobile-big-width) {
     padding: 10px;
     .card {
       max-width: 95%;

@@ -5,6 +5,9 @@ import { CardList } from '../CardList';
 import { Buttons } from '../Buttons';
 import { getWords } from '../../helpers/getWords';
 import { DATA_LINK } from '../../constants/constants';
+import { Results } from '../Results';
+import { runSpeechRecognition } from '../../helpers/runSpeechRecognition';
+import { saveResult } from '../../helpers/saveResult';
 
 class MainPage extends Component {
   constructor(props) {
@@ -19,6 +22,8 @@ class MainPage extends Component {
       activeCardIndexes: [],
       isRecognitionMode: false,
       recognizedWord: null,
+      isWon: false,
+      isResultsDisplayed: false,
     };
     this.audio = null;
     this.handleLevelChange = this.handleLevelChange.bind(this);
@@ -50,6 +55,7 @@ class MainPage extends Component {
       activeCardIndexes: [],
       isRecognitionMode: false,
       recognizedWord: null,
+      isResultsDisplayed: false,
     });
   }
 
@@ -59,41 +65,19 @@ class MainPage extends Component {
   }
 
   startRecognizeSpeech() {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.interimResults = true;
-    recognition.lang = 'en-US';
-    recognition.maxAlternatives = 4;
+    this.setState({ score: 0 });
 
-    recognition.addEventListener('result', (e) => {
-      const transcriptArr = Array.from(e.results[0]).map(
-        (alt) => alt.transcript
-      );
-      if (e.results[0].isFinal) {
-        const wordIndex = this.findIndexTranscriptInWords(transcriptArr);
-        wordIndex >= 0 && this.activateCard(wordIndex);
-      }
-    });
+    const setRecognizedWord = (transcript) =>
+      this.setState({ recognizedWord: transcript });
+    const checkRecognitionMode = () => this.state.isRecognitionMode;
+    const activateCard = (index) => this.activateCard(index);
 
-    recognition.addEventListener('end', () => {
-      if (this.state.isRecognitionMode) {
-        return recognition.start();
-      }
-      return recognition.stop();
-    });
-
-    recognition.start();
-  }
-
-  findIndexTranscriptInWords(transcriptArr) {
-    return this.state.words.findIndex((word) => {
-      const result = transcriptArr.find((transcript) => {
-        this.setState({ recognizedWord: transcript });
-        return word.word.toLowerCase() === transcript.toLowerCase();
-      });
-      return result;
-    });
+    runSpeechRecognition(
+      this.state.words,
+      setRecognizedWord,
+      checkRecognitionMode,
+      activateCard
+    );
   }
 
   activateCard(index) {
@@ -102,20 +86,26 @@ class MainPage extends Component {
         activeCardIndexes: [...this.state.activeCardIndexes, index],
       });
       this.setState({ score: this.state.score + 1 });
-      //   if (this.statusBar.score.score === 9) {
-      //     setTimeout(() => this.showResult(), 1000);
-      //   }
-      //   return this.statusBar.score.increaseScore();
-      // }
-      // [this.imagesBlock.audioInput.value] = transcriptArr;
-      // return -1;
+      if (this.state.score === 10) {
+        setTimeout(
+          () =>
+            this.setState({
+              isWon: true,
+              isResultsDisplayed: true,
+              isRecognitionMode: false,
+            }),
+          1000
+        );
+      }
     }
   }
 
   handleLevelChange(value) {
-    this.setState({ level: { current: value, maxLevel: 6 } });
-    this.setState({ activeCardIndexes: [] });
-    this.setState({ isRecognitionMode: false });
+    this.setState({
+      level: { current: value, maxLevel: 6 },
+      activeCardIndexes: [],
+      isRecognitionMode: false,
+    });
     this.setWords(value);
   }
 
@@ -126,18 +116,35 @@ class MainPage extends Component {
     const wordIndex = this.state.words.findIndex(
       (word) => word.word === targetWord
     );
-    this.setState({ activeCardIndexes: [wordIndex] });
+    !this.state.isResultsDisplayed &&
+      this.setState({ activeCardIndexes: [wordIndex] });
     this.playAudio(DATA_LINK + this.state.words[wordIndex].audio);
   }
 
   handleButtonClick(e) {
-    console.log(e.target);
     if (e.target.classList.contains('restart')) {
       return this.restartStudyCurrentPage();
     }
 
     if (e.target.classList.contains('user-speach')) {
       return this.enableisRecognitionMode();
+    }
+
+    if (e.target.classList.contains('result')) {
+      !this.state.isRecognitionMode && this.setState({ activeCardIndexes: [] });
+      return this.setState({
+        isResultsDisplayed: true,
+        isRecognitionMode: false,
+      });
+    }
+
+    if (e.target.classList.contains('return')) {
+      return this.setState({ isResultsDisplayed: false });
+    }
+    if (e.target.classList.contains('new-game')) {
+      saveResult(this.state.words, this.state.activeCardIndexes);
+      this.restartStudyCurrentPage();
+      return this.setWords(this.state.level.current);
     }
   }
 
@@ -165,6 +172,14 @@ class MainPage extends Component {
           onCardClick={this.handleCardClick}
         />
         <Buttons onButtonClick={this.handleButtonClick} />
+        {this.state.isResultsDisplayed && (
+          <Results
+            onButtonClick={this.handleButtonClick}
+            onCardClick={this.handleCardClick}
+            words={this.state.words}
+            succesWordIndexes={this.state.activeCardIndexes}
+          />
+        )}
       </div>
     );
   }
