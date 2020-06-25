@@ -1,3 +1,14 @@
+import {
+  START_SOUND,
+  END_SOUND,
+  CORRECT_ANSWER_SOUND,
+  WRONG_ANSWER_SOUND,
+  LEVEL_UP_SOUND,
+  RIGHT_BTN_VALUE,
+  WRONG_BTN_VALUE
+} from '../../pages/SprintMiniGame/constants/constants'
+import { playSound } from '../../pages/SprintMiniGame/utils/playSound'
+
 export const HIDE_WELCOME_DIALOG = 'HIDE_WELCOME_DIALOG';
 export const USER_WORDS = 'USE_USER_WORDS';
 export const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
@@ -77,13 +88,13 @@ export const loadGame = (difficulty, round) => {
   return async dispatch => {
     dispatch(hideWelcomeDialog())
     dispatch(showLoader())
-    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${round}&group=${difficulty - 1}`
+    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${round - 1}&group=${difficulty - 1}`
     const response = await fetch(url)
     const words = await response.json()
     setTimeout(() => {
       dispatch({ type: LOAD_GAME, payload: words, })
       dispatch(hideLoader())
-      playSound('gameStart')
+      playSound(START_SOUND)
       dispatch(showCard(words.length))
     }, 1200)
   }
@@ -92,46 +103,41 @@ export const loadGame = (difficulty, round) => {
 export const checkAnswer = (btnValue, sprintState) => {
   const { wordIndex, translateIndex, gameWords, xpLevel, xpLevelStepper } = sprintState
   return dispatch => {
-    if (btnValue === 'right') {
+    if (btnValue === RIGHT_BTN_VALUE) {
       if (wordIndex === translateIndex) {
         dispatch ({
           type: CHECK_ANSWER,
           answer: true,
         })
-        playSound('correct')
+        playSound(CORRECT_ANSWER_SOUND)
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
           type: CHECK_ANSWER,
           answer: false,
         })
-        playSound('error')
+        playSound(WRONG_ANSWER_SOUND)
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       }
-    } else if (btnValue === 'wrong') {
+    } else if (btnValue === WRONG_BTN_VALUE) {
       if (wordIndex === translateIndex) {
         dispatch ({
           type: CHECK_ANSWER,
           answer: false,
         })
-        playSound('error')
+        playSound(WRONG_ANSWER_SOUND)
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
           type: CHECK_ANSWER,
           answer: true,
         })
-        playSound('correct')
+        playSound(CORRECT_ANSWER_SOUND)
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       }
     }
     dispatch(showCard(gameWords.length))
   }
-}
-
-const playSound = (sound) => {
-  const audio = new Audio(`${process.env.PUBLIC_URL}/audio/${sound}.mp3`)
-  audio.play()
 }
 
 export const xpLevelToggle = (answer, xpLevel, xpLevelStepper) => {
@@ -142,7 +148,7 @@ export const xpLevelToggle = (answer, xpLevel, xpLevelStepper) => {
         payload: xpLevel,
       })
     } else {
-      xpLevel < 8 && playSound('levelUp')
+      xpLevel < 8 && playSound(LEVEL_UP_SOUND)
       return ({
         type: XP_LEVEL,
         payload: xpLevel < 8 ? xpLevel * 2 : xpLevel,
@@ -163,8 +169,10 @@ export const endGame = () => {
 }
 
 export const isTimerFinished = () => {
-  return ({
-    type: TIMER_FINISHED,
-  })
+  playSound(END_SOUND)
+  return dispatch => {
+    dispatch ({
+      type: TIMER_FINISHED,
+    })
+  }
 }
-

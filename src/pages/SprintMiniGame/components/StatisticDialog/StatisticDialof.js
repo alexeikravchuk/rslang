@@ -33,6 +33,8 @@ const DialogActions = withStyles((theme) => ({
 
 function StatisticDialog(props) {
 
+  const stars = Math.round(5 * props.sprintState.score / props.sprintState.scoreAverage)
+
   return (
     <div>
       <Dialog
@@ -45,12 +47,12 @@ function StatisticDialog(props) {
             {props.sprintState.score} points
           </Typography>
           <Typography variant="h5" component="h3">
-            Your record: 3830 points
+            Your record: {props.sprintState.scoreRecord} points
           </Typography>
           <DialogContentText>
-            Your average result: 2800 points
+            Your average result: {props.sprintState.scoreAverage} points
           </DialogContentText>
-          <Rating name="game-results" value={4} readOnly style={{display: 'flex', justifyContent: 'center'}} />
+          <Rating name="game-results" value={stars} readOnly style={{display: 'flex', justifyContent: 'center'}} />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={props.endGame} color="primary">

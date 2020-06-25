@@ -17,7 +17,6 @@ function GameCard({ sprintState, checkAnswer }) {
   const wordTranslate = wordList[sprintState.translateIndex].wordTranslate;
 
   React.useEffect(() => {
-
     const onKeydown = e => {
       if (e.keyCode === 37) {
         checkAnswer('right', sprintState)
@@ -38,7 +37,7 @@ function GameCard({ sprintState, checkAnswer }) {
         <Typography variant="h3" component="h3">
           {word}
         </Typography>
-        <Typography variant="h5" component="h3">
+        <Typography variant="h5" component="h3" >
           {wordTranslate}
         </Typography>
       </CardContent>

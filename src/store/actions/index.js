@@ -14,7 +14,7 @@ import {
   XP_LEVEL,
   END_GAME,
   CHANGE_ROUND,
-  TIMER_FINISHED
+  TIMER_FINISHED,
  } from './sprintActions';
 
 export {
@@ -37,5 +37,5 @@ export {
   XP_LEVEL,
   END_GAME,
   CHANGE_ROUND,
-  TIMER_FINISHED
+  TIMER_FINISHED,
 }

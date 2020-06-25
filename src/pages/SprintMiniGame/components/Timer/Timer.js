@@ -5,8 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { isTimerFinished } from '../../../../store/actions/sprintActions';
 
-
-
 const useStyles = makeStyles((theme) => ({
   timer: {
     position: 'relative',
@@ -38,25 +36,15 @@ function Timer(props) {
   React.useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + progressPerSecond));
-      setTimer((prevValue) => (prevValue === 0 ? 60 : prevValue - 1));
+      setTimer((prevValue) => (prevValue === 0 ? timerState.timerValue : prevValue - 1));
     }, 1000);
     return () => {
       clearInterval(timer);
     };
-  }, []);
-
-  const playSound = (sound) => {
-    const audio = new Audio(`${process.env.PUBLIC_URL}/audio/${sound}.mp3`)
-    audio.play()
-  }
-
-  if (timerValue <= 3 && timerValue > 0) {
-    playSound('endTimer')
-  }
+  }, [timerState]);
 
   if (timerValue <= 0) {
     props.isTimerFinished()
-    playSound('roundEnd')
   }
 
    return (

@@ -1,4 +1,13 @@
 import {
+  BASIC_XP,
+  INITIAL_DIFFICULTY,
+  INITIAL_ROUND,
+  INITIAL_XP_LEVEL,
+  INITIAL_XP_STEPPER_VALUE,
+  XP_STEPPER_NUMBER
+ } from '../../pages/SprintMiniGame/constants/constants'
+
+import {
   HIDE_WELCOME_DIALOG,
   USER_WORDS,
   CHANGE_DIFFICULTY,
@@ -17,8 +26,8 @@ const defaultState = {
   checked: false,
   open: true,
   disabled: false,
-  difficulty: 2,
-  round: 1,
+  difficulty: INITIAL_DIFFICULTY,
+  round: INITIAL_ROUND,
   gameWords: [],
   userWords: false,
   gameLoading: false,
@@ -27,9 +36,13 @@ const defaultState = {
   translateIndex: 0,
   answer: null,
   score: 0,
-  xp: 10,
-  xpLevel: 1,
-  xpLevelStepper: -1,
+  scoreRecord: 0,
+  scoreAverage: 0,
+  totalScore: 0,
+  gameCounter: 0,
+  xp: BASIC_XP,
+  xpLevel: INITIAL_XP_LEVEL,
+  xpLevelStepper: INITIAL_XP_STEPPER_VALUE,
   showStatistic: false,
 }
 
@@ -64,17 +77,31 @@ const sprintReducer = ( state = defaultState, action) => {
         ...state,
         answer: action.answer,
         score: action.answer ? state.score + state.xp * state.xpLevel : state.score,
-        xpLevelStepper: (state.xpLevelStepper < 2 && action.answer) ? state.xpLevelStepper + 1 : -1,
+        xpLevelStepper: (state.xpLevelStepper <= XP_STEPPER_NUMBER && action.answer) ? state.xpLevelStepper + 1 : INITIAL_XP_STEPPER_VALUE,
       };
     }
     case XP_LEVEL: {
       return {...state, xpLevel: action.payload};
     }
     case END_GAME: {
-      return {...state, open: true, showCard: false, showStatistic: false};
+      return {...state,
+       open: true,
+       showCard: false,
+       showStatistic: false,
+       score: 0,
+       xpLevel: INITIAL_XP_LEVEL,
+       xpLevelStepper: INITIAL_XP_STEPPER_VALUE,
+      };
     }
     case TIMER_FINISHED: {
-      return {...state, showStatistic: true, showCard: false};
+      return {...state,
+       showStatistic: true,
+       showCard: false,
+       scoreRecord: Math.max(state.score, state.scoreRecord),
+       totalScore: state.totalScore + state.score,
+       gameCounter: state.gameCounter + 1,
+       scoreAverage: Math.round(state.totalScore / state.gameCounter),
+      };
     }
     default: {
       return {...state};

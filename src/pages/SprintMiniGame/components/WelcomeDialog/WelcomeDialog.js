@@ -61,7 +61,7 @@ function WelcomeDialog(props) {
             Choose your difficulty level, please
           </Typography>
           <Slider
-            defaultValue={2}
+            defaultValue={props.sprintState.difficulty}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="on"
             step={1}
@@ -75,7 +75,7 @@ function WelcomeDialog(props) {
             Choose round, please
           </Typography>
           <Slider
-            defaultValue={2}
+            defaultValue={props.sprintState.round}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="on"
             step={1}

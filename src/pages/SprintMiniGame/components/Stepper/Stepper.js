@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './Stepper.scss'
+import { XP_STEPPER_NUMBER } from '../../constants/constants'
 
-const stepperLength = [1, 2, 3]
+const stepper = new Array(XP_STEPPER_NUMBER);
 
 function Stepper({sprintState}) {
   return (
     <div className='stepper'>
       {
-        stepperLength.map((step, i) => {
+        stepper.fill(' ').map((step, i) => {
           if (i <= sprintState.xpLevelStepper) {
             return <div className='step' style={{backgroundColor: '#1976d2'}} key={i} />
           }
