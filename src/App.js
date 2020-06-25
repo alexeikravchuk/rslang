@@ -1,12 +1,21 @@
 import React from 'react';
 import './App.scss';
-// import Button from '@material-ui/core/Button';
-import SprintMiniGame from './pages/SprintMiniGame/SprintMiniGame'
-
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import PrimaryAppBar from './components/AppBar/AppBar';
+import SignIn from './components/Registration/SignIn';
+import SignUp from './components/Registration/SignUp';
 function App() {
   return (
-    <SprintMiniGame />
+    <Router>
+      <Switch>
+        <Route path='/signin' component={SignIn}/>
+        <Route path='/signup' component={SignUp}/>
+        <Route path='/' component={PrimaryAppBar}/>
+      </Switch>
+    </Router>
   );
 }
 
 export default App;
+
+
