@@ -8,4 +8,4 @@ function AboutTeamPage() {
   );
 }
 
-export { AboutTeamPage }
+export default AboutTeamPage
