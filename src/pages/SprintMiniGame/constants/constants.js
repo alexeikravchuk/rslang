@@ -17,3 +17,6 @@ export const WORD_LANGUAGE = 'en-US';
 export const TRANSLATE_LANGUAGE = 'ru-RU';
 
 export const TIMER_VALUE = 60;
+
+export const LEFW_ARROW_KEY_CODE = 37;
+export const RIGHT_ARROW_KEY_CODE = 39;
