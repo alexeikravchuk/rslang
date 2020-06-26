@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { StatusBar } from '../StatusBar';
 import { ImagesBlock } from '../ImagesBlock';
 import { CardList } from '../CardList';
@@ -15,21 +14,18 @@ import {
 import { MAX_LEVEL } from '../../constants/constants';
 
 class MainPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      level: {
-        current: 1,
-        maxLevel: MAX_LEVEL,
-      },
-      words: [],
-      score: 0,
-      activeCardIndexes: [],
-      isRecognitionMode: false,
-      recognizedWord: null,
-      isResultsDisplayed: false,
-    };
-  }
+  state = {
+    level: {
+      current: 1,
+      maxLevel: MAX_LEVEL,
+    },
+    words: [],
+    score: 0,
+    activeCardIndexes: [],
+    isRecognitionMode: false,
+    recognizedWord: null,
+    isResultsDisplayed: false,
+  };
 
   componentDidMount = () => {
     this.setWords(this.state.level.current);

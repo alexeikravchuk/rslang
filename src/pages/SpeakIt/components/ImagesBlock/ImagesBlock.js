@@ -1,33 +1,46 @@
-import React, { Component } from 'react';
-import startImg from '../../../../assets/speak_it_start_img.jpg';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { DATA_LINK } from '../../constants/constants';
+import startImg from '../../../../assets/speak_it_start_img.jpg';
 
-class ImagesBlock extends Component {
-  render() {
-    const imgSrc = this.props.word
-      ? DATA_LINK + this.props.word.image
-      : startImg;
+const ImagesBlock = ({ word, isRecognitionMode, recognizedWord }) => {
+  const imgSrc = word ? DATA_LINK + word.image : startImg;
 
-    return (
-      <div className='images'>
-        {<img className='img' src={imgSrc} alt=''></img>}
-        <p
-          className={
-            'translation' +
-            (this.props.isRecognitionMode ? ' none' : '') +
-            (this.props.word ? '' : ' hidden')
-          }>
-          {this.props.word ? this.props.word.wordTranslate : ''}
-        </p>
-        <input
-          className={'input' + (this.props.isRecognitionMode ? '' : ' none')}
-          type='text'
-          readOnly={true}
-          value={this.props.recognizedWord || '...'}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className='images'>
+      {<img className='img' src={imgSrc} alt=''></img>}
+      <p
+        className={
+          'translation' +
+          (isRecognitionMode ? ' none' : '') +
+          (word ? '' : ' hidden')
+        }>
+        {word ? word.wordTranslate : ''}
+      </p>
+      <input
+        className={'input' + (isRecognitionMode ? '' : ' none')}
+        type='text'
+        readOnly={true}
+        value={recognizedWord || '...'}
+      />
+    </div>
+  );
+};
+
+ImagesBlock.propTypes = {
+  word: PropTypes.shape({
+    word: PropTypes.string,
+    wordTranslate: PropTypes.string,
+  }),
+  isRecognitionMode: PropTypes.bool,
+  recognizedWord: PropTypes.string,
+};
+
+ImagesBlock.defaultProps = {
+  word: {},
+  isRecognitionMode: false,
+  recognizedWord: '',
+};
 
 export default ImagesBlock;

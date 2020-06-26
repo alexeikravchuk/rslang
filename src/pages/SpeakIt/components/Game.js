@@ -6,12 +6,9 @@ import { MainPage } from './MainPage';
 import backdropBackgroundImg from '../../../assets/game-background.jpg';
 
 class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gameStarted: false,
-    };
-  }
+  state = {
+    gameStarted: false,
+  };
 
   startBtnClickHandler() {
     this.setState({ gameStarted: true });
@@ -32,7 +29,7 @@ class Game extends Component {
   }
 }
 
-function createStyles(theme) {
+function createStyles() {
   return {
     backdrop: {
       position: 'relative',

@@ -1,25 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Card from './Card';
 
-class CardList extends Component {
-  render() {
-    return (
-      <div className='cards'>
-        {this.props.words.length ? (
-          this.props.words.map((word, i) => (
-            <Card
-              word={word}
-              isActive={this.props.activeCards.includes(i)}
-              key={word.id}
-              onCardClick={this.props.onCardClick}
-            />
-          ))
-        ) : (
-          <div className='spiner' />
-        )}
-      </div>
-    );
-  }
-}
+const CardList = ({ words, activeCards, onCardClick }) => {
+  return (
+    <div className='cards'>
+      {words.length ? (
+        words.map((word, i) => (
+          <Card
+            word={word}
+            isActive={activeCards.includes(i)}
+            key={word.id}
+            onCardClick={onCardClick}
+          />
+        ))
+      ) : (
+        <div className='spiner' />
+      )}
+    </div>
+  );
+};
+
+CardList.propTypes = {
+  words: PropTypes.arrayOf(PropTypes.object),
+  activeCards: PropTypes.array,
+  onCardClick: PropTypes.func,
+};
+
+CardList.defaultProps = {
+  words: [],
+  activeCards: [],
+  onCardClick: () => {},
+};
 
 export default CardList;

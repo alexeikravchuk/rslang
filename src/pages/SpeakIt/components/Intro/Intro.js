@@ -1,28 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Fade, withStyles, Button } from '@material-ui/core';
 
-class Intro extends Component {
-  render() {
-    return (
-      <Fade in={this.props.open}>
-        <div className={this.props.classes.paper}>
-          <h1 className='title'>Speak It</h1>
-          <p className='text'>
-            Click on the words to hear them sound.
-            <br />
-            Click on the button and speak the words into the microphone.
-          </p>
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={() => this.props.onClick()}>
-            <span>Start</span>
-          </Button>
-        </div>
-      </Fade>
-    );
-  }
-}
+const Intro = ({ open, classes, onClick }) => {
+  return (
+    <Fade in={open}>
+      <div className={classes.paper}>
+        <h1 className='title'>Speak It</h1>
+        <p className='text'>
+          Click on the words to hear them sound.
+          <br />
+          Click on the button and speak the words into the microphone.
+        </p>
+        <Button variant='contained' color='primary' onClick={onClick}>
+          <span>Start</span>
+        </Button>
+      </div>
+    </Fade>
+  );
+};
+
+Intro.propTypes = {
+  open: PropTypes.bool.isRequired,
+  classes: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 function createStyles(theme) {
   return {

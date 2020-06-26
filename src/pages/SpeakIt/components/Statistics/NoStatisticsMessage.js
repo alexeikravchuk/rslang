@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class NoStatisticsMessage extends Component {
-  render() {
-    return (
-      <div className='message-stat'>
-        <p>
-          No statistics.<br/>
-          Statistics are saved when the "New game" button is pressed
-        </p>
-      </div>
-    );
-  }
-}
-
-export default NoStatisticsMessage;
+export const NoStatisticsMessage = () => {
+  return (
+    <div className='message-stat'>
+      <p>
+        No statistics.
+        <br />
+        Statistics are saved when the "New game" button is pressed
+      </p>
+    </div>
+  );
+};

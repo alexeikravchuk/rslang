@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { Backdrop } from '@material-ui/core';
 import { CardList } from '../CardList';
 import { Statistics } from '../Statistics';
@@ -6,25 +8,24 @@ import { Buttons } from '../Buttons';
 import { separateWords, getSavedResult, playCardsAudio } from '../../helpers';
 
 class Results extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShowStatistics: false,
-      words: props.words,
-      succesWordIndexes: props.succesWordIndexes,
-    };
-  }
+  static propTypes = {
+    words: PropTypes.arrayOf(PropTypes.object).isRequired,
+    succesWordIndexes: PropTypes.array,
+    onButtonClick: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    succesWordIndexes: [],
+  };
+
+  state = {
+    isShowStatistics: false,
+    words: this.props.words,
+    succesWordIndexes: this.props.succesWordIndexes,
+  };
 
   handleCardClick = (targetWord) => {
     playCardsAudio(targetWord, this.state.words);
-  };
-
-  playAudio = (audioSrc) => {
-    if (this.audio && this.audio.played) {
-      this.audio.pause();
-    }
-    this.audio = new Audio(audioSrc);
-    this.audio.play();
   };
 
   handleButtonClick = (e) => {

@@ -1,22 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class Card extends Component {
-  handleCardClick = () => {
-    this.props.onCardClick(this.props.word.word);
-  };
+const Card = ({ word, isActive, onCardClick }) => {
+  return (
+    <div
+      className={'card' + (isActive ? ' active-card' : '')}
+      onClick={() => onCardClick(word.word)}>
+      <span className='audio-icon' />
+      <p className='word'>{word.word}</p>
+      <p className='transcription'>{word.transcription}</p>
+      <p className='translation'>{word.wordTranslate}</p>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div
-        className={'card' + (this.props.isActive ? ' active-card' : '')}
-        onClick={this.handleCardClick}>
-        <span className='audio-icon' />
-        <p className='word'>{this.props.word.word}</p>
-        <p className='transcription'>{this.props.word.transcription}</p>
-        <p className='translation'>{this.props.word.wordTranslate}</p>
-      </div>
-    );
-  }
-}
+Card.propTypes = {
+  word: PropTypes.shape({
+    word: PropTypes.string,
+    transcription: PropTypes.string,
+    wordTranslate: PropTypes.string,
+  }),
+  isActive: PropTypes.bool,
+  onCardClick: PropTypes.func,
+};
+
+Card.defautProps = {
+  isActive: false,
+  onCardClick: () => {},
+};
 
 export default Card;

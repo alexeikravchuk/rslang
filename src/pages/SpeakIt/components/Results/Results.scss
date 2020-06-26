@@ -27,11 +27,11 @@ $mobile-big-width: 414px;
   position: relative;
   width: 100%;
   max-width: 780px;
-  max-height: 98vh;
+  max-height: 98%;
   padding: 15px 100px;
   text-align: left;
   overflow-y: auto;
-  font-size: 22px;
+  font-size: 20px;
   background-color: $color-background;
   border-radius: 8px;
   
@@ -40,12 +40,13 @@ $mobile-big-width: 414px;
   .card {
     flex-direction: row;
     flex-wrap: wrap;
-    min-height: 45px;
+    min-height: 40px;
+    font-size: 20px;
     border: 0;
     margin: 0 0 8px;
     padding: 0 0 0 50px;
     .audio-icon {
-      top: 8px;
+      top: 5px;
     }
   }
   .errors-num {
@@ -68,16 +69,22 @@ $mobile-big-width: 414px;
       display: block;
     }
     .card {
-      box-shadow: 0 0 3px #da5b4c;
+      box-shadow: 0 0 3px 1px #da5b4c;
+      .translation {
+        display: block;
+      }
     }
   }
   .succes-cards {
     .cards {
       display: block;
     }
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     .card {
-      box-shadow: 0 0 3px $color-play;
+      box-shadow: 0 0 3px 1px $color-play;
+      .translation {
+        display: block;
+      }
     }
   }
   .btns-res {

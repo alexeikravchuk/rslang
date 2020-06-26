@@ -1,19 +1,34 @@
-import React, { Component } from 'react';
-import LevelSwitch from './LevelSwitch';
-import Score from './Score';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class StatusBar extends Component {
-  render() {
-    return (
-      <div className='status-bar'>
-        <LevelSwitch
-          level={this.props.level}
-          onLevelChange={this.props.onLevelChange}
-        />
-        <Score score={this.props.score} />
-      </div>
-    );
-  }
-}
+import { LevelSwitch } from './LevelSwitch';
+import { Score } from './Score';
+import { MAX_LEVEL } from '../../constants/constants';
+
+const StatusBar = ({ level, score, onLevelChange }) => {
+  return (
+    <div className='status-bar'>
+      <LevelSwitch level={level} onLevelChange={onLevelChange} />
+      <Score score={score} />
+    </div>
+  );
+};
+
+StatusBar.propTypes = {
+  level: PropTypes.shape({
+    current: PropTypes.number,
+    maxLevel: PropTypes.number,
+  }),
+  score: PropTypes.number,
+  onLevelChange: PropTypes.func.isRequired,
+};
+
+StatusBar.defaultProps = {
+  level: {
+    current: 1,
+    maxLevel: MAX_LEVEL,
+  },
+  score: 0,
+};
 
 export default StatusBar;

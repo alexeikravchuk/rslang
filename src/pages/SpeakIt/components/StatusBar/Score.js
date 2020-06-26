@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class Score extends Component {
+export class Score extends Component {
+  static propTypes = {
+    score: PropTypes.number,
+  };
+
+  static defaultProps = {
+    score: 0,
+  };
+
   getStars(score) {
-    return new Array(this.props.score)
+    return new Array(score)
       .fill(1)
-      .map((item, i) => <div className='star' key={'start' + i}></div>);
+      .map((_, i) => <div className='star' key={'start' + i}></div>);
   }
 
   render() {
-    return <div className='score'>{this.getStars(this.props.score)}</div>;
+    const { score } = this.props;
+    return <div className='score'>{this.getStars(score)}</div>;
   }
 }
-
-export default Score;

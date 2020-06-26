@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import StatisticsBody from './StatisticsBody';
-import NoStatisticsMessage from './NoStatisticsMessage';
+import PropTypes from 'prop-types';
+
+import { StatisticsBody } from './StatisticsBody';
+import { NoStatisticsMessage } from './NoStatisticsMessage';
 
 class Statistics extends Component {
+  static propTypes = {
+    onClick: PropTypes.func.isRequired,
+  };
+
   getStatistics = () => {
     if (!localStorage.stat) {
       return null;
@@ -12,6 +18,7 @@ class Statistics extends Component {
 
   render() {
     const statistics = this.getStatistics();
+    const { onClick } = this.props;
 
     return (
       <div className='stat-container'>
@@ -27,16 +34,11 @@ class Statistics extends Component {
             </tr>
           </thead>
           {statistics && (
-            <StatisticsBody
-              statistics={statistics}
-              onClick={(e) => this.props.onClick(e)}
-            />
+            <StatisticsBody statistics={statistics} onClick={onClick} />
           )}
         </table>
         {!statistics && <NoStatisticsMessage />}
-        <button
-          className='btn btn-stat return'
-          onClick={(e) => this.props.onClick(e)}>
+        <button className='btn btn-stat return' onClick={onClick}>
           Return
         </button>
       </div>

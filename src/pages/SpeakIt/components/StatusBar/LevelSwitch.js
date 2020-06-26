@@ -1,32 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-class LevelSwitch extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
+export const LevelSwitch = ({ level, onLevelChange }) => {
+  return (
+    <ul className='points'>
+      {new Array(level.maxLevel).fill(1).map((point, i) => (
+        <li
+          className={clsx('point', {
+            'point-active': i === level.current - 1,
+          })}
+          key={'level-' + (i + 1)}
+          onClick={(e) => onLevelChange(+e.target.textContent)}>
+          {i + 1}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
-  handleClick(e) {
-    this.props.onLevelChange(+e.target.textContent);
-  }
-
-  render() {
-    return (
-      <ul className='points'>
-        {new Array(this.props.level.maxLevel).fill(1).map((point, i) => (
-          <li
-            className={clsx('point', {
-              'point-active': i === this.props.level.current - 1,
-            })}
-            key={'level-' + (i + 1)}
-            onClick={this.handleClick}>
-            {i + 1}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-}
-
-export default LevelSwitch;
+LevelSwitch.propTypes = {
+  level: PropTypes.shape({
+    current: PropTypes.number,
+    maxLevel: PropTypes.number,
+  }).isRequired,
+  onLevelChange: PropTypes.func.isRequired,
+};

@@ -1,24 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class Buttons extends Component {
-  onClickHandler = (e) => {
-    this.props.onButtonClick(e);
-  };
+const Buttons = ({ classes, onButtonClick, btns }) => {
+  return (
+    <div className={'btns ' + (classes ? classes : '')}>
+      {btns.map((btn, i) => (
+        <button
+          className={'btn ' + btn.classes}
+          onClick={onButtonClick}
+          key={'button' + i}>
+          {btn.title}
+        </button>
+      ))}
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className={'btns ' + (this.props.classes ? this.props.classes : '')}>
-        {this.props.btns.map((btn, i) => (
-          <button
-            className={'btn ' + btn.classes}
-            onClick={this.onClickHandler}
-            key={'button' + i}>
-            {btn.title}
-          </button>
-        ))}
-      </div>
-    );
-  }
+Buttons.propTypes = {
+  classes: PropTypes.string,
+  onButtonClick: PropTypes.func.isRequired,
+  btns: PropTypes.array.isRequired,
+};
+
+Buttons.defaultProps = {
+  classes: '',
 }
 
 export default Buttons;
