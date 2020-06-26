@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Backdrop } from '@material-ui/core';
 import { CardList } from '../CardList';
 import { Statistics } from '../Statistics';
-import { separateWords } from '../../helpers/separateWords';
-import { getSavedResult } from '../../helpers/getSavedResult';
 import { Buttons } from '../Buttons';
-import { playCardsAudio } from '../../helpers/playCardsAudio';
+import { separateWords, getSavedResult, playCardsAudio } from '../../helpers';
 
 class Results extends Component {
   constructor(props) {

@@ -31,9 +31,3 @@ class ImagesBlock extends Component {
 }
 
 export default ImagesBlock;
-
-//   reset() {
-//     this.img.src = START_IMG_LINK;
-//     this.translation.innerText = '';
-//     this.audioInput.value = '';
-//   }

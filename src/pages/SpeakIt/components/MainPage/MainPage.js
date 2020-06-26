@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
+
 import { StatusBar } from '../StatusBar';
 import { ImagesBlock } from '../ImagesBlock';
 import { CardList } from '../CardList';
 import { Buttons } from '../Buttons';
-import { getWords } from '../../helpers/getWords';
 import { Results } from '../Results';
-import { runSpeechRecognition } from '../../helpers/runSpeechRecognition';
-import { saveResult } from '../../helpers/saveResult';
-import { playCardsAudio } from '../../helpers/playCardsAudio';
+
+import {
+  getWords,
+  runSpeechRecognition,
+  saveResult,
+  playCardsAudio,
+} from '../../helpers';
+import { MAX_LEVEL } from '../../constants/constants';
 
 class MainPage extends Component {
   constructor(props) {
@@ -15,14 +20,13 @@ class MainPage extends Component {
     this.state = {
       level: {
         current: 1,
-        maxLevel: 6,
+        maxLevel: MAX_LEVEL,
       },
       words: [],
       score: 0,
       activeCardIndexes: [],
       isRecognitionMode: false,
       recognizedWord: null,
-      isWon: false,
       isResultsDisplayed: false,
     };
   }
@@ -47,7 +51,7 @@ class MainPage extends Component {
     });
   };
 
-  enableisRecognitionMode = () => {
+  enableRecognitionMode = () => {
     this.setState({ activeCardIndexes: [], isRecognitionMode: true });
     this.startRecognizeSpeech();
   };
@@ -73,11 +77,10 @@ class MainPage extends Component {
         activeCardIndexes: [...this.state.activeCardIndexes, index],
       });
       this.setState({ score: this.state.score + 1 });
-      if (this.state.score === 10) {
+      if (this.state.score === this.state.words.length) {
         setTimeout(
           () =>
             this.setState({
-              isWon: true,
               isResultsDisplayed: true,
               isRecognitionMode: false,
             }),
@@ -114,7 +117,7 @@ class MainPage extends Component {
     }
 
     if (e.target.classList.contains('user-speach')) {
-      return this.enableisRecognitionMode();
+      return this.enableRecognitionMode();
     }
 
     if (e.target.classList.contains('result')) {

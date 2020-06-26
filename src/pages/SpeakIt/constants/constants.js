@@ -1,4 +1,7 @@
-const DATA_LINK = 'https://raw.githubusercontent.com/alekseykravtchuk/rslang/rslang-data/data/';
-const CARDS_LINK = 'https://afternoon-falls-25894.herokuapp.com/words?';
+const DATA_LINK =
+  'https://raw.githubusercontent.com/alekseykravtchuk/rslang/rslang-data/data/';
+const WORDS_LINK = 'https://afternoon-falls-25894.herokuapp.com/words?';
 
-export { DATA_LINK, CARDS_LINK };
+const MAX_LEVEL = 6;
+
+export { DATA_LINK, WORDS_LINK, MAX_LEVEL };
