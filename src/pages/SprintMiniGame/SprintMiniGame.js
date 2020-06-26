@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Timer, Score, GameCard, WelcomeDialog, StatisticDialog } from './components/index';
+import { Timer, Score, GameCard, WelcomeDialog, StatisticDialog } from './components/';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { WORD_LANGUAGE, TRANSLATE_LANGUAGE } from '../../pages/SprintMiniGame/constants/constants'

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { isTimerFinished } from '../../../../store/actions/sprintActions';
+import { TIMER_VALUE } from '../../constants/constants';
 
 const useStyles = makeStyles((theme) => ({
   timer: {
@@ -36,12 +37,12 @@ function Timer(props) {
   React.useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + progressPerSecond));
-      setTimer((prevValue) => (prevValue === 0 ? timerState.timerValue : prevValue - 1));
+      setTimer((prevValue) => (prevValue === 0 ? TIMER_VALUE : prevValue - 1));
     }, 1000);
     return () => {
       clearInterval(timer);
     };
-  }, [timerState]);
+  }, []);
 
   if (timerValue <= 0) {
     props.isTimerFinished()

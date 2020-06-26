@@ -15,3 +15,5 @@ export const XP_STEPPER_NUMBER = 3;
 
 export const WORD_LANGUAGE = 'en-US';
 export const TRANSLATE_LANGUAGE = 'ru-RU';
+
+export const TIMER_VALUE = 60;
