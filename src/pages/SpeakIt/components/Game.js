@@ -10,20 +10,19 @@ class Game extends Component {
     gameStarted: false,
   };
 
-  startBtnClickHandler() {
+  handleBtnClick = () => {
     this.setState({ gameStarted: true });
-  }
+  };
 
   render() {
+    const { classes } = this.props;
+    const { gameStarted } = this.state;
     return (
-      <Backdrop className={this.props.classes.backdrop} open={true}>
-        {!this.state.gameStarted && (
-          <Intro
-            open={!this.state.gameStarted}
-            onClick={() => this.startBtnClickHandler()}
-          />
+      <Backdrop className={classes.backdrop} open={true}>
+        {!gameStarted && (
+          <Intro open={!gameStarted} onClick={this.handleBtnClick} />
         )}
-        {this.state.gameStarted && <MainPage level={this.state.level} />}
+        {gameStarted && <MainPage />}
       </Backdrop>
     );
   }

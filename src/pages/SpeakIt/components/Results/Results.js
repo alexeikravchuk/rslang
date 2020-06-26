@@ -83,22 +83,21 @@ class Results extends Component {
   render() {
     const errorCards = this.getErrorCards();
     const succesCards = this.getSuccesCards();
+    const { words, succesWordIndexes, isShowStatistics } = this.state;
     return (
       <Backdrop className='results' open={true}>
-        {!this.state.isShowStatistics && (
+        {!isShowStatistics && (
           <div className='results-container'>
             <p className='errors'>
               Errors:
               <span className='errors-num'>
-                {this.state.words.length - this.state.succesWordIndexes.length}
+                {words.length - succesWordIndexes.length}
               </span>
             </p>
             <div className='error-cards'>{errorCards ? errorCards : ''}</div>
             <p className='succes'>
               You know:
-              <span className='succes-num'>
-                {this.state.succesWordIndexes.length}
-              </span>
+              <span className='succes-num'>{succesWordIndexes.length}</span>
             </p>
             <div className='succes-cards'>{succesCards ? succesCards : ''}</div>
             <Buttons
@@ -112,9 +111,7 @@ class Results extends Component {
             />
           </div>
         )}
-        {this.state.isShowStatistics && (
-          <Statistics onClick={this.handleButtonClick} />
-        )}
+        {isShowStatistics && <Statistics onClick={this.handleButtonClick} />}
       </Backdrop>
     );
   }

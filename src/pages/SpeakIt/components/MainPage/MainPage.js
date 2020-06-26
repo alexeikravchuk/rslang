@@ -71,23 +71,32 @@ class MainPage extends Component {
     if (!this.state.activeCardIndexes.includes(index)) {
       this.setState({
         activeCardIndexes: [...this.state.activeCardIndexes, index],
+        score: this.state.score + 1,
       });
-      this.setState({ score: this.state.score + 1 });
+
       if (this.state.score === this.state.words.length) {
-        setTimeout(
-          () =>
-            this.setState({
-              isResultsDisplayed: true,
-              isRecognitionMode: false,
-            }),
-          1000
-        );
+        setTimeout(this.showResults(), 1000);
       }
     }
   };
 
+  showResults = () => {
+    !this.state.isRecognitionMode && this.setState({ activeCardIndexes: [] });
+    this.setState({
+      isResultsDisplayed: true,
+      isRecognitionMode: false,
+    });
+  };
+
+  startNewGame = () => {
+    const { words, activeCardIndexes, level } = this.state;
+    console.log(activeCardIndexes);
+    saveResult(words, activeCardIndexes);
+    this.restartStudyCurrentPage();
+    this.setWords(level.current);
+  };
+
   handleLevelChange = (value) => {
-    console.log(value);
     this.setState({
       level: { current: value, maxLevel: 6 },
       activeCardIndexes: [],
@@ -97,65 +106,64 @@ class MainPage extends Component {
   };
 
   handleCardClick = (targetWord) => {
-    if (this.state.isRecognitionMode) {
-      return;
+    if (!this.state.isRecognitionMode) {
+      const wordIndex = this.state.words.findIndex(
+        (word) => word.word === targetWord
+      );
+      !this.state.isResultsDisplayed &&
+        this.setState({ activeCardIndexes: [wordIndex] });
+      playCardsAudio(targetWord, this.state.words);
     }
-    const wordIndex = this.state.words.findIndex(
-      (word) => word.word === targetWord
-    );
-    !this.state.isResultsDisplayed &&
-      this.setState({ activeCardIndexes: [wordIndex] });
-    playCardsAudio(targetWord, this.state.words);
   };
 
   handleButtonClick = (e) => {
     if (e.target.classList.contains('restart')) {
       return this.restartStudyCurrentPage();
     }
-
     if (e.target.classList.contains('user-speach')) {
       return this.enableRecognitionMode();
     }
-
     if (e.target.classList.contains('result')) {
-      !this.state.isRecognitionMode && this.setState({ activeCardIndexes: [] });
-      return this.setState({
-        isResultsDisplayed: true,
-        isRecognitionMode: false,
-      });
+      return this.showResults();
     }
-
     if (e.target.classList.contains('return')) {
       return this.setState({ isResultsDisplayed: false });
     }
     if (e.target.classList.contains('new-game')) {
-      saveResult(this.state.words, this.state.activeCardIndexes);
-      this.restartStudyCurrentPage();
-      return this.setWords(this.state.level.current);
+      return this.startNewGame();
     }
   };
 
   render() {
-    const activeCard = this.state.activeCardIndexes.length
-      ? this.state.words[
-          this.state.activeCardIndexes[this.state.activeCardIndexes.length - 1]
-        ]
+    const {
+      words,
+      activeCardIndexes,
+      level,
+      score,
+      isRecognitionMode,
+      recognizedWord,
+      isResultsDisplayed,
+    } = this.state;
+
+    const activeCard = activeCardIndexes.length
+      ? words[activeCardIndexes.slice(-1)]
       : null;
+
     return (
       <div className='main-page'>
         <StatusBar
-          level={this.state.level}
-          score={this.state.score}
+          level={level}
+          score={score}
           onLevelChange={this.handleLevelChange}
         />
         <ImagesBlock
           word={activeCard}
-          isRecognitionMode={this.state.isRecognitionMode}
-          recognizedWord={this.state.recognizedWord}
+          isRecognitionMode={isRecognitionMode}
+          recognizedWord={recognizedWord}
         />
         <CardList
-          words={this.state.words}
-          activeCards={this.state.activeCardIndexes}
+          words={words}
+          activeCards={activeCardIndexes}
           onCardClick={this.handleCardClick}
         />
         <Buttons
@@ -166,11 +174,11 @@ class MainPage extends Component {
             { classes: 'result', title: 'Results' },
           ]}
         />
-        {this.state.isResultsDisplayed && (
+        {isResultsDisplayed && (
           <Results
             onButtonClick={this.handleButtonClick}
-            words={this.state.words}
-            succesWordIndexes={this.state.activeCardIndexes}
+            words={words}
+            succesWordIndexes={activeCardIndexes}
           />
         )}
       </div>
