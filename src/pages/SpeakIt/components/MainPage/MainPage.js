@@ -87,6 +87,7 @@ class MainPage extends Component {
   };
 
   handleLevelChange = (value) => {
+    console.log(value);
     this.setState({
       level: { current: value, maxLevel: 6 },
       activeCardIndexes: [],

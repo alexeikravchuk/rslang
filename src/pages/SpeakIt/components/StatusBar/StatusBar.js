@@ -5,14 +5,12 @@ import { LevelSwitch } from './LevelSwitch';
 import { Score } from './Score';
 import { MAX_LEVEL } from '../../constants/constants';
 
-const StatusBar = ({ level, score, onLevelChange }) => {
-  return (
-    <div className='status-bar'>
-      <LevelSwitch level={level} onLevelChange={onLevelChange} />
-      <Score score={score} />
-    </div>
-  );
-};
+const StatusBar = ({ level, score, onLevelChange }) => (
+  <div className='status-bar'>
+    <LevelSwitch level={level} onLevelChange={onLevelChange} />
+    <Score score={score} />
+  </div>
+);
 
 StatusBar.propTypes = {
   level: PropTypes.shape({

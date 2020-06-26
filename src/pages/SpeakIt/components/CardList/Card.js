@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Card = ({ word, isActive, onCardClick }) => {
-  return (
-    <div
-      className={'card' + (isActive ? ' active-card' : '')}
-      onClick={() => onCardClick(word.word)}>
-      <span className='audio-icon' />
-      <p className='word'>{word.word}</p>
-      <p className='transcription'>{word.transcription}</p>
-      <p className='translation'>{word.wordTranslate}</p>
-    </div>
-  );
-};
+const Card = ({ word, isActive, onCardClick }) => (
+  <div
+    className={'card' + (isActive ? ' active-card' : '')}
+    onClick={() => onCardClick(word.word)}>
+    <span className='audio-icon' />
+    <p className='word'>{word.word}</p>
+    <p className='transcription'>{word.transcription}</p>
+    <p className='translation'>{word.wordTranslate}</p>
+  </div>
+);
 
 Card.propTypes = {
   word: PropTypes.shape({
