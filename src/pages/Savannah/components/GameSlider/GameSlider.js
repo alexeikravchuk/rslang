@@ -36,8 +36,8 @@ function GameSlider(props){
           valueLabelDisplay="auto"
           step={1}
           marks
-          min={1}
-          max={6}
+          min={0}
+          max={5}
         />
       </div>
     );
