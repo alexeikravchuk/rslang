@@ -18,7 +18,7 @@ const defaultState = {
   loading: false,
   reloading: false,
   error: null,
-  difficulty: 1,
+  difficulty: 0,
   lifeCounter: 5,
   newWords: [],
   learnedWords: [],
