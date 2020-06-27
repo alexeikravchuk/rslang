@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './Stepper.scss'
 import { XP_STEPPER_NUMBER } from '../../constants/constants'
 
-const stepper = new Array(XP_STEPPER_NUMBER);
+const stepper = new Array(XP_STEPPER_NUMBER + 1);
 
 function Stepper({sprintState}) {
   return (

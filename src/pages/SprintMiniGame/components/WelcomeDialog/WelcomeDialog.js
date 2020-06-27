@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import MuiAvatar from '@material-ui/core/Avatar';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import {
@@ -12,9 +12,11 @@ import {
   Slider,
   Checkbox,
   FormControlLabel,
+  IconButton
 } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import { Loader } from '../Loader/Loader'
-import { userWords, changeDifficulty, loadGame, changeRound } from '../../../../store/actions/sprintActions';
+import { userWords, changeDifficulty, loadGame, changeRound, endGame } from '../../../../store/actions/sprintActions';
 
 const DialogContent = withStyles((theme) => ({
   root: {
@@ -53,13 +55,23 @@ function WelcomeDialog(props) {
       <Dialog
        fullWidth={true}
        maxWidth="sm"
-       open={props.sprintState.open}>
-        <MuiDialogTitle>
+       open={props.sprintState.open}
+       onBackdropClick={props.closeWindow}
+       onEscapeKeyDown={props.closeWindow}
+       >
+        <DialogContent style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <Avatar alt="logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} />
-          RS Sprint
-        </MuiDialogTitle>
+          <Typography variant="h6">RS Sprint</Typography>
+          <IconButton
+            onClick={props.closeWindow}
+            component={Link}
+            to='/home'
+            >
+            <CloseIcon />
+          </IconButton>
+        </DialogContent>
         <DialogContent dividers>
-          <Typography variant="h5" id="discrete-slider" gutterBottom style={{marginBottom: '2.35em'}}>
+          <Typography variant="h5" id="discrete-slider" gutterBottom style={{marginBottom: "2.35em"}}>
             Choose your difficulty level, please
           </Typography>
           <Slider
@@ -113,7 +125,8 @@ const mapDispatchToProps = dispatch => {
     handleChange: () => dispatch(userWords()),
     changeDifficulty: (value) => dispatch(changeDifficulty(value)),
     changeRound: (value) => dispatch(changeRound(value)),
-    loadGame: (difficulty, round) => dispatch(loadGame(difficulty, round))
+    loadGame: (difficulty, round) => dispatch(loadGame(difficulty, round)),
+    endGame: () => dispatch(endGame()),
   }
 }
 

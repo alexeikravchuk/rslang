@@ -5,7 +5,10 @@ import {
   WRONG_ANSWER_SOUND,
   LEVEL_UP_SOUND,
   RIGHT_BTN_VALUE,
-  WRONG_BTN_VALUE
+  WRONG_BTN_VALUE,
+  MAX_XP_LEVEL,
+  XP_STEPPER_NUMBER,
+  RIGHT_CARD_CHANCE
 } from '../../pages/SprintMiniGame/constants/constants'
 import { playSound } from '../../pages/SprintMiniGame/utils/playSound'
 
@@ -21,6 +24,7 @@ export const XP_LEVEL = 'XP_LEVEL';
 export const END_GAME = 'END_GAME';
 export const CHANGE_ROUND = 'CHANGE_ROUND';
 export const TIMER_FINISHED = 'TIMER_FINISHED';
+export const CLOSE_WINDOW = 'CLOSE_WINDOW';
 
 export const hideWelcomeDialog = () => {
   return ({
@@ -68,7 +72,7 @@ export const showCard = (maxIndx) => {
     return Math.floor(Math.random() * (max - min)) + min
   }
 
-  if (Math.random() < 0.7) {
+  if (Math.random() < RIGHT_CARD_CHANCE) {
     const index = getRandomIndex(maxIndx);
     return ({
       type: SHOW_CARD,
@@ -142,16 +146,16 @@ export const checkAnswer = (btnValue, sprintState) => {
 
 export const xpLevelToggle = (answer, xpLevel, xpLevelStepper) => {
   if (answer) {
-    if (xpLevelStepper < 2) {
+    if (xpLevelStepper < XP_STEPPER_NUMBER) {
       return ({
         type: XP_LEVEL,
         payload: xpLevel,
       })
     } else {
-      xpLevel < 8 && playSound(LEVEL_UP_SOUND)
+      xpLevel < MAX_XP_LEVEL && playSound(LEVEL_UP_SOUND)
       return ({
         type: XP_LEVEL,
-        payload: xpLevel < 8 ? xpLevel * 2 : xpLevel,
+        payload: xpLevel < MAX_XP_LEVEL ? xpLevel * XP_STEPPER_NUMBER : xpLevel,
       })
     }
   } else {
@@ -160,6 +164,12 @@ export const xpLevelToggle = (answer, xpLevel, xpLevelStepper) => {
       payload: 1,
     })
   }
+}
+
+export const closeWindow = () => {
+  return ({
+    type: CLOSE_WINDOW,
+  })
 }
 
 export const endGame = () => {

@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Timer, Score, GameCard, WelcomeDialog, StatisticDialog } from './components/';
+import { ExitToApp, VolumeUp }from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import { WORD_LANGUAGE, TRANSLATE_LANGUAGE } from '../../pages/SprintMiniGame/constants/constants'
+import { endGame } from '../../store/actions/sprintActions';
+
 
 const useStyles = makeStyles({
   container: {
@@ -49,7 +52,14 @@ function SprintMiniGame(props) {
             sayCardWord(TRANSLATE_LANGUAGE)
           }}
         >
-          <VolumeUpIcon style={{ fontSize: 60 }} />
+          <VolumeUp style={{ fontSize: 60 }} />
+        </IconButton>
+        <IconButton
+          component={Link}
+          to='/home'
+          onClick={props.endGame}
+        >
+          <ExitToApp style={{ fontSize: 60 }}/>
         </IconButton>
       </div>
     )
@@ -78,4 +88,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(SprintMiniGame)
+const mapDispatchToProps = dispatch => {
+  return {
+    endGame: () => dispatch(endGame()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SprintMiniGame)

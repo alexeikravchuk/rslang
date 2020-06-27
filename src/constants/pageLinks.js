@@ -6,12 +6,13 @@ import {
     Extension,
     Pets,
     Hearing,
+    DirectionsRun,
     People,
     Slideshow,
     Settings,
   } from '@material-ui/icons';
   import React from 'react';
-  
+
   export const pageLinks = [
     {
       title: 'Main page',
@@ -53,6 +54,12 @@ import {
       title: 'Audio call',
       link: '#audiocall',
       icon: <Hearing color='secondary' />,
+      type: 'game',
+    },
+    {
+      title: 'Sprint',
+      link: 'sprint',
+      icon: <DirectionsRun color='secondary' />,
       type: 'game',
     },
     {

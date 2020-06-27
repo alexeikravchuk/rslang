@@ -15,6 +15,7 @@ import {
   END_GAME,
   CHANGE_ROUND,
   TIMER_FINISHED,
+  CLOSE_WINDOW,
  } from './sprintActions';
 
 export {
@@ -38,4 +39,5 @@ export {
   END_GAME,
   CHANGE_ROUND,
   TIMER_FINISHED,
+  CLOSE_WINDOW
 }

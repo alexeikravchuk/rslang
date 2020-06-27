@@ -20,6 +20,7 @@ import {
   END_GAME,
   CHANGE_ROUND,
   TIMER_FINISHED,
+  CLOSE_WINDOW,
  } from '../actions';
 
 const defaultState = {
@@ -77,7 +78,7 @@ const sprintReducer = ( state = defaultState, action) => {
         ...state,
         answer: action.answer,
         score: action.answer ? state.score + state.xp * state.xpLevel : state.score,
-        xpLevelStepper: (state.xpLevelStepper <= XP_STEPPER_NUMBER && action.answer) ? state.xpLevelStepper + 1 : INITIAL_XP_STEPPER_VALUE,
+        xpLevelStepper: (state.xpLevelStepper < XP_STEPPER_NUMBER && action.answer) ? state.xpLevelStepper + 1 : INITIAL_XP_STEPPER_VALUE,
       };
     }
     case XP_LEVEL: {
@@ -101,6 +102,16 @@ const sprintReducer = ( state = defaultState, action) => {
        totalScore: state.totalScore + state.score,
        gameCounter: state.gameCounter + 1,
        scoreAverage: Math.round(state.totalScore / state.gameCounter),
+      };
+    }
+    case CLOSE_WINDOW: {
+      return {...state,
+        open: false,
+        showCard: false,
+        showStatistic: false,
+        score: 0,
+        xpLevel: INITIAL_XP_LEVEL,
+        xpLevelStepper: INITIAL_XP_STEPPER_VALUE,
       };
     }
     default: {

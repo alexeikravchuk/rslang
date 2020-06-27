@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
+import {
+  Button,
+  Dialog,
+  DialogContentText,
+  Typography,
+} from '@material-ui/core';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import MuiDialogActions from '@material-ui/core/DialogActions';
-import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import { endGame } from '../../../../store/actions/sprintActions';
 
@@ -30,6 +32,7 @@ const DialogActions = withStyles((theme) => ({
     padding: theme.spacing(2),
   },
 }))(MuiDialogActions);
+
 
 function StatisticDialog(props) {
 

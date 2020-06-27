@@ -11,7 +11,9 @@ export const INITIAL_DIFFICULTY = 2;
 export const INITIAL_ROUND = 2;
 export const INITIAL_XP_LEVEL = 1;
 export const INITIAL_XP_STEPPER_VALUE = -1;
-export const XP_STEPPER_NUMBER = 3;
+export const XP_STEPPER_NUMBER = 2;
+export const MAX_XP_LEVEL = 8;
+export const RIGHT_CARD_CHANCE = 0.7;
 
 export const WORD_LANGUAGE = 'en-US';
 export const TRANSLATE_LANGUAGE = 'ru-RU';

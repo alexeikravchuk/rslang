@@ -10,7 +10,7 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { Stepper } from '../index';
 import { checkAnswer } from '../../../../store/actions/sprintActions';
-import { LEFW_ARROW_KEY_CODE, RIGHT_ARROW_KEY_CODE } from '../../constants/constants';
+import { RIGHT_BTN_VALUE, WRONG_BTN_VALUE, LEFW_ARROW_KEY_CODE, RIGHT_ARROW_KEY_CODE } from '../../constants/constants';
 
 function GameCard({ sprintState, checkAnswer }) {
   const wordList = sprintState.gameWords;
@@ -20,9 +20,9 @@ function GameCard({ sprintState, checkAnswer }) {
   React.useEffect(() => {
     const onKeydown = e => {
       if (e.keyCode === LEFW_ARROW_KEY_CODE) {
-        checkAnswer('right', sprintState)
+        checkAnswer(RIGHT_BTN_VALUE, sprintState)
       } else if (e.keyCode === RIGHT_ARROW_KEY_CODE) {
-        checkAnswer('wrong', sprintState)
+        checkAnswer(WRONG_BTN_VALUE, sprintState)
       }
     };
     document.addEventListener('keydown', onKeydown);
