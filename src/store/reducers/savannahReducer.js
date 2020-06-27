@@ -8,7 +8,7 @@ import {
   LIFE_DECREASE,
   GAME_END,
   RESET_GAME,
-  DIFFICULTY_CHANGE, RELOAD,
+  DIFFICULTY_CHANGE, REMOVE_WORD,
 } from '../actions/savannahAction';
 import {shuffleArray} from "../../pages/Savannah/utils/utils";
 
@@ -59,8 +59,8 @@ const savannahReducer = ( state = defaultState, action) => {
     case RESET_GAME: {
       return defaultState;
     }
-    case RELOAD: {
-      return {...state, reloading: true}
+    case REMOVE_WORD: {
+      return { ...state, newWords: state.newWords.slice(1)}
     }
     default: {
       return {...state};

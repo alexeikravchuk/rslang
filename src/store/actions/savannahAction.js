@@ -8,7 +8,7 @@ const LIFE_DECREASE = 'LIFE_DECREASE'
 const GAME_END = 'GAME_END'
 const RESET_GAME = 'RESET_GAME'
 const DIFFICULTY_CHANGE = 'DIFFICULTY_CHANGE'
-const RELOAD = 'RELOAD'
+const REMOVE_WORD = 'REMOVE_WORD'
 
 const loadWords = () => {
   return (
@@ -78,7 +78,14 @@ const addMissedWords = (word) => {
   )
 }
 
-const reload = () => {return {type: RELOAD}}
+const removeWord = (word) => {
+  return (
+    {
+      type: REMOVE_WORD,
+      word
+    }
+  )
+}
 
 export { ADD_NEW_WORDS,
   ADD_LEARNED_WORDS,
@@ -90,7 +97,7 @@ export { ADD_NEW_WORDS,
   LIFE_DECREASE,
   RESET_GAME,
   DIFFICULTY_CHANGE,
-  RELOAD,
+  REMOVE_WORD,
   addLearnedWords,
   addMissedWords,
   loadWords,
@@ -100,4 +107,4 @@ export { ADD_NEW_WORDS,
   lifeDecrease,
   gameReset,
   difficultyChange,
-  reload}
+  removeWord}
