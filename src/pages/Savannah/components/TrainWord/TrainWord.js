@@ -1,36 +1,29 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
+import {connect} from "react-redux";
 import Container from "@material-ui/core/Container";
 import {SavannahButton} from "../SavannahButton";
-import './TrainWord.scss'
+import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
+
 const styles = {
   root:{
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'center',
     height: '60vh'
   },
 }
 
 class TrainWord extends Component{
- componentDidMount() {
- }
-
- componentWillUnmount() {
- }
-
   render() {
     const { classes } = this.props;
     return (
-      <div onAnimationStart={this.props.onAnimationStart}
-           onAnimationEnd={this.props.onAnimationEnd}
-           className={'animate'}>
-        <Container className={classes.root}>
-          <SavannahButton title={this.props.currentWord} />
-        </Container>
-      </div>
+      <Container className={classes.root}>
+        <SavannahButton title={this.props.currentWord} />
+      </Container>
     )
   }
+
 }
 
 
