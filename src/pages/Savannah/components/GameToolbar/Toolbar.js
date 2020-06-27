@@ -33,7 +33,7 @@ function GameToolbar(props){
       {props.gameStarted &&
         lifeCounterFunction(props.lifeCounter)
       }
-      <CloseButton />
+      <CloseButton onClick={props.onClose}/>
     </Toolbar>
   )
 }
