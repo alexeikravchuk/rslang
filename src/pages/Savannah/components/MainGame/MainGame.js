@@ -1,22 +1,18 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
-import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import GameToolbar from "../GameToolbar/Toolbar";
 import Background from "../background/Background";
 import {Statistics} from "../Statistics";
 import {
   gameEnding,
-  LIFE_DECREASE, lifeDecrease,
   loadWords,
   loadWordsSuccess,
 } from "../../../../store/actions/savannahAction";
 import {getWords} from "../../utils/wordRequest";
 import {StartGame} from "../StartGame";
 import GameButtonGroup from "../ButtonGroup/ButtonGroup";
-import TrainWord from "../TrainWord/TrainWord";
-import {ADD_LEARNED_WORDS, ADD_MISSED_WORDS} from "../../../../store/actions";
 
 const styles ={
   root: {
@@ -40,11 +36,11 @@ class MainGame extends Component{
     const { classes } = this.props;
     return (
       <div>
-        <GameToolbar title={'Savannah game'} />
+        <GameToolbar title={''} onClose={this.props.onClose}/>
         <Container className={classes.root}>
           {this.props.gameStarted === false && <StartGame />}
           {this.props.gameEnd && <Statistics />}
-          {this.props.gameStarted && <GameButtonGroup
+          {(this.props.gameStarted && !this.props.gameEnd) && <GameButtonGroup
             fetch={this.props.fetchWords}
             visible={true}
           />}
@@ -66,6 +62,7 @@ const mapDispatchToProps = dispatch => ({
     getWords(page, category)
       .then(json => dispatch(loadWordsSuccess(json)))
   },
+  onClose: ()=> dispatch(gameEnding())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainGame));
