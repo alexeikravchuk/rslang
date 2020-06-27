@@ -8,6 +8,8 @@ const LIFE_DECREASE = 'LIFE_DECREASE'
 const GAME_END = 'GAME_END'
 const RESET_GAME = 'RESET_GAME'
 const DIFFICULTY_CHANGE = 'DIFFICULTY_CHANGE'
+const RELOAD = 'RELOAD'
+
 const loadWords = () => {
   return (
     {
@@ -44,6 +46,7 @@ const loadWordsSuccess = (words) => {
     }
   )
 }
+
 const difficultyChange = (difficulty) => {
   return(
     {
@@ -57,21 +60,25 @@ const lifeDecrease = () => {
   return {type: LIFE_DECREASE}
 }
 
-const addLearnedWords = () => {
+const addLearnedWords = (word) => {
   return (
     {
       type: ADD_LEARNED_WORDS,
+      word: word
     }
   )
 }
 
-const addMissedWords = () => {
+const addMissedWords = (word) => {
   return (
     {
       type: ADD_MISSED_WORDS,
+      word
     }
   )
 }
+
+const reload = () => {return {type: RELOAD}}
 
 export { ADD_NEW_WORDS,
   ADD_LEARNED_WORDS,
@@ -83,6 +90,7 @@ export { ADD_NEW_WORDS,
   LIFE_DECREASE,
   RESET_GAME,
   DIFFICULTY_CHANGE,
+  RELOAD,
   addLearnedWords,
   addMissedWords,
   loadWords,
@@ -91,4 +99,5 @@ export { ADD_NEW_WORDS,
   gameEnding,
   lifeDecrease,
   gameReset,
-  difficultyChange}
+  difficultyChange,
+  reload}
