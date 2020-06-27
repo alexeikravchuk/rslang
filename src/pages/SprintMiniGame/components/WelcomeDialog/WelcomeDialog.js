@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import MuiAvatar from '@material-ui/core/Avatar';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import {
+  DialogActions,
+  DialogContent,
+  Avatar,
   Button,
   Dialog,
   Typography,
@@ -18,28 +18,28 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Loader } from '../Loader/Loader'
 import { userWords, changeDifficulty, loadGame, changeRound, endGame } from '../../../../store/actions/sprintActions';
 
-const DialogContent = withStyles((theme) => ({
+const MuiDialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(4),
   },
-}))(MuiDialogContent);
+}))(DialogContent);
 
-const DialogActions = withStyles((theme) => ({
+const MuiDialogActions = withStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
     margin: 0,
     padding: theme.spacing(2),
   },
-}))(MuiDialogActions);
+}))(DialogActions);
 
-const Avatar = withStyles((theme) => ({
+const MuiAvatar = withStyles((theme) => ({
   root: {
     display: 'inline-block',
     verticalAlign: 'middle',
     marginRight: theme.spacing(2),
   },
-}))(MuiAvatar);
+}))(Avatar);
 
 
 function WelcomeDialog(props) {
@@ -59,8 +59,8 @@ function WelcomeDialog(props) {
        onBackdropClick={props.closeWindow}
        onEscapeKeyDown={props.closeWindow}
        >
-        <DialogContent style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-          <Avatar alt="logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} />
+        <MuiDialogContent style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+          <MuiAvatar alt="logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} />
           <Typography variant="h6">RS Sprint</Typography>
           <IconButton
             onClick={props.closeWindow}
@@ -69,8 +69,8 @@ function WelcomeDialog(props) {
             >
             <CloseIcon />
           </IconButton>
-        </DialogContent>
-        <DialogContent dividers>
+        </MuiDialogContent>
+        <MuiDialogContent dividers>
           <Typography variant="h5" id="discrete-slider" gutterBottom style={{marginBottom: "2.35em"}}>
             Choose your difficulty level, please
           </Typography>
@@ -99,8 +99,8 @@ function WelcomeDialog(props) {
             disabled={props.sprintState.disabled}
             onChange={(event, value) => props.changeRound(value)}
           />
-        </DialogContent>
-        <DialogActions>
+        </MuiDialogContent>
+        <MuiDialogActions>
           <FormControlLabel
             control={<Checkbox checked={props.sprintState.checked} onChange={props.handleChange} />}
             label="Use my dictionary"
@@ -108,7 +108,7 @@ function WelcomeDialog(props) {
           <Button autoFocus onClick={() => {props.loadGame(props.sprintState.difficulty, props.sprintState.round)}} color="primary">
             Start game!
           </Button>
-        </DialogActions>
+        </MuiDialogActions>
       </Dialog>
     </div>
   );
