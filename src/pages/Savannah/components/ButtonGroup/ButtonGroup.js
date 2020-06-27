@@ -8,7 +8,7 @@ import TrainWord from "../TrainWord/TrainWord";
 import {
   addLearnedWords, addMissedWords,
   gameEnding,
-  lifeDecrease, reload
+  lifeDecrease, removeWord,
 } from "../../../../store/actions/savannahAction";
 
 const styles = {
@@ -20,14 +20,17 @@ const styles = {
 }
 
 class GameButtonGroup extends Component {
-
   wordTranslate;
   onClick(word){
-    (word === this.props.newWords[0].word) ? this.props.onGuess(word) : this.props.onMiss(this.props.lifeCounter, word)
+    (word === this.props.newWords[0].word) ? this.props.onGuess(word) : this.props.onMiss(this.props.lifeCounter, word);
+    this.props.onRemove(word);
+    if( this.props.newWords.length < 8) {
+      this.props.fetch(randomInteger(0, 30), this.props.difficulty)
+    };
   }
 
   componentDidMount() {
-    this.props.fetch(randomInteger(0,30), this.props.difficulty)
+    this.props.fetch(randomInteger(0,30), this.props.difficulty);
   }
 
   render() {
@@ -36,7 +39,7 @@ class GameButtonGroup extends Component {
       <div>
         {this.props.newWords.length > 0 && <TrainWord currentWord={this.props.newWords[0].word}/>}
         <Container className={classes.root}>
-          {this.props.newWords.slice(0, 4).map((el, index) => {
+          {shuffleArray(this.props.newWords.slice(0, 4)).map((el, index) => {
             return <SavannahButton key={index} title={el.wordTranslate} onClick={()=> this.onClick(el.word)}/>
           })}
         </Container>
@@ -58,6 +61,9 @@ const mapDispatchToProps = dispatch => ({
   onGuess: (learnedWord) => {
     dispatch(addLearnedWords(learnedWord))
   },
+  onRemove: (word) => {
+    dispatch(removeWord(word))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(GameButtonGroup))
