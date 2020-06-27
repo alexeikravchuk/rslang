@@ -116,20 +116,20 @@ class MainPage extends Component {
     }
   };
 
-  handleButtonClick = (e) => {
-    if (e.target.classList.contains('restart')) {
+  handleButtonClick = ({ target: { classList } }) => {
+    if (classList.contains('restart')) {
       return this.restartStudyCurrentPage();
     }
-    if (e.target.classList.contains('user-speach')) {
+    if (classList.contains('user-speach')) {
       return this.enableRecognitionMode();
     }
-    if (e.target.classList.contains('result')) {
+    if (classList.contains('result')) {
       return this.showResults();
     }
-    if (e.target.classList.contains('return')) {
+    if (classList.contains('return')) {
       return this.setState({ isResultsDisplayed: false });
     }
-    if (e.target.classList.contains('new-game')) {
+    if (classList.contains('new-game')) {
       return this.startNewGame();
     }
   };
