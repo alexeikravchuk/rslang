@@ -1,17 +1,17 @@
 .animate{
-  animation: container 4000ms ease-in;
+  animation: container 500ms ease-in;
 }
 
 @keyframes  container {
   0% {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-100px);
   }
   50% {
-    opacity: 1;
+    opacity: 0.5;
   }
   100% {
     opacity: 1;
-    transform: translateY(0%);
+    transform: translateY(0px);
   }
 }
