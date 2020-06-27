@@ -8,23 +8,22 @@ import {
   LIFE_DECREASE,
   GAME_END,
   RESET_GAME,
-  DIFFICULTY_CHANGE,
+  DIFFICULTY_CHANGE, RELOAD,
 } from '../actions/savannahAction';
+import {shuffleArray} from "../../pages/Savannah/utils/utils";
 
 const defaultState = {
   gameStarted: false,
   gameEnd:false,
   loading: false,
+  reloading: false,
   error: null,
-  difficulty: 3,
+  difficulty: 1,
   lifeCounter: 5,
   newWords: [],
   learnedWords: [],
   missedWords: [],
-  currentWord:{
-    word: '',
-    translate: '',
-  },
+  currentWord:{},
 }
 
 const savannahReducer = ( state = defaultState, action) => {
@@ -39,7 +38,7 @@ const savannahReducer = ( state = defaultState, action) => {
       return { ...state, loading: true, error: null}
     }
     case LOAD_WORDS_SUCCESS: {
-      return { ...state, newWords: action.words , loading: false, error: null}
+      return { ...state, newWords: shuffleArray(action.words), loading: false, error: null}
     }
     case LIFE_DECREASE: {
       return { ...state,
@@ -52,13 +51,16 @@ const savannahReducer = ( state = defaultState, action) => {
       return {...state};
     }
     case ADD_LEARNED_WORDS:{
-      return {...state};
+      return {...state, learnedWords: state.learnedWords.concat(action.word)}
     }
     case ADD_MISSED_WORDS: {
-      return {...state}
+      return {...state, missedWords: state.missedWords.concat(action.word)}
     }
     case RESET_GAME: {
       return defaultState;
+    }
+    case RELOAD: {
+      return {...state, reloading: true}
     }
     default: {
       return {...state};
