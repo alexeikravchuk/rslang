@@ -6,9 +6,17 @@ import Container from "@material-ui/core/Container";
 import GameToolbar from "../GameToolbar/Toolbar";
 import Background from "../background/Background";
 import {Statistics} from "../Statistics";
-import {LIFE_DECREASE,gameEnding, loadWords, loadWordsSuccess} from "../../../../store/actions/savannahAction";
+import {
+  gameEnding,
+  LIFE_DECREASE, lifeDecrease,
+  loadWords,
+  loadWordsSuccess,
+} from "../../../../store/actions/savannahAction";
 import {getWords} from "../../utils/wordRequest";
 import {StartGame} from "../StartGame";
+import GameButtonGroup from "../ButtonGroup/ButtonGroup";
+import TrainWord from "../TrainWord/TrainWord";
+import {ADD_LEARNED_WORDS, ADD_MISSED_WORDS} from "../../../../store/actions";
 
 const styles ={
   root: {
@@ -16,7 +24,8 @@ const styles ={
     zIndex: 10,
     display: 'flex',
     flexDirection: 'column',
-    alignContent: 'center'
+    alignContent: 'center',
+    justifyContent: 'center'
 
   },
   title: {
@@ -33,11 +42,12 @@ class MainGame extends Component{
       <div>
         <GameToolbar title={'Savannah game'} />
         <Container className={classes.root}>
-          <Button variant={'contained'} color={'primary'} onClick={() => this.props.onMiss(this.props.lifeCounter)}>
-            {this.props.gameStarted ? 'I am missed': 'Game not started'}
-          </Button>
           {this.props.gameStarted === false && <StartGame />}
           {this.props.gameEnd && <Statistics />}
+          {this.props.gameStarted && <GameButtonGroup
+            fetch={this.props.fetchWords}
+            visible={true}
+          />}
         </Container>
         <Background />
       </div>
@@ -56,10 +66,6 @@ const mapDispatchToProps = dispatch => ({
     getWords(page, category)
       .then(json => dispatch(loadWordsSuccess(json)))
   },
-  onMiss: (lifeCounter) => {
-    (lifeCounter === 0) ? dispatch(gameEnding()): dispatch({type: LIFE_DECREASE}
-    )
-  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainGame));
