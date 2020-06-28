@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme)=> ({
 export default (props) => {
   const classes = useStyles();
   return (
-      <Button variant={'outlined'} className={classes.button} onClick={props.onClick}>
+      <Button key={props.key} variant={'outlined'} className={classes.button} onClick={props.onClick}>
         {props.title}
       </Button>
     )
