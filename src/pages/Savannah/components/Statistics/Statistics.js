@@ -26,7 +26,9 @@ function Statistics(props) {
       >
         <DialogTitle id="alert-dialog-title">{"Your statistic:"}</DialogTitle>
         <DialogTitle id="alert-dialog-title">{"Learned words:"}</DialogTitle>
+        {props.learnedWords.map((el, index) => <span>{index+1} {el}</span>)}
         <DialogTitle id="alert-dialog-title">{"Missed words:"}</DialogTitle>
+        {props.missedWords.map((el, index) => <span>{index+1} {el}</span>)}
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Each small step brings closer to your goal...
