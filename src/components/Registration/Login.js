@@ -8,13 +8,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 
-export default function Alert(props) {
+import { 
+  addFirstName,
+  addLastName,
+  addEmail,
+  addToken
+  }  from '../../store/actions/authAction'
+import { connect } from 'react-redux';
 
+ function Alert(props) {
   const signURL = 'https://afternoon-falls-25894.herokuapp.com/signin';
   const createURL = 'https://afternoon-falls-25894.herokuapp.com/users';
-
+  console.log(props)
   function getResponse(emailInput, passwordInput){
-
     if(props.action === 'login'){
       doTransition('/signin')
       const loginUser = async user => {
@@ -36,10 +42,11 @@ export default function Alert(props) {
         return content;
         
       };
-      loginUser({ "email": emailInput, "password": passwordInput }).then((entryData) => {
+      loginUser({ "email": emailInput, "password": passwordInput }).then(() => {
           setTitle('Login success')
           doTransition('/main')
-          console.log(entryData)
+          props.dispatch(addEmail(emailInput))
+          
       })
     }
     if(props.action === 'register'){
@@ -62,17 +69,21 @@ export default function Alert(props) {
         const content = await rawResponse.json();
         return content;
       };
-      createUser({ "email": emailInput, "password": passwordInput }).then((regData) => {
-        if('error' in regData){
-          setTitle('Registration error')
-        }else{
-          setTitle('Registration successful')
-          doTransition('/home')
-          console.log(regData);
-        }
-      }) 
+    createUser({ "email": emailInput, "password": passwordInput }).then((regData) => {
+      if('error' in regData){
+        setTitle('Registration error')
+      }else{
+        props.dispatch(addFirstName(props.firstNameInput))
+        props.dispatch(addLastName(props.lastNameInput))
+        setTitle('Registration successful')
+        doTransition('/signin')
+        
+      }
+    }) 
   }
 }
+
+ 
 
   const [title, setTitle] = useState('');
   const [emailTitle, setEmailStatus] = useState('');
@@ -144,3 +155,9 @@ export default function Alert(props) {
     </div>
   );
 }
+
+function mapState(state){
+  return state
+}
+
+export default connect(mapState)(Alert)

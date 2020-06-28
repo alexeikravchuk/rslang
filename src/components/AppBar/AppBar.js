@@ -7,6 +7,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+
 import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
@@ -15,6 +16,9 @@ import { Route, Switch } from 'react-router-dom'
 
 import HomePage from '../../pages/Home/HomePage'
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
+import AccountInfo from '../../pages/AccountInfo/AccountInfo'
+
+import Container from '@material-ui/core/Container';
 
 class PrimaryAppBar extends Component {
   constructor(props) {
@@ -24,7 +28,7 @@ class PrimaryAppBar extends Component {
       drawerOpen: false,
     };
   }
-
+ 
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
   };
@@ -32,7 +36,7 @@ class PrimaryAppBar extends Component {
   handleDrawerClose = () => {
     this.setState({ drawerOpen: false });
   };
-
+  
   render() {
     return (
       <React.Fragment>
@@ -54,10 +58,15 @@ class PrimaryAppBar extends Component {
           </Toolbar>
         </AppBar>
         <SideBar open={this.state.drawerOpen} onShewronClick={() => this.handleDrawerClose()}/>
-      <Switch>
-        <Route path='/home' component={HomePage}/>
-        <Route path='/about' component={AboutTeamPage}/>
-      </Switch>
+      <Container style={{margin: '100px auto'}}>
+        <Switch>
+          <Route path='/home' component={HomePage}/>
+          <Route path='/about' component={AboutTeamPage} />
+          <Route path='/account'  >
+              <AccountInfo />
+          </Route>
+        </Switch>
+      </Container>
       </React.Fragment>
     );
   }
