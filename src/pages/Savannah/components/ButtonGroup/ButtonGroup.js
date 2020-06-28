@@ -86,7 +86,6 @@ class GameButtonGroup extends Component {
           onAnimationStart={this.setStart.bind(this)}
           onAnimationEnd={this.setEnd.bind(this)}
         />}
-
         {this.state.showWord && <Container className={classes.root}>
           {shuffleArray(this.props.newWords.slice(0, 4)).map((el, index) => {
             return <SavannahButton key={el.id}
