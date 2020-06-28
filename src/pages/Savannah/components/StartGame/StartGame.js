@@ -37,11 +37,11 @@ function StartGame(props) {
         fullScreen
         open={open}
         onClose={handleClose}>
-          <GameToolbar title={'Savannah game'} />
+          <GameToolbar title={'Savannah'} />
           <Background />
           <Container className={classes.contentDialog}>
             <GameSlider />
-            <SavannahButton title={'lets begin'} onClick={handleClose}/>
+            <SavannahButton title={'lets try...'} onClick={handleClose}/>
          </Container>
        </Dialog>
   )
