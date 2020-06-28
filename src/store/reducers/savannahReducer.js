@@ -38,7 +38,7 @@ const savannahReducer = ( state = defaultState, action) => {
       return { ...state, loading: true, error: null}
     }
     case LOAD_WORDS_SUCCESS: {
-      return { ...state, newWords: shuffleArray(action.words), loading: false, error: null}
+      return { ...state, newWords: state.newWords.concat(shuffleArray(action.words)), loading: false, error: null}
     }
     case LIFE_DECREASE: {
       return { ...state,
