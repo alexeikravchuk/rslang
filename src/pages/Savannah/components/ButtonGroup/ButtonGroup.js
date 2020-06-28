@@ -62,7 +62,7 @@ class GameButtonGroup extends Component {
     this.checkWord(word);
     this.props.onRemove(this.state.trainWord);
     this.setState(defaultState);
-    setTimeout(() => this.setState({showWord: true}), 200)
+    this.timer = setTimeout(() => this.setState({showWord: true}), 200)
   }
 
   componentDidMount() {
@@ -71,6 +71,9 @@ class GameButtonGroup extends Component {
   }
 
   componentWillUnmount() {
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
   }
 
   render() {
@@ -83,9 +86,10 @@ class GameButtonGroup extends Component {
           onAnimationStart={this.setStart.bind(this)}
           onAnimationEnd={this.setEnd.bind(this)}
         />}
+
         {this.state.showWord && <Container className={classes.root}>
           {shuffleArray(this.props.newWords.slice(0, 4)).map((el, index) => {
-            return <SavannahButton key={index}
+            return <SavannahButton key={el.id}
                                    title={el.wordTranslate}
                                    onClick={() => this.onClick(el.word)}
             />
