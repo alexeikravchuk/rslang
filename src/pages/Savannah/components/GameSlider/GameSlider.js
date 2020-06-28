@@ -9,11 +9,13 @@ const styles = {
   root: {
     width: 300,
     marginBottom: '2rem',
+
+    color: "#662246",
   },
   sliderLabel: {
     color: "#662246",
     textAlign: 'center',
-    marginBottom: '2rem'
+    marginBottom: '1rem'
   },
 };
 
