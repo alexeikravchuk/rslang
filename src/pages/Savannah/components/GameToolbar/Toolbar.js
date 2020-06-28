@@ -19,8 +19,8 @@ const styles = {
 }
 
 function lifeCounterFunction(lifeCounter) {
-  return Array(lifeCounter).fill(1).map(() =>
-    <FavoriteIcon />
+  return Array(lifeCounter).fill(1).map(( el ,index) =>
+    <FavoriteIcon key={index}/>
   )
 }
 function GameToolbar(props){
