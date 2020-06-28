@@ -9,7 +9,6 @@ import {gameStarting} from "../../../../store/actions/savannahAction";
 import {connect} from "react-redux";
 import GameSlider from "../GameSlider/GameSlider";
 
-
 const styles = {
   contentDialog: {
     zIndex: 10,
@@ -37,7 +36,7 @@ function StartGame(props) {
         fullScreen
         open={open}
         onClose={handleClose}>
-          <GameToolbar title={'Savannah'} />
+          <GameToolbar title={'Welcome to savannah'} />
           <Background />
           <Container className={classes.contentDialog}>
             <GameSlider />

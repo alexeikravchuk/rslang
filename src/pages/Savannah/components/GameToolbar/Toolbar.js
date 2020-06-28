@@ -23,6 +23,7 @@ function lifeCounterFunction(lifeCounter) {
     <FavoriteIcon key={index}/>
   )
 }
+
 function GameToolbar(props){
   const { classes } = props;
   return (
