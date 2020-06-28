@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from "react-redux";
 import {gameReset} from "../../../../store/actions/savannahAction";
+import Typography from "@material-ui/core/Typography";
 
 
 function Statistics(props) {
@@ -24,11 +25,30 @@ function Statistics(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Your statistic:"}</DialogTitle>
         <DialogTitle id="alert-dialog-title">{"Learned words:"}</DialogTitle>
-        {props.learnedWords.map((el, index) => <span>{index+1} {el}</span>)}
+        <ul>
+          {props.learnedWords.map((el, index) => {
+            return (
+              <li>
+                <Typography color={'primary'} key={index} variant="body1" component={"h2"}>
+                  {el}
+                </Typography>
+              </li>
+            )
+          })}
+        </ul>
         <DialogTitle id="alert-dialog-title">{"Missed words:"}</DialogTitle>
-        {props.missedWords.map((el, index) => <span>{index+1} {el}</span>)}
+        <ul>
+          {props.missedWords.map((el, index) => {
+            return (
+              <li>
+                <Typography color={'secondary'} key={index} variant="body1" component={"h2"}>
+                  {el}
+                </Typography>
+              </li>
+            )
+          })}
+        </ul>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Each small step brings closer to your goal...
