@@ -17,19 +17,19 @@ function GameCard({ sprintState, checkAnswer }) {
   const word = wordList[sprintState.wordIndex].word;
   const wordTranslate = wordList[sprintState.translateIndex].wordTranslate;
 
-  // React.useEffect(() => {
-  //   const onKeydown = e => {
-  //     if (e.keyCode === LEFW_ARROW_KEY_CODE) {
-  //       checkAnswer(RIGHT_BTN_VALUE, sprintState)
-  //     } else if (e.keyCode === RIGHT_ARROW_KEY_CODE) {
-  //       checkAnswer(WRONG_BTN_VALUE, sprintState)
-  //     }
-  //   };
-  //   document.addEventListener('keydown', onKeydown);
-  //   return () => {
-  //     document.removeEventListener('keydown', onKeydown);
-  //   };
-  // }, [checkAnswer, sprintState]);
+  React.useEffect(() => {
+    const onKeydown = e => {
+      if (e.keyCode === LEFW_ARROW_KEY_CODE) {
+        checkAnswer(RIGHT_BTN_VALUE, sprintState)
+      } else if (e.keyCode === RIGHT_ARROW_KEY_CODE) {
+        checkAnswer(WRONG_BTN_VALUE, sprintState)
+      }
+    };
+    document.addEventListener('keydown', onKeydown);
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+    };
+  }, [checkAnswer, sprintState]);
 
   return (
     <Card className='root'>

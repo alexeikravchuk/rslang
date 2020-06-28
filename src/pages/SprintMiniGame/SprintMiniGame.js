@@ -5,13 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Timer, Score, GameCard, WelcomeDialog, StatisticDialog } from './components';
 import { ExitToApp, VolumeUp }from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton';
-import { WORD_LANGUAGE,
-  TRANSLATE_LANGUAGE,
-  RIGHT_BTN_VALUE,
-  WRONG_BTN_VALUE,
-  LEFW_ARROW_KEY_CODE,
-  RIGHT_ARROW_KEY_CODE
-} from '../../pages/SprintMiniGame/constants/constants'
+import { WORD_LANGUAGE, TRANSLATE_LANGUAGE } from '../../pages/SprintMiniGame/constants/constants'
 import { endGame, checkAnswer } from '../../store/actions/sprintActions';
 
 
@@ -46,26 +40,10 @@ function SprintMiniGame(props) {
     synth.speak(message);
   };
 
-  const onKeydown = e => {
-    console.log(e.keyCode)
-    if (e.keyCode === LEFW_ARROW_KEY_CODE) {
-      props.checkAnswer(RIGHT_BTN_VALUE, props.sprintState)
-    } else if (e.keyCode === RIGHT_ARROW_KEY_CODE) {
-      props.checkAnswer(WRONG_BTN_VALUE, props.sprintState)
-    }
-  };
-
-  const wrapper = React.useRef(null);
-  React.useEffect(() => {
-    wrapper.current && wrapper.current.focus();
-  }, []);
-
   if (props.sprintState.showCard) {
     return (
       <div
         className={classes.container}
-        onKeyDown={(e) => {onKeydown(e)}} tabIndex="0"
-        ref={wrapper}
         >
         <Timer />
         <Score />
