@@ -5,6 +5,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import {withStyles} from "@material-ui/core/styles";
 import {CloseButton} from "../closeButton";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 const styles = {
   toolBar:{
@@ -34,7 +35,9 @@ function GameToolbar(props){
       {props.gameStarted &&
         lifeCounterFunction(props.lifeCounter)
       }
-      <CloseButton onClick={props.onClose}/>
+      <Link to={props.to} >
+        <CloseButton onClick={props.onClose}/>
+      </Link>
     </Toolbar>
   )
 }

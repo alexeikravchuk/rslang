@@ -8,15 +8,15 @@ import Container from "@material-ui/core/Container";
 import {gameStarting} from "../../../../store/actions/savannahAction";
 import {connect} from "react-redux";
 import GameSlider from "../GameSlider/GameSlider";
+import './StartGame.scss'
 
 const styles = {
   contentDialog: {
-    zIndex: 10,
     height: '100vh',
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   contentText:{
     color: 'wheat',
@@ -35,9 +35,10 @@ function StartGame(props) {
       <Dialog
         fullScreen
         open={open}
+        className={'root'}
         onClose={handleClose}>
-          <GameToolbar title={'Welcome to savannah'} />
-          <Background />
+        <Background />
+          <GameToolbar title={'Welcome to savannah'} to={'/home'}/>
           <Container className={classes.contentDialog}>
             <GameSlider />
             <SavannahButton title={'lets try...'} onClick={handleClose}/>
