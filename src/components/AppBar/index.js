@@ -1,3 +1,3 @@
 import PrimaryAppBar from './AppBar';
 
-export default PrimaryAppBar;
+export { PrimaryAppBar };

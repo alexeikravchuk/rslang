@@ -1,0 +1,118 @@
+$color-background: #ccddff;
+$color-play: #6cc49c;
+
+$tablet-width: 768px;
+$mobile-big-width: 414px;
+
+
+.MuiBackdrop-root.results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000b;
+  flex-direction: column;
+  position: fixed;
+  top: 56px;
+  bottom: 0;
+  left: 56px;
+  right: 0;
+  text-align: center;
+  padding: 15px 10px 0;
+  transition: .5s;
+  z-index: 100;
+}
+
+.results-container,
+.stat-container {
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  max-height: 98%;
+  padding: 15px 100px;
+  text-align: left;
+  overflow-y: auto;
+  font-size: 20px;
+  background-color: $color-background;
+  border-radius: 8px;
+  
+}
+.results-container {
+  .card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 40px;
+    font-size: 20px;
+    border: 0;
+    margin: 0 0 8px;
+    padding: 0 0 0 50px;
+    .audio-icon {
+      top: 5px;
+    }
+  }
+  .errors-num {
+    background-color: #da5b4c;
+    color: #fff;
+    padding: 3px 14px;
+    border-radius: 21px;
+    margin-left: 5px;
+  }
+
+  .succes-num {
+    background-color: #01af61;
+    color: #fff;
+    padding: 3px 14px;
+    border-radius: 21px;
+    margin-left: 5px;
+  }
+  .error-cards {
+    .cards {
+      display: block;
+    }
+    .card {
+      box-shadow: 0 0 3px 1px #da5b4c;
+      .translation {
+        display: block;
+      }
+    }
+  }
+  .succes-cards {
+    .cards {
+      display: block;
+    }
+    margin-bottom: 20px;
+    .card {
+      box-shadow: 0 0 3px 1px $color-play;
+      .translation {
+        display: block;
+      }
+    }
+  }
+  .btns-res {
+    margin-bottom: 10px;
+    .btn-res {
+      margin: 5px;
+      font-size: 22px;
+      padding: 10px 15px;
+      min-width: 20%;
+      width: 25%;
+    }
+  }
+  @media (max-width: $tablet-width) {
+    padding: 20px 40px;
+  }
+  @media (max-width: $mobile-big-width) {
+    padding: 10px;
+    .card {
+      max-width: 95%;
+      min-height: 50px;
+    }
+    .succes-cards {
+      margin-bottom: 10px;
+    }
+    .btns-res {
+      .btn {
+        max-width: 30%;
+      }
+    }
+  }
+}
