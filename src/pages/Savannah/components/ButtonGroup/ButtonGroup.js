@@ -10,6 +10,8 @@ import {
   gameEnding,
   lifeDecrease, removeWord,
 } from "../../../../store/actions/savannahAction";
+import Zoom from "@material-ui/core/Zoom";
+import Slide from "@material-ui/core/Slide";
 
 const styles = {
   root:{
@@ -38,6 +40,12 @@ class GameButtonGroup extends Component {
     };
   }
 
+  loadNewWords(){
+    if(this.props.newWords.length < 5) {
+      this.props.fetch(randomInteger(0,30), this.props.difficulty);
+    }
+  }
+
   missAtAnimationEnd(word){
     this.props.onMiss(this.props.lifeCounter, word);
   }
@@ -45,6 +53,7 @@ class GameButtonGroup extends Component {
   setEnd = () => {
     if (this.state.chosenWord === '') {this.missAtAnimationEnd(this.state.trainWord)}
     this.props.onRemove(this.state.trainWord);
+    this.loadNewWords();
     this.setState(defaultState);
     setTimeout(() => this.setState({showWord: true}), 200)
   }
@@ -61,6 +70,7 @@ class GameButtonGroup extends Component {
   onClick(word){
     this.checkWord(word);
     this.props.onRemove(this.state.trainWord);
+    this.loadNewWords();
     this.setState(defaultState);
     this.timer = setTimeout(() => this.setState({showWord: true}), 200)
   }
@@ -86,14 +96,18 @@ class GameButtonGroup extends Component {
           onAnimationStart={this.setStart.bind(this)}
           onAnimationEnd={this.setEnd.bind(this)}
         />}
-        {this.state.showWord && <Container className={classes.root}>
+        {this.state.showWord &&
+        <Slide direction={'up'} in={this.state.showWord}>
+          <Container className={classes.root}>
           {shuffleArray(this.props.newWords.slice(0, 4)).map((el, index) => {
-            return <SavannahButton key={el.id}
-                                   title={el.wordTranslate}
-                                   onClick={() => this.onClick(el.word)}
-            />
+            return (
+                <SavannahButton key={el.id}
+                                title={el.wordTranslate}
+                                onClick={() => this.onClick(el.word)}
+                />
+              )
           })}
-        </Container>}
+        </Container></Slide>}
       </div>
     )
   }
