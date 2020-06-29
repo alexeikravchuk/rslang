@@ -46,7 +46,7 @@ import {
     },
     {
       title: 'Savannah',
-      link: '#savannah',
+      link: './savannah',
       icon: <Pets color='secondary' />,
       type: 'game',
     },
