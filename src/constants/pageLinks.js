@@ -34,7 +34,7 @@ import {
     },
     {
       title: 'SpeakIt',
-      link: '#speakit',
+      link: '/speakit',
       icon: <RecordVoiceOver color='secondary' />,
       type: 'game',
     },
