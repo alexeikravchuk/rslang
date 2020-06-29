@@ -3,7 +3,6 @@ import {withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
 import Container from "@material-ui/core/Container";
 import GameToolbar from "../GameToolbar/Toolbar";
-import Background from "../background/Background";
 import {Statistics} from "../Statistics";
 import {
   gameEnding,
@@ -14,15 +13,11 @@ import {getWords} from "../../utils/wordRequest";
 import {StartGame} from "../StartGame";
 import GameButtonGroup from "../ButtonGroup/ButtonGroup";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import './savannah.scss'
 
-const styles ={
+
+const styles = {
   root: {
-    position: 'relative',
-    zIndex: 10,
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'center',
-    justifyContent: 'center'
   },
   title: {
     flexGrow: 1,
@@ -31,7 +26,7 @@ const styles ={
   },
   loader: {
     position: 'relative',
-    zIndex: 10,
+    zIndex: 2001,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,7 +35,7 @@ const styles ={
   }
 }
 
-class MainGame extends Component{
+class Savannah extends Component{
   loader(classes) {
     return (
       <Container className={classes}>
@@ -51,10 +46,10 @@ class MainGame extends Component{
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <GameToolbar title={''} onClose={this.props.onClose}/>
+      <div  className={'mainGame'}>
         {this.props.loading && this.loader(classes.loader)}
-        <Container className={classes.root}>
+        {<GameToolbar title={''} onClose={this.props.onClose}/>}
+        <Container className={'savannahRoot'}>
           {this.props.gameStarted === false && <StartGame />}
           {this.props.gameEnd && <Statistics />}
           {(this.props.gameStarted && !this.props.gameEnd) && <GameButtonGroup
@@ -62,7 +57,6 @@ class MainGame extends Component{
             visible={true}
           />}
         </Container>
-        <Background />
       </div>
     )
   }
@@ -82,4 +76,4 @@ const mapDispatchToProps = dispatch => ({
   onClose: ()=> dispatch(gameEnding())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainGame));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Savannah));
