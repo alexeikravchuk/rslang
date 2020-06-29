@@ -1,3 +1,3 @@
-import MainGame from './MainGame'
+import Savannah from './Savannah'
 
-export {MainGame}
+export {Savannah}
