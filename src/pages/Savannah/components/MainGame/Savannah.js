@@ -48,7 +48,7 @@ class Savannah extends Component{
     return (
       <div  className={'mainGame'}>
         {this.props.loading && this.loader(classes.loader)}
-        {<GameToolbar title={''} onClose={this.props.onClose}/>}
+        {(this.props.gameStarted && !this.props.loading) && <GameToolbar title={''} onClose={this.props.onClose}/>}
         <Container className={'savannahRoot'}>
           {this.props.gameStarted === false && <StartGame />}
           {this.props.gameEnd && <Statistics />}
