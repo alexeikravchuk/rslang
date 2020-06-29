@@ -9,6 +9,7 @@ import {gameStarting} from "../../../../store/actions/savannahAction";
 import {connect} from "react-redux";
 import GameSlider from "../GameSlider/GameSlider";
 import './StartGame.scss'
+import Typography from "@material-ui/core/Typography";
 
 const styles = {
   contentDialog: {
@@ -22,6 +23,10 @@ const styles = {
     color: 'wheat',
     marginBottom: "1rem"
   },
+  title: {
+    zIndex: '2000',
+    color: '#662246',
+  }
 };
 
 function StartGame(props) {
@@ -40,6 +45,9 @@ function StartGame(props) {
         <Background />
           <GameToolbar title={'Welcome to savannah'} to={'/home'}/>
           <Container className={classes.contentDialog}>
+            <Typography  variant={'h6'} className={classes.title}>
+              Choose your skill:
+            </Typography>
             <GameSlider />
             <SavannahButton title={'lets try...'} onClick={handleClose}/>
          </Container>

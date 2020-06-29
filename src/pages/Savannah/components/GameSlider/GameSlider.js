@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import {difficultyChange} from "../../../../store/actions/savannahAction";
 import {connect} from "react-redux";
@@ -8,8 +7,7 @@ import {connect} from "react-redux";
 const styles = {
   root: {
     width: 300,
-    marginBottom: '2rem',
-
+    marginBottom: '1rem',
     color: "#662246",
   },
   sliderLabel: {
@@ -27,9 +25,6 @@ function GameSlider(props){
   const {classes} = props;
     return (
       <div className={classes.root}>
-        <Typography id="discrete-slider" gutterBottom className={classes.sliderLabel}>
-          Choose your skill:
-        </Typography>
         <Slider
           onChangeCommitted={(e, val) => props.onChange(val)}
           value = {props.difficulty}
