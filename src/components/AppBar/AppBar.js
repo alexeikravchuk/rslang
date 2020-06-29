@@ -15,6 +15,8 @@ import { Route, Switch } from 'react-router-dom'
 
 import HomePage from '../../pages/Home/HomePage'
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
+import SprintMiniGame from '../../pages/SprintMiniGame'
+
 
 class PrimaryAppBar extends Component {
   constructor(props) {
@@ -57,6 +59,7 @@ class PrimaryAppBar extends Component {
       <Switch>
         <Route path='/home' component={HomePage}/>
         <Route path='/about' component={AboutTeamPage}/>
+        <Route path='/sprint' component={SprintMiniGame}/>
       </Switch>
       </React.Fragment>
     );
