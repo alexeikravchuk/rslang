@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Link from '@material-ui/core/Link';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link } from '@material-ui/core'
 import { Link as RouterLink } from 'react-router-dom';
+import {signURL, createURL } from '../../constants/authURL'
 
 import { 
   addFirstName,
@@ -17,8 +12,6 @@ import {
 import { connect } from 'react-redux';
 
  function Alert(props) {
-  const signURL = 'https://afternoon-falls-25894.herokuapp.com/signin';
-  const createURL = 'https://afternoon-falls-25894.herokuapp.com/users';
   function getResponse(emailInput, passwordInput){
     if(props.action === 'login'){
       doTransition('/signin')
@@ -45,10 +38,11 @@ import { connect } from 'react-redux';
         }
       };
       loginUser({ "email": emailInput, "password": passwordInput }).then((entryData) => {
-        if(typeof entryData === undefined){
+        if(typeof entryData !== undefined){
           setTitle('Login success')
           doTransition('/main')
           props.dispatch(addEmail(emailInput))
+          props.dispatch(addToken(entryData.token))
         }
       })
 

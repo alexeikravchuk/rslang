@@ -1,10 +1,6 @@
 import React, { useState } from 'react'; 
 import { makeStyles } from '@material-ui/core/styles';
-import Container from'@material-ui/core/Container';
-import Box from'@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import TextField from'@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
+import { Container, Box, Button, TextField, Avatar } from '@material-ui/core'
 import { connect } from 'react-redux';
 import './AccountInfo.scss';
 import noavatar from '../../assets/no_avatar.png';
@@ -32,6 +28,8 @@ function AccountInfo(props) {
     const [lastName, setLastName] = useState('');
     const [newAvatar, changeAvatar] = useState(noavatar);
     
+
+
     function setPath(path){
         let newUrl = window.URL.createObjectURL(path);
         changeAvatar(newUrl);
@@ -98,14 +96,12 @@ function AccountInfo(props) {
       )
 }
 
-function mapState(state) {
+function mapState({ authReducer: { firstName, lastName, email } }) {
   return {
-    firstName: state.authReducer.firstName,
-    lastName: state.authReducer.lastName,
-    email: state.authReducer.email,
-
-  }
- 
+    firstName,
+    lastName,
+    email,
+  };
 }
 
 export default connect(mapState)(AccountInfo);
