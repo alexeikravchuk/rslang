@@ -23,6 +23,13 @@ const styles = theme => ({
 });
 
 class TrainWord extends Component{
+  componentDidMount() {
+    console.log(this.props.currentWord)
+  }
+  componentWillUnmount() {
+    console.log('good bye')
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -31,7 +38,7 @@ class TrainWord extends Component{
            className={'animate'}>
         <Container className={classes.root}>
           <Typography  variant={'h6'} className={classes.title}>
-            {this.props.currentWord}
+            {this.props.currentWord.word}
           </Typography>
         </Container>
       </div>

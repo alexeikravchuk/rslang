@@ -58,12 +58,14 @@ class GameButtonGroup extends Component {
   }
 
   setStart = () => {
-    this.setState({animationEnded: false, showWord: true, trainWord: this.props.newWords[0].word});
+    this.setState({animationEnded: false, showWord: true, trainWord: this.props.newWords[0]});
   }
 
   wordTranslate;
-  checkWord(word){
-    (word === this.state.trainWord) ? this.props.onGuess(word) : this.props.onMiss(this.props.lifeCounter, word);
+
+  checkWord(wordToCheck){
+    const {trainWord} = this.state;
+    return (wordToCheck === trainWord.word) ? this.props.onGuess(trainWord) : this.props.onMiss(this.props.lifeCounter, trainWord);
   }
 
   onClick(word){
@@ -91,7 +93,7 @@ class GameButtonGroup extends Component {
       <div>
         {(this.props.newWords.length > 0 && this.state.showWord) &&
         <TrainWord
-          currentWord={this.props.newWords[0].word}
+          currentWord={this.props.newWords[0]}
           onAnimationStart={this.setStart.bind(this)}
           onAnimationEnd={this.setEnd.bind(this)}
         />}
