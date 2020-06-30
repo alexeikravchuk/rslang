@@ -21,10 +21,10 @@ const styles = {
   },
   contentText:{
     color: 'wheat',
-    marginBottom: "1rem"
+    marginBottom: "1rem",
   },
   title: {
-    zIndex: '2000',
+    zIndex: 2000,
     color: '#662246',
   }
 };

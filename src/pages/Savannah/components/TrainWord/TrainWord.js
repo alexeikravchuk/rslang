@@ -1,11 +1,8 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-import {SavannahButton} from "../SavannahButton";
 import './TrainWord.scss'
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const styles = theme => ({
   root:{

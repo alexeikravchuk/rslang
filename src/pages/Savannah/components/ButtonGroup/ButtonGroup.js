@@ -10,7 +10,6 @@ import {
   gameEnding,
   lifeDecrease, removeWord,
 } from "../../../../store/actions/savannahAction";
-import Zoom from "@material-ui/core/Zoom";
 import Slide from "@material-ui/core/Slide";
 
 const styles = {
@@ -99,7 +98,7 @@ class GameButtonGroup extends Component {
         {this.state.showWord &&
         <Slide direction={'up'} in={this.state.showWord}>
           <Container className={classes.root}>
-          {shuffleArray(this.props.newWords.slice(0, 4)).map((el, index) => {
+          {shuffleArray(this.props.newWords.slice(0, 4)).map((el) => {
             return (
                 <SavannahButton key={el.id}
                                 title={el.wordTranslate}

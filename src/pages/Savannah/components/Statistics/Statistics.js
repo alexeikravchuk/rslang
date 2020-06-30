@@ -8,8 +8,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from "react-redux";
 import {gameReset} from "../../../../store/actions/savannahAction";
 import Typography from "@material-ui/core/Typography";
-import Background from "../background/Background";
-
 
 function Statistics(props) {
   const [open, setOpen] = React.useState(true);
