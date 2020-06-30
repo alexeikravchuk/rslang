@@ -1,4 +1,7 @@
-import { AboutTeamPage } from './AboutTeamPage/index';
+import HomePage from './Home/HomePage';
 import { SpeakIt } from './SpeakIt';
+import { EnglishPuzzle } from './EnglishPuzzle';
+import { SprintMiniGame } from './SprintMiniGame';
+import { AboutTeamPage } from './AboutTeamPage';
 
-export { AboutTeamPage, SpeakIt };
+export { HomePage, SpeakIt, EnglishPuzzle, SprintMiniGame, AboutTeamPage };

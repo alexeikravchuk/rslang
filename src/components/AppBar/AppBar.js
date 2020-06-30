@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 import clsx from 'clsx';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  withStyles,
-} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, withStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
 
-import HomePage from '../../pages/Home/HomePage'
-import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
-import SprintMiniGame from '../../pages/SprintMiniGame';
-import Game from '../../pages/SpeakIt/components/Game';
-
+import {
+  HomePage,
+  SpeakIt,
+  EnglishPuzzle,
+  SprintMiniGame,
+  AboutTeamPage,
+} from '../../pages';
 
 class PrimaryAppBar extends Component {
   constructor(props) {
@@ -56,14 +53,17 @@ class PrimaryAppBar extends Component {
             <UserMenu />
           </Toolbar>
         </AppBar>
-        <SideBar open={this.state.drawerOpen} onShewronClick={() => this.handleDrawerClose()}/>
-      <Switch>
-        <Route path='/home' component={HomePage}/>
-        <Route path='/about' component={AboutTeamPage}/>
-        <Route path='/speakit' component={Game}/>
-        <Route path='/sprint' component={SprintMiniGame}/>
-        
-      </Switch>
+        <SideBar
+          open={this.state.drawerOpen}
+          onShewronClick={() => this.handleDrawerClose()}
+        />
+        <Switch>
+          <Route path='/home' component={HomePage} />
+          <Route path='/about' component={AboutTeamPage} />
+          <Route path='/speakit' component={SpeakIt} />
+          <Route path='/puzzle' component={EnglishPuzzle} />
+          <Route path='/sprint' component={SprintMiniGame} />
+        </Switch>
       </React.Fragment>
     );
   }

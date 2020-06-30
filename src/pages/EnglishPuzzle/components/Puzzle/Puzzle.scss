@@ -1,0 +1,181 @@
+.game--puzzle-wrapper {
+  .result {
+    position: relative;
+    padding: 5px;
+    font-size: 20px;
+    color: #fff;
+    text-shadow: 0 0 5px #fff;
+    height: 410px;
+    max-width: 765px;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 5;
+    @media screen and (max-width: 830px) {
+      max-width: 675px;
+      height: 355px;
+    }
+    @media screen and (max-width: 749px) {
+      max-width: 580px;
+      height: 305px;
+    }
+    @media screen and (max-width: 629px) {
+      max-width: 480px;
+      height: 260px;
+    }
+    &-field--background {
+      position: absolute;
+      background-color: #a0a0f0ff;
+      opacity: 0.4;
+      height: 100%;
+      width: calc(100% - 45px);
+      top: -4px;
+      left: 47px;
+      -webkit-box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
+      -moz-box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
+      box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
+      pointer-events: none;
+      background-image: none;
+      &.image {
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      @media screen and (max-width: 749px) {
+        width: calc(100% - 38px);
+        top: 0px;
+        left: 40px;
+      }
+      @media screen and (max-width: 629px) {
+        width: calc(100% - 35px);
+        left: 38px;
+      }
+    }
+    &--sentence {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      @media screen and (max-width: 830px) {
+        height: 35px;
+        &-text_container {
+          display: flex;
+          justify-content: space-between;
+          height: 35px;
+          .canvas-item:not(:first-child) {
+            margin-left: -5px;
+          }
+        }
+      }
+      @media screen and (max-width: 749px) {
+        height: 30px;
+        &-text_container {
+          height: 35px;
+          .canvas-item:not(:first-child) {
+            margin-left: -4px;
+          }
+        }
+      }
+      @media screen and (max-width: 629px) {
+        height: 25px;
+        &-text_container {
+          height: 25px;
+        }
+      }
+      &-numeration {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px 8px;
+        height: 30px;
+        width: 30px;
+        background-color: rgba(64, 64, 112, 1);
+        border: solid 1px #fff;
+        border-radius: 50%;
+        user-select: none;
+        @media screen and (max-width: 749px) {
+          font-size: 14px;
+          width: 20px;
+          height: 20px;
+          margin: 3px 8px;
+        }
+      }
+      &-text_container {
+        width: 100%;
+        z-index: 6;
+        .canvas-item:not(:first-child) {
+          margin-left: -7px;
+        }
+      }
+    }
+  }
+
+  .raw {
+    position: relative;
+    margin-top: 20px;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 0 0 2px #20072c, 0 0 2px #774c8a;
+    width: 100%;
+    height: 40px;
+    @media screen and (max-width: 830px) {
+      height: 35px;
+      padding-left: 0;
+    }
+    @media screen and (max-width: 749px) {
+      height: 30px;
+      padding-left: 0;
+    }
+    @media screen and (max-width: 629px) {
+      height: 20px;
+    }
+  }
+}
+
+.word-container {
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-basis: calc(100% / 20);
+  flex-grow: 1;
+  height: 40px;
+  user-select: none;
+  background-color: rgba(64, 64, 112, 1);
+  border: solid 1px #262647;
+  box-shadow: 1px 1px 6px #3a3a69;
+  transition: box-shadow 0.3s ease-in;
+  cursor: grab;
+  &:hover {
+    box-shadow: 1px 1px 3px #111120;
+  }
+}
+
+.canvas-item {
+  height: 40px;
+  cursor: grab;
+  z-index: 100;
+  @media screen and (max-width: 830px) {
+    height: 35px;
+  }
+  @media screen and (max-width: 749px) {
+    height: 30px;
+  }
+  @media screen and (max-width: 629px) {
+    height: 25px;
+  }
+  &:not(:first-child) {
+    margin-left: -2px;
+  }
+  &:last-child {
+    margin-right: -10px;
+  }
+  &.active {
+    opacity: 0.8;
+    box-shadow: inset 0 0 10px white, 0 0 2px 1px #774c8a;
+  }
+}
+
+.group-words {
+  display: flex;
+  justify-content: center;
+}
