@@ -25,29 +25,29 @@ function Statistics(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{"Learned words:"}</DialogTitle>
-        <ul>
+        <ol>
           {props.learnedWords.map((el, index) => {
             return (
               <li>
                 <Typography color={'primary'} key={index} variant="body1" component={"h2"}>
-                  {el}
+                  {el.word} - {el.transcription} - {el.wordTranslate}
                 </Typography>
               </li>
             )
           })}
-        </ul>
+        </ol>
         <DialogTitle id="alert-dialog-title">{"Missed words:"}</DialogTitle>
-        <ul>
+        <ol>
           {props.missedWords.map((el, index) => {
             return (
               <li>
                 <Typography color={'secondary'} key={index} variant="body1" component={"h2"}>
-                  {el}
+                  {el.word} - {el.transcription} - {el.wordTranslate}
                 </Typography>
               </li>
             )
           })}
-        </ul>
+        </ol>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Each small step brings closer to your goal...
