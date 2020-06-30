@@ -1,9 +1,7 @@
 import React, {Component} from "react";
-import {withStyles} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
+import {Container, Typography, withStyles} from "@material-ui/core";
 import './TrainWord.scss'
-import Typography from "@material-ui/core/Typography";
-import {DATA_LINK} from "../../../SpeakIt/constants/constants";
+import {playSound} from "../../utils/utils";
 
 const styles = theme => ({
   root:{
@@ -24,20 +22,11 @@ const styles = theme => ({
 });
 
 class TrainWord extends Component{
-  playSound(word){
-    let audio = null;
-    const audioSrc = DATA_LINK + word.audio;
-    try {
-      audio = new Audio(audioSrc);
-      audio.play().then(r =>{});
-    } catch (e) {
-      console.log(e.message);
-    }
-  }
+
+
   componentDidMount() {
     console.log(this.props.currentWord)
-    this.playSound(this.props.currentWord)
-
+    playSound(this.props.currentWord)
   }
   componentWillUnmount() {
     console.log('good bye')
