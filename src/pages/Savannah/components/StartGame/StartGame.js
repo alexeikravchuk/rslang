@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import GameSlider from "../GameSlider/GameSlider";
 import './StartGame.scss'
 import Typography from "@material-ui/core/Typography";
+import {Card} from "@material-ui/core";
 
 const styles = {
   contentDialog: {
@@ -26,6 +27,15 @@ const styles = {
   title: {
     zIndex: 2000,
     color: '#662246',
+  },
+  card:{
+    marginTop: '3rem',
+    zIndex: 2000,
+    color: 'wheat',
+    textAlign: 'center',
+    padding: '1rem',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
   }
 };
 
@@ -50,6 +60,12 @@ function StartGame(props) {
             </Typography>
             <GameSlider />
             <SavannahButton title={'lets try...'} onClick={handleClose}/>
+            <Card className={classes.card}>
+              <Typography  variant={'subtitle1'} className={classes.title}>
+                <p>Добро пожаловать в саванну - игру по изучению новых слов, и повторению изученных.</p>
+                Желаем успехов...
+              </Typography>
+            </Card>
          </Container>
        </Dialog>
   )
