@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AccountInfo(props) {
-  
+    console.log(props)
     const classes = useStyles();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -34,7 +34,6 @@ function AccountInfo(props) {
     
     function setPath(path){
         let newUrl = window.URL.createObjectURL(path);
-        console.log(newUrl)
         changeAvatar(newUrl);
     }
 

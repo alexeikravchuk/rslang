@@ -19,39 +19,45 @@ import { connect } from 'react-redux';
  function Alert(props) {
   const signURL = 'https://afternoon-falls-25894.herokuapp.com/signin';
   const createURL = 'https://afternoon-falls-25894.herokuapp.com/users';
-  console.log(props)
   function getResponse(emailInput, passwordInput){
     if(props.action === 'login'){
       doTransition('/signin')
       const loginUser = async user => {
-        const rawResponse = await fetch(signURL, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(user)
-        });
+        try{
+          const rawResponse = await fetch(signURL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user)
+          });
           if(rawResponse.status === 404){  
             setTitle('Please, check the fields')
           }
           if(rawResponse.status === 403){
             setTitle('Incorrect data')
           }
-        const content = await rawResponse.json();
-        return content;
-        
+            const content = await rawResponse.json();
+            return content;
+        } catch (e) {
+          setTitle('Server error')
+        }
       };
-      loginUser({ "email": emailInput, "password": passwordInput }).then(() => {
+      loginUser({ "email": emailInput, "password": passwordInput }).then((entryData) => {
+        if(typeof entryData === undefined){
           setTitle('Login success')
           doTransition('/main')
           props.dispatch(addEmail(emailInput))
-          
+        }
       })
+
     }
+
     if(props.action === 'register'){
       doTransition('/signup')
       const createUser = async user => {
+        try{
         const rawResponse = await fetch(createURL, {
           method: 'POST',
           headers: {
@@ -68,9 +74,14 @@ import { connect } from 'react-redux';
         }
         const content = await rawResponse.json();
         return content;
+        } catch(e) {
+          setTitle('Server error')
+        }
       };
     createUser({ "email": emailInput, "password": passwordInput }).then((regData) => {
-      if('error' in regData){
+      if(typeof regData !== undefined){
+        setTitle('Server error')
+      } else if('error' in regData){
         setTitle('Registration error')
       }else{
         props.dispatch(addFirstName(props.firstNameInput))
@@ -82,8 +93,6 @@ import { connect } from 'react-redux';
     }) 
   }
 }
-
- 
 
   const [title, setTitle] = useState('');
   const [emailTitle, setEmailStatus] = useState('');
