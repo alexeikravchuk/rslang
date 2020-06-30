@@ -19,8 +19,7 @@ import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
 import AccountInfo from '../../pages/AccountInfo/AccountInfo'
 import Container from '@material-ui/core/Container';
 import SprintMiniGame from '../../pages/SprintMiniGame';
-import { SpeakIt } from '../../pages';
-import {Savannah} from "../../pages/Savannah";
+import { SpeakIt, Savannah } from '../../pages';
 
 class PrimaryAppBar extends Component {
   constructor(props) {
