@@ -7,6 +7,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+
 import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
@@ -15,9 +16,12 @@ import { Route, Switch } from 'react-router-dom'
 
 import HomePage from '../../pages/Home/HomePage'
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
-import SprintMiniGame from '../../pages/SprintMiniGame';
-import Game from '../../pages/SpeakIt/components/Game';
 
+import AccountInfo from '../../pages/AccountInfo/AccountInfo'
+
+import Container from '@material-ui/core/Container';
+import SprintMiniGame from '../../pages/SprintMiniGame';
+import { SpeakIt } from '../../pages';
 
 class PrimaryAppBar extends Component {
   constructor(props) {
@@ -27,7 +31,7 @@ class PrimaryAppBar extends Component {
       drawerOpen: false,
     };
   }
-
+ 
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
   };
@@ -35,7 +39,7 @@ class PrimaryAppBar extends Component {
   handleDrawerClose = () => {
     this.setState({ drawerOpen: false });
   };
-
+  
   render() {
     return (
       <React.Fragment>
@@ -57,13 +61,18 @@ class PrimaryAppBar extends Component {
           </Toolbar>
         </AppBar>
         <SideBar open={this.state.drawerOpen} onShewronClick={() => this.handleDrawerClose()}/>
-      <Switch>
-        <Route path='/home' component={HomePage}/>
-        <Route path='/about' component={AboutTeamPage}/>
-        <Route path='/speakit' component={Game}/>
-        <Route path='/sprint' component={SprintMiniGame}/>
-        
-      </Switch>
+
+        <Container style={{margin: '100px auto'}}>
+          <Switch>
+            <Route path='/home' component={HomePage}/>
+            <Route path='/about' component={AboutTeamPage} />
+            <Route path='/speakit' component={SpeakIt}/>
+            <Route path='/sprint' component={SprintMiniGame}/>
+            <Route path='/account'  >
+              <AccountInfo />
+            </Route>
+          </Switch>
+        </Container>
       </React.Fragment>
     );
   }

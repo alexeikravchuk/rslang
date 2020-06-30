@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link, Avatar, Typography, withStyles } from '@material-ui/core';
 import logo from '../../assets/logo.png';
+import { Link as RouterLink } from 'react-router-dom';
 
 class Logo extends Component {
   render() {
     return (
-      <Link href='#main' className={this.props.classes.mainLink}>
+      <Link to='/home' component={RouterLink} className={this.props.classes.mainLink}>
         <Avatar alt='logo' src={logo} className={this.props.classes.logo} />
         <Typography variant='h6' className={this.props.classes.title}>
           RS Lang
