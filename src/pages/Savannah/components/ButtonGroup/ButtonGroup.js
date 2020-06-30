@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import {withStyles} from "@material-ui/core";
 import {connect} from "react-redux";
-import Container from "@material-ui/core/Container";
+import {withStyles, Container, Slide} from "@material-ui/core";
 import {randomInteger, shuffleArray} from '../../utils/utils'
 import {SavannahButton} from "../SavannahButton";
 import TrainWord from "../TrainWord/TrainWord";
@@ -10,10 +9,10 @@ import {
   gameEnding,
   lifeDecrease, removeWord,
 } from "../../../../store/actions/savannahAction";
-import Slide from "@material-ui/core/Slide";
+
 
 const styles = {
-  root:{
+  buttonGroupRoot:{
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -99,7 +98,7 @@ class GameButtonGroup extends Component {
         />}
         {this.state.showWord &&
         <Slide direction={'up'} in={this.state.showWord}>
-          <Container className={classes.root}>
+          <Container className={classes.buttonGroupRoot}>
           {shuffleArray(this.props.newWords.slice(0, 4)).map((el) => {
             return (
                 <SavannahButton key={el.id}

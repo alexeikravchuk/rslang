@@ -1,16 +1,12 @@
 import React  from "react";
-import { withStyles } from '@material-ui/core/styles';
-import Dialog from "@material-ui/core/Dialog";
+import {connect} from "react-redux";
+import { withStyles, Card, Dialog, Container, Typography } from '@material-ui/core';
 import Background from "../background/Background";
 import {GameToolbar} from "../GameToolbar";
 import {SavannahButton} from "../SavannahButton";
-import Container from "@material-ui/core/Container";
 import {gameStarting} from "../../../../store/actions/savannahAction";
-import {connect} from "react-redux";
 import GameSlider from "../GameSlider/GameSlider";
 import './StartGame.scss'
-import Typography from "@material-ui/core/Typography";
-import {Card} from "@material-ui/core";
 
 const styles = {
   contentDialog: {
@@ -50,7 +46,6 @@ function StartGame(props) {
       <Dialog
         fullScreen
         open={open}
-        className={'root'}
         onClose={handleClose}>
         <Background />
           <GameToolbar title={'Welcome to savannah'} to={'/home'}/>

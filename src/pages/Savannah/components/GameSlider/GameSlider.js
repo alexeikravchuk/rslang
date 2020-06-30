@@ -5,7 +5,7 @@ import {difficultyChange} from "../../../../store/actions/savannahAction";
 import {connect} from "react-redux";
 
 const styles = {
-  root: {
+  gameSliderRoot: {
     width: 300,
     marginBottom: '1rem',
     color: "#662246",
@@ -24,7 +24,7 @@ function valuetext(value) {
 function GameSlider(props){
   const {classes} = props;
     return (
-      <div className={classes.root}>
+      <div className={classes.gameSliderRoot}>
         <Slider
           onChangeCommitted={(e, val) => props.onChange(val)}
           value = {props.difficulty}

@@ -1,24 +1,19 @@
 import React, {Component} from "react";
-import {withStyles} from "@material-ui/core/styles";
+import {withStyles, Container, CircularProgress} from "@material-ui/core";
 import {connect} from "react-redux";
-import Container from "@material-ui/core/Container";
 import GameToolbar from "../GameToolbar/Toolbar";
 import {Statistics} from "../Statistics";
+import {getWords} from "../../utils/wordRequest";
+import {StartGame} from "../StartGame";
+import GameButtonGroup from "../ButtonGroup/ButtonGroup";
+import './savannah.scss'
 import {
   gameEnding,
   loadWords,
   loadWordsSuccess,
 } from "../../../../store/actions/savannahAction";
-import {getWords} from "../../utils/wordRequest";
-import {StartGame} from "../StartGame";
-import GameButtonGroup from "../ButtonGroup/ButtonGroup";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import './savannah.scss'
-
 
 const styles = {
-  root: {
-  },
   title: {
     flexGrow: 1,
     textAlign: 'center',

@@ -1,11 +1,9 @@
 import React from "react";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import {withStyles} from "@material-ui/core/styles";
-import {CloseButton} from "../closeButton";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {Toolbar, withStyles, Typography} from "@material-ui/core";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import {CloseButton} from "../closeButton";
 
 const styles = {
   toolBar:{
