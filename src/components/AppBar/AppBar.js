@@ -16,6 +16,7 @@ import { Route, Switch } from 'react-router-dom'
 import HomePage from '../../pages/Home/HomePage'
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
 import SprintMiniGame from '../../pages/SprintMiniGame'
+import AudioCall from '../../pages/AudioCall/components/AudioCall'
 
 
 class PrimaryAppBar extends Component {
@@ -60,6 +61,7 @@ class PrimaryAppBar extends Component {
         <Route path='/home' component={HomePage}/>
         <Route path='/about' component={AboutTeamPage}/>
         <Route path='/sprint' component={SprintMiniGame}/>
+        <Route path='/audiocall' component={AudioCall}/>
       </Switch>
       </React.Fragment>
     );
