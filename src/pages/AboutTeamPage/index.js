@@ -1,3 +1,3 @@
-import { AboutTeamPage } from './AboutTeamPage'
+import AboutTeamPage  from './AboutTeamPage'
 
 export  { AboutTeamPage }

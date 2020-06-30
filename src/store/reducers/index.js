@@ -3,5 +3,6 @@ import authReducer from './authReducer';
 import wordsReducer from './wordsReducer';
 import { savannahReducer} from "./savannahReducer";
 import { combineReducers } from 'redux'
+import sprintReducer from "./sprintReducer";
 
-export default combineReducers({ appStateReducer, wordsReducer, authReducer, sprintReducer })
+export default combineReducers({ appStateReducer, wordsReducer, authReducer, sprintReducer, savannahReducer })
