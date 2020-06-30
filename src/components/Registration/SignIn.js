@@ -13,6 +13,7 @@ import logo from '../../assets/logo.png';
 import Login from './Login'
 import { Link as RouterLink } from 'react-router-dom';
 
+
 function Copyright () {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -46,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
-
+export default function SignIn(props) {
+  
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [emailError, checkEmail] = useState(false);
@@ -127,6 +128,7 @@ export default function SignIn() {
             email={emailError}
             password={passwordError}
             action='login'
+            store={props}
           >
             Sign In
           </Login>
