@@ -91,13 +91,46 @@ export const showCard = (maxIndx) => {
   })
 }
 
-export const loadGame = (difficulty, round) => {
-  return async dispatch => {
-    dispatch(hideWelcomeDialog())
-    dispatch(showLoader())
+export const getUserWords = async (id, token) => {
+  await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}/words`, {
+    method: 'GET',
+    withCredentials: true,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
+    }
+  }
+  )
+    .then(response => {
+      if (response.status === 404) {
+        throw new Error('404');
+      } else {
+        return response.json()
+      }
+    })
+}
+
+export const getCommonWords = async (difficulty, round) => {
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${round - 1}&group=${difficulty - 1}`
     const response = await fetch(url)
     const words = await response.json()
+    return words
+}
+
+export const loadGame = (userWords, difficulty, round, id, token) => {
+  return async dispatch => {
+    dispatch(hideWelcomeDialog())
+    dispatch(showLoader())
+    let words
+    if (userWords) {
+      try {
+        words = await getUserWords(id, token)
+      } catch (e) {
+        words = await getCommonWords(difficulty, round)
+      }
+    } else {
+      words = await getCommonWords(difficulty, round)
+    }
     setTimeout(() => {
       dispatch({ type: LOAD_GAME, payload: words })
       dispatch(hideLoader())

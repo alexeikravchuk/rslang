@@ -43,6 +43,11 @@ const MuiAvatar = withStyles((theme) => ({
 
 
 function WelcomeDialog(props) {
+
+  const { userWords, difficulty, round } = props.sprintState
+  const id = "5ef9e4aba0d86400172933fa";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjllNGFiYTBkODY0MDAxNzI5MzNmYSIsImlhdCI6MTU5MzQ1OTQ4OCwiZXhwIjoxNTkzNDczODg4fQ.pGbvA96sbP08m0kg-PH8wL0fXBJxAtKeoCQvKT2IHfs";
+
   if (props.sprintState.gameLoading) {
     return (
       <Loader />
@@ -102,7 +107,7 @@ function WelcomeDialog(props) {
             control={<Checkbox checked={props.sprintState.checked} onChange={props.handleChange} />}
             label="Use my dictionary"
           />
-          <Button autoFocus onClick={() => {props.loadGame(props.sprintState.difficulty, props.sprintState.round)}} color="primary">
+          <Button autoFocus onClick={() => {props.loadGame(userWords, difficulty, round, id, token)}} color="primary">
             Start game!
           </Button>
         </MuiDialogActions>
@@ -122,7 +127,7 @@ const mapDispatchToProps = dispatch => {
     handleChange: () => dispatch(userWords()),
     changeDifficulty: (value) => dispatch(changeDifficulty(value)),
     changeRound: (value) => dispatch(changeRound(value)),
-    loadGame: (difficulty, round) => dispatch(loadGame(difficulty, round)),
+    loadGame: (userWords, difficulty, round, id, token) => dispatch(loadGame(userWords, difficulty, round, id, token)),
     endGame: () => dispatch(endGame()),
   }
 }
