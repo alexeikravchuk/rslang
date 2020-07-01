@@ -1,0 +1,279 @@
+* {
+	margin: 0;
+    padding: 0;
+}
+
+html {
+    position: relative;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: #ddfaff;
+    overflow: hidden;
+}
+
+.wrapper {
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.word-cards {
+    display: flex;
+    width: 700px;
+    height: 400px;
+    margin: 50px auto;
+}
+
+.card-prev {
+    width: 50px;
+    background-color: pink;
+}
+
+.card-prev p {
+    font-size: 50px;
+    margin: 160px 4px;
+}
+
+.card {
+    width: 600px;
+    background-color: #4b909b;
+    border-radius: .5rem;
+}
+
+.card-next {
+    width: 50px;
+    background-color: pink;
+}
+
+.card-next p {
+    font-size: 50px;
+    margin: 160px 4px;
+}
+
+.card-header {
+    display: flex;
+    height: 50px;
+    padding: 1rem;
+    justify-content: space-between;
+}
+
+.current-word {
+    padding: 0;
+    align-items: center;
+    background: transparent;
+    border-radius: .5rem;
+    display: flex;
+}
+
+.dots {
+    display: flex;
+    padding-right: .5rem;
+}
+
+.dot {
+    background-color: pink;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 1rem .125rem;
+}
+
+.description {
+    color: pink;
+}
+
+.word-notes span {
+    font-size: 30px;
+    margin: 4px 8px 0 0;   
+}
+
+.dropdown {
+    display: none;
+}
+
+.dropdown div {
+    color: pink;
+    font-size: small;
+    text-decoration: underline;
+    margin-left: 140px;
+}
+
+.card-main {
+    height: 230px;
+}
+
+.word-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px;
+}
+
+.word-translation {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.transcription {
+    padding-bottom: 10px;
+}
+
+.input-word {
+    align-items: center;
+}
+
+.input {
+    height: 50px;
+    font-size: 20px;
+    padding: 0 .5em;
+}
+
+.word-image {
+    width: 200px;
+    height: 135px;
+    position: relative;
+}
+
+.word-examples {
+    padding: 2rem 1rem 1rem 1rem;
+}
+
+.word-examples div {
+    padding: 5px 0;
+}
+
+.meaning-translate {
+    display: none;
+}
+
+.example-translate {
+    display: none;
+}
+
+/* .card-footer {
+    display: flex;
+    height: 50px;
+    padding: 1rem;
+    justify-content: space-between;
+} */
+
+.spell {
+    margin: 15px;
+    cursor: pointer;
+}
+
+.notification {
+    width: 568px;
+    height: 20px;
+    background-color: pink;
+    border-radius: .2rem;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.stage {
+    display:flex;
+    margin: 40px 29%;
+}
+
+.number-start {
+    position: relative;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #338c99;
+    padding: 0 .5rem;
+    opacity: 1;
+    transition: opacity .25s;
+    width: 1.5rem;
+    text-align: end;
+    line-height: .8;
+    font-feature-settings: "lnum" on;
+}
+
+.number-progress {
+    width: calc(100% - 1rem);
+    height: .625rem;
+    max-width: 34.375rem;
+    background: #bddbdf;
+    border-radius: .312rem;
+}
+
+.progress-bar {
+    height: .625rem;
+    background: #338c99;
+    border-radius: .312rem;
+    transition: width .5s;
+}
+
+.number-end {
+    position: relative;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #338c99;
+    padding: 0 .5rem;
+    opacity: 1;
+    transition: opacity .25s;
+    width: 1.5rem;
+    text-align: end;
+    line-height: .8;
+    font-feature-settings: "lnum" on;
+}
+
+
+.prev {
+    cursor: pointer;
+}
+
+.next {
+    cursor: pointer;
+}
+
+/* .prev:hover {
+    animation: prev 1s linear infinite;
+}
+@keyframes prev {
+    0% {
+        left:0;
+    }
+    50% {
+        left:10px;
+    }
+    100% {
+        left:0;
+    }
+} */
+
+@keyframes prev {
+    15% {
+      
+      transform: translateX(9px);
+    }
+    30% {
+     
+      transform: translateX(-9px);
+    }
+    40% {
+    
+      transform: translateX(6px);
+    }
+    50% {
+   
+      transform: translateX(-6px);
+    }
+    65% {
+
+      transform: translateX(3px);
+    }
+    100% {
+
+      transform: translateX(0);
+    }
+  }
+  
+  .prev:hover {
+    
+    animation: swing 0.6s ease;
+    animation-iteration-count: 1;
+  }
