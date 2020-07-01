@@ -25,6 +25,9 @@ export const END_GAME = 'END_GAME';
 export const CHANGE_ROUND = 'CHANGE_ROUND';
 export const TIMER_FINISHED = 'TIMER_FINISHED';
 export const CLOSE_WINDOW = 'CLOSE_WINDOW';
+export const ADD_LEARNED_WORDS = 'LEARNED_WORDS';
+export const ADD_WRONG_WORDS = 'CLOSE_WINDOW';
+
 
 export const hideWelcomeDialog = () => {
   return ({
@@ -96,12 +99,26 @@ export const loadGame = (difficulty, round) => {
     const response = await fetch(url)
     const words = await response.json()
     setTimeout(() => {
-      dispatch({ type: LOAD_GAME, payload: words, })
+      dispatch({ type: LOAD_GAME, payload: words })
       dispatch(hideLoader())
       playSound(START_SOUND)
       dispatch(showCard(words.length))
-    }, 1200)
+    }, 1000)
   }
+}
+
+export const addLearnedWord = (wordIndex) => {
+  return ({
+    type: ADD_LEARNED_WORDS,
+    payload: wordIndex,
+  })
+}
+
+export const addWrongWord = (wordIndex) => {
+  return ({
+    type: ADD_WRONG_WORDS,
+    payload: wordIndex,
+  })
 }
 
 export const checkAnswer = (btnValue, sprintState) => {
@@ -114,6 +131,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: true,
         })
         playSound(CORRECT_ANSWER_SOUND)
+        dispatch(addLearnedWord(wordIndex))
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
@@ -121,6 +139,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: false,
         })
         playSound(WRONG_ANSWER_SOUND)
+        dispatch(addWrongWord(wordIndex))
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       }
     } else if (btnValue === WRONG_BTN_VALUE) {
@@ -130,6 +149,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: false,
         })
         playSound(WRONG_ANSWER_SOUND)
+        dispatch(addWrongWord(wordIndex))
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
@@ -137,6 +157,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: true,
         })
         playSound(CORRECT_ANSWER_SOUND)
+        dispatch(addLearnedWord(wordIndex))
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       }
     }

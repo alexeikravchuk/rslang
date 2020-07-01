@@ -16,6 +16,8 @@ import {
   CHANGE_ROUND,
   TIMER_FINISHED,
   CLOSE_WINDOW,
+  ADD_LEARNED_WORDS,
+  ADD_WRONG_WORDS
  } from './sprintActions';
 
 export {
@@ -39,5 +41,7 @@ export {
   END_GAME,
   CHANGE_ROUND,
   TIMER_FINISHED,
-  CLOSE_WINDOW
+  CLOSE_WINDOW,
+  ADD_LEARNED_WORDS,
+  ADD_WRONG_WORDS
 }

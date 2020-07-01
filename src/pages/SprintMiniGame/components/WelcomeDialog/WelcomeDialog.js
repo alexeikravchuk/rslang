@@ -43,7 +43,6 @@ const MuiAvatar = withStyles((theme) => ({
 
 
 function WelcomeDialog(props) {
-
   if (props.sprintState.gameLoading) {
     return (
       <Loader />
@@ -56,8 +55,6 @@ function WelcomeDialog(props) {
        fullWidth={true}
        maxWidth="sm"
        open={props.sprintState.open}
-       onBackdropClick={props.closeWindow}
-       onEscapeKeyDown={props.closeWindow}
        >
         <MuiDialogContent style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <MuiAvatar alt="logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} />
