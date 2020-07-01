@@ -12,21 +12,30 @@ class Puzzle{
 function game(){
 const c = document.getElementById("canvas");
 const ctx = c.getContext("2d");
-const word = 'Hello World'
+ctx.textAlign = "center";
+var my_gradient = ctx.createLinearGradient(0, 0, 0, 500);
+my_gradient.addColorStop(1, "grey");
+my_gradient.addColorStop(0, "white");
+const word = 'Hello'
 var capture=false;
 var x;
 var y;
-var j = 0;
+var j;
 var result = [];
 var data = [];
+var arrindex;
+var count = 0;
 ctx.font = "30px Verdana";
+gameLogic()
+function gameLogic(){
+    gameStart()
+    drow()
+}
 
 
-
-
-
-var arrindex = word.split('')
-console.log(arrindex)
+function gameStart(){
+    j = 0;
+arrindex = word.split('')
 for(let i=0; i<arrindex.length; i++){
     data[i] = new Puzzle({
         name: arrindex[i],
@@ -34,21 +43,22 @@ for(let i=0; i<arrindex.length; i++){
         cordY: Math.random() * (400 - 0) + 0
     })
 }
+}
 
-drow(data)
 
-function drow(data){
+function drow(){
     ctx.clearRect(0, 0, 900, 600);
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "grey";
     ctx.fillRect(0, 500, 900, 200);
     for(let i=0; i<data.length; i++){
 
        
-        ctx.fillStyle = "white";
+        ctx.fillStyle = my_gradient;
         ctx.fillRect(data[i].cordX, data[i].cordY, 100, 70);
         ctx.fillStyle = "black";
-        ctx.fillText(data[i].name, data[i].cordX+45, data[i].cordY+30);
-        ctx.fillText(result.join(''), 100, 100);
+        ctx.fillText(data[i].name, data[i].cordX+50, data[i].cordY+40);
+        ctx.fillText(result.join(''), 450, 550);
+        ctx.fillText(count, 800, 40);
         
     }
 }
@@ -84,6 +94,11 @@ c.onmousedown = function(e){
                 data[i].cordX = 900;
                 data[i].cordY = 0;
                 j++;
+                if (result.join('') === word){
+                    result = []
+                    gameLogic()
+                    count++
+                }
                 } else {
                      
                         data[i].cordX = Math.random() * (800 - 0) + 0;
@@ -93,7 +108,8 @@ c.onmousedown = function(e){
             }
             drow(data)
             ctx.fillStyle = "black";
-            ctx.fillText(result.join(''), 100, 100);
+            
+            
         }
 }
 

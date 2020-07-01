@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
 }
 
 code {
@@ -13,5 +13,5 @@ code {
     monospace;
 }
 canvas{
-  background-color: antiquewhite;
+  background-image: url(assets/background.jpg);
 }
