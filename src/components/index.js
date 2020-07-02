@@ -1,3 +1,3 @@
-import { PrimaryAppBar } from './AppBar';
+const { PrimaryAppBar } = require('./AppBar');
 
 export { PrimaryAppBar };
