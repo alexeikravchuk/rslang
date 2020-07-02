@@ -3,36 +3,24 @@ import { ControlBar } from '../ControlBar';
 import { Puzzle } from '../Puzzle';
 import { Buttons } from '../Buttons';
 import { ControlBarContext, PuzzleContext } from '../context';
-import { MAX_LEVEL } from '../../constants/constants';
+import { ROW_TYPE } from '../../constants/constants';
 
 import {
-  getTipsSettings,
   getImageSrc,
   getNumberOfPages,
   getCurrentPageWords,
   getPuzzles,
+  getDefaultState,
 } from '../../helpers';
 
 class MainPage extends Component {
-  state = {
-    level: {
-      current: 1,
-      maxLevel: MAX_LEVEL,
-    },
-    page: {
-      current: 1,
-      maxPage: 1,
-    },
-    activeTips: getTipsSettings(),
-    words: [],
-    currentSentence: 1,
-    puzzles: null,
-    puzzleResults: new Array(10).fill([]),
-    draggablePuzzle: null,
-    painting: null,
+  state = getDefaultState();
+
+  componentDidMount = () => {
+    this.setData();
   };
 
-  componentDidMount = async () => {
+  setData = async () => {
     this.setPainting();
     await Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]);
     await this.setPuzzles();
@@ -49,7 +37,10 @@ class MainPage extends Component {
   };
 
   setCurrentPageWords = async () => {
-    const words = await getCurrentPageWords(this.state.level.current, this.state.page.current);
+    const words = await getCurrentPageWords(
+      this.state.level.current - 1,
+      this.state.page.current - 1
+    );
     this.setState({ words });
   };
 
@@ -64,15 +55,16 @@ class MainPage extends Component {
 
   changeLevel = ({ target: { value } }) => {
     const { level } = this.state;
-    this.setState({ level: { ...level, current: value } });
+    this.setState({ ...getDefaultState(), level: { ...level, current: value } });
+    this.setData();
   };
   changePage = ({ target: { value } }) => {
     const { page } = this.state;
-    this.setState({ page: { ...page, current: value } });
+    this.setState({ ...getDefaultState(), page: { ...page, current: value } });
+    this.setData();
   };
 
   onDragStart = (event, dataItem) => {
-    console.log('dragstart on canvas: ', dataItem);
     event.dataTransfer.setData('dataItem', dataItem);
     this.setState({ draggablePuzzle: dataItem });
   };
@@ -81,30 +73,126 @@ class MainPage extends Component {
     event.preventDefault();
   };
 
-  onDrop = (event, position) => {
-    let dataItem = event.dataTransfer.getData('dataItem');
-    const { puzzleResults, currentSentence, puzzles } = this.state;
-    console.log(dataItem, position);
+  onDrop = (event, rowType) => {
+    const { dataTransfer, target, nativeEvent } = event;
 
-    const puzzle = puzzles[currentSentence - 1].filter(
-      (puzzle) => puzzle.props.dataItem === dataItem
-    );
+    let dataItem = dataTransfer.getData('dataItem');
 
     this.setState({ draggablePuzzle: null });
+    const droppedPuzzle = this.findPuzzle(dataItem);
 
-    console.log(puzzle[0]);
+    setTimeout(this.checkResult, 500);
 
-    if (position === 'result') {
-      puzzleResults[currentSentence - 1] = [...puzzleResults[currentSentence - 1], ...puzzle];
-      this.setState({ puzzleResults });
-
-      const rawPuzzles = puzzles[currentSentence - 1].filter(
-        (puzzle) => puzzle.props.dataItem !== dataItem
+    if (rowType === ROW_TYPE.RESULT && target.classList.contains('current-sentence')) {
+      this.removePuzzle(dataItem);
+      return this.addPuzzleToCurrentSentence(droppedPuzzle);
+    }
+    if (target.classList.contains('canvas-item')) {
+      this.removePuzzle(dataItem);
+      return this.addPuzzleBeside(
+        target,
+        target.getAttribute('data-item'),
+        nativeEvent.offsetX,
+        droppedPuzzle
       );
-      puzzles[currentSentence - 1] = [...rawPuzzles];
-      this.setState({ puzzles });
     }
   };
+
+  checkResult = () => {
+    const { puzzleResults, currentSentence, words } = this.state;
+    console.log(puzzleResults[currentSentence - 1], words[currentSentence - 1]);
+
+    const sentenceLength = +words[currentSentence - 1].wordsPerExampleSentence;
+    const isCorectOrder = puzzleResults[currentSentence - 1].every((item, i) => {
+      if (+item.key.split('-')[1] === i + 1) {
+        return true;
+      }
+      return false;
+    });
+    if (isCorectOrder && sentenceLength === puzzleResults[currentSentence - 1].length) {
+      return (
+        currentSentence < words.length && this.setState({ currentSentence: currentSentence + 1 })
+      );
+    }
+    return 0;
+  };
+
+  findPuzzle = (dataItem) => {
+    return this.findPuzzleInRaw(dataItem) || this.findPuzzleInResult(dataItem);
+  };
+
+  findPuzzleInRaw = (dataItem) => {
+    const { currentSentence, puzzles } = this.state;
+    return puzzles[currentSentence - 1].find((puzzle) => puzzle.props.dataItem === dataItem);
+  };
+
+  findPuzzleInResult = (dataItem) => {
+    const { puzzleResults, currentSentence } = this.state;
+    return puzzleResults[currentSentence - 1].find((puzzle) => puzzle.props.dataItem === dataItem);
+  };
+
+  findPuzzleIndexInRaw = (dataItem) => {
+    const { currentSentence, puzzles } = this.state;
+    return puzzles[currentSentence - 1].findIndex((puzzle) => puzzle.props.dataItem === dataItem);
+  };
+
+  findPuzzleIndexInResult = (dataItem) => {
+    const { puzzleResults, currentSentence } = this.state;
+    return puzzleResults[currentSentence - 1].findIndex(
+      (puzzle) => puzzle.props.dataItem === dataItem
+    );
+  };
+
+  removePuzzle = (dataItem) => {
+    this.removePuzzleFrom(dataItem, ROW_TYPE.RESULT);
+    this.removePuzzleFrom(dataItem, ROW_TYPE.RAW);
+  };
+
+  removePuzzleFrom = (dataItem, rowType) => {
+    const { puzzleResults, currentSentence, puzzles } = this.state;
+
+    if (rowType === ROW_TYPE.RESULT) {
+      const resultRow = this.filterRow(puzzleResults, dataItem);
+      puzzleResults[currentSentence - 1] = [...resultRow];
+    } else {
+      const rawRow = this.filterRow(puzzles, dataItem);
+      puzzles[currentSentence - 1] = [...rawRow];
+    }
+
+    this.setState({ puzzleResults, puzzles });
+  };
+
+  filterRow = (puzzles, dataItem) => {
+    const { currentSentence } = this.state;
+    return puzzles[currentSentence - 1].filter((puzzle) => puzzle.props.dataItem !== dataItem);
+  };
+
+  addPuzzleToCurrentSentence = (puzzle) => {
+    const { puzzleResults, currentSentence } = this.state;
+    puzzleResults[currentSentence - 1] = [...puzzleResults[currentSentence - 1], puzzle];
+    this.setState({ puzzleResults });
+  };
+
+  addPuzzleBeside(target, targetItem, offsetX, droppedPuzzle) {
+    if (offsetX < target.clientWidth / 2) {
+      return this.insertPuzzle('before', targetItem, droppedPuzzle);
+    }
+    return this.insertPuzzle('after', targetItem, droppedPuzzle);
+  }
+
+  insertPuzzle(place, targetItem, droppedPuzzle) {
+    const { puzzleResults, puzzles, currentSentence } = this.state;
+    if (this.findPuzzleInResult(targetItem)) {
+      let index = this.findPuzzleIndexInResult(targetItem);
+      index = place === 'after' ? index + 1 : index;
+      puzzleResults[currentSentence - 1].splice(index, 0, droppedPuzzle);
+    } else {
+      let index = this.findPuzzleIndexInRaw(targetItem);
+      index = place === 'after' ? index + 1 : index;
+      puzzles[currentSentence - 1].splice(index, 0, droppedPuzzle);
+    }
+    this.setState({ puzzleResults, puzzles });
+  }
 
   render() {
     const { level, page, puzzles, currentSentence, puzzleResults, draggablePuzzle } = this.state;

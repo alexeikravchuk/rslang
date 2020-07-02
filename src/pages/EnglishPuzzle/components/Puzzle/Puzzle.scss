@@ -28,7 +28,7 @@
       opacity: 0.4;
       height: 100%;
       width: calc(100% - 45px);
-      top: -4px;
+      top: 0px;
       left: 47px;
       -webkit-box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
       -moz-box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
@@ -55,11 +55,15 @@
       align-items: center;
       height: 40px;
       &-text_container {
+        margin-left: 2px;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         width: 100%;
         z-index: 6;
         height: 100%;
+        &.current-sentence {
+          justify-content: start;
+        }
         .canvas-item:not(:first-child) {
           margin-left: -7px;
         }
@@ -177,13 +181,12 @@
     height: 25px;
   }
   &:not(:first-child) {
-    margin-left: -2px;
+    margin-left: -3px;
   }
   &:last-child {
     margin-right: -10px;
   }
   &.dragged {
     opacity: 0.2;
-    box-shadow: inset 0 0 10px white, 0 0 2px 1px #774c8a;
   }
 }
