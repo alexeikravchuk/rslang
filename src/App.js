@@ -1,11 +1,21 @@
 import React from 'react';
-import Dictionary from './components/Dictionary/Dictionary.js';
+import './App.scss';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PrimaryAppBar from './components/AppBar/AppBar';
+import SignIn from './components/Registration/SignIn';
+import SignUp from './components/Registration/SignUp';
 
 function App() {
   return (
-    <div className="App">
-      <Dictionary />
-    </div>
+    <Router>
+      <Switch>
+        <Route path='/signin' component={SignIn} />
+        <Route path='/signup' component={SignUp} />
+        <Route path='/'>
+          <PrimaryAppBar />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
