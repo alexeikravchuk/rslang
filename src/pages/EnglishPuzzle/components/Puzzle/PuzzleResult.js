@@ -1,28 +1,36 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import { PuzzleContext } from '../context';
 
-class PuzzleResult extends Component {
-  render() {
-    return (
-      <div className='game--puzzle-results result'>
-        <div className='result-field--background'></div>
-        {new Array(10).fill(0).map((_, i) => (
-          <div className='result--sentence' key={'reault-' + i}>
-            <div
-              className={
-                'result--sentence-numeration' + (i > 1 ? ' hidden' : '')
-              }>
-              <span>{i + 1}</span>
-            </div>
-            <div
-              className={
-                'result--sentence-text_container' +
-                (i > 1 ? '' : ' current-sentence')
-              }></div>
+const PuzzleResult = () => {
+  const { puzzleResults, currentSentence } = useContext(PuzzleContext);
+
+  return (
+    <div className='game--puzzle-results result'>
+      <div className='result-field--background'></div>
+      {puzzleResults.map((puzzleRow, i) => (
+        <div className='result--sentence' key={'row' + i}>
+          <div
+            className={'result--sentence-numeration' + (i + 1 > currentSentence ? ' hidden' : '')}>
+            <span>{i + 1}</span>
           </div>
-        ))}
-      </div>
-    );
-  }
-}
+          {i + 1 === currentSentence ? (
+            <PuzzleContext.Consumer>
+              {({ onDragOver, onDrop }) => (
+                <div
+                  className='result--sentence-text_container'
+                  onDragOver={onDragOver}
+                  onDrop={(event) => onDrop(event, 'result')}>
+                  {puzzleRow}
+                </div>
+              )}
+            </PuzzleContext.Consumer>
+          ) : (
+            <div className='result--sentence-text_container'>{puzzleRow}</div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default PuzzleResult;

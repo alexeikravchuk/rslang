@@ -1,24 +1,26 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import SelectSwitcher from './SelectSwitcher';
-import { MAX_LEVEL } from '../../constants/constants';
+import { ControlBarContext } from '../context';
 
-class RaundSwitchers extends Component {
-  state = {
-    level: 1,
-    page: 1,
-  };
-  handleChange = (event) => {
-    this.setState(event.target.value);
-  };
-  render() {
-    const { level, page } = this.state;
-    return (
-      <form className='control--raunds'>
-        <SelectSwitcher name='level' value={level} maxValue={MAX_LEVEL} />
-        <SelectSwitcher name='page' value={page} maxValue={30} />
-      </form>
-    );
-  }
-}
+const RaundSwitchers = () => {
+  const { level, page, changeLevel, changePage } = useContext(ControlBarContext);
+
+  return (
+    <form className='control--raunds'>
+      <SelectSwitcher
+        name='level'
+        value={level.current}
+        maxValue={level.maxLevel}
+        changeValue={changeLevel}
+      />
+      <SelectSwitcher
+        name='page'
+        value={page.current}
+        maxValue={page.maxPage}
+        changeValue={changePage}
+      />
+    </form>
+  );
+};
 
 export default RaundSwitchers;

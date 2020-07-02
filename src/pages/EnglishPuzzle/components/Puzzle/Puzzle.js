@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PuzzleResult from './PuzzleResult';
-import PuzzleRow from './PuzzleRow';
+import PuzzleRaw from './PuzzleRaw';
 
 class Puzzle extends Component {
   render() {
     return (
       <div className='game--puzzle-wrapper'>
         <PuzzleResult />
-        <PuzzleRow />
+        <PuzzleRaw />
       </div>
     );
   }

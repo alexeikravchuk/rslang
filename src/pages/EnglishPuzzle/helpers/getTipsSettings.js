@@ -22,7 +22,7 @@ const checkPronunciationSetting = () => {
 const checkBackgroundImgSetting = () => {
   const isBackgroundImg = localStorage.isBackgroundImg
     ? JSON.parse(localStorage.isBackgroundImg)
-    : true;
+    : false;
   return isBackgroundImg;
 };
 
