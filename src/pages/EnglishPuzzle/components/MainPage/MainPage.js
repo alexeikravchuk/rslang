@@ -20,10 +20,20 @@ class MainPage extends Component {
     this.setData();
   };
 
-  setData = async () => {
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevState.page.current !== this.state.page.current ||
+      prevState.level.current !== this.state.level.current
+    ) {
+      this.resetLevel();
+    }
+  };
+
+  setData = () => {
     this.setPainting();
-    await Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]);
-    await this.setPuzzles();
+    Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]).then(() =>
+      this.setPuzzles()
+    );
   };
 
   setPainting = () => {
@@ -55,12 +65,20 @@ class MainPage extends Component {
 
   changeLevel = ({ target: { value } }) => {
     const { level } = this.state;
-    this.setState({ ...getDefaultState(), level: { ...level, current: value } });
-    this.setData();
+    this.setState({ level: { ...level, current: value } });
   };
   changePage = ({ target: { value } }) => {
     const { page } = this.state;
     this.setState({ ...getDefaultState(), page: { ...page, current: value } });
+  };
+
+  resetLevel = () => {
+    this.setState({
+      currentSentence: 1,
+      puzzles: null,
+      puzzleResults: new Array(10).fill([]),
+      draggablePuzzle: null,
+    });
     this.setData();
   };
 
@@ -167,7 +185,9 @@ class MainPage extends Component {
 
   filterRow = (puzzles, dataItem) => {
     const { currentSentence } = this.state;
-    return puzzles[currentSentence - 1].filter((puzzle) => puzzle.props.dataItem !== dataItem);
+    return puzzles[currentSentence - 1].filter(
+      (puzzle) => puzzle && puzzle.props.dataItem !== dataItem
+    );
   };
 
   addPuzzleToCurrentSentence = (puzzle) => {
@@ -199,7 +219,7 @@ class MainPage extends Component {
 
   handlePuzzleClick = ({ target, currentTarget, nativeEvent }) => {
     const dataItem = target.getAttribute('data-item');
-    if (currentTarget.classList.contains('raw')) {
+    if (currentTarget.classList.contains('raw') && target.classList.contains('canvas-item')) {
       return this.movePuzzleFromRawToSentence(dataItem);
     }
     if (currentTarget.className.includes('current') && target.classList.contains('canvas-item')) {
@@ -211,6 +231,7 @@ class MainPage extends Component {
     const puzzle = this.findPuzzleInRaw(dataItem);
     this.removePuzzleFrom(dataItem, ROW_TYPE.RAW);
     this.addPuzzleToCurrentSentence(puzzle);
+    this.setState({ draggablePuzzle: null });
     return this.checkResult();
   };
 
@@ -226,16 +247,43 @@ class MainPage extends Component {
     return this.setState({ draggablePuzzle: dataItem });
   };
 
+  handleControlButtonClick = ({ currentTarget: { className } }) => {
+    const { activeTips } = this.state;
+    const { isAutoplay, isTranslate, isPronunciation, isBackgroundImg } = activeTips;
+    if (className.includes('autoplay')) {
+      return this.setState({ activeTips: { ...activeTips, isAutoplay: !isAutoplay } });
+    }
+    if (className.includes('translate')) {
+      return this.setState({ activeTips: { ...activeTips, isTranslate: !isTranslate } });
+    }
+    if (className.includes('listen')) {
+      return this.setState({ activeTips: { ...activeTips, isPronunciation: !isPronunciation } });
+    }
+    if (className.includes('image')) {
+      return this.setState({ activeTips: { ...activeTips, isBackgroundImg: !isBackgroundImg } });
+    }
+  };
+
   render() {
-    const { level, page, puzzles, currentSentence, puzzleResults, draggablePuzzle } = this.state;
+    const {
+      level,
+      page,
+      puzzles,
+      currentSentence,
+      puzzleResults,
+      draggablePuzzle,
+      activeTips,
+    } = this.state;
     return (
       <div className='game--wrapper'>
         <ControlBarContext.Provider
           value={{
             level,
             page,
+            activeTips,
             changeLevel: this.changeLevel,
             changePage: this.changePage,
+            onControlButtonClick: this.handleControlButtonClick,
           }}>
           <ControlBar />
         </ControlBarContext.Provider>
