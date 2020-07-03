@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import {difficultyChange} from "../../../../store/actions/savannahAction";
-import {connect} from "react-redux";
+import {difficultyChange} from '../../../../store/actions/savannahAction';
+import {connect} from 'react-redux';
 
 const styles = {
   gameSliderRoot: {
@@ -29,8 +29,8 @@ function GameSlider(props){
           onChangeCommitted={(e, val) => onChange(val)}
           value = {difficulty}
           getAriaValueText={valuetext}
-          aria-labelledby="discrete-slider"
-          valueLabelDisplay="auto"
+          aria-labelledby='discrete-slider'
+          valueLabelDisplay='auto'
           step={1}
           marks
           min={0}

@@ -1,6 +1,5 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import {makeStyles} from "@material-ui/core";
+import React from 'react';
+import {makeStyles, Button} from '@material-ui/core';
 
 const useStyles = makeStyles((theme)=> ({
   button: {
@@ -15,14 +14,13 @@ const useStyles = makeStyles((theme)=> ({
   },
 }));
 
-export default (props) => {
+export default ({onClick, key, disabled, title}) => {
   const classes = useStyles();
   return (
-      <Button key={props.key} variant={'outlined'}
-              className={classes.button}
-              onClick={props.onClick}
-              disabled={props.disabled}>
-        {props.title}
+      <Button key={key} variant={'outlined'} className={classes.button}
+        onClick={onClick}
+        disabled={disabled}>
+        {title}
       </Button>
     )
 }

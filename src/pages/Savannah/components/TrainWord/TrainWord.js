@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Container, Typography, withStyles} from "@material-ui/core";
+import React, {Component} from 'react';
+import {Container, Typography, withStyles} from '@material-ui/core';
 import './TrainWord.scss'
 import {playSound} from "../../utils/utils";
 
@@ -33,14 +33,14 @@ class TrainWord extends Component{
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, onAnimationStart, onAnimationEnd, currentWord} = this.props;
     return (
-      <div onAnimationStart={this.props.onAnimationStart}
-           onAnimationEnd={this.props.onAnimationEnd}
+      <div onAnimationStart={onAnimationStart}
+           onAnimationEnd={onAnimationEnd}
            className={'animate'}>
         <Container className={classes.trainWordRoot}>
           <Typography  variant={'h6'} className={classes.title}>
-            {this.props.currentWord.word}
+            {currentWord.word}
           </Typography>
         </Container>
       </div>

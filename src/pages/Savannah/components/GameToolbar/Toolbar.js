@@ -1,15 +1,15 @@
-import React from "react";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {Toolbar, withStyles, Typography} from "@material-ui/core";
+import React from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {Toolbar, withStyles, Typography} from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import {CloseButton} from "../closeButton";
+import {CloseButton} from '../closeButton';
 
 const styles = {
   toolBar:{
-    position: "relative",
-    textAlign: "center",
-    color: "#662246",
+    position: 'relative',
+    textAlign: 'center',
+    color: '#662246',
     zIndex: 10,
   },
   title: {
@@ -24,14 +24,14 @@ function lifeCounterFunction(lifeCounter) {
 }
 
 function GameToolbar(props){
-  const { classes, title, to, onClose} = props;
+  const { classes, title, to, onClose, gameStarted, lifeCounter} = props;
   return (
     <Toolbar className={classes.toolBar}>
       <Typography variant={'h4'} className={classes.title}>
         {title}
       </Typography>
-      {props.gameStarted &&
-        lifeCounterFunction(props.lifeCounter)
+      {gameStarted &&
+        lifeCounterFunction(lifeCounter)
       }
       <Link to={to} >
         <CloseButton onClick={onClose}/>

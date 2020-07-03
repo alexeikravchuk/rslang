@@ -1,24 +1,24 @@
-import React  from "react";
-import {connect} from "react-redux";
+import React  from 'react';
+import {connect} from 'react-redux';
 import { withStyles, Card, Dialog, Container, Typography } from '@material-ui/core';
-import Background from "../background/Background";
-import {GameToolbar} from "../GameToolbar";
-import {SavannahButton} from "../SavannahButton";
-import {gameStarting} from "../../../../store/actions/savannahAction";
-import GameSlider from "../GameSlider/GameSlider";
+import Background from '../background/Background';
+import {GameToolbar} from '../GameToolbar';
+import {SavannahButton} from '../SavannahButton';
+import {gameStarting} from '../../../../store/actions/savannahAction';
+import GameSlider from '../GameSlider/GameSlider';
 import './StartGame.scss'
 
 const styles = {
   contentDialog: {
     height: '100vh',
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   contentText:{
     color: 'wheat',
-    marginBottom: "1rem",
+    marginBottom: '1rem',
   },
   title: {
     zIndex: 2000,
@@ -36,11 +36,11 @@ const styles = {
 };
 
 function StartGame(props) {
-  const {classes} = props;
+  const {classes, gameStarting} = props;
   const [open, setOpen] = React.useState(true);
   const handleClose = () => {
     setOpen(false)
-    props.gameStarting();
+    gameStarting();
   };
   return (
       <Dialog

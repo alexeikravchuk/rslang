@@ -1,14 +1,17 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {withStyles, Container, Slide} from "@material-ui/core";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {withStyles, Container, Slide} from '@material-ui/core';
 import {randomInteger, shuffleArray} from '../../utils/utils'
-import {SavannahButton} from "../SavannahButton";
-import TrainWord from "../TrainWord/TrainWord";
+import {SavannahButton} from '../SavannahButton';
+import TrainWord from '../TrainWord/TrainWord';
 import {
   addLearnedWords, addMissedWords,
   gameEnding,
   lifeDecrease, removeWord,
-} from "../../../../store/actions/savannahAction";
+} from '../../../../store/actions/savannahAction';
+
+const wordsLimit = 30;
+const buttonLimit = 4;
 
 const styles = {
   buttonGroupRoot:{
@@ -37,7 +40,7 @@ class GameButtonGroup extends Component {
 
   loadNewWords(){
     if(this.props.newWords.length < 5) {
-      this.props.fetch(randomInteger(0,30), this.props.difficulty);
+      this.props.fetch(randomInteger(0,wordsLimit), this.props.difficulty);
     }
   }
 
@@ -71,7 +74,7 @@ class GameButtonGroup extends Component {
   }
 
   componentDidMount() {
-    this.props.fetch(randomInteger(0,30), this.props.difficulty);
+    this.props.fetch(randomInteger(0,wordsLimit), this.props.difficulty);
     this.setState({showWord: true})
   }
 
@@ -94,7 +97,7 @@ class GameButtonGroup extends Component {
         {this.state.showWord &&
         <Slide direction={'up'} in={this.state.showWord}>
           <Container className={classes.buttonGroupRoot}>
-          {shuffleArray(newWords.slice(0, 4)).map((el) => {
+          {shuffleArray(newWords.slice(0, buttonLimit)).map((el) => {
             return (
                 <SavannahButton key={el.id}
                                 title={el.wordTranslate}

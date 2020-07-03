@@ -1,23 +1,23 @@
-import React, {Component} from "react";
-import {withStyles, Container, CircularProgress} from "@material-ui/core";
-import {connect} from "react-redux";
-import GameToolbar from "../GameToolbar/Toolbar";
-import {Statistics} from "../Statistics";
-import {getWords} from "../../utils/wordRequest";
-import {StartGame} from "../StartGame";
-import GameButtonGroup from "../ButtonGroup/ButtonGroup";
+import React, {Component} from 'react';
+import {withStyles, Container, CircularProgress} from '@material-ui/core';
+import {connect} from 'react-redux';
+import GameToolbar from '../GameToolbar/Toolbar';
+import {Statistics} from '../Statistics';
+import {getWords} from '../../utils/wordRequest';
+import {StartGame} from '../StartGame';
+import GameButtonGroup from '../ButtonGroup/ButtonGroup';
 import './savannah.scss'
 import {
   gameEnding,
   loadWords,
   loadWordsSuccess,
-} from "../../../../store/actions/savannahAction";
+} from '../../../../store/actions/savannahAction';
 
 const styles = {
   title: {
     flexGrow: 1,
     textAlign: 'center',
-    color: "#662246",
+    color: '#662246',
   },
   loader: {
     position: 'relative',
@@ -39,16 +39,16 @@ class Savannah extends Component{
     )
   }
   render() {
-    const { classes } = this.props;
+    const { classes, loading, gameStarted, onClose, gameEnd, fetchWords} = this.props;
     return (
       <div  className={'mainGame'}>
-        {this.props.loading && this.loader(classes.loader)}
-        {(this.props.gameStarted && !this.props.loading) && <GameToolbar title={''} onClose={this.props.onClose}/>}
+        {loading && this.loader(classes.loader)}
+        {(gameStarted && !loading) && <GameToolbar title={''} onClose={onClose}/>}
         <Container className={'savannahRoot'}>
-          {this.props.gameStarted === false && <StartGame />}
-          {this.props.gameEnd && <Statistics />}
-          {(this.props.gameStarted && !this.props.gameEnd) && <GameButtonGroup
-            fetch={this.props.fetchWords}
+          {gameStarted === false && <StartGame />}
+          {gameEnd && <Statistics />}
+          {(gameStarted && !gameEnd) && <GameButtonGroup
+            fetch={fetchWords}
             visible={true}
           />}
         </Container>
