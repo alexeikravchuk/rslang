@@ -65,6 +65,7 @@ class MainPage extends Component {
   };
 
   onDragStart = (event, dataItem) => {
+    if (this.state.currentSentence !== +dataItem.slice(0, 1)) return;
     event.dataTransfer.setData('dataItem', dataItem);
     this.setState({ draggablePuzzle: dataItem });
   };
@@ -77,6 +78,7 @@ class MainPage extends Component {
     const { dataTransfer, target, nativeEvent } = event;
 
     let dataItem = dataTransfer.getData('dataItem');
+    if (this.state.currentSentence !== +dataItem.slice(0, 1)) return;
 
     this.setState({ draggablePuzzle: null });
     const droppedPuzzle = this.findPuzzle(dataItem);
@@ -100,7 +102,6 @@ class MainPage extends Component {
 
   checkResult = () => {
     const { puzzleResults, currentSentence, words } = this.state;
-    console.log(puzzleResults[currentSentence - 1], words[currentSentence - 1]);
 
     const sentenceLength = +words[currentSentence - 1].wordsPerExampleSentence;
     const isCorectOrder = puzzleResults[currentSentence - 1].every((item, i) => {
@@ -128,7 +129,9 @@ class MainPage extends Component {
 
   findPuzzleInResult = (dataItem) => {
     const { puzzleResults, currentSentence } = this.state;
-    return puzzleResults[currentSentence - 1].find((puzzle) => puzzle.props.dataItem === dataItem);
+    return puzzleResults[currentSentence - 1].find(
+      (puzzle) => puzzle && puzzle.props.dataItem === dataItem
+    );
   };
 
   findPuzzleIndexInRaw = (dataItem) => {
@@ -139,7 +142,7 @@ class MainPage extends Component {
   findPuzzleIndexInResult = (dataItem) => {
     const { puzzleResults, currentSentence } = this.state;
     return puzzleResults[currentSentence - 1].findIndex(
-      (puzzle) => puzzle.props.dataItem === dataItem
+      (puzzle) => puzzle && puzzle.props.dataItem === dataItem
     );
   };
 
@@ -194,6 +197,35 @@ class MainPage extends Component {
     this.setState({ puzzleResults, puzzles });
   }
 
+  handlePuzzleClick = ({ target, currentTarget, nativeEvent }) => {
+    const dataItem = target.getAttribute('data-item');
+    if (currentTarget.classList.contains('raw')) {
+      return this.movePuzzleFromRawToSentence(dataItem);
+    }
+    if (currentTarget.className.includes('current') && target.classList.contains('canvas-item')) {
+      return this.swabPuzzles(target, dataItem, nativeEvent.offsetX);
+    }
+  };
+
+  movePuzzleFromRawToSentence = (dataItem) => {
+    const puzzle = this.findPuzzleInRaw(dataItem);
+    this.removePuzzleFrom(dataItem, ROW_TYPE.RAW);
+    this.addPuzzleToCurrentSentence(puzzle);
+    return this.checkResult();
+  };
+
+  swabPuzzles = (target, dataItem, offsetX) => {
+    const { draggablePuzzle } = this.state;
+    if (draggablePuzzle) {
+      const droppedPuzzle = this.findPuzzleInResult(draggablePuzzle);
+      this.setState({ draggablePuzzle: null });
+      this.removePuzzleFrom(draggablePuzzle, ROW_TYPE.RESULT);
+      this.addPuzzleBeside(target, dataItem, offsetX, droppedPuzzle);
+      return this.checkResult();
+    }
+    return this.setState({ draggablePuzzle: dataItem });
+  };
+
   render() {
     const { level, page, puzzles, currentSentence, puzzleResults, draggablePuzzle } = this.state;
     return (
@@ -216,6 +248,7 @@ class MainPage extends Component {
             onDragStart: this.onDragStart,
             onDragOver: this.onDragOver,
             onDrop: this.onDrop,
+            onPuzzleClick: this.handlePuzzleClick,
           }}>
           <Puzzle />
         </PuzzleContext.Provider>

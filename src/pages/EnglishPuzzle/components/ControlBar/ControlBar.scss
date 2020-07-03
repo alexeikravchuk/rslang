@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
 .game--control-wrapper {
   margin-top: 25px;
   padding: 0 10px;
@@ -23,8 +25,7 @@
   background: linear-gradient(#d8b9fc, #757475);
   border: 1px solid rgba(33, 43, 52, 1);
   border-radius: 5px;
-  box-shadow: inset 0 1px #93729e, inset 0 0 1px #a07cacc0, 0 1px #9d5bb3,
-    0 0 1px #4e3955;
+  box-shadow: inset 0 1px #93729e, inset 0 0 1px #a07cacc0, 0 1px #9d5bb3, 0 0 1px #4e3955;
   @media screen and (max-width: 400px) {
     margin-bottom: 10px;
   }
@@ -54,8 +55,7 @@
     margin: 0 4px;
     border: 1px solid rgba(33, 43, 52, 1);
     border-radius: 3px;
-    box-shadow: inset 0 1px #93729e, inset 0 0 1px #a07cacc0, 0 1px #9d5bb3,
-      0 0 1px #4e3955;
+    box-shadow: inset 0 1px #93729e, inset 0 0 1px #a07cacc0, 0 1px #9d5bb3, 0 0 1px #4e3955;
     transition: 0.3s ease-in;
     &.disabled {
       background: linear-gradient(#757475, #d8b9fc);

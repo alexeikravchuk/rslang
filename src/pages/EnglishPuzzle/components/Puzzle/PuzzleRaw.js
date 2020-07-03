@@ -6,11 +6,12 @@ const PuzzleRaw = () => {
 
   return (
     <PuzzleContext.Consumer>
-      {({ onDragOver, onDrop }) => (
+      {({ onDragOver, onDrop, onPuzzleClick }) => (
         <div
           className='game--puzzle-raw raw'
           onDragOver={onDragOver}
-          onDrop={(event) => onDrop(event, 'raw')}>
+          onDrop={(event) => onDrop(event, 'raw')}
+          onClick={onPuzzleClick}>
           {puzzles && puzzles[currentSentence - 1]}
         </div>
       )}

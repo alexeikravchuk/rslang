@@ -15,13 +15,14 @@ const PuzzleResult = () => {
           </div>
           {i + 1 === currentSentence ? (
             <PuzzleContext.Consumer>
-              {({ onDragOver, onDrop }) => (
+              {({ onDragOver, onDrop, onPuzzleClick }) => (
                 <div
                   className={`result--sentence-text_container${
                     i + 1 === currentSentence ? ' current-sentence' : ''
                   }`}
                   onDragOver={onDragOver}
-                  onDrop={(event) => onDrop(event, 'result')}>
+                  onDrop={(event) => onDrop(event, 'result')}
+                  onClick={onPuzzleClick}>
                   {puzzleRow}
                 </div>
               )}
