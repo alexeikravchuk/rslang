@@ -24,25 +24,24 @@ function lifeCounterFunction(lifeCounter) {
 }
 
 function GameToolbar(props){
-  const { classes } = props;
+  const { classes, title, to, onClose} = props;
   return (
     <Toolbar className={classes.toolBar}>
       <Typography variant={'h4'} className={classes.title}>
-        {props.title}
+        {title}
       </Typography>
       {props.gameStarted &&
         lifeCounterFunction(props.lifeCounter)
       }
-      <Link to={props.to} >
-        <CloseButton onClick={props.onClose}/>
+      <Link to={to} >
+        <CloseButton onClick={onClose}/>
       </Link>
     </Toolbar>
   )
 }
 
-const mapStateToProps = (store) => {
-  return { lifeCounter: store.savannahReducer.lifeCounter,
-  gameStarted: store.savannahReducer.gameStarted}
+const mapStateToProps = ({ savannahReducer: { lifeCounter, gameStarted } }) => {
+  return { lifeCounter, gameStarted }
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(GameToolbar))

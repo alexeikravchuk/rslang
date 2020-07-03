@@ -1,5 +1,7 @@
 .animate{
   animation: container 4000ms ease-in;
+  width: 300px;
+  margin: 0 auto;
 }
 
 @keyframes  container {

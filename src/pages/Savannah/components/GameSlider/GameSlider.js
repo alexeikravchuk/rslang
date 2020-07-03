@@ -22,12 +22,12 @@ function valuetext(value) {
 }
 
 function GameSlider(props){
-  const {classes} = props;
+  const {classes, difficulty, onChange} = props;
     return (
       <div className={classes.gameSliderRoot}>
         <Slider
-          onChangeCommitted={(e, val) => props.onChange(val)}
-          value = {props.difficulty}
+          onChangeCommitted={(e, val) => onChange(val)}
+          value = {difficulty}
           getAriaValueText={valuetext}
           aria-labelledby="discrete-slider"
           valueLabelDisplay="auto"

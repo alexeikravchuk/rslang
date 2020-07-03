@@ -10,7 +10,6 @@ import {
   lifeDecrease, removeWord,
 } from "../../../../store/actions/savannahAction";
 
-
 const styles = {
   buttonGroupRoot:{
     display: 'flex',
@@ -28,8 +27,6 @@ const defaultState = {
 class GameButtonGroup extends Component {
   constructor(props) {
     super(props);
-    this.setEnd = this.setEnd.bind(this)
-    this.setStart = this.setStart.bind(this)
     this.state = {
       showWord: false,
       animationEnded: true,
@@ -60,8 +57,6 @@ class GameButtonGroup extends Component {
     this.setState({animationEnded: false, showWord: true, trainWord: this.props.newWords[0]});
   }
 
-  wordTranslate;
-
   checkWord(wordToCheck){
     const {trainWord} = this.state;
     return (wordToCheck === trainWord.word) ? this.props.onGuess(trainWord) : this.props.onMiss(this.props.lifeCounter, trainWord);
@@ -87,19 +82,19 @@ class GameButtonGroup extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, newWords, } = this.props;
     return (
       <div>
-        {(this.props.newWords.length > 0 && this.state.showWord) &&
+        {(newWords.length > 0 && this.state.showWord) &&
         <TrainWord
-          currentWord={this.props.newWords[0]}
+          currentWord={newWords[0]}
           onAnimationStart={this.setStart.bind(this)}
           onAnimationEnd={this.setEnd.bind(this)}
         />}
         {this.state.showWord &&
         <Slide direction={'up'} in={this.state.showWord}>
           <Container className={classes.buttonGroupRoot}>
-          {shuffleArray(this.props.newWords.slice(0, 4)).map((el) => {
+          {shuffleArray(newWords.slice(0, 4)).map((el) => {
             return (
                 <SavannahButton key={el.id}
                                 title={el.wordTranslate}

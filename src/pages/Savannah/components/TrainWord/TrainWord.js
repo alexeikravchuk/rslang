@@ -4,11 +4,11 @@ import './TrainWord.scss'
 import {playSound} from "../../utils/utils";
 
 const styles = theme => ({
-  root:{
+  trainWordRoot:{
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'center',
-    height: '60vh'
+    height: '60vh',
   },
   title:{
     ...theme.typography.button,
@@ -38,7 +38,7 @@ class TrainWord extends Component{
       <div onAnimationStart={this.props.onAnimationStart}
            onAnimationEnd={this.props.onAnimationEnd}
            className={'animate'}>
-        <Container className={classes.root}>
+        <Container className={classes.trainWordRoot}>
           <Typography  variant={'h6'} className={classes.title}>
             {this.props.currentWord.word}
           </Typography>
