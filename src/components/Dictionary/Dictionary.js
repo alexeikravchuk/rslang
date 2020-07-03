@@ -1,5 +1,7 @@
 import React from 'react';
 import './Dictionary.css';
+import { URL } from './constants';
+import { getWords } from './getWords.js'
 
 class Dictionary extends React.Component {
   
@@ -29,13 +31,7 @@ class Dictionary extends React.Component {
     }
   }
 
-  async getWords(page, category){
-    const response = await fetch (`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${category}`)
-    const data = await response.json();
-    return data;
-  }
-
-  newWords = (data, category) => {
+  getNewWords = (data, category) => {
     let words = []
     let transcriptions = []
     let translations = []
@@ -47,7 +43,8 @@ class Dictionary extends React.Component {
       audios.push(item.audio)
     })
     words = words.map((item, index) => 
-    <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.playAudioWords(`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
+    <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span>
+    <button onClick={()=>{this.playAudioWords(`${URL}${audios[index]}`)}}>Spell IT</button></div>)
     this.setState({
       content: words,
       category: category,
@@ -55,7 +52,8 @@ class Dictionary extends React.Component {
     });
   };
 
-  nextWords = (data, counter) => {
+  getNextWords = (data, counter) => {
+    // const URL = "https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/";
     if(this.state.count < 1){
       this.setState({
         count: 0
@@ -73,7 +71,8 @@ class Dictionary extends React.Component {
         audios.push(item.audio)
       })
       words = words.map((item, index) => 
-      <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span><button onClick={()=>{this.playAudioWords(`https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/${audios[index]}`)}}>Spell IT</button></div>)
+      <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span>
+      <button onClick={()=>{this.playAudioWords(`${URL}${audios[index]}`)}}>Spell IT</button></div>)
       this.setState({
         content: words,
         count: counter + 1
@@ -84,7 +83,15 @@ class Dictionary extends React.Component {
         count: 30
       });
     }
-  };  
+  };
+
+  handleCategory = (categoryNumber) => {
+    getWords(0, categoryNumber).then((data)=>{this.getNewWords(data, categoryNumber)})
+  }
+
+  handleMoreWords = () => {
+    getWords(this.state.count, this.state.category).then((data)=>{this.getNextWords(data, this.state.count)})
+  }
  
   render(){
     return (
@@ -92,17 +99,17 @@ class Dictionary extends React.Component {
         <h2>Word Categories</h2>
         <p className="select-category"><i>Select a category</i></p>
         <div className="category">
-          <a onClick={()=>this.getWords(0, 0).then((data)=>{this.newWords(data, 0)})} href="#anchor">category1</a>
-          <a onClick={()=>this.getWords(0, 1).then((data)=>{this.newWords(data, 1)})} href="#anchor">category2</a>
-          <a onClick={()=>this.getWords(0, 2).then((data)=>{this.newWords(data, 2)})} href="#anchor">category3</a>
-          <a onClick={()=>this.getWords(0, 3).then((data)=>{this.newWords(data, 3)})} href="#anchor">category4</a>
-          <a onClick={()=>this.getWords(0, 4).then((data)=>{this.newWords(data, 4)})} href="#anchor">category5</a>
-          <a onClick={()=>this.getWords(0, 5).then((data)=>{this.newWords(data, 5)})} href="#anchor">category6</a>
+          <a onClick={()=>this.handleCategory(0)} href="#anchor">category1</a>
+          <a onClick={()=>this.handleCategory(1)} href="#anchor">category2</a>
+          <a onClick={()=>this.handleCategory(2)} href="#anchor">category3</a>
+          <a onClick={()=>this.handleCategory(3)} href="#anchor">category4</a>
+          <a onClick={()=>this.handleCategory(4)} href="#anchor">category5</a>
+          <a onClick={()=>this.handleCategory(5)} href="#anchor">category6</a>
         </div>
         <h2 id="anchor">Essential english words</h2>
         <div className="dictionaryPage">{this.state.content}</div>
         <button className="show">
-          <a onClick={()=>this.getWords(this.state.count, this.state.category).then((data)=>{this.nextWords(data, this.state.count)})}className="more" href="#anchor">Show more words</a>
+          <a onClick={()=>this.handleMoreWords()} className="more" href="#anchor">Show more words</a>
         </button>
         <p className="page">Results page {this.state.count}</p>
       </div>

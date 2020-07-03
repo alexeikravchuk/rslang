@@ -22,7 +22,7 @@ import {
     },
     {
       title: 'Vocabulary',
-      link: '#vocabulary',
+      link: '/dictionary',
       icon: <MenuBook color='primary' />,
       type: 'primary',
     },
