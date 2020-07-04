@@ -8,7 +8,8 @@ import {
   WRONG_BTN_VALUE,
   MAX_XP_LEVEL,
   XP_STEPPER_NUMBER,
-  RIGHT_CARD_CHANCE
+  RIGHT_CARD_CHANCE,
+  SERVER_URL,
 } from '../../pages/SprintMiniGame/constants/constants'
 import { playSound } from '../../pages/SprintMiniGame/utils/playSound'
 
@@ -92,7 +93,7 @@ export const showCard = (maxIndx) => {
 }
 
 export const getUserWords = async (id, token) => {
-  await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}/words`, {
+  await fetch(`${SERVER_URL}users/${id}/words`, {
     method: 'GET',
     withCredentials: true,
     headers: {
@@ -111,7 +112,7 @@ export const getUserWords = async (id, token) => {
 }
 
 export const getCommonWords = async (difficulty, round) => {
-    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${round - 1}&group=${difficulty - 1}`
+    const url = `${SERVER_URL}words?page=${round - 1}&group=${difficulty - 1}`
     const response = await fetch(url)
     const words = await response.json()
     return words
