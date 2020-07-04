@@ -11,29 +11,45 @@ import {
   getCurrentPageWords,
   getPuzzles,
   getDefaultState,
+  saveTipsSetting,
+  playSentence,
 } from '../../helpers';
 
 class MainPage extends Component {
   state = getDefaultState();
 
-  componentDidMount = () => {
-    this.setData();
-  };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (
-      prevState.page.current !== this.state.page.current ||
-      prevState.level.current !== this.state.level.current
-    ) {
-      this.resetLevel();
+  componentDidMount = async () => {
+    await this.setData();
+    if (this.state.activeTips.isAutoplay) {
+      playSentence(this.state.words[0]);
     }
   };
 
-  setData = () => {
+  componentDidUpdate = (prevProps, prevState) => {
+    const {
+      page,
+      level,
+      activeTips,
+      activeTips: { isAutoplay, isTranslate, isPronunciation, isBackgroundImg },
+    } = this.state;
+    if (prevState.page.current !== page.current || prevState.level.current !== level.current) {
+      return this.resetLevel();
+    }
+    if (
+      prevState.activeTips.isAutoplay !== isAutoplay ||
+      prevState.activeTips.isTranslate !== isTranslate ||
+      prevState.activeTips.isPronunciation !== isPronunciation ||
+      prevState.activeTips.isBackgroundImg !== isBackgroundImg
+    ) {
+      return saveTipsSetting(activeTips);
+    }
+  };
+
+  setData = async () => {
     this.setPainting();
-    Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]).then(() =>
-      this.setPuzzles()
-    );
+    await Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]);
+    await this.setPuzzles();
+    return 1;
   };
 
   setPainting = () => {
@@ -250,6 +266,7 @@ class MainPage extends Component {
   handleControlButtonClick = ({ currentTarget: { className } }) => {
     const { activeTips } = this.state;
     const { isAutoplay, isTranslate, isPronunciation, isBackgroundImg } = activeTips;
+
     if (className.includes('autoplay')) {
       return this.setState({ activeTips: { ...activeTips, isAutoplay: !isAutoplay } });
     }
@@ -268,6 +285,7 @@ class MainPage extends Component {
     const {
       level,
       page,
+      words,
       puzzles,
       currentSentence,
       puzzleResults,
@@ -281,6 +299,7 @@ class MainPage extends Component {
             level,
             page,
             activeTips,
+            word: words[currentSentence - 1],
             changeLevel: this.changeLevel,
             changePage: this.changePage,
             onControlButtonClick: this.handleControlButtonClick,

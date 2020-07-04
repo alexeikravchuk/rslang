@@ -1,11 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import {
-  ContactSupport,
-  CheckCircleOutline,
-  Forward,
-  InsertChart,
-} from '@material-ui/icons';
+import { ContactSupport, CheckCircle, Forward, InsertChart } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 const buttons = [
   { title: "I don't know", icon: <ContactSupport /> },
-  { title: 'Check', icon: <CheckCircleOutline /> },
+  { title: 'Check', icon: <CheckCircle /> },
   { title: 'Continue', icon: <Forward /> },
   { title: 'Results', icon: <InsertChart /> },
 ];

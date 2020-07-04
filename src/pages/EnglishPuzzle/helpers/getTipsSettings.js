@@ -1,36 +1,12 @@
-const checkAutoplaySetting = () => {
-  const isAutoplay = localStorage.isAutoplayActive
-    ? JSON.parse(localStorage.isAutoplayActive)
-    : true;
-  return isAutoplay;
+const defaultSettings = {
+  isAutoplay: true,
+  isTranslate: true,
+  isPronunciation: true,
+  isBackgroundImg: false,
 };
 
-const checkTranslateSetting = () => {
-  const isTranslate = localStorage.isTranslateActive
-    ? JSON.parse(localStorage.isTranslateActive)
-    : true;
-  return isTranslate;
+const getTipsSettings = () => {
+  return localStorage.tipsSetting ? JSON.parse(localStorage.tipsSetting) : defaultSettings;
 };
 
-const checkPronunciationSetting = () => {
-  const isPronunciation = localStorage.isPronunciationActive
-    ? JSON.parse(localStorage.isPronunciationActive)
-    : true;
-  return isPronunciation;
-};
-
-const checkBackgroundImgSetting = () => {
-  const isBackgroundImg = localStorage.isBackgroundImg
-    ? JSON.parse(localStorage.isBackgroundImg)
-    : false;
-  return isBackgroundImg;
-};
-
-export const getTipsSettings = () => {
-  return {
-    isAutoplay: checkAutoplaySetting(),
-    isTranslate: checkTranslateSetting(),
-    isPronunciation: checkPronunciationSetting(),
-    isBackgroundImg: checkBackgroundImgSetting(),
-  };
-};
+export { getTipsSettings };
