@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme)=> ({
     boxShadow: '0 3px 5px 2px rgba(106, 35, 72, .3)',
     color: 'wheat',
     height: 48,
-    width: 200,
+    width: '100%',
     margin: theme.spacing(1),
   },
 }));

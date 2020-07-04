@@ -7,6 +7,7 @@ import {SavannahButton} from '../SavannahButton';
 import {gameStarting} from '../../../../store/actions/savannahAction';
 import GameSlider from '../GameSlider/GameSlider';
 import './StartGame.scss'
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
   contentDialog: {
@@ -25,14 +26,14 @@ const styles = {
     color: '#662246',
   },
   card:{
-    marginTop: '3rem',
+    marginTop: '1rem',
     zIndex: 2000,
     color: 'wheat',
     textAlign: 'center',
     padding: '1rem',
     backgroundColor: 'transparent',
     boxShadow: 'none',
-  }
+  },
 };
 
 function StartGame(props) {
@@ -54,13 +55,15 @@ function StartGame(props) {
               Choose your skill:
             </Typography>
             <GameSlider />
-            <SavannahButton title={'lets try...'} onClick={handleClose}/>
             <Card className={classes.card}>
               <Typography  variant={'subtitle1'} className={classes.title}>
                 <p>Добро пожаловать в саванну - игру по изучению новых слов, и повторению изученных.</p>
                 Желаем успехов...
               </Typography>
             </Card>
+            <Grid item sm={4}>
+              <SavannahButton className={classes.button} title={'lets try...'} onClick={handleClose} xs={12}  sm={4}/>
+            </Grid>
          </Container>
        </Dialog>
   )

@@ -8,7 +8,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'center',
-    height: '60vh',
+    height: '50vh',
   },
   title:{
     ...theme.typography.button,

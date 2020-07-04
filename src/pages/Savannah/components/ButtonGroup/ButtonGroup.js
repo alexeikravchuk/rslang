@@ -9,6 +9,7 @@ import {
   gameEnding,
   lifeDecrease, removeWord,
 } from '../../../../store/actions/savannahAction';
+import Grid from '@material-ui/core/Grid';
 
 const wordsLimit = 30;
 const buttonLimit = 4;
@@ -97,16 +98,23 @@ class GameButtonGroup extends Component {
         {this.state.showWord &&
         <Slide direction={'up'} in={this.state.showWord}>
           <Container className={classes.buttonGroupRoot}>
-          {shuffleArray(newWords.slice(0, buttonLimit)).map((el, index) => {
-            return (
-                <SavannahButton keyId={el.id}
-                                key={index}
-                                title={el.wordTranslate}
-                                onClick={() => this.onClick(el.word)}
-                />
-              )
-          })}
-        </Container></Slide>}
+            <Grid container
+                  spacing={1}
+                  justify='center'
+                  alignItems='center'>
+              {shuffleArray(newWords.slice(0, buttonLimit)).map((el, index) => {
+                return (
+                  <Grid item xs={12}  sm={6} md={3} key={index}>
+                    <SavannahButton keyId={el.id}
+                                    title={el.wordTranslate}
+                                    onClick={() => this.onClick(el.word)}
+                    />
+                  </Grid>
+                )
+              })}
+            </Grid>
+        </Container>
+        </Slide>}
       </div>
     )
   }
