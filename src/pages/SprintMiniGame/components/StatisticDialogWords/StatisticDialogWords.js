@@ -3,9 +3,6 @@ import {
   Typography,
   DialogContent,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import CheckIcon from '@material-ui/icons/Check';
-import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import { StatisticDialogWord } from '../StatisticDialogWord/StatisticDialogWord';
 
 export function StatisticDialogWords (props) {

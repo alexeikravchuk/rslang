@@ -1,30 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
 import {
+  withStyles,
   Button,
   Dialog,
   DialogTitle,
   Tabs,
-  Tab
+  Tab,
+  DialogActions
 } from '@material-ui/core';
 import {
   Description,
   Spellcheck,
 } from '@material-ui/icons';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import { endGame } from '../../../../store/actions/sprintActions';
 import { StatisticDialogDescription } from '../StatisticDialogDescription/StatisticDialogDescription';
 import { StatisticDialogWords } from '../StatisticDialogWords/StatisticDialogWords'
 
-const DialogActions = withStyles((theme) => ({
+const MuiDialogActions = withStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'flex-end',
     margin: 0,
     padding: theme.spacing(2),
   },
-}))(MuiDialogActions);
+}))(DialogActions);
 
 
 function StatisticDialog(props) {
@@ -54,11 +54,11 @@ function StatisticDialog(props) {
         <Tab icon={<Description />} />
         <Tab icon={<Spellcheck />} />
       </Tabs>
-      <DialogActions>
+      <MuiDialogActions>
         <Button autoFocus onClick={props.endGame} color="primary">
           Close
         </Button>
-      </DialogActions>
+      </MuiDialogActions>
     </Dialog>
   );
 }
