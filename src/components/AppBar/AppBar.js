@@ -21,6 +21,8 @@ import Container from '@material-ui/core/Container';
 import SprintMiniGame from '../../pages/SprintMiniGame';
 import { SpeakIt, Savannah } from '../../pages';
 
+import Dictionary from '../Dictionary/Dictionary'
+
 class PrimaryAppBar extends Component {
   constructor(props) {
     super(props);
@@ -64,6 +66,7 @@ class PrimaryAppBar extends Component {
             <Route path='/home' component={HomePage}/>
             <Route path='/about' component={AboutTeamPage} />
             <Route path='/savannah' component={Savannah}/>
+            <Route path='/dictionary' component={Dictionary} />
             <Route path='/speakit' component={SpeakIt}/>
             <Route path='/sprint' component={SprintMiniGame}/>
             <Route path='/account'  >

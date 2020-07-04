@@ -1,3 +1,2 @@
-import AboutTeamPage  from './AboutTeamPage'
-
+import { AboutTeamPage } from './'
 export  { AboutTeamPage }
