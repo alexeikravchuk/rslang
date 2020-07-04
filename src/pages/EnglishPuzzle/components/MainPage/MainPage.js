@@ -88,14 +88,17 @@ class MainPage extends Component {
     this.setState({ ...getDefaultState(), page: { ...page, current: value } });
   };
 
-  resetLevel = () => {
+  resetLevel = async () => {
     this.setState({
       currentSentence: 1,
       puzzles: null,
       puzzleResults: new Array(10).fill([]),
       draggablePuzzle: null,
     });
-    this.setData();
+    await this.setData();
+    if (this.state.activeTips.isAutoplay) {
+      playSentence(this.state.words[0]);
+    }
   };
 
   onDragStart = (event, dataItem) => {
@@ -145,6 +148,9 @@ class MainPage extends Component {
       return false;
     });
     if (isCorectOrder && sentenceLength === puzzleResults[currentSentence - 1].length) {
+      if (this.state.activeTips.isAutoplay) {
+        playSentence(this.state.words[currentSentence]);
+      }
       return (
         currentSentence < words.length && this.setState({ currentSentence: currentSentence + 1 })
       );

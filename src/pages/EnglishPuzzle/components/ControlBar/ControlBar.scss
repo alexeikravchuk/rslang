@@ -115,8 +115,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     position: relative;
     i.material-icons {
       display: flex;
@@ -131,7 +131,7 @@
       top: -50%;
       left: 115%;
       margin-left: auto;
-      transition: 0.3s 1s ease-in-out;
+      transition: 0.3s 1.5s ease-in-out;
       &::after {
         bottom: auto;
         left: auto;
@@ -150,7 +150,6 @@
         background-color: #0001;
         cursor: pointer;
         box-shadow: none;
-        animation: swing 3s infinite;
       }
     }
   }
