@@ -1,20 +1,25 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Button,
+import {
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
-  Typography} from '@material-ui/core';
+  ListItem,
+  ListItemText,
+  Divider,
+  Typography,
+  List,
+} from '@material-ui/core';
 import {gameReset} from '../../../../store/actions/savannahAction';
 
-function Statistics(props) {
+function Statistics({learnedWords, missedWords, onReset}) {
   const [open, setOpen] = React.useState(true);
 
   const handleClose = () => {
-    setOpen(false)
-    props.onReset();
+    setOpen(false);
+    onReset();
   };
   return (
     <div>
@@ -24,56 +29,65 @@ function Statistics(props) {
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>{'Learned words:'}</DialogTitle>
-        <ol>
-          {props.learnedWords.map((el) => {
-            return (
-              <li>
-                <Typography color={'primary'} key={el.id} variant='body1' component={'h2'}>
-                  {el.word} - {el.transcription} - {el.wordTranslate}
-                </Typography>
-              </li>
-            )
-          })}
-        </ol>
-        <DialogTitle id='alert-dialog-title'>{'Missed words:'}</DialogTitle>
-        <ol>
-          {props.missedWords.map((el) => {
-            return (
-              <li>
-                <Typography color={'secondary'} key={el.id} variant='body1' component={'h2'}>
-                  {el.word} - {el.transcription} - {el.wordTranslate}
-                </Typography>
-              </li>
-            )
-          })}
-        </ol>
+        <Typography align={'center'} variant='h6' color={'primary'} gutterBottom>
+          Learned words:
+        </Typography>
+        <Divider/>
+        <DialogContent>
+          <List dense={true}>
+            {learnedWords.map((el) => {
+              return (
+                <ListItem key={el.id}>
+                  <ListItemText
+                    primary={`${el.word} - ${el.transcription} - ${el.wordTranslate}`}
+                  />
+                </ListItem>
+              );
+            })}
+          </List>
+        </DialogContent>
+        <Divider/>
+        <Typography align={'center'} variant='h6' color={'secondary'} gutterBottom>
+          Missed words:
+        </Typography>
+        <Divider/>
+        <DialogContent>
+          <List dense={true}>
+            {missedWords.map((el) => {
+              return (
+                <ListItem key={el.id}>
+                  <ListItemText
+                    primary={`${el.word} - ${el.transcription} - ${el.wordTranslate}`}
+                  />
+                </ListItem>
+              );
+            })}
+          </List>
+        </DialogContent>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
             Each small step brings closer to your goal...
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button variant='outlined' color='primary' onClick={handleClose}  >
+          <Button variant='outlined' color='primary' onClick={handleClose}>
             Agree
           </Button>
         </DialogActions>
       </Dialog>
     </div>
-    )
+  );
 }
 
 const mapStateToProps = store => {
-  const { savannahReducer } = store
-  return { ...savannahReducer }
-}
+  const {savannahReducer} = store;
+  return {...savannahReducer};
+};
 
 const mapDispatchToProps = dispatch => ({
   onReset: () => {
-    dispatch(gameReset())
-  }
-})
-
-
+    dispatch(gameReset());
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Statistics);

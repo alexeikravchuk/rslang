@@ -43,7 +43,7 @@ class Savannah extends Component{
     return (
       <div  className={'mainGame'}>
         {loading && this.loader(classes.loader)}
-        {(gameStarted && !loading) && <GameToolbar title={''} onClose={onClose}/>}
+        {(gameStarted && !loading) && <GameToolbar title={''} onClose={onClose} to={'/savannah'}/>}
         <Container className={'savannahRoot'}>
           {gameStarted === false && <StartGame />}
           {gameEnd && <Statistics />}

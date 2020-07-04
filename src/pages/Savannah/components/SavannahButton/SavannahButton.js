@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme)=> ({
   },
 }));
 
-export default ({onClick, key, disabled, title}) => {
+export default ({onClick, keyId, disabled, title}) => {
   const classes = useStyles();
   return (
-      <Button key={key} variant={'outlined'} className={classes.button}
+      <Button key={keyId} variant={'outlined'} className={classes.button}
         onClick={onClick}
         disabled={disabled}>
         {title}

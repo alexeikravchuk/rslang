@@ -97,9 +97,10 @@ class GameButtonGroup extends Component {
         {this.state.showWord &&
         <Slide direction={'up'} in={this.state.showWord}>
           <Container className={classes.buttonGroupRoot}>
-          {shuffleArray(newWords.slice(0, buttonLimit)).map((el) => {
+          {shuffleArray(newWords.slice(0, buttonLimit)).map((el, index) => {
             return (
-                <SavannahButton key={el.id}
+                <SavannahButton keyId={el.id}
+                                key={index}
                                 title={el.wordTranslate}
                                 onClick={() => this.onClick(el.word)}
                 />
