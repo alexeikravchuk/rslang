@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PuzzleContext } from '../components/context';
+import { PuzzleContext } from '../context';
 
 class CanvasItem extends Component {
   canvasRef = React.createRef();
@@ -12,9 +12,10 @@ class CanvasItem extends Component {
       widthCount,
       canvasWidth,
       canvasHeight,
-      img,
       startYPointCropImage,
     } = this.props;
+
+    let { img } = this.props;
 
     const canvas = this.canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -77,14 +78,15 @@ class CanvasItem extends Component {
     ctx.fill();
     ctx.globalCompositeOperation = 'source-over';
     ctx.beginPath();
-    ctx.shadowColor = 'black';
-    ctx.shadowBlur = 10;
+    ctx.shadowColor = 'rgb(255, 255, 255)';
+    ctx.shadowBlur = 5;
+    ctx.strokeStyle = 'rgb(150,150,150)';
     ctx.lineWidth = 1;
-    ctx.strokeStyle = 'magenta';
-    ctx.font = `${'bold'} ${fontSize * 1}pt ${'Arial'}`;
+    ctx.fillStyle = 'black';
+    ctx.font = `${'bold'} ${fontSize * 1.3}pt ${'Arial'}`;
     ctx.textAlign = 'center';
-    ctx.fillStyle = 'white';
-    ctx['fillText'](word, canvasWidth / 2 + radius / 2, canvasHeight / 2 + fontSize / 3);
+    ctx.fillText(word, canvasWidth / 2 + radius / 2, canvasHeight / 2 + fontSize / 3);
+    ctx.strokeText(word, canvasWidth / 2 + radius / 2, canvasHeight / 2 + fontSize / 3);
   }
 
   render() {

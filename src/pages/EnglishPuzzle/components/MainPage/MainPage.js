@@ -3,7 +3,7 @@ import { ControlBar } from '../ControlBar';
 import { Puzzle } from '../Puzzle';
 import { Buttons } from '../Buttons';
 import { ControlBarContext, PuzzleContext } from '../context';
-import { ROW_TYPE } from '../../constants/constants';
+import { ROW_TYPE, BLANK_IMG } from '../../constants/constants';
 
 import {
   getImageSrc,
@@ -49,6 +49,7 @@ class MainPage extends Component {
     this.setPainting();
     await Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]);
     await this.setPuzzles();
+    await this.setWhitePuzzles();
     return 1;
   };
 
@@ -77,6 +78,15 @@ class MainPage extends Component {
     });
 
     this.setState({ puzzles });
+  };
+
+  setWhitePuzzles = async () => {
+    const whitePuzzles = await getPuzzles({
+      src: BLANK_IMG,
+      wordsList: this.state.words.map((word) => word.textExample),
+    });
+
+    this.setState({ whitePuzzles });
   };
 
   changeLevel = ({ target: { value } }) => {
@@ -163,8 +173,16 @@ class MainPage extends Component {
   };
 
   findPuzzleInRaw = (dataItem) => {
-    const { currentSentence, puzzles } = this.state;
-    return puzzles[currentSentence - 1].find((puzzle) => puzzle.props.dataItem === dataItem);
+    const {
+      currentSentence,
+      puzzles,
+      whitePuzzles,
+      activeTips: { isBackgroundImg },
+    } = this.state;
+    if (isBackgroundImg) {
+      return puzzles[currentSentence - 1].find((puzzle) => puzzle.props.dataItem === dataItem);
+    }
+    return whitePuzzles[currentSentence - 1].find((puzzle) => puzzle.props.dataItem === dataItem);
   };
 
   findPuzzleInResult = (dataItem) => {
@@ -186,13 +204,20 @@ class MainPage extends Component {
     );
   };
 
+  findPuzzleIndexInRawWhite = (dataItem) => {
+    const { whitePuzzles, currentSentence } = this.state;
+    return whitePuzzles[currentSentence - 1].findIndex(
+      (puzzle) => puzzle && puzzle.props.dataItem === dataItem
+    );
+  };
+
   removePuzzle = (dataItem) => {
     this.removePuzzleFrom(dataItem, ROW_TYPE.RESULT);
     this.removePuzzleFrom(dataItem, ROW_TYPE.RAW);
   };
 
   removePuzzleFrom = (dataItem, rowType) => {
-    const { puzzleResults, currentSentence, puzzles } = this.state;
+    const { puzzleResults, currentSentence, puzzles, whitePuzzles } = this.state;
 
     if (rowType === ROW_TYPE.RESULT) {
       const resultRow = this.filterRow(puzzleResults, dataItem);
@@ -200,9 +225,11 @@ class MainPage extends Component {
     } else {
       const rawRow = this.filterRow(puzzles, dataItem);
       puzzles[currentSentence - 1] = [...rawRow];
+      const rawRowWhite = this.filterRow(whitePuzzles, dataItem);
+      whitePuzzles[currentSentence - 1] = [...rawRowWhite];
     }
 
-    this.setState({ puzzleResults, puzzles });
+    this.setState({ puzzleResults, puzzles, whitePuzzles });
   };
 
   filterRow = (puzzles, dataItem) => {
@@ -226,7 +253,7 @@ class MainPage extends Component {
   }
 
   insertPuzzle(place, targetItem, droppedPuzzle) {
-    const { puzzleResults, puzzles, currentSentence } = this.state;
+    const { puzzleResults, puzzles, whitePuzzles, currentSentence } = this.state;
     if (this.findPuzzleInResult(targetItem)) {
       let index = this.findPuzzleIndexInResult(targetItem);
       index = place === 'after' ? index + 1 : index;
@@ -235,8 +262,12 @@ class MainPage extends Component {
       let index = this.findPuzzleIndexInRaw(targetItem);
       index = place === 'after' ? index + 1 : index;
       puzzles[currentSentence - 1].splice(index, 0, droppedPuzzle);
+
+      let indexWhite = this.findPuzzleIndexInRawWhite(targetItem);
+      indexWhite = place === 'after' ? indexWhite + 1 : indexWhite;
+      whitePuzzles[currentSentence - 1].splice(indexWhite, 0, droppedPuzzle);
     }
-    this.setState({ puzzleResults, puzzles });
+    this.setState({ puzzleResults, puzzles, whitePuzzles });
   }
 
   handlePuzzleClick = ({ target, currentTarget, nativeEvent }) => {
@@ -293,6 +324,7 @@ class MainPage extends Component {
       page,
       words,
       puzzles,
+      whitePuzzles,
       currentSentence,
       puzzleResults,
       draggablePuzzle,
@@ -315,9 +347,12 @@ class MainPage extends Component {
         <PuzzleContext.Provider
           value={{
             puzzles,
+            whitePuzzles,
             currentSentence,
             puzzleResults,
             draggablePuzzle,
+            checked: false,
+            isBackgroundImg: activeTips.isBackgroundImg,
             onDragStart: this.onDragStart,
             onDragOver: this.onDragOver,
             onDrop: this.onDrop,

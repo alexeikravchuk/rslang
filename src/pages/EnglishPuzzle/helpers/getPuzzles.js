@@ -1,6 +1,7 @@
 import React from 'react';
 import { shuffleArray } from './shuffleArray';
-import CanvasItem from './CanvasItem';
+import CanvasItem from '../components/Puzzle/CanvasItem';
+import { BLANK_IMG } from '../constants/constants';
 
 async function getPuzzles({ src, wordsList, extraWidthValue = 10 }) {
   if (
@@ -51,6 +52,8 @@ async function getPuzzles({ src, wordsList, extraWidthValue = 10 }) {
         startYPointCropImage += canvasHeight;
         let widthCount = 0;
 
+        const isBlank = src === BLANK_IMG;
+
         const row = () => {
           return shuffleArray(
             words.map((w, j) => {
@@ -75,7 +78,7 @@ async function getPuzzles({ src, wordsList, extraWidthValue = 10 }) {
                   canvasWidth={canvasWidth}
                   img={img}
                   startYPointCropImage={startYPointCropImage}
-                  key={`${i + 1}-${j + 1}`}
+                  key={`${i + 1}-${j + 1}${isBlank ? '-blank' : ''}`}
                 />
               );
             })
