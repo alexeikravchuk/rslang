@@ -22,7 +22,7 @@ import {
     },
     {
       title: 'Vocabulary',
-      link: '#vocabulary',
+      link: '/dictionary',
       icon: <MenuBook color='primary' />,
       type: 'primary',
     },
@@ -34,7 +34,7 @@ import {
     },
     {
       title: 'SpeakIt',
-      link: '#speakit',
+      link: '/speakit',
       icon: <RecordVoiceOver color='secondary' />,
       type: 'game',
     },

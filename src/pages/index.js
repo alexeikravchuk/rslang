@@ -1,3 +1,4 @@
-import { AboutTeamPage } from './AboutTeamPage/index'
+import { AboutTeamPage } from './AboutTeamPage/index';
+import { SpeakIt } from './SpeakIt';
 
-export { AboutTeamPage }
+export { AboutTeamPage, SpeakIt };
