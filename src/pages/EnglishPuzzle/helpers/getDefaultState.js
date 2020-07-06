@@ -1,4 +1,6 @@
-const { MAX_LEVEL } = require('../constants/constants');
+import { getButtonsInfo } from './getButtonsInfo';
+
+const { MAX_LEVEL, SENTENCE_STATUS } = require('../constants/constants');
 const { getTipsSettings } = require('./getTipsSettings');
 
 const getDefaultState = () => {
@@ -12,8 +14,11 @@ const getDefaultState = () => {
       maxPage: 1,
     },
     activeTips: getTipsSettings(),
+    shownButtons: [getButtonsInfo()[0]],
     words: [],
     currentSentence: 1,
+    sentenceStatus: SENTENCE_STATUS.PENDING,
+    isCorrectOrder: [],
     puzzles: [],
     whitePuzzles: [],
     puzzleResults: new Array(10).fill([]),

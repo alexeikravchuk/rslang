@@ -3,7 +3,7 @@ import { ControlBar } from '../ControlBar';
 import { Puzzle } from '../Puzzle';
 import { Buttons } from '../Buttons';
 import { ControlBarContext, PuzzleContext } from '../context';
-import { ROW_TYPE, BLANK_IMG } from '../../constants/constants';
+import { ROW_TYPE, BLANK_IMG, SENTENCE_STATUS, BUTTONS_NAME } from '../../constants/constants';
 
 import {
   getImageSrc,
@@ -13,6 +13,7 @@ import {
   getDefaultState,
   saveTipsSetting,
   playSentence,
+  getButtonsInfo,
 } from '../../helpers';
 
 class MainPage extends Component {
@@ -101,9 +102,12 @@ class MainPage extends Component {
   resetLevel = async () => {
     this.setState({
       currentSentence: 1,
+      sentenceStatus: SENTENCE_STATUS.PENDING,
+      isCorrectOrder: [],
       puzzles: null,
       puzzleResults: new Array(10).fill([]),
       draggablePuzzle: null,
+      shownButtons: [getButtonsInfo()[0]],
     });
     await this.setData();
     if (this.state.activeTips.isAutoplay) {
@@ -148,24 +152,49 @@ class MainPage extends Component {
   };
 
   checkResult = () => {
-    const { puzzleResults, currentSentence, words } = this.state;
+    const { sentenceStatus } = this.state;
 
+    if (sentenceStatus === SENTENCE_STATUS.PENDING) {
+      return this.checkSentenceLength();
+    }
+
+    if (sentenceStatus === SENTENCE_STATUS.READY || sentenceStatus === SENTENCE_STATUS.ERROR) {
+      return this.checkResultOrder();
+    }
+
+    return 0;
+  };
+
+  checkSentenceLength = () => {
+    const { puzzleResults, currentSentence, words } = this.state;
     const sentenceLength = +words[currentSentence - 1].wordsPerExampleSentence;
-    const isCorectOrder = puzzleResults[currentSentence - 1].every((item, i) => {
+    if (sentenceLength === puzzleResults[currentSentence - 1].length) {
+      return this.setState({
+        shownButtons: [getButtonsInfo()[1]],
+        sentenceStatus: SENTENCE_STATUS.READY,
+      });
+    }
+  };
+
+  checkResultOrder = async () => {
+    const { puzzleResults, currentSentence } = this.state;
+    let { sentenceStatus, shownButtons } = this.state;
+    const isCorrectOrder = puzzleResults[currentSentence - 1].map((item, i) => {
       if (+item.key.split('-')[1] === i + 1) {
         return true;
       }
       return false;
     });
-    if (isCorectOrder && sentenceLength === puzzleResults[currentSentence - 1].length) {
-      if (this.state.activeTips.isAutoplay) {
-        playSentence(this.state.words[currentSentence]);
-      }
-      return (
-        currentSentence < words.length && this.setState({ currentSentence: currentSentence + 1 })
-      );
+    const isError = isCorrectOrder.includes(false);
+    sentenceStatus = isError ? SENTENCE_STATUS.ERROR : SENTENCE_STATUS.SUCCESS;
+    shownButtons =
+      sentenceStatus === SENTENCE_STATUS.SUCCESS
+        ? [getButtonsInfo()[2]]
+        : [getButtonsInfo()[0], getButtonsInfo()[1]];
+    if (!isError) {
+      puzzleResults[currentSentence - 1] = await this.getCurrentSortedRow();
     }
-    return 0;
+    return this.setState({ isCorrectOrder, sentenceStatus, shownButtons });
   };
 
   findPuzzle = (dataItem) => {
@@ -300,6 +329,48 @@ class MainPage extends Component {
     return this.setState({ draggablePuzzle: dataItem });
   };
 
+  getCurrentSortedRow = async () => {
+    const { currentSentence, painting, words } = this.state;
+    const puzzles = await getPuzzles({
+      src: painting.cutSrc,
+      wordsList: words.map((word) => word.textExample),
+    });
+
+    return puzzles[currentSentence - 1].sort((a, b) => a.key.split('-')[1] - b.key.split('-')[1]);
+  };
+
+  skipSentence = async () => {
+    const { puzzles, puzzleResults, whitePuzzles, currentSentence } = this.state;
+    let { shownButtons } = this.state;
+
+    puzzleResults[currentSentence - 1] = await this.getCurrentSortedRow();
+    puzzles[currentSentence - 1] = [];
+    whitePuzzles[currentSentence - 1] = [];
+
+    shownButtons = [getButtonsInfo()[2]];
+    this.setState({ puzzleResults, puzzles, whitePuzzles, shownButtons, isCorrectOrder: [] });
+    if (!this.state.activeTips.isAutoplay) {
+      return playSentence(this.state.words[currentSentence - 1]);
+    }
+  };
+
+  showPainting = () => {
+    console.log('show painting');
+  };
+
+  nextSentence = () => {
+    const { currentSentence } = this.state;
+    this.setState({
+      currentSentence: currentSentence + 1,
+      shownButtons: [getButtonsInfo()[0]],
+      isCorrectOrder: [],
+      sentenceStatus: SENTENCE_STATUS.PENDING,
+    });
+    if (this.state.activeTips.isAutoplay) {
+      return playSentence(this.state.words[currentSentence - 1]);
+    }
+  };
+
   handleControlButtonClick = ({ currentTarget: { className } }) => {
     const { activeTips } = this.state;
     const { isAutoplay, isTranslate, isPronunciation, isBackgroundImg } = activeTips;
@@ -318,6 +389,21 @@ class MainPage extends Component {
     }
   };
 
+  handleBtnClick = ({ currentTarget }) => {
+    const { currentSentence, puzzleResults } = this.state;
+    console.log(currentTarget.innerText);
+    if (currentTarget.innerText === BUTTONS_NAME.CHECK) {
+      return this.checkResult();
+    }
+    if (currentTarget.innerText === BUTTONS_NAME.CONTINUE) {
+      if (currentSentence === puzzleResults.length) {
+        return this.showPainting();
+      }
+      return this.nextSentence();
+    }
+    return this.skipSentence();
+  };
+
   render() {
     const {
       level,
@@ -329,6 +415,8 @@ class MainPage extends Component {
       puzzleResults,
       draggablePuzzle,
       activeTips,
+      shownButtons,
+      isCorrectOrder,
     } = this.state;
     return (
       <div className='game--wrapper'>
@@ -352,6 +440,7 @@ class MainPage extends Component {
             puzzleResults,
             draggablePuzzle,
             checked: false,
+            isCorrectOrder,
             isBackgroundImg: activeTips.isBackgroundImg,
             onDragStart: this.onDragStart,
             onDragOver: this.onDragOver,
@@ -360,7 +449,7 @@ class MainPage extends Component {
           }}>
           <Puzzle />
         </PuzzleContext.Provider>
-        <Buttons />
+        <Buttons buttons={shownButtons} onBtnClick={this.handleBtnClick} />
       </div>
     );
   }

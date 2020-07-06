@@ -6,6 +6,7 @@ import { getPuzzles } from './getPuzzles';
 import { getDefaultState } from './getDefaultState';
 import { playSentence } from './playSentence';
 import { saveTipsSetting } from './saveTipsSetting';
+import { getButtonsInfo } from './getButtonsInfo';
 
 export {
   getTipsSettings,
@@ -16,4 +17,5 @@ export {
   getDefaultState,
   playSentence,
   saveTipsSetting,
+  getButtonsInfo,
 };

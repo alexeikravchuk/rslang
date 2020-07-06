@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import { ContactSupport, CheckCircle, Forward, InsertChart } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -9,14 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const buttons = [
-  { title: "I don't know", icon: <ContactSupport /> },
-  { title: 'Check', icon: <CheckCircle /> },
-  { title: 'Continue', icon: <Forward /> },
-  { title: 'Results', icon: <InsertChart /> },
-];
-
-const Buttons = () => {
+const Buttons = ({ buttons, onBtnClick }) => {
   const classes = useStyles();
   return (
     <div>
@@ -26,6 +17,7 @@ const Buttons = () => {
           color='primary'
           className={classes.button}
           endIcon={button.icon}
+          onClick={onBtnClick}
           key={i}>
           {button.title}
         </Button>

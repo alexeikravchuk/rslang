@@ -11,6 +11,18 @@ const ROW_TYPE = {
   RAW: 'raw',
 };
 
+const SENTENCE_STATUS = {
+  PENDING: 'pending',
+  READY: 'ready',
+  SUCCESS: 'success',
+  ERROR: 'error',
+};
+
+const BUTTONS_NAME = {
+  CHECK: 'CHECK',
+  CONTINUE: 'CONTINUE',
+};
+
 export {
   MAX_LEVEL,
   WORDS_PER_PAGE,
@@ -20,4 +32,6 @@ export {
   ROW_TYPE,
   BACKEND_URL,
   BLANK_IMG,
+  SENTENCE_STATUS,
+  BUTTONS_NAME,
 };

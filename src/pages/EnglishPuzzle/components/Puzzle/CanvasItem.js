@@ -93,11 +93,17 @@ class CanvasItem extends Component {
     const { canvasRow, canvasItem, dataItem, dataWord } = this.props;
     return (
       <PuzzleContext.Consumer>
-        {({ onDragStart, draggablePuzzle }) => (
+        {({ onDragStart, draggablePuzzle, isCorrectOrder, currentSentence }) => (
           <canvas
             ref={this.canvasRef}
             className={`canvas-item canvas-row-${canvasRow} canvas-item-${canvasItem}${
               dataItem === draggablePuzzle ? ' dragged' : ''
+            } ${
+              isCorrectOrder.length && +dataItem.split('-')[0] === currentSentence
+                ? isCorrectOrder[+dataItem.split('-')[1] - 1]
+                  ? 'correct'
+                  : 'error'
+                : ''
             }`}
             data-item={dataItem}
             data-word={dataWord}

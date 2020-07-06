@@ -180,6 +180,12 @@
   @media screen and (max-width: 629px) {
     height: 25px;
   }
+  &.correct {
+    box-shadow: -2px 15px 8px -10px #00ff0090;
+  }
+  &.error {
+    box-shadow: -2px 15px 8px -10px rgba(242,8,8,1);  
+  }
   &:not(:first-child) {
     margin-left: -3px;
   }
@@ -189,4 +195,5 @@
   &.dragged {
     opacity: 0.2;
   }
+  
 }
