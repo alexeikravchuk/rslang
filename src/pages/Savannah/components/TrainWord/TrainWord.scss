@@ -1,0 +1,19 @@
+.animate{
+  animation: container 4000ms ease-in;
+  width: 300px;
+  margin: 0 auto;
+}
+
+@keyframes  container {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}

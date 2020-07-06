@@ -21,7 +21,7 @@ import {
   CHANGE_ROUND,
   TIMER_FINISHED,
   CLOSE_WINDOW,
- } from '../actions';
+ } from '../actions/sprintActions';
 
 const defaultState = {
   checked: false,

@@ -16,12 +16,10 @@ import { Route, Switch } from 'react-router-dom'
 
 import HomePage from '../../pages/Home/HomePage'
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
-
 import AccountInfo from '../../pages/AccountInfo/AccountInfo'
-
 import Container from '@material-ui/core/Container';
 import SprintMiniGame from '../../pages/SprintMiniGame';
-import { SpeakIt } from '../../pages';
+import { SpeakIt, Savannah } from '../../pages';
 
 import Dictionary from '../Dictionary/Dictionary'
 
@@ -63,11 +61,11 @@ class PrimaryAppBar extends Component {
           </Toolbar>
         </AppBar>
         <SideBar open={this.state.drawerOpen} onShewronClick={() => this.handleDrawerClose()}/>
-
         <Container style={{margin: '100px auto'}}>
           <Switch>
             <Route path='/home' component={HomePage}/>
             <Route path='/about' component={AboutTeamPage} />
+            <Route path='/savannah' component={Savannah}/>
             <Route path='/dictionary' component={Dictionary} />
             <Route path='/speakit' component={SpeakIt}/>
             <Route path='/sprint' component={SprintMiniGame}/>
