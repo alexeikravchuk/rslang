@@ -16,11 +16,14 @@ const SENTENCE_STATUS = {
   READY: 'ready',
   SUCCESS: 'success',
   ERROR: 'error',
+  FINISH: 'finish',
 };
 
 const BUTTONS_NAME = {
+  DONT_KNOW: 'KNOW',
   CHECK: 'CHECK',
   CONTINUE: 'CONTINUE',
+  RESULTS: 'RESULTS',
 };
 
 export {

@@ -1,14 +1,29 @@
 import React, { useContext } from 'react';
 import { PuzzleContext } from '../context';
+import { SENTENCE_STATUS } from '../../constants/constants';
 
 const PuzzleResult = () => {
-  const { puzzleResults, currentSentence } = useContext(PuzzleContext);
+  const { puzzleResults, currentSentence, sentenceStatus, painting } = useContext(PuzzleContext);
+  const isShowPainting = sentenceStatus === SENTENCE_STATUS.FINISH;
+
+  const paintingStyle = {
+    backgroundImage: `url(${painting && painting.cutSrc})`,
+    backgroundSize: 'contain',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    opacity: 1,
+  };
+  const coloredStyle = {
+    backgroundColor: '#a0a0f0ff',
+  };
 
   return (
     <div className='game--puzzle-results result'>
-      <div className='result-field--background'></div>
+      <div
+        className='result-field--background'
+        style={isShowPainting ? paintingStyle : coloredStyle}></div>
       {puzzleResults.map((puzzleRow, i) => (
-        <div className='result--sentence' key={'row' + i}>
+        <div className={`result--sentence ${isShowPainting ? 'hidden' : ''}`} key={'row' + i}>
           <div
             className={'result--sentence-numeration' + (i + 1 > currentSentence ? ' hidden' : '')}>
             <span>{i + 1}</span>

@@ -21,9 +21,6 @@ class MainPage extends Component {
 
   componentDidMount = async () => {
     await this.setData();
-    if (this.state.activeTips.isAutoplay) {
-      playSentence(this.state.words[0]);
-    }
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -91,12 +88,16 @@ class MainPage extends Component {
   };
 
   changeLevel = ({ target: { value } }) => {
-    const { level } = this.state;
-    this.setState({ level: { ...level, current: value } });
+    const { level, page } = this.state;
+    this.setState({
+      ...getDefaultState(),
+      level: { ...level, current: value },
+      page: { ...page, current: 1 },
+    });
   };
   changePage = ({ target: { value } }) => {
-    const { page } = this.state;
-    this.setState({ ...getDefaultState(), page: { ...page, current: value } });
+    const { level, page } = this.state;
+    this.setState({ ...getDefaultState(), level, page: { ...page, current: value } });
   };
 
   resetLevel = async () => {
@@ -107,18 +108,19 @@ class MainPage extends Component {
       puzzles: null,
       puzzleResults: new Array(10).fill([]),
       draggablePuzzle: null,
-      shownButtons: [getButtonsInfo()[0]],
+      shownButtons: getButtonsInfo([BUTTONS_NAME.DONT_KNOW]),
     });
     await this.setData();
-    if (this.state.activeTips.isAutoplay) {
-      playSentence(this.state.words[0]);
-    }
   };
 
   onDragStart = (event, dataItem) => {
-    if (this.state.currentSentence !== +dataItem.slice(0, 1)) return;
+    if (this.state.currentSentence !== parseInt(dataItem.slice(0, 2))) return;
     event.dataTransfer.setData('dataItem', dataItem);
-    this.setState({ draggablePuzzle: dataItem });
+    this.setState({
+      draggablePuzzle: dataItem,
+      sentenceStatus: SENTENCE_STATUS.PENDING,
+      isCorrectOrder: [],
+    });
   };
 
   onDragOver = (event) => {
@@ -129,11 +131,10 @@ class MainPage extends Component {
     const { dataTransfer, target, nativeEvent } = event;
 
     let dataItem = dataTransfer.getData('dataItem');
-    if (this.state.currentSentence !== +dataItem.slice(0, 1)) return;
+    if (this.state.currentSentence !== parseInt(dataItem.slice(0, 2))) return;
 
     this.setState({ draggablePuzzle: null });
     const droppedPuzzle = this.findPuzzle(dataItem);
-
     setTimeout(this.checkResult, 500);
 
     if (rowType === ROW_TYPE.RESULT && target.classList.contains('current-sentence')) {
@@ -170,14 +171,14 @@ class MainPage extends Component {
     const sentenceLength = +words[currentSentence - 1].wordsPerExampleSentence;
     if (sentenceLength === puzzleResults[currentSentence - 1].length) {
       return this.setState({
-        shownButtons: [getButtonsInfo()[1]],
+        shownButtons: getButtonsInfo([BUTTONS_NAME.CHECK]),
         sentenceStatus: SENTENCE_STATUS.READY,
       });
     }
   };
 
   checkResultOrder = async () => {
-    const { puzzleResults, currentSentence } = this.state;
+    const { puzzleResults, currentSentence, words, activeTips } = this.state;
     let { sentenceStatus, shownButtons } = this.state;
     const isCorrectOrder = puzzleResults[currentSentence - 1].map((item, i) => {
       if (+item.key.split('-')[1] === i + 1) {
@@ -189,10 +190,11 @@ class MainPage extends Component {
     sentenceStatus = isError ? SENTENCE_STATUS.ERROR : SENTENCE_STATUS.SUCCESS;
     shownButtons =
       sentenceStatus === SENTENCE_STATUS.SUCCESS
-        ? [getButtonsInfo()[2]]
-        : [getButtonsInfo()[0], getButtonsInfo()[1]];
+        ? getButtonsInfo([BUTTONS_NAME.CONTINUE])
+        : getButtonsInfo([BUTTONS_NAME.DONT_KNOW, BUTTONS_NAME.CONTINUE]);
     if (!isError) {
       puzzleResults[currentSentence - 1] = await this.getCurrentSortedRow();
+      activeTips.isAutoplay && playSentence(words[currentSentence - 1]);
     }
     return this.setState({ isCorrectOrder, sentenceStatus, shownButtons });
   };
@@ -326,7 +328,11 @@ class MainPage extends Component {
       this.addPuzzleBeside(target, dataItem, offsetX, droppedPuzzle);
       return this.checkResult();
     }
-    return this.setState({ draggablePuzzle: dataItem });
+    return this.setState({
+      draggablePuzzle: dataItem,
+      sentenceStatus: SENTENCE_STATUS.PENDING,
+      isCorrectOrder: [],
+    });
   };
 
   getCurrentSortedRow = async () => {
@@ -340,36 +346,57 @@ class MainPage extends Component {
   };
 
   skipSentence = async () => {
-    const { puzzles, puzzleResults, whitePuzzles, currentSentence } = this.state;
-    let { shownButtons } = this.state;
+    const { puzzles, puzzleResults, whitePuzzles, currentSentence, activeTips, words } = this.state;
 
     puzzleResults[currentSentence - 1] = await this.getCurrentSortedRow();
     puzzles[currentSentence - 1] = [];
     whitePuzzles[currentSentence - 1] = [];
 
-    shownButtons = [getButtonsInfo()[2]];
-    this.setState({ puzzleResults, puzzles, whitePuzzles, shownButtons, isCorrectOrder: [] });
-    if (!this.state.activeTips.isAutoplay) {
-      return playSentence(this.state.words[currentSentence - 1]);
+    const shownButtons = getButtonsInfo([BUTTONS_NAME.CONTINUE]);
+    this.setState({
+      puzzleResults,
+      puzzles,
+      whitePuzzles,
+      shownButtons,
+      isCorrectOrder: [],
+      sentenceStatus: SENTENCE_STATUS.SUCCESS,
+    });
+    if (activeTips.isAutoplay) {
+      return playSentence(words[currentSentence - 1]);
     }
   };
 
   showPainting = () => {
-    console.log('show painting');
+    const shownButtons = getButtonsInfo([BUTTONS_NAME.CONTINUE, BUTTONS_NAME.RESULTS]);
+    this.setState({ sentenceStatus: SENTENCE_STATUS.FINISH, shownButtons });
   };
 
   nextSentence = () => {
     const { currentSentence } = this.state;
     this.setState({
       currentSentence: currentSentence + 1,
-      shownButtons: [getButtonsInfo()[0]],
+      shownButtons: getButtonsInfo([BUTTONS_NAME.DONT_KNOW]),
       isCorrectOrder: [],
       sentenceStatus: SENTENCE_STATUS.PENDING,
     });
-    if (this.state.activeTips.isAutoplay) {
-      return playSentence(this.state.words[currentSentence - 1]);
-    }
   };
+
+  nextLevel() {
+    const { level, page } = this.state;
+    if (page.current < page.maxPage) {
+      const value = page.current + 1;
+      return this.setState({ page: { ...page, current: value } });
+    }
+    if (level.current < level.maxLevel) {
+      const levelValue = level.current + 1;
+      const pageValue = 1;
+      return this.setState({
+        ...getDefaultState(),
+        level: { ...level, current: levelValue },
+        page: { ...page, current: pageValue },
+      });
+    }
+  }
 
   handleControlButtonClick = ({ currentTarget: { className } }) => {
     const { activeTips } = this.state;
@@ -390,12 +417,14 @@ class MainPage extends Component {
   };
 
   handleBtnClick = ({ currentTarget }) => {
-    const { currentSentence, puzzleResults } = this.state;
-    console.log(currentTarget.innerText);
+    const { currentSentence, puzzleResults, sentenceStatus } = this.state;
     if (currentTarget.innerText === BUTTONS_NAME.CHECK) {
       return this.checkResult();
     }
     if (currentTarget.innerText === BUTTONS_NAME.CONTINUE) {
+      if (sentenceStatus === SENTENCE_STATUS.FINISH) {
+        return this.nextLevel();
+      }
       if (currentSentence === puzzleResults.length) {
         return this.showPainting();
       }
@@ -409,6 +438,8 @@ class MainPage extends Component {
       level,
       page,
       words,
+      painting,
+      sentenceStatus,
       puzzles,
       whitePuzzles,
       currentSentence,
@@ -426,6 +457,7 @@ class MainPage extends Component {
             page,
             activeTips,
             word: words[currentSentence - 1],
+            sentenceStatus,
             changeLevel: this.changeLevel,
             changePage: this.changePage,
             onControlButtonClick: this.handleControlButtonClick,
@@ -439,6 +471,8 @@ class MainPage extends Component {
             currentSentence,
             puzzleResults,
             draggablePuzzle,
+            sentenceStatus,
+            painting,
             checked: false,
             isCorrectOrder,
             isBackgroundImg: activeTips.isBackgroundImg,

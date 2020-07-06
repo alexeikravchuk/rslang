@@ -79,14 +79,15 @@ class CanvasItem extends Component {
     ctx.globalCompositeOperation = 'source-over';
     ctx.beginPath();
     ctx.shadowColor = 'rgb(255, 255, 255)';
-    ctx.shadowBlur = 5;
-    ctx.strokeStyle = 'rgb(150,150,150)';
-    ctx.lineWidth = 1;
+    ctx.shadowBlur = 10;
+    ctx.strokeStyle = 'rgb(250,250,250)';
+    ctx.lineWidth = 3;
     ctx.fillStyle = 'black';
     ctx.font = `${'bold'} ${fontSize * 1.3}pt ${'Arial'}`;
     ctx.textAlign = 'center';
-    ctx.fillText(word, canvasWidth / 2 + radius / 2, canvasHeight / 2 + fontSize / 3);
+    ctx.font = `${'bold'} ${fontSize * 1.3}pt ${'Arial'}`;
     ctx.strokeText(word, canvasWidth / 2 + radius / 2, canvasHeight / 2 + fontSize / 3);
+    ctx.fillText(word, canvasWidth / 2 + radius / 2, canvasHeight / 2 + fontSize / 3);
   }
 
   render() {

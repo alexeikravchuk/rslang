@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { PuzzleContext } from '../context';
+import { SENTENCE_STATUS } from '../../constants/constants';
 
 const PuzzleRaw = () => {
   const {
@@ -10,7 +11,11 @@ const PuzzleRaw = () => {
     onDrop,
     onPuzzleClick,
     isBackgroundImg,
+    sentenceStatus,
+    painting,
   } = useContext(PuzzleContext);
+
+  const isShowPainting = sentenceStatus === SENTENCE_STATUS.FINISH;
 
   return (
     <div
@@ -18,8 +23,12 @@ const PuzzleRaw = () => {
       onDragOver={onDragOver}
       onDrop={(event) => onDrop(event, 'raw')}
       onClick={onPuzzleClick}>
-      {(isBackgroundImg && puzzles && puzzles[currentSentence - 1]) ||
-        (whitePuzzles && whitePuzzles[currentSentence - 1])}
+      {isShowPainting ? (
+        <p>{`${painting.author} — ${painting.name} (${painting.year})`}</p>
+      ) : (
+        (isBackgroundImg && puzzles && puzzles[currentSentence - 1]) ||
+        (whitePuzzles && whitePuzzles[currentSentence - 1])
+      )}
     </div>
   );
 };
