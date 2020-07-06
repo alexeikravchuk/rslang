@@ -87,18 +87,28 @@ body {
 
 .word-notes span {
     font-size: 30px;
+    cursor: pointer;
     margin: 4px 8px 0 0;   
 }
 
-.dropdown {
-    display: none;
+.word-notes span:hover {
+    color: white;
 }
+
+/* .dropdown {
+    display: visible;
+} */
 
 .dropdown div {
     color: pink;
+    cursor: pointer;
     font-size: small;
     text-decoration: underline;
-    margin-left: 140px;
+    margin-left: 160px;
+}
+
+.dropdown div:hover {
+    color: white;
 }
 
 .card-main {
@@ -152,16 +162,21 @@ body {
     display: none;
 }
 
-/* .card-footer {
-    display: flex;
-    height: 50px;
-    padding: 1rem;
-    justify-content: space-between;
-} */
-
 .spell {
     margin: 15px;
     cursor: pointer;
+}
+
+.spell:hover {
+    color: white;
+}
+
+.prev:hover {
+    color: white;
+}
+
+.next:hover {
+    color: white;
 }
 
 .notification {

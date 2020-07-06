@@ -7,8 +7,11 @@ class WordCards extends React.Component {
     super(props);
     this.audio = null;
     this.state = {
+      // previousPage: [],
+      dataRandom: [],
       category: 1,
       count: 0,
+      dropdown: false,
       translation: "перевод",
       transcription: "транскрипция",
       word: "слово",
@@ -25,28 +28,37 @@ class WordCards extends React.Component {
   }
 
   componentDidMount(){
-    this.getWords(0, 0).then((data)=>{this.newWords(data, 0)});
+    this.getWords(0, 0).then((data)=>{this.getNewWords(data, 0)});
   }
 
   async getWords(page, category){
     const response = await fetch (`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${category}`)
     const data = await response.json();
-    return data;
+    let dataRandom = this.getShuffle(data);
+    console.log(dataRandom);
+    return dataRandom;
   }
 
-  newWords = (data, category) => {
+   getShuffle(array) {
+    let m = array.length, t, i;
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+    return array;
+  }
+  
+  getNewWords = (dataRandom) => {
     const URL = "https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/";
-    let words = []
-    data.forEach(item => {
-      words.push(item.word)
-    })
-    let item = words[Math.floor(Math.random() * words.length)];
-    let currentWordNumber = words.indexOf(item);
-    let currentObj = data[currentWordNumber];
+    let currentObj = dataRandom[0];
+    let previousArr = [];
+    previousArr.push(currentObj);
 
-    console.log(currentObj)
-
+console.log(previousArr);
     this.setState({
+      // previousPage: previousArr,
       translation: currentObj.wordTranslate, 
       transcription: currentObj.transcription,
       word: currentObj.word,
@@ -58,7 +70,11 @@ class WordCards extends React.Component {
       audioWord: `${URL}${currentObj.audio}`,
       audioMeaning: `${URL}${currentObj.audioMeaning}`,
       audioExample: `${URL}${currentObj.audioExample}`,
+      dataRandom: dataRandom.slice(1)
     })
+
+    // dataRandom = dataRandom.slice(1);
+    // console.log(this.state.previousPage);
   };
 
   playAudioWords(audioSrc) {
@@ -69,13 +85,26 @@ class WordCards extends React.Component {
     }
   }
 
+  toggleDropdown() {
+    if(this.state.dropdown === false){
+      this.setState({
+        dropdown: true
+      });
+    }
+    if(this.state.dropdown === true){
+      this.setState({
+        dropdown: false
+      });
+    }
+  }
+
   render(){
     let wordLength = "alcohol".length;
     return (
       <div className="wrapper">
         <div className="word-cards">
           <div className="card-prev">
-            <p className="prev">⮜</p>
+            <p /* onClick={()=>{this.getNewWords(this.state.previousPage)}} */ className="prev">⮜</p>
           </div>
           <div className="card">
             <div className="card-header">
@@ -91,13 +120,13 @@ class WordCards extends React.Component {
                   <span>New word</span>
                 </div>
               </div>
-              <div className="dropdown">
+              <div className="dropdown" style={{display: this.state.dropdown ? 'block' : 'none'}}>
                 <div>Добавить в Изучаемые слова</div>
                 <div>Пометить как Сложное слово</div>
                 <div>Удалить из списка слов</div>
               </div>
               <div className="word-notes">
-                <span>⚑</span>
+                <span onClick={()=>{this.toggleDropdown()}}>⚑</span>
               </div>
             </div>
             <div className="card-main">
@@ -118,10 +147,9 @@ class WordCards extends React.Component {
                 <div className="example-translate">{this.state.exampleTranslate}</div>
               </div>
             </div>
-            <div className="card-footer"></div>
           </div>
           <div className="card-next">
-            <p className="next">⮞</p>
+            <p onClick={()=>{this.getNewWords(this.state.dataRandom)}} className="next">⮞</p>
           </div>
         </div>
         <div className="notification">Уведомления</div>
