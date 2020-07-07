@@ -45,7 +45,7 @@ const MuiAvatar = withStyles((theme) => ({
 function WelcomeDialog(props) {
 
   const { gameLoading, userWords, difficulty, round, open, disabled, checked } = props.sprintState.sprintReducer
-  const { userID, token } = props.sprintState.authReducer;
+  const { userId, token } = props.sprintState.authReducer;
 
   if (gameLoading) {
     return (
@@ -106,7 +106,7 @@ function WelcomeDialog(props) {
             control={<Checkbox checked={checked} onChange={props.handleChange} />}
             label="Use my dictionary"
           />
-          <Button autoFocus onClick={() => {props.loadGame(userWords, difficulty, round, userID, token)}} color="primary">
+          <Button autoFocus onClick={() => {props.loadGame(userWords, difficulty, round, userId, token)}} color="primary">
             Start game!
           </Button>
         </MuiDialogActions>

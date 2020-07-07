@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { isTimerFinished } from '../../../../store/actions/sprintActions';
-import { TIMER_VALUE } from '../../constants/constants';
 
 const useStyles = makeStyles((theme) => ({
   timer: {
@@ -25,34 +24,28 @@ const useStyles = makeStyles((theme) => ({
 function Timer(props) {
   const classes = useStyles();
 
-  const timerState = {
-    timerProgress: 0,
-    timerValue: 60,
-  }
-  const [progress, setProgress] = React.useState(timerState.timerProgress);
-  const [timerValue, setTimer] = React.useState(timerState.timerValue);
-  const fullProgress = 99;
-  const progressPerSecond = 1.666666666666667;
+
+  const [progress, setProgress] = React.useState(0);
+  const fullProgress = 100;
+  const roundDuration = 60;
 
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + progressPerSecond));
-      setTimer((prevValue) => (prevValue === 0 ? TIMER_VALUE : prevValue - 1));
+      setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + fullProgress / roundDuration));
+      if (progress >= 10) {
+        props.isTimerFinished()
+      }
     }, 1000);
     return () => {
       clearInterval(timer);
     };
-  }, []);
-
-  if (timerValue <= 0) {
-    props.isTimerFinished()
-  }
+  }, [progress, props]);
 
   return (
     <div className={classes.timer}>
       <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 100 } />
       <Typography variant="h4" component="h4" className={classes.timerValue}>
-        {timerValue}
+        {Math.floor(progress * roundDuration / fullProgress)}
       </Typography>
     </div>
   );

@@ -36,7 +36,7 @@ function StatisticDialog(props) {
   };
 
   const { scoreRecord, totalScore, gameCounter, showStatistic } = props.sprintState.sprintReducer;
-  const { userID, token } = props.sprintState.authReducer;
+  const { userId, token } = props.sprintState.authReducer;
 
   const data = {
     "optional": {
@@ -66,7 +66,7 @@ function StatisticDialog(props) {
         <Tab icon={<Spellcheck />} />
       </Tabs>
       <MuiDialogActions>
-        <Button autoFocus onClick={() => props.endGame(data, userID, token)} color="primary">
+        <Button autoFocus onClick={() => props.endGame(data, userId, token)} color="primary">
           Close
         </Button>
       </MuiDialogActions>
