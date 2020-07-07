@@ -40,13 +40,6 @@ class MainGame extends Component{
     
   }
 
-// async getWords(page, category){
-//   const url = `${wordsData}page=${page - 1}&group=${category - 1}`;
-//   const response = await fetch (url);
-//   const data = await response.json();
-//   return data;
-// }
-
 playAudio(src) {
   if (!this.audio) {
     this.audio = new Audio(src);

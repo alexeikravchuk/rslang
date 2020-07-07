@@ -2,33 +2,7 @@ import React from 'react';
 import { withStyles, } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-
-const marks = [
-  {
-    value: 1,
-    label: '1',
-  },
-  {
-    value: 2,
-    label: '2',
-  },
-  {
-    value: 3,
-    label: '3',
-  },
-  {
-    value: 4,
-    label: '4',
-  },
-  {
-    value: 5,
-    label: '5',
-  },
-  {
-    value: 6,
-    label: '6',
-  }
-];
+import { marks } from '../../constants/constants';
 
 class GameSettings extends React.Component {
 
@@ -81,5 +55,3 @@ function createStyles(theme) {
 }
 
 export default withStyles(createStyles)(GameSettings);
-
-
