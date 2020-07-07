@@ -44,11 +44,11 @@ function Timer(props) {
     };
   }, []);
 
-  if (timerValue <= 58) {
+  if (timerValue <= 0) {
     props.isTimerFinished()
   }
 
-   return (
+  return (
     <div className={classes.timer}>
       <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 100 } />
       <Typography variant="h4" component="h4" className={classes.timerValue}>

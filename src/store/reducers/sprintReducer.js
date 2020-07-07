@@ -42,7 +42,6 @@ const defaultState = {
   answer: null,
   score: 0,
   scoreRecord: 0,
-  scoreAverage: 0,
   totalScore: 0,
   gameCounter: 0,
   xp: BASIC_XP,
@@ -72,7 +71,6 @@ const sprintReducer = ( state = defaultState, action) => {
         learnedWords: new Set(),
         wrongWords: new Set(),
         scoreRecord: action.stats.optional.scoreRecord,
-        scoreAverage: action.stats.optional.scoreAverage,
         totalScore: action.stats.optional.totalScore,
         gameCounter: action.stats.optional.gameCounter,
       };
@@ -124,7 +122,6 @@ const sprintReducer = ( state = defaultState, action) => {
        scoreRecord: Math.max(state.score, state.scoreRecord),
        totalScore: state.totalScore + state.score,
        gameCounter: state.gameCounter + 1,
-       scoreAverage: Math.round(state.totalScore / state.gameCounter),
       };
     }
     case CLOSE_WINDOW: {

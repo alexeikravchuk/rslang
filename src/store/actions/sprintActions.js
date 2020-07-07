@@ -287,9 +287,7 @@ export const endGame = (data, id, token) => {
 
 export const isTimerFinished = () => {
   playSound(END_SOUND)
-  return dispatch => {
-    dispatch ({
+  return {
       type: TIMER_FINISHED,
-    })
   }
 }

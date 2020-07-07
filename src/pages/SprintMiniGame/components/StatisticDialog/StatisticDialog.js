@@ -35,13 +35,12 @@ function StatisticDialog(props) {
     setValue(newValue);
   };
 
-  const { scoreRecord, scoreAverage, totalScore, gameCounter, showStatistic } = props.sprintState.sprintReducer;
+  const { scoreRecord, totalScore, gameCounter, showStatistic } = props.sprintState.sprintReducer;
   const { userID, token } = props.sprintState.authReducer;
 
   const data = {
     "optional": {
       "scoreRecord": scoreRecord,
-      "scoreAverage": scoreAverage,
       "totalScore": totalScore,
       "gameCounter": gameCounter,
     }
