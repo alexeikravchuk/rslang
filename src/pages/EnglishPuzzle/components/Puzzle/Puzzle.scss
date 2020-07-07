@@ -57,10 +57,13 @@
         z-index: 6;
         height: 100%;
         &.current-sentence {
-          justify-content: start;
+          justify-content: flex-start;
+          .canvas-item:not(:first-child) {
+            margin-left: -5.5px;
+          }
         }
         .canvas-item:not(:first-child) {
-          margin-left: -6px;
+          margin-left: -7px;
         }
       }
       &.hidden {

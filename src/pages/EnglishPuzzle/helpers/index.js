@@ -7,6 +7,7 @@ import { getDefaultState } from './getDefaultState';
 import { playSentence } from './playSentence';
 import { saveTipsSetting } from './saveTipsSetting';
 import { getButtonsInfo } from './getButtonsInfo';
+import { getStatistics } from './getStatistics';
 
 export {
   getTipsSettings,
@@ -18,4 +19,5 @@ export {
   playSentence,
   saveTipsSetting,
   getButtonsInfo,
+  getStatistics,
 };

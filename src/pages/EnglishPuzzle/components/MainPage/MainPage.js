@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { ControlBar } from '../ControlBar';
 import { Puzzle } from '../Puzzle';
 import { Buttons } from '../Buttons';
@@ -14,13 +14,16 @@ import {
   saveTipsSetting,
   playSentence,
   getButtonsInfo,
+  getStatistics,
 } from '../../helpers';
+import { Results } from '../Results';
 
 class MainPage extends Component {
   state = getDefaultState();
 
   componentDidMount = async () => {
     await this.setData();
+    await this.setStatistics();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -50,6 +53,7 @@ class MainPage extends Component {
     await Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]);
     await this.setPuzzles();
     await this.setWhitePuzzles();
+
     return 1;
   };
 
@@ -89,6 +93,12 @@ class MainPage extends Component {
     this.setState({ whitePuzzles });
   };
 
+  setStatistics = async () => {
+    const statistics = await getStatistics();
+    console.log(statistics);
+    // this.setState({ statistics });
+  };
+
   changeLevel = ({ target: { value } }) => {
     const { level, page } = this.state;
     this.setState({
@@ -105,6 +115,8 @@ class MainPage extends Component {
   resetLevel = async () => {
     this.setState({
       currentSentence: 1,
+      results: [],
+      isShowResults: false,
       sentenceStatus: SENTENCE_STATUS.PENDING,
       isCorrectOrder: [],
       puzzles: null,
@@ -180,7 +192,7 @@ class MainPage extends Component {
   };
 
   checkResultOrder = async () => {
-    const { puzzleResults, currentSentence, words, activeTips } = this.state;
+    const { puzzleResults, currentSentence, words, activeTips, results } = this.state;
     let { sentenceStatus, shownButtons } = this.state;
     const isCorrectOrder = puzzleResults[currentSentence - 1].map((item, i) => {
       if (+item.key.split('-')[1] === i + 1) {
@@ -193,12 +205,13 @@ class MainPage extends Component {
     shownButtons =
       sentenceStatus === SENTENCE_STATUS.SUCCESS
         ? getButtonsInfo([BUTTONS_NAME.CONTINUE])
-        : getButtonsInfo([BUTTONS_NAME.DONT_KNOW, BUTTONS_NAME.CONTINUE]);
+        : getButtonsInfo([BUTTONS_NAME.DONT_KNOW, BUTTONS_NAME.CHECK]);
     if (!isError) {
       puzzleResults[currentSentence - 1] = await this.getCurrentSortedRow();
+      results.length < currentSentence && results.push(1);
       activeTips.isAutoplay && playSentence(words[currentSentence - 1]);
     }
-    return this.setState({ isCorrectOrder, sentenceStatus, shownButtons });
+    return this.setState({ isCorrectOrder, sentenceStatus, shownButtons, results });
   };
 
   findPuzzle = (dataItem) => {
@@ -348,7 +361,15 @@ class MainPage extends Component {
   };
 
   skipSentence = async () => {
-    const { puzzles, puzzleResults, whitePuzzles, currentSentence, activeTips, words } = this.state;
+    const {
+      puzzles,
+      puzzleResults,
+      whitePuzzles,
+      currentSentence,
+      activeTips,
+      words,
+      results,
+    } = this.state;
 
     puzzleResults[currentSentence - 1] = await this.getCurrentSortedRow();
     puzzles[currentSentence - 1] = [];
@@ -356,6 +377,7 @@ class MainPage extends Component {
 
     const shownButtons = getButtonsInfo([BUTTONS_NAME.CONTINUE]);
     this.setState({
+      results: [...results, 0],
       puzzleResults,
       puzzles,
       whitePuzzles,
@@ -396,6 +418,7 @@ class MainPage extends Component {
         ...getDefaultState(),
         level: { ...level, current: levelValue },
         page: { ...page, current: pageValue },
+        isShowResults: false,
       });
     }
   }
@@ -420,6 +443,7 @@ class MainPage extends Component {
 
   handleBtnClick = ({ currentTarget }) => {
     const { currentSentence, puzzleResults, sentenceStatus } = this.state;
+    console.log(currentTarget.innerText);
     if (currentTarget.innerText === BUTTONS_NAME.CHECK) {
       return this.checkResult();
     }
@@ -432,6 +456,9 @@ class MainPage extends Component {
       }
       return this.nextSentence();
     }
+    if (currentTarget.innerText === BUTTONS_NAME.RESULTS) {
+      return this.setState({ isShowResults: true });
+    }
     return this.skipSentence();
   };
 
@@ -440,6 +467,7 @@ class MainPage extends Component {
       level,
       page,
       words,
+      results,
       painting,
       sentenceStatus,
       puzzles,
@@ -450,42 +478,54 @@ class MainPage extends Component {
       activeTips,
       shownButtons,
       isCorrectOrder,
+      isShowResults,
     } = this.state;
     return (
       <div className='game--wrapper'>
-        <ControlBarContext.Provider
-          value={{
-            level,
-            page,
-            activeTips,
-            word: words[currentSentence - 1],
-            sentenceStatus,
-            changeLevel: this.changeLevel,
-            changePage: this.changePage,
-            onControlButtonClick: this.handleControlButtonClick,
-          }}>
-          <ControlBar />
-        </ControlBarContext.Provider>
-        <PuzzleContext.Provider
-          value={{
-            puzzles,
-            whitePuzzles,
-            currentSentence,
-            puzzleResults,
-            draggablePuzzle,
-            sentenceStatus,
-            painting,
-            checked: false,
-            isCorrectOrder,
-            isBackgroundImg: activeTips.isBackgroundImg,
-            onDragStart: this.onDragStart,
-            onDragOver: this.onDragOver,
-            onDrop: this.onDrop,
-            onPuzzleClick: this.handlePuzzleClick,
-          }}>
-          <Puzzle />
-        </PuzzleContext.Provider>
-        <Buttons buttons={shownButtons} onBtnClick={this.handleBtnClick} />
+        {isShowResults ? (
+          <Results
+            words={words}
+            results={results}
+            painting={painting}
+            onBtnClick={this.handleBtnClick}
+          />
+        ) : (
+          <Fragment>
+            <ControlBarContext.Provider
+              value={{
+                level,
+                page,
+                activeTips,
+                word: words[currentSentence - 1],
+                sentenceStatus,
+                changeLevel: this.changeLevel,
+                changePage: this.changePage,
+                onControlButtonClick: this.handleControlButtonClick,
+              }}>
+              <ControlBar />
+            </ControlBarContext.Provider>
+            <PuzzleContext.Provider
+              value={{
+                puzzles,
+                whitePuzzles,
+                currentSentence,
+                puzzleResults,
+                draggablePuzzle,
+                sentenceStatus,
+                painting,
+                checked: false,
+                isCorrectOrder,
+                isBackgroundImg: activeTips.isBackgroundImg,
+                onDragStart: this.onDragStart,
+                onDragOver: this.onDragOver,
+                onDrop: this.onDrop,
+                onPuzzleClick: this.handlePuzzleClick,
+              }}>
+              <Puzzle />
+            </PuzzleContext.Provider>
+            <Buttons buttons={shownButtons} onBtnClick={this.handleBtnClick} />
+          </Fragment>
+        )}
       </div>
     );
   }

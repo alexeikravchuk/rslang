@@ -11,11 +11,12 @@ const getDefaultState = () => {
     },
     page: {
       current: +localStorage.page || 1,
-      maxPage: 1,
+      maxPage: 50,
     },
     activeTips: getTipsSettings(),
     shownButtons: [getButtonsInfo()[0]],
     words: [],
+    results: [],
     currentSentence: 1,
     sentenceStatus: SENTENCE_STATUS.PENDING,
     isCorrectOrder: [],
@@ -24,6 +25,7 @@ const getDefaultState = () => {
     puzzleResults: new Array(10).fill([]),
     draggablePuzzle: null,
     painting: null,
+    isShowResults: false,
   };
 };
 
