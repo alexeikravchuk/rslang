@@ -15,13 +15,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     width: 100%;
-    @media screen and (max-width: 499px) {
+    @media screen and (max-width: 530px) {
       &:after {
         position: absolute;
         content: 'please, rotate the screen';
-        font-size: 40px;
+        font-size: 30px;
+        text-align: center;
         text-shadow: 0 0 10px black;
         color: #c7a2ec;
       }

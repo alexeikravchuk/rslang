@@ -2,7 +2,7 @@
   .result {
     position: relative;
     padding: 5px;
-    font-size: 20px;
+    font-size: 18px;
     color: #fff;
     text-shadow: 0 0 5px #fff;
     height: 410px;
@@ -12,10 +12,10 @@
     z-index: 5;
     @media screen and (max-width: 830px) {
       max-width: 675px;
-      height: 355px;
+      height: 360px;
     }
     @media screen and (max-width: 749px) {
-      max-width: 580px;
+      max-width: 575px;
       height: 305px;
     }
     @media screen and (max-width: 629px) {
@@ -27,18 +27,16 @@
       background-color: #a0a0f0ff;
       opacity: 0.4;
       height: 100%;
-      width: calc(100% - 45px);
+      width: calc(100% - 43px);
       top: 0px;
-      left: 47px;
-      -webkit-box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
-      -moz-box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
+      left: 44px;
       box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
       pointer-events: none;
       background-image: none;
       @media screen and (max-width: 749px) {
-        width: calc(100% - 38px);
         top: 0px;
-        left: 40px;
+        width: calc(100% - 30px);
+        left: 32px;
       }
       @media screen and (max-width: 629px) {
         width: calc(100% - 35px);
@@ -50,9 +48,9 @@
       align-items: center;
       height: 40px;
       opacity: 1;
-      transition: 0.6s ease-in;
+      transition: opacity 0.6s ease-in;
       &-text_container {
-        margin-left: 2px;
+        margin-left: 3px;
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -73,10 +71,9 @@
         height: 35px;
         &-text_container {
           display: flex;
-          justify-content: space-between;
           height: 35px;
           .canvas-item:not(:first-child) {
-            margin-left: -5px;
+            margin-left: -5.5px;
           }
         }
       }
@@ -85,7 +82,7 @@
         &-text_container {
           height: 35px;
           .canvas-item:not(:first-child) {
-            margin-left: -4px;
+            margin-left: -4.5px;
           }
         }
       }
@@ -99,7 +96,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 5px 8px;
+        margin: 5px 10px 5px 0;
         height: 30px;
         width: 30px;
         background-color: rgba(64, 64, 112, 1);
@@ -110,7 +107,7 @@
           font-size: 14px;
           width: 20px;
           height: 20px;
-          margin: 3px 8px;
+          margin: 3px 8px 3px 0;
         }
         &.hidden {
           opacity: 0;
@@ -126,14 +123,17 @@
     display: flex;
     justify-content: center;
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 45px;
     font-size: 20px;
-    color: #000;
-    font-weight: 700;
-    text-shadow: 0 0 2px #ffffff, 0 0 15px #a46dbb;
+    color: #fff;
+    font-weight: 400;
+    text-shadow:  0 0 5px #3c0253, 0 0 15px #231729;
     width: 100%;
     height: 40px;
+    .painting-description {
+      margin: 0;
+    }
     @media screen and (max-width: 830px) {
       height: 35px;
       padding-left: 0;
@@ -144,6 +144,10 @@
     }
     @media screen and (max-width: 629px) {
       height: 20px;
+    }
+    @media screen and (max-width: 530px) {
+      opacity: 0;
+      pointer-events: none;
     }
   }
 }

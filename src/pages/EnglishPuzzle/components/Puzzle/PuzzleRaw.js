@@ -24,7 +24,7 @@ const PuzzleRaw = () => {
       onDrop={(event) => onDrop(event, 'raw')}
       onClick={onPuzzleClick}>
       {isShowPainting ? (
-        <p>{`${painting.author} — ${painting.name} (${painting.year})`}</p>
+        <p className='painting-description'>{`${painting.author} — ${painting.name} (${painting.year})`}</p>
       ) : (
         (isBackgroundImg && puzzles && puzzles[currentSentence - 1]) ||
         (whitePuzzles && whitePuzzles[currentSentence - 1])

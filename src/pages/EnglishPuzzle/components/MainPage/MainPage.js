@@ -31,6 +31,8 @@ class MainPage extends Component {
       activeTips: { isAutoplay, isTranslate, isPronunciation, isBackgroundImg },
     } = this.state;
     if (prevState.page.current !== page.current || prevState.level.current !== level.current) {
+      localStorage.level = level.current;
+      localStorage.page = page.current;
       return this.resetLevel();
     }
     if (

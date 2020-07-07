@@ -2,6 +2,9 @@ import React from 'react';
 import { Button, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  buttons: {
+    marginTop: '5px',
+  },
   button: {
     margin: theme.spacing(1),
   },
@@ -10,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 const Buttons = ({ buttons, onBtnClick }) => {
   const classes = useStyles();
   return (
-    <div>
+    <div className={classes.buttons}>
       {buttons.map((button, i) => (
         <Button
           variant='contained'

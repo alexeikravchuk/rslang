@@ -8,7 +8,7 @@ const PuzzleResult = () => {
 
   const paintingStyle = {
     backgroundImage: `url(${painting && painting.cutSrc})`,
-    backgroundSize: 'contain',
+    backgroundSize: 'calc(100% - 4px)',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     opacity: 1,

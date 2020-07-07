@@ -6,11 +6,11 @@ const { getTipsSettings } = require('./getTipsSettings');
 const getDefaultState = () => {
   return {
     level: {
-      current: 1,
+      current: +localStorage.level || 1,
       maxLevel: MAX_LEVEL,
     },
     page: {
-      current: 1,
+      current: +localStorage.page || 1,
       maxPage: 1,
     },
     activeTips: getTipsSettings(),
