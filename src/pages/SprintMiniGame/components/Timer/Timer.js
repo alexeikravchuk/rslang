@@ -44,7 +44,7 @@ function Timer(props) {
     };
   }, []);
 
-  if (timerValue <= 0) {
+  if (timerValue <= 58) {
     props.isTimerFinished()
   }
 

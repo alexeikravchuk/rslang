@@ -66,7 +66,16 @@ const sprintReducer = ( state = defaultState, action) => {
       return {...state, round: action.payload};
     }
     case LOAD_GAME: {
-      return {...state, gameWords: action.payload, learnedWords: new Set(), wrongWords: new Set()};
+      return {
+        ...state,
+        gameWords: action.words,
+        learnedWords: new Set(),
+        wrongWords: new Set(),
+        scoreRecord: action.stats.optional.scoreRecord,
+        scoreAverage: action.stats.optional.scoreAverage,
+        totalScore: action.stats.optional.totalScore,
+        gameCounter: action.stats.optional.gameCounter,
+      };
     }
     case SHOW_LOADER: {
       return {...state, gameLoading: true};

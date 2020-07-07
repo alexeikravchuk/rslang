@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { Link as RouterLink } from 'react-router-dom';
 import {signURL, createURL } from '../../constants/authURL'
 
-import { 
+import {
   addFirstName,
   addLastName,
   addEmail,
@@ -25,7 +25,7 @@ import { connect } from 'react-redux';
             },
             body: JSON.stringify(user)
           });
-          if(rawResponse.status === 404){  
+          if(rawResponse.status === 404){
             setTitle('Please, check the fields')
           }
           if(rawResponse.status === 403){
@@ -82,9 +82,9 @@ import { connect } from 'react-redux';
         props.dispatch(addLastName(props.lastNameInput))
         setTitle('Registration successful')
         doTransition('/signin')
-        
+
       }
-    }) 
+    })
   }
 }
 
@@ -118,9 +118,9 @@ import { connect } from 'react-redux';
 
   return (
     <div>
-      <Button 
+      <Button
         variant="contained"
-        fullWidth       
+        fullWidth
         color="primary"
         onClick={() => { getResponse(props.emailInput, props.passwordInput); handleClickOpen()}}
         >
@@ -142,15 +142,15 @@ import { connect } from 'react-redux';
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-        <Link 
+        <Link
           component={RouterLink}
           to={transition}
         >
           <Button onClick={handleClose} color="primary" autoFocus>
               OK
           </Button>
-   
-        </Link> 
+
+        </Link>
 
 
         </DialogActions>

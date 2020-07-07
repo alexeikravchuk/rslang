@@ -1,9 +1,9 @@
-import { 
+import {
     FIRST_NAME,
     LAST_NAME,
     EMAIL,
     TOKEN,
-    UserData 
+    UserData
 } from '../actions/authAction'
 
 const initialState = {
@@ -17,29 +17,28 @@ function authReducer(state = initialState, action) {
     switch (action.type) {
       case FIRST_NAME:
         return {
-          ...state,  
+          ...state,
           firstName: action.firstName
-        };         
+        };
       case LAST_NAME:
         return {
-          ...state,  
+          ...state,
           lastName: action.lastName
         };
       case EMAIL:
         return {
-          ...state,  
+          ...state,
           email: action.email,
          };
       case TOKEN:
         return {
-          ...state,  
+          ...state,
           token: action.token,
         };
       default:
         return state
     }
-  
+
   }
- 
+
   export default authReducer
-  

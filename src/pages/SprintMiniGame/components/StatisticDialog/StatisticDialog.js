@@ -35,11 +35,23 @@ function StatisticDialog(props) {
     setValue(newValue);
   };
 
+  const { scoreRecord, scoreAverage, totalScore, gameCounter, showStatistic } = props.sprintState.sprintReducer;
+  const { userID, token } = props.sprintState.authReducer;
+
+  const data = {
+    "optional": {
+      "scoreRecord": scoreRecord,
+      "scoreAverage": scoreAverage,
+      "totalScore": totalScore,
+      "gameCounter": gameCounter,
+    }
+  }
+
   return (
     <Dialog
       fullWidth={true}
       maxWidth="sm"
-      open={props.sprintState.showStatistic}
+      open={showStatistic}
     >
       <DialogTitle>Sprint Results</DialogTitle>
       {value === 0 && <StatisticDialogDescription props={props}/>}
@@ -55,7 +67,7 @@ function StatisticDialog(props) {
         <Tab icon={<Spellcheck />} />
       </Tabs>
       <MuiDialogActions>
-        <Button autoFocus onClick={props.endGame} color="primary">
+        <Button autoFocus onClick={() => props.endGame(data, userID, token)} color="primary">
           Close
         </Button>
       </MuiDialogActions>
@@ -65,13 +77,13 @@ function StatisticDialog(props) {
 
 const mapStateToProps = state => {
   return {
-    sprintState: state.sprintReducer
+    sprintState: state
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    endGame: () => dispatch(endGame()),
+    endGame: (data, id, token) => dispatch(endGame(data, id, token)),
   }
 }
 

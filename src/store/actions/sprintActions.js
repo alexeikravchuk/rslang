@@ -118,6 +118,30 @@ export const getCommonWords = async (difficulty, round) => {
     return words
 }
 
+export const getStatistics = async (id, token) => {
+  try {
+    const response = await fetch(`${SERVER_URL}users/${id}/statistics`, {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+      }
+    })
+    const statistics = await response.json()
+    return statistics
+  } catch (e) {
+    return {
+      "optional": {
+        "scoreRecord": 0,
+        "scoreAverage": 0,
+        "totalScore": 0,
+        "gameCounter": 0,
+      }
+    }
+  }
+}
+
 export const loadGame = (userWords, difficulty, round, id, token) => {
   return async dispatch => {
     dispatch(hideWelcomeDialog())
@@ -132,8 +156,9 @@ export const loadGame = (userWords, difficulty, round, id, token) => {
     } else {
       words = await getCommonWords(difficulty, round)
     }
+    const stats = await getStatistics(id, token);
     setTimeout(() => {
-      dispatch({ type: LOAD_GAME, payload: words })
+      dispatch({ type: LOAD_GAME, words, stats })
       dispatch(hideLoader())
       playSound(START_SOUND)
       dispatch(showCard(words.length))
@@ -227,10 +252,37 @@ export const closeWindow = () => {
   })
 }
 
-export const endGame = () => {
-  return ({
-    type: END_GAME,
-  })
+export const setStatistics = async (data, id, token) => {
+  await fetch(`${SERVER_URL}users/${id}/statistics`, {
+      method: 'PUT',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.status === 404) {
+        throw new Error('404');
+      } else if (response.status === 401) {
+        throw new Error('401');
+      } else {
+        return response.json()
+      }
+    })
+  }
+
+export const endGame = (data, id, token) => {
+  return async dispatch => {
+    try {
+      await setStatistics(data, id, token)
+      dispatch({ type: END_GAME })
+    } catch (e) {
+      dispatch({ type: END_GAME })
+    }
+  }
 }
 
 export const isTimerFinished = () => {
