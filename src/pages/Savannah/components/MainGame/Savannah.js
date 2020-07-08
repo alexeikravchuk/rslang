@@ -8,7 +8,7 @@ import {StartGame} from '../StartGame';
 import GameButtonGroup from '../ButtonGroup/ButtonGroup';
 import './savannah.scss';
 import {
-  gameEnding,
+  gameEnding, gameReset,
   loadWords,
   loadWordsSuccess,
 } from '../../../../store/actions/savannahAction';
@@ -39,6 +39,9 @@ class Savannah extends Component {
       </Container>
     );
   }
+  componentWillUnmount() {
+    this.props.onUnmount();
+  }
 
   render() {
     const {classes, loading, gameStarted, onClose, gameEnd, fetchWords} = this.props;
@@ -64,8 +67,6 @@ class Savannah extends Component {
             </Container>
           </Grid>
         </Grid>
-
-
       </div>
     );
   }
@@ -83,6 +84,7 @@ const mapDispatchToProps = dispatch => ({
       .then(json => dispatch(loadWordsSuccess(json)));
   },
   onClose: () => dispatch(gameEnding()),
+  onUnmount: () => dispatch(gameReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Savannah));
