@@ -1,4 +1,4 @@
-import {DATA_LINK} from '../../../constants/urlsRequests'
+import {DATA_LINK} from '../../../constants/urlsRequests';
 
 export function randomInteger(min, max) {
   let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -13,16 +13,24 @@ export function shuffleArray(array) {
   return array;
 }
 
-export function playSound(word){
+export function playSound(word) {
   const audioSrc = DATA_LINK + word.audio;
-  let audio = new Audio(audioSrc);
+  playFileSound(audioSrc);
+}
+
+export function playFileSound(path) {
+  let audio = new Audio(path);
   let audioPromise = audio.play();
   if (audioPromise !== undefined) {
     audioPromise.then(_ => {
       audio.pause();
     })
       .catch(error => {
-        console.log(error)
+        console.log(error);
       });
   }
+}
+
+export function pubAudioPath(sound) {
+  return `${process.env.PUBLIC_URL}/audio/${sound}.mp3`;
 }

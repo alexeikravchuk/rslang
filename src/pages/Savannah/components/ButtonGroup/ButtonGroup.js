@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withStyles, Container, Slide} from '@material-ui/core';
-import {shuffleArray} from '../../utils/utils';
+import {playFileSound, pubAudioPath, shuffleArray} from '../../utils/utils';
 import {SavannahButton} from '../SavannahButton';
 import TrainWord from '../TrainWord/TrainWord';
 import {
@@ -12,7 +12,9 @@ import {
 import Grid from '@material-ui/core/Grid';
 
 const buttonLimit = 4;
-
+const correct = pubAudioPath('correct');
+const errorSound = pubAudioPath('error');
+const levelUpSound = pubAudioPath('levelUp');
 const styles = {
   buttonGroupRoot: {
     display: 'flex',
@@ -129,13 +131,16 @@ function mapStateToProps(store) {
 
 const mapDispatchToProps = dispatch => ({
   onLevelUp: () => {
+    playFileSound(levelUpSound);
     dispatch(levelUp());
   },
   onMiss: (lifeCounter, missedWord) => {
+    playFileSound(errorSound);
     dispatch(addMissedWords(missedWord));
     (lifeCounter < 1) ? dispatch(gameEnding()) : dispatch(lifeDecrease());
   },
   onGuess: (learnedWord) => {
+    playFileSound(correct);
     dispatch(addLearnedWords(learnedWord));
   },
   onRemove: (word) => {
