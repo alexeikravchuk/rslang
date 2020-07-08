@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withStyles, Container, Slide} from '@material-ui/core';
-import {randomInteger, shuffleArray} from '../../utils/utils'
+import {shuffleArray} from '../../utils/utils'
 import {SavannahButton} from '../SavannahButton';
 import TrainWord from '../TrainWord/TrainWord';
 import {
   addLearnedWords, addMissedWords,
-  gameEnding,
+  gameEnding, levelUp,
   lifeDecrease, removeWord,
 } from '../../../../store/actions/savannahAction';
 import Grid from '@material-ui/core/Grid';
 
-const wordsLimit = 30;
 const buttonLimit = 4;
 
 const styles = {
@@ -41,7 +40,8 @@ class GameButtonGroup extends Component {
 
   loadNewWords(){
     if(this.props.newWords.length < 5) {
-      this.props.fetch(randomInteger(0,wordsLimit), this.props.difficulty);
+      this.props.onLevelUp();
+      this.props.fetch(this.props.gameLevel, this.props.difficulty);
     }
   }
 
@@ -75,7 +75,7 @@ class GameButtonGroup extends Component {
   }
 
   componentDidMount() {
-    this.props.fetch(randomInteger(0,wordsLimit), this.props.difficulty);
+    this.loadNewWords()
     this.setState({showWord: true})
   }
 
@@ -126,6 +126,9 @@ function mapStateToProps(store){
 }
 
 const mapDispatchToProps = dispatch => ({
+  onLevelUp: () => {
+    dispatch(levelUp())
+  },
   onMiss: (lifeCounter, missedWord) => {
     dispatch(addMissedWords(missedWord));
     (lifeCounter < 1) ? dispatch(gameEnding()) : dispatch(lifeDecrease())

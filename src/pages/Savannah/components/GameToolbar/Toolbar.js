@@ -7,10 +7,13 @@ import {CloseButton} from '../closeButton';
 
 const styles = {
   toolBar:{
+    display: 'flex',
     position: 'relative',
     textAlign: 'center',
     color: '#662246',
     zIndex: 10,
+    justifyContent: 'space-between',
+    width: '100%'
   },
   title: {
     flexGrow: 1,
@@ -24,15 +27,18 @@ function lifeCounterFunction(lifeCounter) {
 }
 
 function GameToolbar(props){
-  const { classes, title, to, onClose, gameStarted, lifeCounter} = props;
+  const { classes, title, to, onClose, gameStarted, lifeCounter, gameLevel} = props;
   return (
     <Toolbar className={classes.toolBar}>
+      {gameStarted &&
+      lifeCounterFunction(lifeCounter)
+      }
       <Typography variant={'h4'} className={classes.title}>
         {title}
       </Typography>
-      {gameStarted &&
-        lifeCounterFunction(lifeCounter)
-      }
+      {gameStarted && <Typography variant={'h6'} className={''}>
+        Ваш уровень: {gameLevel}
+      </Typography>}
       <Link to={to} >
         <CloseButton onClick={onClose}/>
       </Link>
@@ -40,8 +46,8 @@ function GameToolbar(props){
   )
 }
 
-const mapStateToProps = ({ savannahReducer: { lifeCounter, gameStarted } }) => {
-  return { lifeCounter, gameStarted }
+const mapStateToProps = ({ savannahReducer: { lifeCounter, gameStarted, gameLevel } }) => {
+  return { lifeCounter, gameStarted, gameLevel }
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(GameToolbar))
