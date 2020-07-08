@@ -1,7 +1,6 @@
 import React  from 'react';
 import {connect} from 'react-redux';
 import { withStyles, Card, Dialog, Container, Typography } from '@material-ui/core';
-import Background from '../background/Background';
 import {GameToolbar} from '../GameToolbar';
 import {SavannahButton} from '../SavannahButton';
 import {gameStarting} from '../../../../store/actions/savannahAction';
@@ -11,11 +10,12 @@ import Grid from '@material-ui/core/Grid';
 
 const styles = {
   contentDialog: {
-    height: '100vh',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '1rem'
   },
   contentText:{
     color: 'wheat',
@@ -45,10 +45,9 @@ function StartGame(props) {
   };
   return (
       <Dialog
-        fullScreen
         open={open}
-        onClose={handleClose}>
-        <Background />
+        onClose={handleClose}
+        >
           <GameToolbar title={'Welcome to savannah'} to={'/home'}/>
           <Container className={classes.contentDialog}>
             <Typography  variant={'h6'} className={classes.title}>

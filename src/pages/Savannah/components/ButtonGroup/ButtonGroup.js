@@ -15,7 +15,13 @@ const wordsLimit = 30;
 const buttonLimit = 4;
 
 const styles = {
-  buttonGroupRoot:{
+  groupRoot: {
+    height: '100%'
+  },
+  trainWord:{
+    height: '45vh'
+  },
+  buttonGroupContainer:{
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -88,34 +94,45 @@ class GameButtonGroup extends Component {
   render() {
     const { classes, newWords, } = this.props;
     return (
-      <div>
-        {(newWords.length > 0 && this.state.showWord) &&
-        <TrainWord
-          currentWord={newWords[0]}
-          onAnimationStart={this.setStart.bind(this)}
-          onAnimationEnd={this.setEnd.bind(this)}
-        />}
-        {this.state.showWord &&
-        <Slide direction={'up'} in={this.state.showWord}>
-          <Container className={classes.buttonGroupRoot}>
-            <Grid container
-                  spacing={1}
-                  justify='center'
-                  alignItems='center'>
-              {shuffleArray(newWords.slice(0, buttonLimit)).map((el, index) => {
-                return (
-                  <Grid item xs={12}  sm={6} md={3} key={index}>
-                    <SavannahButton keyId={el.id}
-                                    title={el.wordTranslate}
-                                    onClick={() => this.onClick(el.word)}
-                    />
-                  </Grid>
-                )
-              })}
-            </Grid>
-        </Container>
-        </Slide>}
-      </div>
+        <Grid
+          container
+          direction={'column'}
+          justify="space-between"
+          alignItems="center"
+          className={classes.groupRoot}
+          xs={12}
+        >
+          <Grid item className={classes.trainWord}>
+            {(newWords.length > 0 && this.state.showWord) &&
+            <TrainWord
+              currentWord={newWords[0]}
+              onAnimationStart={this.setStart.bind(this)}
+              onAnimationEnd={this.setEnd.bind(this)}
+            />}
+          </Grid>
+          <Grid item xs={12}>
+            {this.state.showWord &&
+            <Slide direction={'up'} in={this.state.showWord}>
+              <Container className={classes.buttonGroupContainer}>
+                <Grid container
+                      spacing={2}
+                      justify='center'
+                      alignItems='center'>
+                  {shuffleArray(newWords.slice(0, buttonLimit)).map((el, index) => {
+                    return (
+                      <Grid item xs={12} sm={6} md={3} key={index}>
+                        <SavannahButton keyId={el.id}
+                                        title={el.wordTranslate}
+                                        onClick={() => this.onClick(el.word)}
+                        />
+                      </Grid>
+                    )
+                  })}
+                </Grid>
+              </Container>
+            </Slide>}
+          </Grid>
+        </Grid>
     )
   }
 }

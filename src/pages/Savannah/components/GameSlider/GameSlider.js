@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 const styles = {
   gameSliderRoot: {
-    width: 300,
+    width: '250px',
     marginBottom: '1rem',
     color: "#662246",
   },
@@ -17,6 +17,33 @@ const styles = {
   },
 };
 
+const marks = [
+  {
+    value: 0,
+    label: '1',
+  },
+  {
+    value: 1,
+    label: '2',
+  },
+  {
+    value: 2,
+    label: '3',
+  },
+  {
+    value: 3,
+    label: '4',
+  },
+  {
+    value: 4,
+    label: '5',
+  },
+  {
+    value: 5,
+    label: '6',
+  },
+];
+
 function valuetext(value) {
   return `${value}`;
 }
@@ -26,13 +53,12 @@ function GameSlider(props){
     return (
       <div className={classes.gameSliderRoot}>
         <Slider
-          onChangeCommitted={(e, val) => onChange(val)}
+          onChange={(e, val) => onChange(val)}
           value = {difficulty}
           getAriaValueText={valuetext}
           aria-labelledby='discrete-slider'
-          valueLabelDisplay='auto'
           step={1}
-          marks
+          marks={marks}
           min={0}
           max={5}
         />

@@ -6,9 +6,8 @@ import {playSound} from "../../utils/utils";
 const styles = theme => ({
   trainWordRoot:{
     display: 'flex',
-    alignItems: 'flex-end',
+    //alignItems: 'flex-end',
     justifyContent: 'center',
-    height: '50vh',
   },
   title:{
     ...theme.typography.button,
@@ -29,7 +28,6 @@ class TrainWord extends Component{
     playSound(this.props.currentWord)
   }
   componentWillUnmount() {
-    console.log('good bye')
   }
 
   render() {
