@@ -1,21 +1,18 @@
 import React from 'react';
-import { withStyles, } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
+import { withStyles, Typography, Slider} from '@material-ui/core';
 import { marks } from '../../constants/constants';
 
 class GameSettings extends React.Component {
-
   render(){
-    const { classes } = this.props;
+    const { classes, сhangeDifficulty, handleDragStop, сhangeRound } = this.props;
   return (
     <div className={classes.root}>
         <Typography id="discrete-slider-always" gutterBottom>
             Choose difficulty level
         </Typography>
         <Slider
-          onChange={this.props.сhangeDifficulty}
-          onDragStop={this.props.handleDragStop}
+          onChange={сhangeDifficulty}
+          onDragStop={handleDragStop}
           defaultValue={1}
           min={1}
           max={6}
@@ -28,8 +25,8 @@ class GameSettings extends React.Component {
             Choose round
         </Typography>
         <Slider
-          onChange={this.props.сhangeRound}
-          onDragStop={this.props.handleDragStop} 
+          onChange={сhangeRound}
+          onDragStop={handleDragStop} 
           defaultValue={1}
           min={1}
           max={30}

@@ -16,7 +16,7 @@ import { Route, Switch } from 'react-router-dom'
 import HomePage from '../../pages/Home/HomePage'
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
 import SprintMiniGame from '../../pages/SprintMiniGame'
-import AudioCall from '../../pages/AudioCall/components/AudioCall'
+import AudioCall from '../../pages/AudioCall/'
 
 
 class PrimaryAppBar extends Component {

@@ -13,7 +13,6 @@ class Statistics extends React.Component {
     this.showWrong=this.showWrong.bind(this)
   }
 
-
   playAudio(src) {
     if (!this.audio) {
       this.audio = new Audio(src);
@@ -28,7 +27,7 @@ class Statistics extends React.Component {
       <div key = {index} className={classes.root}>
         <Avatar className={classes.small} src={speaker} onClick={this.playAudio.bind(this,`${apiData}${item.audio}`)}/>
         <Typography>{item.word}</Typography>
-        <div> - </div>
+        <span> - </span>
         <Typography>{item.wordTranslate}</Typography>
       </div>
     )
@@ -44,23 +43,23 @@ class Statistics extends React.Component {
   }
 
   render(){
-      const { classes } = this.props;
-      const { page } = this.state;
       let show;
+      const { classes, correctAnswers, wrongAnswers, finishGame } = this.props;
+      const { page } = this.state;
       if (page) {
         show = 
         <div>
-          <Typography>You know - {this.props.correctAnswers.length}</Typography>
+          <Typography>You know - {correctAnswers.length}</Typography>
             <div>
-                  {this.generateAnswers(this.props.correctAnswers)}
+                  {this.generateAnswers(correctAnswers)}
             </div>
         </div>
       } else {
         show = 
         <div>
-        <Typography>Need to learn - {this.props.wrongAnswers.length}</Typography>
+        <Typography>Need to learn - {wrongAnswers.length}</Typography>
           <div>
-                {this.generateAnswers(this.props.wrongAnswers)}
+                {this.generateAnswers(wrongAnswers)}
           </div>
       </div>
       }
@@ -75,7 +74,7 @@ class Statistics extends React.Component {
         <div open={true}>
           {show}
         </div>
-        <Button className={classes.buttons} variant="contained" color="secondary"  onClick={this.props.finishGame}>
+        <Button className={classes.buttons} variant="contained" color="secondary"  onClick={finishGame}>
           Try again
         </Button>
       </div>
@@ -112,4 +111,3 @@ function createStyles(theme) {
 }
 
 export default withStyles(createStyles)(Statistics);
-

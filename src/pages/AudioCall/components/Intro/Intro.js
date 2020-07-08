@@ -1,11 +1,9 @@
 import React, { Component} from 'react';
 import { Fade, withStyles, Button } from '@material-ui/core';
 
-
 class Intro extends Component{
-
 render(){
-    const { classes } = this.props;
+    const { classes, gameStarts } = this.props;
    return(
     <Fade in={true}>
         <div className={classes.paper}>
@@ -13,7 +11,7 @@ render(){
           <p className='text'>
             Listen the words and select correct answer
           </p>
-          <Button variant='contained' color='primary' onClick={this.props.gameStarts}>
+          <Button variant='contained' color='primary' onClick={gameStarts}>
             <span>Start</span>
           </Button>
         </div>

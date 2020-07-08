@@ -1,12 +1,6 @@
 import React from 'react';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Slide, DialogContentText } from '@material-ui/core';
 
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-
 class AboutGame extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +20,6 @@ class AboutGame extends React.Component {
   }
 
   render(){
-    const { classes } = this.props;
   return (
       <div>
         <Button variant="outlined" color="primary" onClick={this.runInstructions}>
@@ -42,16 +35,16 @@ class AboutGame extends React.Component {
           >
             <DialogTitle id="alert-dialog-slide-title">{"How to play?"}</DialogTitle>
             <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
+              <DialogContentText>
                 Listen closely and choose suited translation. You can listen one more time by clicking on "ear-sound" image.  
               </DialogContentText>
-              <DialogContentText id="alert-dialog-slide-description">
+              <DialogContentText>
                 By the way, you can select answer with keyboard by pressing "1", "2", "3", "4", "5". 
               </DialogContentText>
-              <DialogContentText id="alert-dialog-slide-description">
+              <DialogContentText>
                 To skip or go to next round press enter key.
               </DialogContentText>
-              <DialogContentText id="alert-dialog-slide-description">
+              <DialogContentText>
                 Good luck! 
               </DialogContentText>
             </DialogContent>
@@ -65,5 +58,9 @@ class AboutGame extends React.Component {
     );
   }
 }
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default (AboutGame);

@@ -1,5 +1,6 @@
-const wordsData = 'https://afternoon-falls-25894.herokuapp.com/words?'
-const apiData = 'https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/'
+const wordsData = 'https://afternoon-falls-25894.herokuapp.com/words?';
+const apiData = 'https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/';
+const dontKnow = 'Don\'t know'
 const marks = [
     {
       value: 1,
@@ -27,6 +28,5 @@ const marks = [
     }
   ];
 
-
-export {wordsData, apiData, marks}
+export {wordsData, apiData, marks, dontKnow}
  
