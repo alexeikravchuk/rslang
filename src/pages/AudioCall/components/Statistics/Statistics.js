@@ -67,7 +67,7 @@ class Statistics extends React.Component {
       return (
       <Fade in={true}>
       <div className={classes.main} >
-        <Typography variant="h4">Statistics</Typography>
+        <Typography variant="h4">Score</Typography>
         <ButtonGroup className={classes.buttons} variant="contained"  aria-label="contained primary button group">
           <Button color="primary" onClick={this.showCorrect}>Correct</Button>
           <Button color="secondary" onClick={this.showWrong}>Wrong</Button>
