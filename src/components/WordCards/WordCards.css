@@ -69,7 +69,6 @@ body {
 
 .dots {
     display: flex;
-    padding-right: .5rem;
 }
 
 .dot {
@@ -82,6 +81,17 @@ body {
 
 .description {
     color: white;
+    margin: 0 1rem;
+}
+
+.selectPage {
+    color: white;
+    margin: 10px .5rem;
+}
+
+.selectCategory {
+    color: white;
+    margin: 10px .5rem;
 }
 
 .word-notes span {
@@ -98,7 +108,6 @@ body {
     color: white;
     cursor: pointer;
     font-size: small;
-    margin-left: 160px;
 }
 
 .dropdown div:hover {
@@ -150,6 +159,15 @@ body {
     padding: 4px 0;
 }
 
+.meaning, .example{
+    display: flex;
+    flex-direction: row;
+}
+
+.meaning-sentence:hover, .example-sentence:hover{
+    cursor: pointer;
+}
+
 /* .meaning-translate {
     visibility: hidden;
 }
@@ -187,7 +205,7 @@ body {
 }
 
 .spell {
-    margin: 10px;
+    margin-left: 10px;
     cursor: pointer;
 }
 
@@ -207,7 +225,6 @@ body {
     width: 568px;
     height: 20px;
     text-align: center;
-    /* visibility: hidden; */
     border-color: #4b909b;
     border-radius: .2rem;
     margin: 0 auto;

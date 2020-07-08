@@ -9,7 +9,7 @@ class WordCards extends React.Component {
     super(props);
     this.audio = null;
     this.state = {
-      lastNumber: 20,
+      lastNumber: 30,
       dataRandom: [],
       category: 1,
       counter: 0,
@@ -22,6 +22,10 @@ class WordCards extends React.Component {
       image: "картинка",
       meaning: "значение",
       example: "пример",
+      meaningHide: "", // here will be meaning sentence with word "Click", that hide word to learn 
+      exampleHide: "", // here will be example sentence with word "Click", that hide word to learn
+      showMeaning: false, // option, that will be toggled when user clicks on meaning sentence. Go to line 182 to see how it works  
+      showExample: false, // option, that will be toggled when user clicks on example sentence.  
       meaningTranslate: "перевод значения",
       exampleTranslate: "перевод примера",
       audioWord: "озвучка слова",
@@ -30,14 +34,16 @@ class WordCards extends React.Component {
     }
     this.playAudioWords = this.playAudioWords.bind(this);
     this.setCountPlus = this.setCountPlus.bind(this);
-    this.handleChange = this.handleChange.bind(this); // bind handleChange function to this. Go to line 156, to see how it works
-    // this.setCountMinus = this.setCountMinus.bind(this) 
+    this.handleChange = this.handleChange.bind(this);
+    this.showMeaningWord = this.showMeaningWord.bind(this);
+    this.showExampleWord = this.showExampleWord.bind(this); 
+    
   }
 
   componentDidMount() {
     this.getWords(0, 0).then((data)=>{
       this.getNewWords(data, this.state.counter)
-      this.setState({dataRandom: data}) // here we need to update dataRandom,because in getNewWords function we need this array
+      this.setState({dataRandom: data}) 
     });
   }
   componentDidUpdate() {
@@ -62,33 +68,34 @@ class WordCards extends React.Component {
     return array;
   }
 
-  clearInput(){ 
+  clearInput(){
     this.setState({
-      value: ""
+      value: "",
+      showMeaning: false, // hide word, when user leaves card 
+      showExample: false
     })
   }
 
-
-  setCountMinus (){   
+  setCountMinus (){ 
     this.clearInput()
     if (this.state.counter === 0) {
       this.setState({
         counter: 0,
-      },() => { // after updating state we need to call getNewWords immediately, because setState works in an in an asynchronous way
-        this.getNewWords(this.state.dataRandom, this.state.counter) // function getNewWords takes dataRandom from state (see line 39) and runs with 0, as second param. Goes to line 97 
-    })
-  } else{
-    this.setState({
-      counter: this.state.counter - 1
-    },() => { // similar to line 68
-      this.getNewWords(this.state.dataRandom, this.state.counter) // function getNewWords takes dataRandom from state (see line 39) and runs with incremented counter value, as second param. Goes to line 97 
-  })
+      },() => { 
+        this.getNewWords(this.state.dataRandom, this.state.counter) 
+      })
+    } else{
+      this.setState({
+        counter: this.state.counter - 1
+      },() => { 
+        this.getNewWords(this.state.dataRandom, this.state.counter) 
+      })
+    }
   }
-}
 
-  setCountPlus = () => {  
+  setCountPlus = () => { 
     this.clearInput()
-    if (this.state.counter === (this.state.lastNumber - 1)) { 
+    if (this.state.counter === (this.state.lastNumber - 1)) {
       this.setState({
         counter: this.state.lastNumber - 1
       },() => {
@@ -96,35 +103,51 @@ class WordCards extends React.Component {
         this.setState({
           notification: "Day plan is completed!"
         })
-        
         this.getNewWords(this.state.dataRandom, this.state.counter)
-    })
-  } else {
-    this.setState({
-      counter: this.state.counter + 1
-    },() => {
-      this.getNewWords(this.state.dataRandom, this.state.counter)
-  });
+      })
+    } else {
+      this.setState({
+        counter: this.state.counter + 1
+      },() => {
+        this.getNewWords(this.state.dataRandom, this.state.counter)
+      });
+    }
+  }
+  
+  removeTags = (seq, tag) => { // this is a show/hiding core. This function deals with tags, and construct sentence with hided word
+    // eslint-disable-next-line
+    let tagged = seq.match(new RegExp('(<'+tag+'>(.*?)<\/'+tag+'>)', 'g')).toString(); 
+    let word = tagged.substr(3, tagged.length-7);
+    let hidden = seq.replace(tagged, 'CLICK')
+    if(tag === 'i'){
+      this.setState({
+        meaningHide: hidden
+      })
+    } else {
+      this.setState({
+        exampleHide: hidden
+      })
+    }
+    seq = seq.replace(tagged, word);
+    return seq 
   }
 
-}
-  
   getNewWords = (dataRandom, counter) => {
-    let currentObj = dataRandom[counter]; // here counter represent index in dataRandom array and serves as page number
+    let currentObj = dataRandom[counter]; 
+  
     this.setState({
       translation: currentObj.wordTranslate, 
       transcription: currentObj.transcription,
       word: currentObj.word,
       image: `${URL}${currentObj.image}`,
-      meaning: currentObj.textMeaning,
-      example: currentObj.textExample,
+      meaning: this.removeTags(currentObj.textMeaning, 'i'), // remove  tag <i> from sentence
+      example: this.removeTags(currentObj.textExample, 'b'), // remove  tag <b> from sentence
       meaningTranslate: currentObj.textMeaningTranslate,
       exampleTranslate: currentObj.textExampleTranslate,
       audioWord: `${URL}${currentObj.audio}`,
       audioMeaning: `${URL}${currentObj.audioMeaning}`,
       audioExample: `${URL}${currentObj.audioExample}`
     })
-    
   };
 
   playAudioWords(audioSrc) {
@@ -150,15 +173,31 @@ class WordCards extends React.Component {
 
   getAnswer() {
     this.setState({value: this.state.word})
-    // this.playAudioWords(audioWord);
   }
 
-  handleChange(event) { //create handleChange function, it update value state (line 16) with inputed text. This function need to be bind to this, other way in will not work. See line 32. 
+  handleChange(event) { 
     this.setState({value: event.target.value});
+    if(this.state.value === this.state.word) {
+      alert("Word are similar");
+    } else {
+      alert("Not similar");
+    }
   }
-  // ()=>{this.getNewWords(this.state.dataRandom, 0)}
+
+  showMeaningWord(){ // this function toggled show/hide meaning option 
+    this.setState(state => ({
+      showMeaning: !state.showMeaning
+    }));
+  }
+
+  showExampleWord(){ // this function toggled show/hide example option 
+    this.setState(state => ({
+      showExample: !state.showExample
+    }));
+  }
+  
   render(){
-    let wordLength = "alcohol".length;
+    let wordLength = this.state.word.length;
     return (
       <div className="wrapper">
         <div className="word-cards">
@@ -178,6 +217,50 @@ class WordCards extends React.Component {
                 <div className="description">
                   <span>New word</span>
                 </div>
+                <form className="selectPage">Page:<br />
+                  <select name="page">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                  </select>
+                </form>
+                <form className="selectCategory">Category:<br />
+                  <select name="category">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                  </select>
+                </form>
               </div>
               <div className="dropdown" style={{display: this.state.dropdown ? 'block' : 'none'}}>
                 <div>Добавить в Изучаемые слова</div>
@@ -200,8 +283,9 @@ class WordCards extends React.Component {
                 <img className="word-image" src={this.state.image} alt="" />
               </div>
               <div className="word-examples">
-                <div className="meaning">{this.state.meaning}<span onClick={()=>{this.playAudioWords(this.state.audioMeaning)}} className="spell">🕬</span></div>
-                <div className="example">{this.state.example}<span onClick={()=>{this.playAudioWords(this.state.audioExample)}}  className="spell">🕬</span></div>
+                {/* content generated with ternary operator and shows sentence with actual word or with 'Click' word. See example on https://ru.reactjs.org/docs/handling-events.html*/}
+                <div className="meaning"><div className="meaning-sentence" onClick={this.showMeaningWord}>{this.state.showMeaning ? this.state.meaning : this.state.meaningHide}</div><span onClick={()=>{this.playAudioWords(this.state.audioMeaning)}} className="spell">🕬</span></div>
+                <div className="example"><div className="example-sentence" onClick={this.showExampleWord}>{this.state.showExample ? this.state.example : this.state.exampleHide}</div><span onClick={()=>{this.playAudioWords(this.state.audioExample)}}  className="spell">🕬</span></div>
                 <div className="meaning-translate">{this.state.meaningTranslate}</div>
                 <div className="example-translate">{this.state.exampleTranslate}</div>
               </div>
