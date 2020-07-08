@@ -1,17 +1,21 @@
 import React from 'react';
 import './WordCards.css';
 
+const URL = "https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/";
+
 class WordCards extends React.Component {
 
   constructor(props){
     super(props);
     this.audio = null;
     this.state = {
-      // previousPage: [],
+      lastNumber: 20,
       dataRandom: [],
       category: 1,
-      count: 0,
+      counter: 0,
+      value: "",
       dropdown: false,
+      notification: "",
       translation: "перевод",
       transcription: "транскрипция",
       word: "слово",
@@ -25,17 +29,25 @@ class WordCards extends React.Component {
       audioExampleWord: "озвучка примера",
     }
     this.playAudioWords = this.playAudioWords.bind(this);
+    this.setCountPlus = this.setCountPlus.bind(this);
+    this.handleChange = this.handleChange.bind(this); // bind handleChange function to this. Go to line 156, to see how it works
+    // this.setCountMinus = this.setCountMinus.bind(this) 
   }
 
-  componentDidMount(){
-    this.getWords(0, 0).then((data)=>{this.getNewWords(data, 0)});
+  componentDidMount() {
+    this.getWords(0, 0).then((data)=>{
+      this.getNewWords(data, this.state.counter)
+      this.setState({dataRandom: data}) // here we need to update dataRandom,because in getNewWords function we need this array
+    });
+  }
+  componentDidUpdate() {
+    document.title = `Word ${this.state.counter}`;
   }
 
   async getWords(page, category){
     const response = await fetch (`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${category}`)
     const data = await response.json();
     let dataRandom = this.getShuffle(data);
-    console.log(dataRandom);
     return dataRandom;
   }
 
@@ -49,16 +61,57 @@ class WordCards extends React.Component {
     }
     return array;
   }
-  
-  getNewWords = (dataRandom) => {
-    const URL = "https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/";
-    let currentObj = dataRandom[0];
-    let previousArr = [];
-    previousArr.push(currentObj);
 
-console.log(previousArr);
+  clearInput(){ 
     this.setState({
-      // previousPage: previousArr,
+      value: ""
+    })
+  }
+
+
+  setCountMinus (){   
+    this.clearInput()
+    if (this.state.counter === 0) {
+      this.setState({
+        counter: 0,
+      },() => { // after updating state we need to call getNewWords immediately, because setState works in an in an asynchronous way
+        this.getNewWords(this.state.dataRandom, this.state.counter) // function getNewWords takes dataRandom from state (see line 39) and runs with 0, as second param. Goes to line 97 
+    })
+  } else{
+    this.setState({
+      counter: this.state.counter - 1
+    },() => { // similar to line 68
+      this.getNewWords(this.state.dataRandom, this.state.counter) // function getNewWords takes dataRandom from state (see line 39) and runs with incremented counter value, as second param. Goes to line 97 
+  })
+  }
+}
+
+  setCountPlus = () => {  
+    this.clearInput()
+    if (this.state.counter === (this.state.lastNumber - 1)) { 
+      this.setState({
+        counter: this.state.lastNumber - 1
+      },() => {
+        alert('Day plan is completed!')
+        this.setState({
+          notification: "Day plan is completed!"
+        })
+        
+        this.getNewWords(this.state.dataRandom, this.state.counter)
+    })
+  } else {
+    this.setState({
+      counter: this.state.counter + 1
+    },() => {
+      this.getNewWords(this.state.dataRandom, this.state.counter)
+  });
+  }
+
+}
+  
+  getNewWords = (dataRandom, counter) => {
+    let currentObj = dataRandom[counter]; // here counter represent index in dataRandom array and serves as page number
+    this.setState({
       translation: currentObj.wordTranslate, 
       transcription: currentObj.transcription,
       word: currentObj.word,
@@ -69,12 +122,9 @@ console.log(previousArr);
       exampleTranslate: currentObj.textExampleTranslate,
       audioWord: `${URL}${currentObj.audio}`,
       audioMeaning: `${URL}${currentObj.audioMeaning}`,
-      audioExample: `${URL}${currentObj.audioExample}`,
-      dataRandom: dataRandom.slice(1)
+      audioExample: `${URL}${currentObj.audioExample}`
     })
-
-    // dataRandom = dataRandom.slice(1);
-    // console.log(this.state.previousPage);
+    
   };
 
   playAudioWords(audioSrc) {
@@ -98,13 +148,22 @@ console.log(previousArr);
     }
   }
 
+  getAnswer() {
+    this.setState({value: this.state.word})
+    // this.playAudioWords(audioWord);
+  }
+
+  handleChange(event) { //create handleChange function, it update value state (line 16) with inputed text. This function need to be bind to this, other way in will not work. See line 32. 
+    this.setState({value: event.target.value});
+  }
+  // ()=>{this.getNewWords(this.state.dataRandom, 0)}
   render(){
     let wordLength = "alcohol".length;
     return (
       <div className="wrapper">
         <div className="word-cards">
           <div className="card-prev">
-            <p /* onClick={()=>{this.getNewWords(this.state.previousPage)}} */ className="prev">⮜</p>
+            <p onClick={()=>this.setCountMinus()} className="prev">⮜</p>
           </div>
           <div className="card">
             <div className="card-header">
@@ -135,7 +194,7 @@ console.log(previousArr);
                   <div className="word-translation">{this.state.translation}<span onClick={()=>{this.playAudioWords(this.state.audioWord)}}  className="spell">🕬</span></div>
                     <div className="transcription">{this.state.transcription}</div>
                     <div className="input-word">
-                      <input className="input" style={{width: `${wordLength * 12}px`}} type="text" maxLength={wordLength} autoComplete="off" autoFocus/>
+                      <input value={this.state.value} onChange={this.handleChange} className="input" style={{width: `${wordLength * 12}px`}} type="text" maxLength={wordLength} autoComplete="off" autoFocus />
                     </div>
                 </div>
                 <img className="word-image" src={this.state.image} alt="" />
@@ -149,16 +208,20 @@ console.log(previousArr);
             </div>
           </div>
           <div className="card-next">
-            <p onClick={()=>{this.getNewWords(this.state.dataRandom)}} className="next">⮞</p>
+            <p onClick={()=>this.setCountPlus()} className="next">⮞</p>
           </div>
         </div>
-        <div className="notification">Уведомления</div>
+        <div className="button-reactions">
+          <div onClick={()=>{this.getAnswer()}} className="button-show">Показать ответ</div>
+          <div onClick={()=>this.setCountPlus()} className="button-check">Дальше</div>
+        </div>
+        <div className="notification">{this.state.notification}</div>
         <div className="stage">
           <div className="number-start">0</div>
           <div className="number-progress">
             <div className="progress-bar" style={{width: "2%"}}></div>
           </div>
-          <div className="number-end">10</div>
+          <div className="number-end">{this.state.lastNumber}</div>
         </div>
     </div>
     )

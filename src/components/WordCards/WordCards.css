@@ -24,12 +24,11 @@ body {
     display: flex;
     width: 700px;
     height: 400px;
-    margin: 50px auto;
+    margin: 50px auto 10px auto;
 }
 
 .card-prev {
     width: 50px;
-    background-color: pink;
 }
 
 .card-prev p {
@@ -39,13 +38,13 @@ body {
 
 .card {
     width: 600px;
+    height: 400px;
     background-color: #4b909b;
     border-radius: .5rem;
 }
 
 .card-next {
     width: 50px;
-    background-color: pink;
 }
 
 .card-next p {
@@ -74,7 +73,7 @@ body {
 }
 
 .dot {
-    background-color: pink;
+    background-color: white;
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -82,7 +81,7 @@ body {
 }
 
 .description {
-    color: pink;
+    color: white;
 }
 
 .word-notes span {
@@ -95,20 +94,15 @@ body {
     color: white;
 }
 
-/* .dropdown {
-    display: visible;
-} */
-
 .dropdown div {
-    color: pink;
+    color: white;
     cursor: pointer;
     font-size: small;
-    text-decoration: underline;
     margin-left: 160px;
 }
 
 .dropdown div:hover {
-    color: white;
+    text-decoration: underline;
 }
 
 .card-main {
@@ -137,6 +131,7 @@ body {
 .input {
     height: 50px;
     font-size: 20px;
+    /* color: transparent; */
     padding: 0 .5em;
 }
 
@@ -147,23 +142,52 @@ body {
 }
 
 .word-examples {
-    padding: 2rem 1rem 1rem 1rem;
+    padding: 1.5rem 1rem 1rem 1rem;
 }
 
 .word-examples div {
-    padding: 5px 0;
+    font-size: 14px;
+    padding: 4px 0;
 }
 
-.meaning-translate {
-    display: none;
+/* .meaning-translate {
+    visibility: hidden;
 }
 
 .example-translate {
-    display: none;
+    visibility: hidden;
+} */
+
+.button-reactions {
+    display: flex;
+}
+
+.button-check {
+    width: 120px;
+    height: 40px;
+    color: white;
+    text-align: center;
+    background-color: #4b909b;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 10px;
+    margin: 0 5px;
+}
+
+.button-show {
+    width: 135px;
+    height: 40px;
+    color: white;
+    text-align: center;
+    background-color: #4b909b;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 10px;
+    margin: 0 5px 0 40%;
 }
 
 .spell {
-    margin: 15px;
+    margin: 10px;
     cursor: pointer;
 }
 
@@ -182,15 +206,17 @@ body {
 .notification {
     width: 568px;
     height: 20px;
-    background-color: pink;
+    text-align: center;
+    /* visibility: hidden; */
+    border-color: #4b909b;
     border-radius: .2rem;
     margin: 0 auto;
     padding: 1rem;
 }
 
 .stage {
-    display:flex;
-    margin: 40px 29%;
+    display: flex;
+    margin: 20px 29%;
 }
 
 .number-start {
@@ -236,7 +262,6 @@ body {
     font-feature-settings: "lnum" on;
 }
 
-
 .prev {
     cursor: pointer;
 }
@@ -244,51 +269,3 @@ body {
 .next {
     cursor: pointer;
 }
-
-/* .prev:hover {
-    animation: prev 1s linear infinite;
-}
-@keyframes prev {
-    0% {
-        left:0;
-    }
-    50% {
-        left:10px;
-    }
-    100% {
-        left:0;
-    }
-} */
-
-@keyframes prev {
-    15% {
-      
-      transform: translateX(9px);
-    }
-    30% {
-     
-      transform: translateX(-9px);
-    }
-    40% {
-    
-      transform: translateX(6px);
-    }
-    50% {
-   
-      transform: translateX(-6px);
-    }
-    65% {
-
-      transform: translateX(3px);
-    }
-    100% {
-
-      transform: translateX(0);
-    }
-  }
-  
-  .prev:hover {
-    
-    animation: swing 0.6s ease;
-    animation-iteration-count: 1;
-  }
