@@ -18,7 +18,6 @@ import HomePage from '../../pages/Home/HomePage';
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
 import AccountInfo from '../../pages/AccountInfo/AccountInfo';
 import SprintMiniGame from '../../pages/SprintMiniGame';
-import AudioCall from '../../pages/AudioCall/'
 import {SpeakIt, Savannah, AudioCall} from '../../pages';
 
 import Dictionary from '../Dictionary/Dictionary';
