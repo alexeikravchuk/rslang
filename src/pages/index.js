@@ -1,5 +1,5 @@
 import { AboutTeamPage } from './AboutTeamPage/index';
 import { SpeakIt } from './SpeakIt';
-import { AudioCall } from './AudioCall'
-
-export { AboutTeamPage, SpeakIt, AudioCall};
+import { Savannah } from './Savannah';
+import { AudioCall } from './AudioCall';
+export { AboutTeamPage, SpeakIt, Savannah, AudioCall };

@@ -1,50 +1,59 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Link from '@material-ui/core/Link';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link } from '@material-ui/core'
 import { Link as RouterLink } from 'react-router-dom';
+import {signURL, createURL } from '../../constants/authURL'
 
-export default function Alert(props) {
+import {
+  addFirstName,
+  addLastName,
+  addEmail,
+  addToken,
+  addUserId
+  }  from '../../store/actions/authAction'
+import { connect } from 'react-redux';
 
-  const signURL = 'https://afternoon-falls-25894.herokuapp.com/signin';
-  const createURL = 'https://afternoon-falls-25894.herokuapp.com/users';
-
+ function Alert(props) {
   function getResponse(emailInput, passwordInput){
-
     if(props.action === 'login'){
       doTransition('/signin')
       const loginUser = async user => {
-        const rawResponse = await fetch(signURL, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(user)
-        });
-          if(rawResponse.status === 404){  
+        try{
+          const rawResponse = await fetch(signURL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user)
+          });
+          if(rawResponse.status === 404){
             setTitle('Please, check the fields')
           }
           if(rawResponse.status === 403){
             setTitle('Incorrect data')
           }
-        const content = await rawResponse.json();
-        return content;
-        
+            const content = await rawResponse.json();
+            return content;
+        } catch (e) {
+          setTitle('Server error')
+        }
       };
       loginUser({ "email": emailInput, "password": passwordInput }).then((entryData) => {
+        if(typeof entryData !== undefined){
           setTitle('Login success')
           doTransition('/main')
-          console.log(entryData)
+          props.dispatch(addEmail(emailInput))
+          props.dispatch(addToken(entryData.token))
+          props.dispatch(addUserId(entryData.userId))
+        }
       })
+
     }
+
     if(props.action === 'register'){
       doTransition('/signup')
       const createUser = async user => {
+        try{
         const rawResponse = await fetch(createURL, {
           method: 'POST',
           headers: {
@@ -61,16 +70,23 @@ export default function Alert(props) {
         }
         const content = await rawResponse.json();
         return content;
-      };
-      createUser({ "email": emailInput, "password": passwordInput }).then((regData) => {
-        if('error' in regData){
-          setTitle('Registration error')
-        }else{
-          setTitle('Registration successful')
-          doTransition('/home')
-          console.log(regData);
+        } catch(e) {
+          setTitle('Server error')
         }
-      }) 
+      };
+    createUser({ "email": emailInput, "password": passwordInput }).then((regData) => {
+      if(typeof regData !== undefined){
+        setTitle('Server error')
+      } else if('error' in regData){
+        setTitle('Registration error')
+      }else{
+        props.dispatch(addFirstName(props.firstNameInput))
+        props.dispatch(addLastName(props.lastNameInput))
+        setTitle('Registration successful')
+        doTransition('/signin')
+
+      }
+    })
   }
 }
 
@@ -104,9 +120,9 @@ export default function Alert(props) {
 
   return (
     <div>
-      <Button 
+      <Button
         variant="contained"
-        fullWidth       
+        fullWidth
         color="primary"
         onClick={() => { getResponse(props.emailInput, props.passwordInput); handleClickOpen()}}
         >
@@ -128,15 +144,15 @@ export default function Alert(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-        <Link 
+        <Link
           component={RouterLink}
           to={transition}
         >
           <Button onClick={handleClose} color="primary" autoFocus>
               OK
           </Button>
-   
-        </Link> 
+
+        </Link>
 
 
         </DialogActions>
@@ -144,3 +160,9 @@ export default function Alert(props) {
     </div>
   );
 }
+
+function mapState(state){
+  return state
+}
+
+export default connect(mapState)(Alert)

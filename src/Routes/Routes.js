@@ -4,6 +4,7 @@ import SignUp from '../components/Registration/SignUp';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import PrimaryAppBar from '../components/AppBar/AppBar';
 import AboutTeamPage from '../pages/AboutTeamPage/AboutTeamPage';
+import {Savannah} from "../pages/Savannah";
 
 function Routes() {
 
@@ -17,6 +18,8 @@ function Routes() {
         <Route path='/signup' component={SignUp}>
         </Route>
         <Route path='/main' component={PrimaryAppBar}>
+        </Route>
+        <Route path= '/savannah' component={Savannah}>
         </Route>
         <Route path='/aboutteampage' component={AboutTeamPage}>
         </Route>

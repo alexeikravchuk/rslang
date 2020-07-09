@@ -8,7 +8,7 @@ import './TeamCard.scss'
 function TeamCard({ card }) {
 
   return (
-    <Card className='card'>
+    <Card className='team-card'>
       <CardMedia
         component="img"
         alt= { card.title }
