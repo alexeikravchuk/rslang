@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Timer, Score, GameCard, WelcomeDialog, StatisticDialog } from './components';
 import { ExitToApp, VolumeUp }from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton';
-import { WORD_LANGUAGE, TRANSLATE_LANGUAGE } from '../../pages/SprintMiniGame/constants/constants'
+import { WORD_LANGUAGE, TRANSLATE_LANGUAGE } from './constants/constants'
 import { endGame, checkAnswer } from '../../store/actions/sprintActions';
 
 
@@ -17,8 +17,8 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     background: 'url(/images/backgrounds/SprintMiniGameBackground.jpg) center no-repeat',
     backgroundSize: 'cover',
-    width: '100vw',
-    height: '100vh',
+    width: '100%',
+    height: '100%',
   },
   volume: {
     width: '50px',

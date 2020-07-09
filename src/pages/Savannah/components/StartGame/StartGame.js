@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withStyles, Card, Dialog, Container, Typography} from '@material-ui/core';
-import Background from '../background/Background';
+import { withStyles, Card, Dialog, Container, Typography } from '@material-ui/core';
 import {GameToolbar} from '../GameToolbar';
 import {SavannahButton} from '../SavannahButton';
 import {gameStarting} from '../../../../store/actions/savannahAction';
@@ -13,11 +12,12 @@ import {playFileSound, pubAudioPath} from '../../utils/utils';
 const gameStartSound = pubAudioPath('gameStart');
 const styles = {
   contentDialog: {
-    height: '100vh',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '1rem'
   },
   contentText: {
     color: 'wheat',
@@ -46,29 +46,28 @@ function StartGame(props) {
     gameStarting();
   };
   return (
-    <Dialog
-      fullScreen
-      open={open}
-      onClose={handleClose}>
-      <Background/>
-      <GameToolbar title={'Welcome to savannah'} to={'/home'}/>
-      <Container className={classes.contentDialog}>
-        <Typography variant={'h6'} className={classes.title}>
-          Choose your skill:
-        </Typography>
-        <GameSlider/>
-        <Card className={classes.card}>
-          <Typography variant={'subtitle1'} className={classes.title}>
-            <p>Добро пожаловать в саванну - игру по изучению новых слов, и повторению изученных.</p>
-            Желаем успехов...
-          </Typography>
-        </Card>
-        <Grid item sm={4}>
-          <SavannahButton className={classes.button} title={'lets try...'} onClick={handleClose} xs={12} sm={4}/>
-        </Grid>
-      </Container>
-    </Dialog>
-  );
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        >
+          <GameToolbar title={'Welcome to savannah'} to={'/home'}/>
+          <Container className={classes.contentDialog}>
+            <Typography  variant={'h6'} className={classes.title}>
+              Choose your skill:
+            </Typography>
+            <GameSlider />
+            <Card className={classes.card}>
+              <Typography  variant={'subtitle1'} className={classes.title}>
+                <p>Добро пожаловать в саванну - игру по изучению новых слов, и повторению изученных.</p>
+                Желаем успехов...
+              </Typography>
+            </Card>
+            <Grid item sm={4}>
+              <SavannahButton className={classes.button} title={'lets try...'} onClick={handleClose} xs={12}  sm={4}/>
+            </Grid>
+         </Container>
+       </Dialog>
+  )
 }
 
 const mapStateToProps = store => {

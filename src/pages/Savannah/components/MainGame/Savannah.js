@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {withStyles, Container, CircularProgress} from '@material-ui/core';
+import {withStyles, Container, CircularProgress, Grid} from '@material-ui/core';
 import {connect} from 'react-redux';
 import GameToolbar from '../GameToolbar/Toolbar';
 import {Statistics} from '../Statistics';
@@ -8,7 +8,7 @@ import {StartGame} from '../StartGame';
 import GameButtonGroup from '../ButtonGroup/ButtonGroup';
 import './savannah.scss';
 import {
-  gameEnding,
+  gameEnding, gameReset,
   loadWords,
   loadWordsSuccess,
 } from '../../../../store/actions/savannahAction';
@@ -27,7 +27,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '80vh',
+    height: '80%',
     width: '100%',
   },
 };
@@ -41,20 +41,34 @@ class Savannah extends Component {
     );
   }
 
+  componentWillUnmount() {
+    this.props.onUnmount();
+  }
+
   render() {
     const {classes, loading, gameStarted, onClose, gameEnd, fetchWords} = this.props;
     return (
       <div className={'mainGame'}>
         {loading && this.loader(classes.loader)}
-        {(gameStarted && !loading) && <GameToolbar title={''} onClose={onClose} to={'/savannah'}/>}
-        <Container className={'savannahRoot'}>
-          {gameStarted === false && <StartGame/>}
-          {gameEnd && <Statistics/>}
-          {(gameStarted && !gameEnd) && <GameButtonGroup
-            fetch={fetchWords}
-            visible={true}
-          />}
-        </Container>
+        <Grid
+          container
+          direction={'column'}
+          justify={'space-between'}
+        >
+          <Grid item xs={12}>
+            {(gameStarted && !loading) && <GameToolbar title={''} onClose={onClose} to={'/savannah'}/>}
+          </Grid>
+          <Grid item xs={12}>
+            <Container className={'savannahRoot'}>
+              {gameStarted === false && <StartGame/>}
+              {gameEnd && <Statistics/>}
+              {(gameStarted && !gameEnd) && <GameButtonGroup
+                fetch={fetchWords}
+                visible={true}
+              />}
+            </Container>
+          </Grid>
+        </Grid>
       </div>
     );
   }
@@ -75,6 +89,7 @@ const mapDispatchToProps = dispatch => ({
     playFileSound(gameEndSound);
     dispatch(gameEnding());
   },
+  onUnmount: () => dispatch(gameReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Savannah));
