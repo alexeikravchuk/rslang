@@ -4,6 +4,7 @@ $mobile-big-width: 414px;
 
 .main-page {
   position: relative;
+  right: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -12,6 +13,7 @@ $mobile-big-width: 414px;
   width: 100%;
   max-width: $content-width;
   min-height: calc(100vh - 56px);
+  width: calc(100vw - 60px);
 }
 
 .cards {

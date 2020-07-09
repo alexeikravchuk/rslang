@@ -1,4 +1,4 @@
-.results {
+.game--wrapper .results {
   position: relative;
   display: flex;
   align-items: center;
@@ -12,6 +12,7 @@
   transition: 0.5s ease-in;
   @media screen and (max-width: 440px) {
     padding: 20px 10px 10px;
+    max-width: 95%;
     div:last-child {
       display: flex;
       flex-direction: column;
@@ -33,6 +34,7 @@
     }
   }
   &-sentences {
+    margin-top: 10px;
     overflow-y: auto;
     width: 500px;
     max-width: 95%;
