@@ -7,7 +7,8 @@ import {
   addFirstName,
   addLastName,
   addEmail,
-  addToken
+  addToken,
+  addUserId
   }  from '../../store/actions/authAction'
 import { connect } from 'react-redux';
 
@@ -43,6 +44,7 @@ import { connect } from 'react-redux';
           doTransition('/main')
           props.dispatch(addEmail(emailInput))
           props.dispatch(addToken(entryData.token))
+          props.dispatch(addUserId(entryData.userId))
         }
       })
 

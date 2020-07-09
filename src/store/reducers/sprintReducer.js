@@ -25,6 +25,7 @@ import {
   ADD_WRONG_WORDS,
  } from '../actions';
 
+
 const defaultState = {
   checked: false,
   open: true,

@@ -3,14 +3,16 @@ import {
     LAST_NAME,
     EMAIL,
     TOKEN,
-    UserData
+    USER_ID,
+    UserData,
 } from '../actions/authAction'
 
 const initialState = {
     firstName: UserData.FIRST_NAME,
     lastName: UserData.LAST_NAME,
     email: UserData.EMAIL,
-    token: UserData.TOKEN
+    token: UserData.TOKEN,
+    userId: UserData.USER_ID
 }
 
 function authReducer(state = initialState, action) {
@@ -35,6 +37,11 @@ function authReducer(state = initialState, action) {
           ...state,
           token: action.token,
         };
+      case USER_ID:
+      return {
+        ...state,
+        userId: action.id,
+      };
       default:
         return state
     }

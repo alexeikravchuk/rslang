@@ -1,3 +1,3 @@
-import SprintMiniGame from './SprintMiniGame'
+import SprintMiniGame from './SprintMiniGame';
 
-export  default SprintMiniGame
+export { SprintMiniGame };
