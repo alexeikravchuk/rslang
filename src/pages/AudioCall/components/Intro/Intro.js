@@ -30,7 +30,7 @@ function createStyles(theme) {
     },
     text: {
       opacity: '.8',
-    },
+    }
   };
 }
 
