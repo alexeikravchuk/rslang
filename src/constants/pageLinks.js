@@ -52,7 +52,7 @@ import {
     },
     {
       title: 'Audio call',
-      link: '#audiocall',
+      link: '/audiocall',
       icon: <Hearing color='secondary' />,
       type: 'game',
     },

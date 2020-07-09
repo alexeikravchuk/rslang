@@ -18,7 +18,8 @@ import HomePage from '../../pages/Home/HomePage';
 import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
 import AccountInfo from '../../pages/AccountInfo/AccountInfo';
 import SprintMiniGame from '../../pages/SprintMiniGame';
-import {SpeakIt, Savannah} from '../../pages';
+import AudioCall from '../../pages/AudioCall/'
+import {SpeakIt, Savannah, AudioCall} from '../../pages';
 
 import Dictionary from '../Dictionary/Dictionary';
 import Grid from '@material-ui/core/Grid';
@@ -78,6 +79,7 @@ class PrimaryAppBar extends Component {
                     <Route path='/dictionary' component={Dictionary}/>
                     <Route path='/speakit' component={SpeakIt}/>
                     <Route path='/sprint' component={SprintMiniGame}/>
+                    <Route path='/audiocall' component={AudioCall}/>
                     <Route path='/account'>
                       <AccountInfo/>
                     </Route>
