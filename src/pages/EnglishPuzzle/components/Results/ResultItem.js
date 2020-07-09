@@ -22,7 +22,10 @@ class ResultItem extends Component {
 }
 
 ResultItem.propTypes = {
-  words: PropTypes.object.isRequired,
+  word: PropTypes.object.isRequired,
+};
+ResultItem.defaultProps = {
+  words: {},
 };
 
 export { ResultItem };

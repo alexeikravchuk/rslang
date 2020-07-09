@@ -3,14 +3,14 @@ import { PuzzleContext } from '../context';
 import { SENTENCE_STATUS } from '../../constants/constants';
 
 const PuzzleResult = () => {
-  const { puzzleResults, currentSentence, sentenceStatus, painting } = useContext(PuzzleContext);
+  const { puzzles, puzzleResults, currentSentence, sentenceStatus, painting } = useContext(
+    PuzzleContext
+  );
   const isShowPainting = sentenceStatus === SENTENCE_STATUS.FINISH;
+  const currentLength = puzzles[currentSentence - 1] && puzzles[currentSentence - 1].length;
 
   const paintingStyle = {
     backgroundImage: `url(${painting && painting.cutSrc})`,
-    backgroundSize: 'calc(100% - 4px)',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
     opacity: 1,
   };
   const coloredStyle = {
@@ -33,7 +33,11 @@ const PuzzleResult = () => {
               {({ onDragOver, onDrop, onPuzzleClick }) => (
                 <div
                   className={`result--sentence-text_container${
-                    i + 1 === currentSentence ? ' current-sentence' : ''
+                    i + 1 === currentSentence
+                      ? currentLength
+                        ? ' current-sentence'
+                        : ' current-sentence filled'
+                      : ''
                   }`}
                   onDragOver={onDragOver}
                   onDrop={(event) => onDrop(event, 'result')}

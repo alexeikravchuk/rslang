@@ -1,12 +1,11 @@
 .game--puzzle-wrapper {
   .result {
     position: relative;
-    padding: 5px;
     font-size: 18px;
     color: #fff;
     text-shadow: 0 0 5px #fff;
     height: 410px;
-    max-width: 765px;
+    max-width: 760px;
     width: 100%;
     box-sizing: border-box;
     z-index: 5;
@@ -16,34 +15,37 @@
     }
     @media screen and (max-width: 749px) {
       max-width: 575px;
-      height: 305px;
+      height: 308px;
     }
     @media screen and (max-width: 629px) {
-      max-width: 480px;
+      max-width: 475px;
       height: 260px;
     }
     &-field--background {
       position: absolute;
-      background-color: #a0a0f0ff;
       opacity: 0.4;
       height: 100%;
-      width: calc(100% - 43px);
-      top: 0px;
-      left: 44px;
+      width: calc(100% - 33px);
+      top: -4px;
+      left: 36px;
       box-shadow: inset 0px 0px 4px 1px rgba(64, 64, 112, 1);
       pointer-events: none;
-      background-image: none;
+      background-size: calc(100% - 8px) calc(100% - 10px);
+      background-position: center center;
+      background-repeat: no-repeat;
       @media screen and (max-width: 749px) {
-        top: 0px;
-        width: calc(100% - 30px);
-        left: 32px;
+        top: -5px;
+        width: calc(100% - 24px);
+        left: 27px;
       }
       @media screen and (max-width: 629px) {
-        width: calc(100% - 35px);
-        left: 38px;
+        width: calc(100% - 20px);
+        left: 25px;
       }
     }
     &--sentence {
+      position: relative;
+      width: 100%;
       display: flex;
       align-items: center;
       height: 40px;
@@ -58,8 +60,16 @@
         height: 100%;
         &.current-sentence {
           justify-content: flex-start;
+          box-shadow: inset 0 0 5px #559, 0 0 2px #fff5;
+          border-radius: 2px;
+          &.filled {
+            justify-content: space-between;
+            .canvas-item:not(:first-child) {
+              margin-left: -7px;
+            }
+          }
           .canvas-item:not(:first-child) {
-            margin-left: -5.5px;
+            margin-left: -5px;
           }
         }
         .canvas-item:not(:first-child) {
@@ -131,7 +141,7 @@
     font-size: 20px;
     color: #fff;
     font-weight: 400;
-    text-shadow:  0 0 5px #3c0253, 0 0 15px #231729;
+    text-shadow: 0 0 5px #3c0253, 0 0 15px #231729;
     width: 100%;
     height: 40px;
     .painting-description {
@@ -144,11 +154,13 @@
     @media screen and (max-width: 749px) {
       height: 30px;
       padding-left: 0;
+      margin-left: 20px;
     }
     @media screen and (max-width: 629px) {
+      margin-left: 5px;
       height: 20px;
     }
-    @media screen and (max-width: 530px) {
+    @media screen and (max-width: 549px) {
       opacity: 0;
       pointer-events: none;
     }
@@ -199,7 +211,7 @@
     margin-left: -2px;
   }
   &:last-child {
-    margin-right: -10px;
+    margin-right: -6px;
   }
   &.dragged {
     opacity: 0.2;

@@ -28,10 +28,7 @@ const loginUser = async () => {
 };
 
 const getStatistics = async () => {
-  const time = Date.now() - tokenTime;
-  if (time > tokenLife) {
-    await loginUser();
-  }
+  await loginUser();
   const rawResponse = await fetch(
     `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
     {
@@ -48,4 +45,22 @@ const getStatistics = async () => {
   return content;
 };
 
-export { getStatistics };
+const saveStaistics = async (statistics) => {
+  const time = Date.now() - tokenTime;
+  if (time > tokenLife) {
+    await loginUser();
+  }
+
+  await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(statistics),
+  });
+  return true;
+};
+
+export { getStatistics, saveStaistics };

@@ -1,0 +1,75 @@
+.statistics {
+  &-container {
+    position: relative;
+    height: 85%;
+    width: 100%;
+    overflow: auto;
+    .table-container {
+      max-height: 60%;
+      @media screen and (max-width: 440px) {
+        .table-stat {
+          font-size: 14px;
+          max-height: 90%;
+        }
+      }
+      @media screen and (max-width: 400px) {
+        .table-stat {
+          font-size: 12px;
+        }
+      }
+    }
+    .table-stat {
+      font-size: 16px;
+      border-collapse: collapse;
+      min-width: 70%;
+
+      th {
+        background-color: #e274fd55;
+        .th-level {
+          width: 30%;
+        }
+      }
+      th,
+      td {
+        white-space: pre-wrap;
+        padding: 5px;
+        border: 2px solid #90add3;
+        text-align: center;
+        @media screen and (max-width: 480px) {
+          padding: 1px;
+        }
+      }
+      .result-link {
+        border: none;
+        outline: none;
+        font-size: 16px;
+        background-color: transparent;
+        color: #00d;
+        text-decoration: underline;
+        cursor: pointer;
+        transition: 0.3s ease-in;
+        &:hover {
+          color: #a07;
+          text-shadow: 0 0 1px #00f;
+        }
+        @media screen and (max-width: 440px) {
+          font-size: 14px;
+        }
+        @media screen and (max-width: 400px) {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  &-title {
+    text-align: center;
+    font-size: 24px;
+    margin: 0;
+  }
+  &-learned {
+    text-align: center;
+    font-weight: 700;
+    color: #225;
+    margin: 5px;
+  }
+}

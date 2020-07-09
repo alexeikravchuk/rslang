@@ -1,7 +1,7 @@
 import { getButtonsInfo } from './getButtonsInfo';
 
-const { MAX_LEVEL, SENTENCE_STATUS } = require('../constants/constants');
-const { getTipsSettings } = require('./getTipsSettings');
+import { MAX_LEVEL, SENTENCE_STATUS, BUTTONS_NAME } from '../constants/constants';
+import { getTipsSettings } from './getTipsSettings';
 
 const getDefaultState = () => {
   return {
@@ -14,7 +14,7 @@ const getDefaultState = () => {
       maxPage: 50,
     },
     activeTips: getTipsSettings(),
-    shownButtons: [getButtonsInfo()[0]],
+    shownButtons: getButtonsInfo([BUTTONS_NAME.DONT_KNOW]),
     words: [],
     results: [],
     currentSentence: 1,
@@ -26,6 +26,7 @@ const getDefaultState = () => {
     draggablePuzzle: null,
     painting: null,
     isShowResults: false,
+    isShowStatistics: false,
   };
 };
 

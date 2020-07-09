@@ -15,6 +15,7 @@ import {
   playSentence,
   getButtonsInfo,
   getStatistics,
+  updateStatistics,
 } from '../../helpers';
 import { Results } from '../Results';
 
@@ -53,7 +54,6 @@ class MainPage extends Component {
     await Promise.all([this.setNumberOfPages(), this.setCurrentPageWords()]);
     await this.setPuzzles();
     await this.setWhitePuzzles();
-
     return 1;
   };
 
@@ -95,8 +95,19 @@ class MainPage extends Component {
 
   setStatistics = async () => {
     const statistics = await getStatistics();
-    console.log(statistics);
-    // this.setState({ statistics });
+    delete statistics.id;
+    this.setState({ statistics });
+  };
+
+  saveStatistics = () => {
+    const {
+      statistics,
+      level: { current: currentLevel },
+      page: { current: currentPage },
+      results,
+    } = this.state;
+    const newStatistics = updateStatistics({ statistics, currentLevel, currentPage, results });
+    this.setState({ statistics: newStatistics });
   };
 
   changeLevel = ({ target: { value } }) => {
@@ -107,23 +118,14 @@ class MainPage extends Component {
       page: { ...page, current: 1 },
     });
   };
+
   changePage = ({ target: { value } }) => {
     const { level, page } = this.state;
     this.setState({ ...getDefaultState(), level, page: { ...page, current: value } });
   };
 
   resetLevel = async () => {
-    this.setState({
-      currentSentence: 1,
-      results: [],
-      isShowResults: false,
-      sentenceStatus: SENTENCE_STATUS.PENDING,
-      isCorrectOrder: [],
-      puzzles: null,
-      puzzleResults: new Array(10).fill([]),
-      draggablePuzzle: null,
-      shownButtons: getButtonsInfo([BUTTONS_NAME.DONT_KNOW]),
-    });
+    this.setState({ ...getDefaultState() });
     await this.setData();
   };
 
@@ -441,6 +443,12 @@ class MainPage extends Component {
     }
   };
 
+  showStatisticsData = (level) => {
+    console.log('show', level);
+    this.changeLevel({ target: { value: level.split('-')[0] } });
+    this.changePage({ target: { value: level.split('-')[1] } });
+  };
+
   handleBtnClick = ({ currentTarget }) => {
     const { currentSentence, puzzleResults, sentenceStatus } = this.state;
     console.log(currentTarget.innerText);
@@ -452,13 +460,19 @@ class MainPage extends Component {
         return this.nextLevel();
       }
       if (currentSentence === puzzleResults.length) {
+        this.saveStatistics();
         return this.showPainting();
       }
       return this.nextSentence();
     }
     if (currentTarget.innerText === BUTTONS_NAME.RESULTS) {
-      return this.setState({ isShowResults: true });
+      return this.setState({ isShowResults: true, isShowStatistics: false });
     }
+
+    if (currentTarget.innerText === BUTTONS_NAME.STATISTICS) {
+      return this.setState({ isShowStatistics: true });
+    }
+
     return this.skipSentence();
   };
 
@@ -468,6 +482,7 @@ class MainPage extends Component {
       page,
       words,
       results,
+      statistics,
       painting,
       sentenceStatus,
       puzzles,
@@ -479,6 +494,7 @@ class MainPage extends Component {
       shownButtons,
       isCorrectOrder,
       isShowResults,
+      isShowStatistics,
     } = this.state;
     return (
       <div className='game--wrapper'>
@@ -486,7 +502,10 @@ class MainPage extends Component {
           <Results
             words={words}
             results={results}
+            statistics={statistics}
             painting={painting}
+            isShowStatistics={isShowStatistics}
+            showStatisticsData={this.showStatisticsData}
             onBtnClick={this.handleBtnClick}
           />
         ) : (

@@ -9,7 +9,7 @@ const playSentence = (word) => {
       audio.pause();
     }
     audio = new Audio(audioSrc);
-    audio.play();
+    audio.play().catch((e) => console.log(e.message));
   } catch (e) {
     console.log(e.message);
   }
