@@ -444,7 +444,6 @@ class MainPage extends Component {
   };
 
   showStatisticsData = (level) => {
-    console.log('show', level);
     this.changeLevel({ target: { value: level.split('-')[0] } });
     this.changePage({ target: { value: level.split('-')[1] } });
   };

@@ -7,7 +7,7 @@ const Intro = ({ open, classes, onClick }) => (
   <Fade in={open}>
     <div className={classes.paper}>
       <h1 className='title'>Speak It</h1>
-      <p className='text'>
+      <p className={classes.paper}>
         Click on the words to hear them sound.
         <br />
         Click on the button and speak the words into the microphone.
@@ -35,6 +35,7 @@ function createStyles(theme) {
     },
     text: {
       opacity: '.8',
+      marginBottom: '10px',
     },
   };
 }
