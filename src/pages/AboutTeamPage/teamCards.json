@@ -1,0 +1,51 @@
+[
+        {
+            "title": "Alexei Kravchuk",
+            "description": "I’m hard-working individual with proficiency in HTML, JavaScript, and CSS, as well as ability to communicate effectively in a team setting. I studied on my own, as well as in 'Educational Center for Programming and High Tech' on the course 'Web applications development in JavaScript'. I’m ready to further develop my knowledge and skills in web development.",
+            "image": "/images/team/alexei-kravchuk.jpg",
+            "id": "2",
+            "role": "Team Lead"
+        },
+        {
+            "title": "Andrey Somov",
+            "description": "Manufacturing practice: development of web applications, databases",
+            "image": "/images/team/andrey-somov.jpg",
+            "id": "3",
+            "role": "Engineer"
+        },
+        {
+          "title": "Denis Bogdan",
+          "description": "I have been working as telecommunications engineer for the last 9 years. My responsibilities include setup, launch and service fire safety systems, security systems and CCTV systems. I took part in such projects as Minsk International Airport, Belorussian Cement Company. I am interesting in web-development and my goal for this course is to take structured knowledge and experience in web-development to change my career. I hope to get the opportunity to work with a mentor so that he guides me in my training.My current work requires regular learning new technologies and equipments and I have good self-organization and self-learning abilities.",
+          "image": "/images/team/denis-bogdan.jpg",
+          "id": "4",
+          "role": "Engineer"
+        },
+        {
+            "title": "Anzhalika Buben",
+            "description": "I have an analytical mind. I like working with numbers and large amounts of data. I constantly go through various online courses and enjoy it, gaining new knowledge. I am ready to receive new knowledge and continue to develop in IT sphere.",
+            "image": "/images/team/anzhalika-buben.jpg",
+            "id": "5",
+            "role": "Engineer"
+        },
+        {
+            "title": "Maksim Diubo",
+            "description": "It's big adventure and great challenge for me. I want to do what is relevant today and will be relevant tomorrow. I want to do something useful and needful. I want to work hard and get appropriate feedback. I want to be developer. Maybe it will be difficult. But, as one famous governor said - 'No pain - no gain!'",
+            "image": "/images/team/maksim-diubo.jpg",
+            "id": "6",
+            "role": "Engineer"
+        },
+        {
+            "title": "Nikita Zhavoronkov",
+            "description": "A little background story: My first meeting with IT word was at the university, when i did laboratory classes in Visual Basic. I was so exited about opportunities and results in coding, so i even decide to make my own interactive strategy game. I spend much time trying to bring my ideas with realizing this project and this was very fun. But it was a long time ago… Today i feel that it was some sort of signal, so i decide to improve my skills and change my life. I believe, that becoming knowledge in web-design, programming languages, and developer stuff can help me to realize my ideas in future projects.",
+            "image": "/images/team/nikita-zhavoronkov.jpg",
+            "id": "7",
+            "role": "Engineer"
+        },
+        {
+            "title": "Uladzislau Shevel",
+            "description": "I want to become a front-end developer. Like to learn new things. I am purposeful, attentive, accurate, communicative, responsible",
+            "image": "/images/team/vladislav-shevel.jpg",
+            "id": "8",
+            "role": "Engineer"
+        }
+]
