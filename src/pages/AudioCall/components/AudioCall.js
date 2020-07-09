@@ -10,6 +10,8 @@ class AudioCall extends Component {
     super(props)
     this.state = {
       gameStarted: false,
+      difficulty: 1,
+      round: 1
     };
     this.gameStarts = this.gameStarts.bind(this);
     this.gameEnds = this.gameEnds.bind(this);
@@ -69,18 +71,14 @@ class AudioCall extends Component {
 function createStyles() {
   return {
     backdrop: {
-      display: 'flex',
-      flexDirection: 'column',
       position: 'relative',
-      marginTop: '48px',
-      marginLeft: '54px',
-      minHeight: 'calc(100vh - 48px)',
-      overflowX: 'hidden',
-      width: 'calc(100% - 54px)',
+      minHeight: '100%',
+      overflowY: 'hidden',
+      width: '100%',
       background: `url(${audiocallBackground})`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
-      zIndex: 1,
+      zIndex: 100,
     },
   };
 }

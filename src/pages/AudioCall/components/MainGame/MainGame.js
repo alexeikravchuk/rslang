@@ -53,6 +53,7 @@ componentDidMount(){
 
 generateGame(){
   document.addEventListener("keydown", this.handleKeyDown, false);
+
   getWords(this.props.round, this.props.difficulty).then((data) => {  
     data.forEach(el => {
       this.state.translates.push(el.wordTranslate)
