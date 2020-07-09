@@ -1,2 +1,2 @@
-import { AboutTeamPage } from './'
-export  { AboutTeamPage }
+import { AboutTeamPage } from './AboutTeamPage';
+export { AboutTeamPage };

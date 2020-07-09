@@ -7,7 +7,7 @@ const Intro = ({ open, classes, onClick }) => (
   <Fade in={open}>
     <div className={classes.paper}>
       <h1 className='title'>ENGLISH PUZZLE</h1>
-      <p className='text'>
+      <p className={classes.paper}>
         Click on words, collect phrases.
         <br />
         Words can be drag and drop. Select tooltips in the menu
@@ -35,6 +35,7 @@ function createStyles(theme) {
     },
     text: {
       opacity: '.8',
+      marginBottom: '10px',
     },
   };
 }

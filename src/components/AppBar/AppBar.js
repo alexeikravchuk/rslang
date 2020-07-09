@@ -1,22 +1,25 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import clsx from 'clsx';
-import { AppBar, Toolbar, IconButton, withStyles } from '@material-ui/core';
+
+import { AppBar, Toolbar, IconButton, Grid, withStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
-import {Route, Switch} from 'react-router-dom';
-
-import HomePage from '../../pages/Home/HomePage';
-import AboutTeamPage from '../../pages/AboutTeamPage/AboutTeamPage';
-import AccountInfo from '../../pages/AccountInfo/AccountInfo';
-import SprintMiniGame from '../../pages/SprintMiniGame';
-import {SpeakIt, Savannah, AudioCall} from '../../pages';
-
 import Dictionary from '../Dictionary/Dictionary';
-import Grid from '@material-ui/core/Grid';
+import {
+  HomePage,
+  AccountInfo,
+  SpeakIt,
+  EnglishPuzzle,
+  Savannah,
+  AudioCall,
+  AboutTeamPage,
+  SprintMiniGame,
+} from '../../pages';
 
 class PrimaryAppBar extends Component {
   constructor(props) {
@@ -28,15 +31,15 @@ class PrimaryAppBar extends Component {
   }
 
   handleDrawerOpen = () => {
-    this.setState({drawerOpen: true});
+    this.setState({ drawerOpen: true });
   };
 
   handleDrawerClose = () => {
-    this.setState({drawerOpen: false});
+    this.setState({ drawerOpen: false });
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
       <React.Fragment>
         <div className={classes.appContainer}>
@@ -53,29 +56,33 @@ class PrimaryAppBar extends Component {
                     className={clsx(this.props.classes.menuButton, {
                       [this.props.classes.hide]: this.state.drawerOpen,
                     })}>
-                    <MenuIcon/>
+                    <MenuIcon />
                   </IconButton>
-                  <Logo/>
-                  <UserMenu/>
+                  <Logo />
+                  <UserMenu />
                 </Toolbar>
               </AppBar>
             </Grid>
             <Grid item xs={12}>
               <Grid container>
                 <Grid item>
-                  <SideBar open={this.state.drawerOpen} onShewronClick={() => this.handleDrawerClose()}/>
+                  <SideBar
+                    open={this.state.drawerOpen}
+                    onShewronClick={() => this.handleDrawerClose()}
+                  />
                 </Grid>
                 <Grid item xs className={classes.mainContainer}>
                   <Switch>
-                    <Route path='/home' component={HomePage}/>
-                    <Route path='/about' component={AboutTeamPage}/>
-                    <Route path='/savannah' component={Savannah}/>
-                    <Route path='/dictionary' component={Dictionary}/>
-                    <Route path='/speakit' component={SpeakIt}/>
-                    <Route path='/sprint' component={SprintMiniGame}/>
-                    <Route path='/audiocall' component={AudioCall}/>
+                    <Route path='/home' component={HomePage} />
+                    <Route path='/about' component={AboutTeamPage} />
+                    <Route path='/savannah' component={Savannah} />
+                    <Route path='/dictionary' component={Dictionary} />
+                    <Route path='/speakit' component={SpeakIt} />
+                    <Route path='/puzzle' component={EnglishPuzzle} />
+                    <Route path='/sprint' component={SprintMiniGame} />
+                    <Route path='/audiocall' component={AudioCall} />
                     <Route path='/account'>
-                      <AccountInfo/>
+                      <AccountInfo />
                     </Route>
                   </Switch>
                 </Grid>
@@ -105,7 +112,7 @@ function createStyles(theme) {
     },
     appBar: {
       // position: 'fixed',
-      height:`${toolbarHeight}`,
+      height: `${toolbarHeight}`,
       background:
         'linear-gradient(0deg, rgba(71,71,74,1) 0%, rgba(123,123,158,1) 10%, rgba(233,251,255,1) 100%)',
       zIndex: theme.zIndex.drawer + 1,

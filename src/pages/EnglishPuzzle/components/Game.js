@@ -19,9 +19,7 @@ class Game extends Component {
     const { gameStarted } = this.state;
     return (
       <Backdrop className={classes.backdrop} open={true}>
-        {!gameStarted && (
-          <Intro open={!gameStarted} onClick={this.handleBtnClick} />
-        )}
+        {!gameStarted && <Intro open={!gameStarted} onClick={this.handleBtnClick} />}
         {gameStarted && <MainPage />}
       </Backdrop>
     );
@@ -32,11 +30,9 @@ function createStyles() {
   return {
     backdrop: {
       position: 'relative',
-      marginTop: '48px',
-      marginLeft: '54px',
-      minHeight: 'calc(100vh - 48px)',
+      minHeight: '100%',
       overflowX: 'hidden',
-      width: 'calc(100% - 54px)',
+      width: '100%',
       background: `url(${backdropBackgroundImg})`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
