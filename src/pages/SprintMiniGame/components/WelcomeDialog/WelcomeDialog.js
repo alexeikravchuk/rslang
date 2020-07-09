@@ -44,7 +44,10 @@ const MuiAvatar = withStyles((theme) => ({
 
 function WelcomeDialog(props) {
 
-  if (props.sprintState.gameLoading) {
+  const { gameLoading, userWords, difficulty, round, open, disabled, checked } = props.sprintState.sprintReducer
+  const { userId, token } = props.sprintState.authReducer;
+
+  if (gameLoading) {
     return (
       <Loader />
     )
@@ -55,9 +58,7 @@ function WelcomeDialog(props) {
       <Dialog
        fullWidth={true}
        maxWidth="sm"
-       open={props.sprintState.open}
-       onBackdropClick={props.closeWindow}
-       onEscapeKeyDown={props.closeWindow}
+       open={open}
        >
         <MuiDialogContent style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <MuiAvatar alt="logo" src={`${process.env.PUBLIC_URL}/images/logo.png`} />
@@ -75,37 +76,37 @@ function WelcomeDialog(props) {
             Choose your difficulty level, please
           </Typography>
           <Slider
-            defaultValue={props.sprintState.difficulty}
+            defaultValue={difficulty}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="on"
             step={1}
             marks
             min={1}
             max={6}
-            disabled={props.sprintState.disabled}
+            disabled={disabled}
             onChange={(event, value) => props.changeDifficulty(value)}
           />
           <Typography variant="h5" id="discrete-slider" gutterBottom style={{marginBottom: '2.35em'}}>
             Choose round, please
           </Typography>
           <Slider
-            defaultValue={props.sprintState.round}
+            defaultValue={round}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="on"
             step={1}
             marks
             min={1}
             max={30}
-            disabled={props.sprintState.disabled}
+            disabled={disabled}
             onChange={(event, value) => props.changeRound(value)}
           />
         </MuiDialogContent>
         <MuiDialogActions>
           <FormControlLabel
-            control={<Checkbox checked={props.sprintState.checked} onChange={props.handleChange} />}
+            control={<Checkbox checked={checked} onChange={props.handleChange} />}
             label="Use my dictionary"
           />
-          <Button autoFocus onClick={() => {props.loadGame(props.sprintState.difficulty, props.sprintState.round)}} color="primary">
+          <Button autoFocus onClick={() => {props.loadGame(userWords, difficulty, round, userId, token)}} color="primary">
             Start game!
           </Button>
         </MuiDialogActions>
@@ -116,7 +117,7 @@ function WelcomeDialog(props) {
 
 const mapStateToProps = state => {
   return {
-    sprintState: state.sprintReducer
+    sprintState: state
   }
 }
 
@@ -125,7 +126,7 @@ const mapDispatchToProps = dispatch => {
     handleChange: () => dispatch(userWords()),
     changeDifficulty: (value) => dispatch(changeDifficulty(value)),
     changeRound: (value) => dispatch(changeRound(value)),
-    loadGame: (difficulty, round) => dispatch(loadGame(difficulty, round)),
+    loadGame: (userWords, difficulty, round, id, token) => dispatch(loadGame(userWords, difficulty, round, id, token)),
     endGame: () => dispatch(endGame()),
   }
 }

@@ -8,7 +8,8 @@ import {
   WRONG_BTN_VALUE,
   MAX_XP_LEVEL,
   XP_STEPPER_NUMBER,
-  RIGHT_CARD_CHANCE
+  RIGHT_CARD_CHANCE,
+  SERVER_URL,
 } from '../../pages/SprintMiniGame/constants/constants'
 import { playSound } from '../../pages/SprintMiniGame/utils/playSound'
 
@@ -25,6 +26,9 @@ export const END_GAME = 'END_GAME';
 export const CHANGE_ROUND = 'CHANGE_ROUND';
 export const TIMER_FINISHED = 'TIMER_FINISHED';
 export const CLOSE_WINDOW = 'CLOSE_WINDOW';
+export const ADD_LEARNED_WORDS = 'LEARNED_WORDS';
+export const ADD_WRONG_WORDS = 'CLOSE_WINDOW';
+
 
 export const hideWelcomeDialog = () => {
   return ({
@@ -88,20 +92,92 @@ export const showCard = (maxIndx) => {
   })
 }
 
-export const loadGame = (difficulty, round) => {
+export const getUserWords = async (id, token) => {
+  await fetch(`${SERVER_URL}users/${id}/words`, {
+    method: 'GET',
+    withCredentials: true,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
+    }
+  }
+  )
+    .then(response => {
+      if (response.status === 404) {
+        throw new Error('404');
+      } else {
+        return response.json()
+      }
+    })
+}
+
+export const getCommonWords = async (difficulty, round) => {
+    const url = `${SERVER_URL}words?page=${round - 1}&group=${difficulty - 1}`
+    const response = await fetch(url)
+    const words = await response.json()
+    return words
+}
+
+export const getStatistics = async (id, token) => {
+  try {
+    const response = await fetch(`${SERVER_URL}users/${id}/statistics`, {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+      }
+    })
+    const statistics = await response.json()
+    return statistics
+  } catch (e) {
+    return {
+      "optional": {
+        "scoreRecord": 0,
+        "scoreAverage": 0,
+        "totalScore": 0,
+        "gameCounter": 0,
+      }
+    }
+  }
+}
+
+export const loadGame = (userWords, difficulty, round, id, token) => {
   return async dispatch => {
     dispatch(hideWelcomeDialog())
     dispatch(showLoader())
-    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${round - 1}&group=${difficulty - 1}`
-    const response = await fetch(url)
-    const words = await response.json()
+    let words
+    if (userWords) {
+      try {
+        words = await getUserWords(id, token)
+      } catch (e) {
+        words = await getCommonWords(difficulty, round)
+      }
+    } else {
+      words = await getCommonWords(difficulty, round)
+    }
+    const stats = await getStatistics(id, token);
     setTimeout(() => {
-      dispatch({ type: LOAD_GAME, payload: words, })
+      dispatch({ type: LOAD_GAME, words, stats })
       dispatch(hideLoader())
       playSound(START_SOUND)
       dispatch(showCard(words.length))
-    }, 1200)
+    }, 1000)
   }
+}
+
+export const addLearnedWord = (wordIndex) => {
+  return ({
+    type: ADD_LEARNED_WORDS,
+    payload: wordIndex,
+  })
+}
+
+export const addWrongWord = (wordIndex) => {
+  return ({
+    type: ADD_WRONG_WORDS,
+    payload: wordIndex,
+  })
 }
 
 export const checkAnswer = (btnValue, sprintState) => {
@@ -114,6 +190,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: true,
         })
         playSound(CORRECT_ANSWER_SOUND)
+        dispatch(addLearnedWord(wordIndex))
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
@@ -121,6 +198,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: false,
         })
         playSound(WRONG_ANSWER_SOUND)
+        dispatch(addWrongWord(wordIndex))
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       }
     } else if (btnValue === WRONG_BTN_VALUE) {
@@ -130,6 +208,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: false,
         })
         playSound(WRONG_ANSWER_SOUND)
+        dispatch(addWrongWord(wordIndex))
         dispatch(xpLevelToggle(false, xpLevel, xpLevelStepper))
       } else {
         dispatch ({
@@ -137,6 +216,7 @@ export const checkAnswer = (btnValue, sprintState) => {
           answer: true,
         })
         playSound(CORRECT_ANSWER_SOUND)
+        dispatch(addLearnedWord(wordIndex))
         dispatch(xpLevelToggle(true, xpLevel, xpLevelStepper))
       }
     }
@@ -172,17 +252,42 @@ export const closeWindow = () => {
   })
 }
 
-export const endGame = () => {
-  return ({
-    type: END_GAME,
-  })
+export const setStatistics = async (data, id, token) => {
+  await fetch(`${SERVER_URL}users/${id}/statistics`, {
+      method: 'PUT',
+      withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.status === 404) {
+        throw new Error('404');
+      } else if (response.status === 401) {
+        throw new Error('401');
+      } else {
+        return response.json()
+      }
+    })
+  }
+
+export const endGame = (data, id, token) => {
+  return async dispatch => {
+    try {
+      await setStatistics(data, id, token)
+      dispatch({ type: END_GAME })
+    } catch (e) {
+      dispatch({ type: END_GAME })
+    }
+  }
 }
 
 export const isTimerFinished = () => {
   playSound(END_SOUND)
-  return dispatch => {
-    dispatch ({
+  return {
       type: TIMER_FINISHED,
-    })
   }
 }

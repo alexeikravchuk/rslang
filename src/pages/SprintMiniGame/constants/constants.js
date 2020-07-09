@@ -18,7 +18,8 @@ export const RIGHT_CARD_CHANCE = 0.7;
 export const WORD_LANGUAGE = 'en-US';
 export const TRANSLATE_LANGUAGE = 'ru-RU';
 
-export const TIMER_VALUE = 60;
-
 export const LEFW_ARROW_KEY_CODE = 37;
 export const RIGHT_ARROW_KEY_CODE = 39;
+
+export const MEDIA_FILES_URL = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
+export const SERVER_URL = 'https://afternoon-falls-25894.herokuapp.com/';

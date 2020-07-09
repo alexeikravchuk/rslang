@@ -4,7 +4,7 @@ import {
     EMAIL,
     TOKEN,
     USER_ID,
-    UserData
+    UserData,
 } from '../actions/authAction'
 
 const initialState = {

@@ -21,7 +21,10 @@ import {
   CHANGE_ROUND,
   TIMER_FINISHED,
   CLOSE_WINDOW,
- } from '../actions/sprintActions';
+  ADD_LEARNED_WORDS,
+  ADD_WRONG_WORDS,
+ } from '../actions';
+
 
 const defaultState = {
   checked: false,
@@ -30,6 +33,8 @@ const defaultState = {
   difficulty: INITIAL_DIFFICULTY,
   round: INITIAL_ROUND,
   gameWords: [],
+  learnedWords: new Set(),
+  wrongWords: new Set(),
   userWords: false,
   gameLoading: false,
   showCard: false,
@@ -38,7 +43,6 @@ const defaultState = {
   answer: null,
   score: 0,
   scoreRecord: 0,
-  scoreAverage: 0,
   totalScore: 0,
   gameCounter: 0,
   xp: BASIC_XP,
@@ -62,7 +66,15 @@ const sprintReducer = ( state = defaultState, action) => {
       return {...state, round: action.payload};
     }
     case LOAD_GAME: {
-      return {...state, gameWords: action.payload};
+      return {
+        ...state,
+        gameWords: action.words,
+        learnedWords: new Set(),
+        wrongWords: new Set(),
+        scoreRecord: action.stats.optional.scoreRecord,
+        totalScore: action.stats.optional.totalScore,
+        gameCounter: action.stats.optional.gameCounter,
+      };
     }
     case SHOW_LOADER: {
       return {...state, gameLoading: true};
@@ -79,6 +91,16 @@ const sprintReducer = ( state = defaultState, action) => {
         answer: action.answer,
         score: action.answer ? state.score + state.xp * state.xpLevel : state.score,
         xpLevelStepper: (state.xpLevelStepper < XP_STEPPER_NUMBER && action.answer) ? state.xpLevelStepper + 1 : INITIAL_XP_STEPPER_VALUE,
+      };
+    }
+    case ADD_LEARNED_WORDS: {
+      return {...state, learnedWords: state.learnedWords.add(action.payload)};
+    }
+    case ADD_WRONG_WORDS: {
+      return {
+        ...state,
+        wrongWords: state.wrongWords.add(action.payload),
+        learnedWords: state.learnedWords.delete(action.payload) ? state.learnedWords : state.learnedWords,
       };
     }
     case XP_LEVEL: {
@@ -101,7 +123,6 @@ const sprintReducer = ( state = defaultState, action) => {
        scoreRecord: Math.max(state.score, state.scoreRecord),
        totalScore: state.totalScore + state.score,
        gameCounter: state.gameCounter + 1,
-       scoreAverage: Math.round(state.totalScore / state.gameCounter),
       };
     }
     case CLOSE_WINDOW: {
