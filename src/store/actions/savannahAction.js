@@ -9,6 +9,7 @@ const GAME_END = 'GAME_END'
 const RESET_GAME = 'RESET_GAME'
 const DIFFICULTY_CHANGE = 'DIFFICULTY_CHANGE'
 const REMOVE_WORD = 'REMOVE_WORD'
+const LEVEL_UP = 'LEVEL_UP'
 
 const loadWords = () => {
   return (
@@ -87,6 +88,14 @@ const removeWord = (word) => {
   )
 }
 
+const levelUp = () => {
+  return(
+    {
+      type: LEVEL_UP,
+    }
+  )
+}
+
 export { ADD_NEW_WORDS,
   ADD_LEARNED_WORDS,
   ADD_MISSED_WORDS,
@@ -98,6 +107,7 @@ export { ADD_NEW_WORDS,
   RESET_GAME,
   DIFFICULTY_CHANGE,
   REMOVE_WORD,
+  LEVEL_UP,
   addLearnedWords,
   addMissedWords,
   loadWords,
@@ -107,4 +117,5 @@ export { ADD_NEW_WORDS,
   lifeDecrease,
   gameReset,
   difficultyChange,
-  removeWord}
+  removeWord,
+  levelUp}

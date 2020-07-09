@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {withStyles, Container, CircularProgress} from '@material-ui/core';
+import {withStyles, Container, CircularProgress, Grid} from '@material-ui/core';
 import {connect} from 'react-redux';
 import GameToolbar from '../GameToolbar/Toolbar';
 import {Statistics} from '../Statistics';
@@ -12,8 +12,9 @@ import {
   loadWords,
   loadWordsSuccess,
 } from '../../../../store/actions/savannahAction';
-import Grid from '@material-ui/core/Grid';
+import {playFileSound, pubAudioPath} from '../../utils/utils';
 
+const gameEndSound = pubAudioPath('roundEnd');
 const styles = {
   title: {
     flexGrow: 1,
@@ -39,6 +40,7 @@ class Savannah extends Component {
       </Container>
     );
   }
+
   componentWillUnmount() {
     this.props.onUnmount();
   }
@@ -83,7 +85,10 @@ const mapDispatchToProps = dispatch => ({
     getWords(page, category)
       .then(json => dispatch(loadWordsSuccess(json)));
   },
-  onClose: () => dispatch(gameEnding()),
+  onClose: () => {
+    playFileSound(gameEndSound);
+    dispatch(gameEnding());
+  },
   onUnmount: () => dispatch(gameReset()),
 });
 

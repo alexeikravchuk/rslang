@@ -1,13 +1,15 @@
-import React  from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import { withStyles, Card, Dialog, Container, Typography } from '@material-ui/core';
 import {GameToolbar} from '../GameToolbar';
 import {SavannahButton} from '../SavannahButton';
 import {gameStarting} from '../../../../store/actions/savannahAction';
 import GameSlider from '../GameSlider/GameSlider';
-import './StartGame.scss'
+import './StartGame.scss';
 import Grid from '@material-ui/core/Grid';
+import {playFileSound, pubAudioPath} from '../../utils/utils';
 
+const gameStartSound = pubAudioPath('gameStart');
 const styles = {
   contentDialog: {
     height: '100%',
@@ -17,7 +19,7 @@ const styles = {
     alignItems: 'center',
     padding: '1rem'
   },
-  contentText:{
+  contentText: {
     color: 'wheat',
     marginBottom: '1rem',
   },
@@ -25,7 +27,7 @@ const styles = {
     zIndex: 2000,
     color: '#662246',
   },
-  card:{
+  card: {
     marginTop: '1rem',
     zIndex: 2000,
     color: 'wheat',
@@ -40,7 +42,7 @@ function StartGame(props) {
   const {classes, gameStarting} = props;
   const [open, setOpen] = React.useState(true);
   const handleClose = () => {
-    setOpen(false)
+    setOpen(false);
     gameStarting();
   };
   return (
@@ -69,14 +71,15 @@ function StartGame(props) {
 }
 
 const mapStateToProps = store => {
-  const { savannahReducer } = store
-  return { ...savannahReducer }
-}
+  const {savannahReducer} = store;
+  return {...savannahReducer};
+};
 
 const mapDispatchToProps = dispatch => ({
   gameStarting: () => {
-    dispatch(gameStarting())
-  }
-})
+    playFileSound(gameStartSound);
+    dispatch(gameStarting());
+  },
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StartGame))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StartGame));

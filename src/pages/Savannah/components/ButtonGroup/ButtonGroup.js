@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withStyles, Container, Slide} from '@material-ui/core';
-import {randomInteger, shuffleArray} from '../../utils/utils'
+import {playFileSound, pubAudioPath, shuffleArray} from '../../utils/utils';
 import {SavannahButton} from '../SavannahButton';
 import TrainWord from '../TrainWord/TrainWord';
 import {
   addLearnedWords, addMissedWords,
-  gameEnding,
+  gameEnding, levelUp,
   lifeDecrease, removeWord,
 } from '../../../../store/actions/savannahAction';
 import Grid from '@material-ui/core/Grid';
 
-const wordsLimit = 30;
 const buttonLimit = 4;
-
+const correct = pubAudioPath('correct');
+const errorSound = pubAudioPath('error');
+const levelUpSound = pubAudioPath('levelUp');
 const styles = {
   groupRoot: {
     height: '100%'
@@ -26,13 +27,13 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-}
+};
 
 const defaultState = {
   showWord: false,
   animationEnded: true,
   chosenWord: '',
-}
+};
 
 class GameButtonGroup extends Component {
   constructor(props) {
@@ -41,58 +42,61 @@ class GameButtonGroup extends Component {
       showWord: false,
       animationEnded: true,
       chosenWord: '',
-      trainWord:'',
+      trainWord: '',
     };
   }
 
-  loadNewWords(){
-    if(this.props.newWords.length < 5) {
-      this.props.fetch(randomInteger(0,wordsLimit), this.props.difficulty);
+  loadNewWords() {
+    if (this.props.newWords.length < 5) {
+      this.props.onLevelUp();
+      this.props.fetch(this.props.gameLevel, this.props.difficulty);
     }
   }
 
-  missAtAnimationEnd(word){
+  missAtAnimationEnd(word) {
     this.props.onMiss(this.props.lifeCounter, word);
   }
 
   setEnd = () => {
-    if (this.state.chosenWord === '') {this.missAtAnimationEnd(this.state.trainWord)}
+    if (this.state.chosenWord === '') {
+      this.missAtAnimationEnd(this.state.trainWord);
+    }
     this.props.onRemove(this.state.trainWord);
     this.loadNewWords();
     this.setState(defaultState);
-    setTimeout(() => this.setState({showWord: true}), 200)
-  }
+    setTimeout(() => this.setState({showWord: true}), 200);
+  };
 
   setStart = () => {
     this.setState({animationEnded: false, showWord: true, trainWord: this.props.newWords[0]});
-  }
+  };
 
-  checkWord(wordToCheck){
+  checkWord(wordToCheck) {
     const {trainWord} = this.state;
     return (wordToCheck === trainWord.word) ? this.props.onGuess(trainWord) : this.props.onMiss(this.props.lifeCounter, trainWord);
   }
 
-  onClick(word){
+  onClick(word) {
     this.checkWord(word);
     this.props.onRemove(this.state.trainWord);
     this.loadNewWords();
     this.setState(defaultState);
-    this.timer = setTimeout(() => this.setState({showWord: true}), 200)
+    this.timer = setTimeout(() => this.setState({showWord: true}), 200);
   }
 
   componentDidMount() {
-    this.props.fetch(randomInteger(0,wordsLimit), this.props.difficulty);
-    this.setState({showWord: true})
+    this.loadNewWords();
+    this.setState({showWord: true});
   }
 
   componentWillUnmount() {
     if (this.timer) {
-      clearTimeout(this.timer)
+      clearTimeout(this.timer);
     }
   }
 
   render() {
-    const { classes, newWords, } = this.props;
+    const {classes, newWords} = this.props;
     return (
         <Grid
           container
@@ -137,22 +141,28 @@ class GameButtonGroup extends Component {
   }
 }
 
-function mapStateToProps(store){
-  const { savannahReducer } = store
-  return { ...savannahReducer }
+function mapStateToProps(store) {
+  const {savannahReducer} = store;
+  return {...savannahReducer};
 }
 
 const mapDispatchToProps = dispatch => ({
+  onLevelUp: () => {
+    playFileSound(levelUpSound);
+    dispatch(levelUp());
+  },
   onMiss: (lifeCounter, missedWord) => {
+    playFileSound(errorSound);
     dispatch(addMissedWords(missedWord));
-    (lifeCounter < 1) ? dispatch(gameEnding()) : dispatch(lifeDecrease())
+    (lifeCounter < 1) ? dispatch(gameEnding()) : dispatch(lifeDecrease());
   },
   onGuess: (learnedWord) => {
-    dispatch(addLearnedWords(learnedWord))
+    playFileSound(correct);
+    dispatch(addLearnedWords(learnedWord));
   },
   onRemove: (word) => {
-    dispatch(removeWord(word))
-  }
-})
+    dispatch(removeWord(word));
+  },
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(GameButtonGroup))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(GameButtonGroup));

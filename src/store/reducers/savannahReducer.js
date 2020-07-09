@@ -8,7 +8,7 @@ import {
   LIFE_DECREASE,
   GAME_END,
   RESET_GAME,
-  DIFFICULTY_CHANGE, REMOVE_WORD,
+  DIFFICULTY_CHANGE, REMOVE_WORD, LEVEL_UP
 } from '../actions/savannahAction';
 import {shuffleArray} from "../../pages/Savannah/utils/utils";
 
@@ -20,6 +20,7 @@ const defaultState = {
   error: null,
   difficulty: 0,
   lifeCounter: 5,
+  gameLevel: 0,
   newWords: [],
   learnedWords: [],
   missedWords: [],
@@ -61,6 +62,9 @@ const savannahReducer = ( state = defaultState, action) => {
     }
     case REMOVE_WORD: {
       return { ...state, newWords: state.newWords.slice(1)}
+    }
+    case LEVEL_UP: {
+      return { ...state, gameLevel: (state.gameLevel === 30) ?  30 : state.gameLevel + 1}
     }
     default: {
       return {...state};
