@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import clsx from 'clsx';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  withStyles,
-} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, withStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import UserMenu from './UserMenu';

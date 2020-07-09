@@ -28,7 +28,7 @@ import {
     },
     {
       title: 'Statistics',
-      link: '#statistics',
+      link: '/statistics',
       icon: <Timeline color='primary' />,
       type: 'primary',
     },
@@ -40,7 +40,7 @@ import {
     },
     {
       title: 'English puzzle',
-      link: '#puzzle',
+      link: '/puzzle',
       icon: <Extension color='secondary' />,
       type: 'game',
     },
@@ -58,7 +58,7 @@ import {
     },
     {
       title: 'Sprint',
-      link: 'sprint',
+      link: '/sprint',
       icon: <DirectionsRun color='secondary' />,
       type: 'game',
     },
@@ -70,13 +70,13 @@ import {
     },
     {
       title: 'Promo page',
-      link: '#promo',
+      link: '/promo',
       icon: <Slideshow />,
       type: 'addition',
     },
     {
       title: 'Settings',
-      link: '#settings',
+      link: '/settings',
       icon: <Settings />,
       type: 'addition',
     },
