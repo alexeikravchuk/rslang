@@ -47,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  const [firstNameInput, setFirstName] = useState('');
+  const [lastNameInput, setLastName] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [emailError, checkEmail] = useState(false);
@@ -102,6 +104,7 @@ export default function SignUp() {
                 id='firstName'
                 label='First Name'
                 autoFocus
+                onInput={e => setFirstName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -109,10 +112,11 @@ export default function SignUp() {
                 variant='outlined'
                 required
                 fullWidth
-                id='lastName'
-                label='Last Name'
-                name='lastName'
-                autoComplete='lname'
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="lname"
+                onInput={e => setLastName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -159,9 +163,11 @@ export default function SignUp() {
               </Box>
             </Grid>
           </Grid>
-          <Login
-            emailInput={emailInput}
-            passwordInput={passwordInput}
+          <Login 
+            firstNameInput = {firstNameInput}
+            lastNameInput = {lastNameInput}
+            emailInput = {emailInput}
+            passwordInput = {passwordInput}
             email={emailError}
             password={passwordError}
             action='register'>

@@ -22,7 +22,7 @@ import {
     },
     {
       title: 'Vocabulary',
-      link: '/vocabulary',
+      link: '/dictionary',
       icon: <MenuBook color='primary' />,
       type: 'primary',
     },
@@ -46,7 +46,7 @@ import {
     },
     {
       title: 'Savannah',
-      link: '/savannah',
+      link: './savannah',
       icon: <Pets color='secondary' />,
       type: 'game',
     },

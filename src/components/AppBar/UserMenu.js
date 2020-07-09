@@ -60,14 +60,19 @@ class UserMenu extends Component {
                   <MenuList
                     autoFocusItem={Boolean(this.state.userMenuOpen)}
                     id='menu-list-grow'>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    <MenuItem 
+                      onClick={this.handleClose}
+                      to="/account"
+                      component={RouterLink}  
+                    
+                    >My account</MenuItem>
                     <MenuItem onClick={this.handleClose}>Setting</MenuItem>
                     <MenuItem 
                       onClick={this.handleClose}
                       to="/signin"
                       component={RouterLink}
                     >  
-                        {this.state.auth ? 'Logout' : 'Login'}
+                        {this.state.auth ? 'Login' : 'Logout'}
                       </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
