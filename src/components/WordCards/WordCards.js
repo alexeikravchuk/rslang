@@ -1,5 +1,6 @@
 import React from 'react';
 import './WordCards.css';
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 const URL = "https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/";
 
@@ -9,11 +10,16 @@ class WordCards extends React.Component {
     super(props);
     this.audio = null;
     this.state = {
-      lastNumber: 30,
+      lastNumber: 20,
       dataRandom: [],
+      learning: [],
+      compound: [],
+      deleted: [],
       category: 1,
       counter: 0,
       value: "",
+      valuePage: 0,
+      valueCategory: 0,
       dropdown: false,
       notification: "",
       translation: "перевод",
@@ -22,32 +28,39 @@ class WordCards extends React.Component {
       image: "картинка",
       meaning: "значение",
       example: "пример",
-      meaningHide: "", // here will be meaning sentence with word "Click", that hide word to learn 
-      exampleHide: "", // here will be example sentence with word "Click", that hide word to learn
-      showMeaning: false, // option, that will be toggled when user clicks on meaning sentence. Go to line 182 to see how it works  
-      showExample: false, // option, that will be toggled when user clicks on example sentence.  
+      meaningHide: "",
+      exampleHide: "",
+      showMeaning: false, 
+      showExample: false,  
       meaningTranslate: "перевод значения",
       exampleTranslate: "перевод примера",
       audioWord: "озвучка слова",
       audioMeaning: "озвучка значения",
       audioExampleWord: "озвучка примера",
+      progress: 0
     }
     this.playAudioWords = this.playAudioWords.bind(this);
     this.setCountPlus = this.setCountPlus.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.showMeaningWord = this.showMeaningWord.bind(this);
     this.showExampleWord = this.showExampleWord.bind(this); 
-    
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleChangeCategory = this.handleChangeCategory.bind(this);
   }
-
-  componentDidMount() {
-    this.getWords(0, 0).then((data)=>{
+  
+  generateWords(page, category){
+    this.getWords(page, category).then((data)=>{
       this.getNewWords(data, this.state.counter)
       this.setState({dataRandom: data}) 
     });
   }
+  
+  componentDidMount() {
+    this.generateWords(0,0)
+  }
+
   componentDidUpdate() {
-    document.title = `Word ${this.state.counter}`;
+    document.title = `Word ${this.state.counter + 1}`;
   }
 
   async getWords(page, category){
@@ -57,7 +70,7 @@ class WordCards extends React.Component {
     return dataRandom;
   }
 
-   getShuffle(array) {
+  getShuffle(array) {
     let m = array.length, t, i;
     while (m) {
       i = Math.floor(Math.random() * m--);
@@ -81,12 +94,15 @@ class WordCards extends React.Component {
     if (this.state.counter === 0) {
       this.setState({
         counter: 0,
+        progress: 0,
       },() => { 
         this.getNewWords(this.state.dataRandom, this.state.counter) 
       })
     } else{
+      this.setState({progress: this.state.progress - 10})
       this.setState({
-        counter: this.state.counter - 1
+        counter: this.state.counter - 1,
+        progress: this.state.progress - (100 / this.state.lastNumber),
       },() => { 
         this.getNewWords(this.state.dataRandom, this.state.counter) 
       })
@@ -97,7 +113,8 @@ class WordCards extends React.Component {
     this.clearInput()
     if (this.state.counter === (this.state.lastNumber - 1)) {
       this.setState({
-        counter: this.state.lastNumber - 1
+        counter: this.state.lastNumber - 1,
+        progress: 100
       },() => {
         alert('Day plan is completed!')
         this.setState({
@@ -107,7 +124,8 @@ class WordCards extends React.Component {
       })
     } else {
       this.setState({
-        counter: this.state.counter + 1
+        counter: this.state.counter + 1,
+        progress: this.state.progress + (100 / this.state.lastNumber)
       },() => {
         this.getNewWords(this.state.dataRandom, this.state.counter)
       });
@@ -134,7 +152,6 @@ class WordCards extends React.Component {
 
   getNewWords = (dataRandom, counter) => {
     let currentObj = dataRandom[counter]; 
-  
     this.setState({
       translation: currentObj.wordTranslate, 
       transcription: currentObj.transcription,
@@ -172,16 +189,40 @@ class WordCards extends React.Component {
   }
 
   getAnswer() {
-    this.setState({value: this.state.word})
+    this.setState({
+      value: this.state.word,
+      showMeaning: true,
+      showExample: true
+    })
   }
 
   handleChange(event) { 
-    this.setState({value: event.target.value});
-    if(this.state.value === this.state.word) {
-      alert("Word are similar");
-    } else {
-      alert("Not similar");
+    this.setState({value: event.target.value });
+    if(event.target.value.length === this.state.word.length){
+      this.checkAnswer(event.target.value)
     }
+  }
+
+  checkAnswer(input){
+    let word = this.state.word;
+    if (input !== word) {
+      this.setState({value: '?'})
+    } else {
+      this.setState({value: input});
+      this.setCountPlus()
+    }
+  }
+
+  handleChangePage(event){
+    this.setState({valuePage: event.target.value - 1}, ()=> {
+      this.generateWords(this.state.valuePage, this.state.valueCategory)
+    });
+  }
+
+  handleChangeCategory(event){
+    this.setState({valueCategory: event.target.value - 1}, ()=> {
+      this.generateWords(this.state.valuePage, this.state.valueCategory)
+    });
   }
 
   showMeaningWord(){ // this function toggled show/hide meaning option 
@@ -194,6 +235,30 @@ class WordCards extends React.Component {
     this.setState(state => ({
       showExample: !state.showExample
     }));
+  }
+
+  createLearningWords(){
+    this.setState({
+      learning: this.state.learning.concat([this.state.word])
+    }, ()=> { // this function is a second parameter for setState, update it immediately
+      console.log(this.state.learning);
+    })
+  }
+  
+  createCompoundWords(){
+    this.setState({
+      compound: this.state.compound.concat([this.state.word])
+    }, ()=> { 
+      console.log(this.state.compound);
+    })
+  }
+
+  createDeletedWords(){
+    this.setState({
+      deleted: this.state.deleted.concat([this.state.word])
+    }, ()=> {
+      console.log(this.state.deleted);
+    })
   }
   
   render(){
@@ -218,7 +283,7 @@ class WordCards extends React.Component {
                   <span>New word</span>
                 </div>
                 <form className="selectPage">Page:<br />
-                  <select name="page">
+                  <select value={this.state.valuePage} onChange={this.handleChangePage} name="page">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -251,7 +316,7 @@ class WordCards extends React.Component {
                     <option>30</option>
                   </select>
                 </form>
-                <form className="selectCategory">Category:<br />
+                <form value={this.state.valueCategory} onChange={this.handleChangeCategory}className="selectCategory">Category:<br />
                   <select name="category">
                     <option>1</option>
                     <option>2</option>
@@ -263,9 +328,9 @@ class WordCards extends React.Component {
                 </form>
               </div>
               <div className="dropdown" style={{display: this.state.dropdown ? 'block' : 'none'}}>
-                <div>Добавить в Изучаемые слова</div>
-                <div>Пометить как Сложное слово</div>
-                <div>Удалить из списка слов</div>
+                <div /* onClick={()=>{this.toggleDropdown()}} */ onClick={()=>{this.createLearningWords()}} className="learning">Добавить в Изучаемые слова</div>
+                <div /* onClick={()=>{this.toggleDropdown()}} */ onClick={()=>{this.createCompoundWords()}} className="compound">Пометить как Сложное слово</div>
+                <div /* onClick={()=>{this.toggleDropdown()}} */ onClick={()=>{this.createDeletedWords()}} className="deleted">Удалить из списка слов</div>
               </div>
               <div className="word-notes">
                 <span onClick={()=>{this.toggleDropdown()}}>⚑</span>
@@ -277,7 +342,7 @@ class WordCards extends React.Component {
                   <div className="word-translation">{this.state.translation}<span onClick={()=>{this.playAudioWords(this.state.audioWord)}}  className="spell">🕬</span></div>
                     <div className="transcription">{this.state.transcription}</div>
                     <div className="input-word">
-                      <input value={this.state.value} onChange={this.handleChange} className="input" style={{width: `${wordLength * 12}px`}} type="text" maxLength={wordLength} autoComplete="off" autoFocus />
+                      <input id='input' value={this.state.value} onChange={this.handleChange} className="input" style={{ width: `${wordLength * 12}px`}} type="text" maxLength={wordLength} autoComplete="off" autoFocus />
                     </div>
                 </div>
                 <img className="word-image" src={this.state.image} alt="" />
@@ -303,7 +368,7 @@ class WordCards extends React.Component {
         <div className="stage">
           <div className="number-start">0</div>
           <div className="number-progress">
-            <div className="progress-bar" style={{width: "2%"}}></div>
+            <LinearProgress  variant="determinate" value={this.state.progress} />   
           </div>
           <div className="number-end">{this.state.lastNumber}</div>
         </div>
