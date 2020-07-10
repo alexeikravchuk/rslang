@@ -11,7 +11,6 @@ class Results extends Component {
   state = { ...this.props };
 
   showStatistiInfo = async (key) => {
-    console.log('show', key);
     const { level, page, results } = this.state.statistics.optional[key];
 
     const painting = getImageSrc(level, page);

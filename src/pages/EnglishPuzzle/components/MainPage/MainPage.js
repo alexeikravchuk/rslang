@@ -444,7 +444,6 @@ class MainPage extends Component {
   };
 
   startLevelAgain = (level, page) => {
-    console.log(level, page);
     if (level && page) {
       return this.setState({ level: { current: level }, page: { current: page } });
     }
@@ -454,7 +453,6 @@ class MainPage extends Component {
 
   handleBtnClick = ({ currentTarget }, level, page) => {
     const { currentSentence, puzzleResults, sentenceStatus } = this.state;
-    console.log(currentTarget.innerText);
     if (currentTarget.innerText === BUTTONS_NAME.CHECK) {
       return this.checkResult();
     }
