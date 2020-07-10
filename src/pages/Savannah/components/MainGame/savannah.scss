@@ -1,0 +1,13 @@
+.savannahRoot{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.mainGame{
+  height: 100%;
+  background: no-repeat center url(../background/original.png);
+  background-size: cover;
+}
