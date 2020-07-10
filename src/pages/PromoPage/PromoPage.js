@@ -9,9 +9,9 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Card,
+  CardMedia,
 } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Background from './PromoPageImages/PromoBg.png';
@@ -23,7 +23,7 @@ import EqualizerOutlinedIcon from '@material-ui/icons/EqualizerOutlined';
 
 const useStyles = makeStyles({
   container: {
-    backgroundImage: "url(" + Background + ")",
+    backgroundImage: 'url(' + Background +')',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
   },
@@ -70,9 +70,9 @@ export const PromoPage = () => {
     >
       <Grid
         container
-        direction="row"
-        justify="space-around"
-        alignItems="center"
+        direction='row'
+        justify='space-around'
+        alignItems='center'
         spacing={4}
       >
         <Grid
@@ -101,7 +101,7 @@ export const PromoPage = () => {
             </p>
               <Link
                 component={RouterLink}
-                to="/home"
+                to='/home'
                 className={classes.playNowLink}
               >
                 Play Now
@@ -118,7 +118,7 @@ export const PromoPage = () => {
             <CardMedia
               className={classes.media}
               image={firstImage}
-              style={{backgroundSize: "contain"}}
+              style={{backgroundSize: 'contain'}}
             >
             </CardMedia>
           </Card>
@@ -167,7 +167,7 @@ export const PromoPage = () => {
             <CardMedia
               className={classes.media}
               image={secondImage}
-              style={{backgroundSize: "contain"}}
+              style={{backgroundSize: 'contain'}}
             >
             </CardMedia>
           </Card>
