@@ -11,6 +11,7 @@ import SideBar from './SideBar';
 
 import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
+
 import {
   HomePage,
   AccountInfo,

@@ -6,12 +6,13 @@ import {
     Extension,
     Pets,
     Hearing,
+    DirectionsRun,
     People,
     Slideshow,
     Settings,
   } from '@material-ui/icons';
   import React from 'react';
-  
+
   export const pageLinks = [
     {
       title: 'Main page',
@@ -21,38 +22,44 @@ import {
     },
     {
       title: 'Vocabulary',
-      link: '#vocabulary',
+      link: '/dictionary',
       icon: <MenuBook color='primary' />,
       type: 'primary',
     },
     {
       title: 'Statistics',
-      link: '#statistics',
+      link: '/statistics',
       icon: <Timeline color='primary' />,
       type: 'primary',
     },
     {
       title: 'SpeakIt',
-      link: '#speakit',
+      link: '/speakit',
       icon: <RecordVoiceOver color='secondary' />,
       type: 'game',
     },
     {
       title: 'English puzzle',
-      link: '#puzzle',
+      link: '/puzzle',
       icon: <Extension color='secondary' />,
       type: 'game',
     },
     {
       title: 'Savannah',
-      link: '#savannah',
+      link: './savannah',
       icon: <Pets color='secondary' />,
       type: 'game',
     },
     {
       title: 'Audio call',
-      link: '#audiocall',
+      link: '/audiocall',
       icon: <Hearing color='secondary' />,
+      type: 'game',
+    },
+    {
+      title: 'Sprint',
+      link: '/sprint',
+      icon: <DirectionsRun color='secondary' />,
       type: 'game',
     },
     {
@@ -63,13 +70,13 @@ import {
     },
     {
       title: 'Promo page',
-      link: '#promo',
+      link: '/promo',
       icon: <Slideshow />,
       type: 'addition',
     },
     {
       title: 'Settings',
-      link: '#settings',
+      link: '/settings',
       icon: <Settings />,
       type: 'addition',
     },

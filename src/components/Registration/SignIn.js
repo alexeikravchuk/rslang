@@ -13,6 +13,7 @@ import logo from '../../assets/logo.png';
 import Login from './Login'
 import { Link as RouterLink } from 'react-router-dom';
 
+
 function Copyright () {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -46,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
-
+export default function SignIn(props) {
+  
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [emailError, checkEmail] = useState(false);
@@ -55,13 +56,13 @@ export default function SignIn() {
   const classes = useStyles();
 
   function emailValid(value){
-    const emailCheck = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const check = emailCheck.test(value);
     return check;
   }
 
   function passwordValid(value){
-    const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\+\-_@$!%*?&#\.,;\:\[\]\{\}])[A-Za-z\d\+\-_@$!%*?&#\.,;\:\[\]\{\}]{8,}$/;
+    const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[+\-_@$!%*?&#.,;:[\]{}])[A-Za-z\d+\-_@$!%*?&#.,;:[\]{}]{8,}$/;
     const check = passwordCheck.test(value);
     return check;
 }
@@ -127,6 +128,7 @@ export default function SignIn() {
             email={emailError}
             password={passwordError}
             action='login'
+            store={props}
           >
             Sign In
           </Login>
