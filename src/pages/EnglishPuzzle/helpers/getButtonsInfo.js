@@ -1,5 +1,12 @@
 import React from 'react';
-import { ContactSupport, CheckCircle, Forward, InsertChart, History } from '@material-ui/icons';
+import {
+  ContactSupport,
+  CheckCircle,
+  Forward,
+  InsertChart,
+  History,
+  Replay,
+} from '@material-ui/icons';
 import { BUTTONS_NAME } from '../constants/constants';
 
 const buttonsInfo = [
@@ -8,6 +15,7 @@ const buttonsInfo = [
   { title: 'Continue', icon: <Forward /> },
   { title: 'Results', icon: <InsertChart /> },
   { title: 'Statistics', icon: <History /> },
+  { title: 'Try again', icon: <Replay /> },
 ];
 
 const getButtonsInfo = (buttonNames) => {
@@ -27,6 +35,9 @@ const getButtonsInfo = (buttonNames) => {
         }
         if (name === BUTTONS_NAME.STATISTICS) {
           return buttonsInfo[4];
+        }
+        if (name === BUTTONS_NAME.TRY_AGAIN) {
+          return buttonsInfo[5];
         }
         return null;
       })

@@ -443,12 +443,16 @@ class MainPage extends Component {
     }
   };
 
-  showStatisticsData = (level) => {
-    this.changeLevel({ target: { value: level.split('-')[0] } });
-    this.changePage({ target: { value: level.split('-')[1] } });
+  startLevelAgain = (level, page) => {
+    console.log(level, page);
+    if (level && page) {
+      return this.setState({ level: { current: level }, page: { current: page } });
+    }
+
+    return this.resetLevel();
   };
 
-  handleBtnClick = ({ currentTarget }) => {
+  handleBtnClick = ({ currentTarget }, level, page) => {
     const { currentSentence, puzzleResults, sentenceStatus } = this.state;
     console.log(currentTarget.innerText);
     if (currentTarget.innerText === BUTTONS_NAME.CHECK) {
@@ -465,11 +469,10 @@ class MainPage extends Component {
       return this.nextSentence();
     }
     if (currentTarget.innerText === BUTTONS_NAME.RESULTS) {
-      return this.setState({ isShowResults: true, isShowStatistics: false });
+      return this.setState({ isShowResults: true });
     }
-
-    if (currentTarget.innerText === BUTTONS_NAME.STATISTICS) {
-      return this.setState({ isShowStatistics: true });
+    if (currentTarget.innerText === BUTTONS_NAME.TRY_AGAIN) {
+      return this.startLevelAgain(level, page);
     }
 
     return this.skipSentence();
@@ -493,7 +496,6 @@ class MainPage extends Component {
       shownButtons,
       isCorrectOrder,
       isShowResults,
-      isShowStatistics,
     } = this.state;
     return (
       <div className='game--wrapper'>
@@ -503,8 +505,6 @@ class MainPage extends Component {
             results={results}
             statistics={statistics}
             painting={painting}
-            isShowStatistics={isShowStatistics}
-            showStatisticsData={this.showStatisticsData}
             onBtnClick={this.handleBtnClick}
           />
         ) : (

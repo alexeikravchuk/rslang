@@ -10,7 +10,18 @@
   background-color: #edf;
   border-radius: 5px;
   transition: 0.5s ease-in;
-  @media screen and (max-width: 440px) {
+  @media screen and (max-width: 594px) {
+    div:last-child {
+      .MuiButton-root {
+        margin: 4px;
+        padding: 6px 10px;
+      }
+      .MuiButton-label {
+        font-size: 12px;
+      }
+    }
+  }
+  @media screen and (max-width: 494px) {
     padding: 20px 10px 10px;
     max-width: 95%;
     div:last-child {
