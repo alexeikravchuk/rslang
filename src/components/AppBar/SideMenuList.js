@@ -19,9 +19,7 @@ class SideMenuList extends Component {
       <List>
         {pageLinks.map((item, index) => (
           <React.Fragment key={'link' + index}>
-            {index > 1 && pageLinks[index - 1].type !== item.type && (
-              <Divider />
-            )}
+            {index > 1 && pageLinks[index - 1].type !== item.type && <Divider />}
             <Link
               component={RouterLink}
               to={item.link}

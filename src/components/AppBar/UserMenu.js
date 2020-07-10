@@ -27,10 +27,7 @@ class UserMenu extends Component {
   };
 
   handleClose = (event) => {
-    if (
-      this.anchorRef.current &&
-      this.anchorRef.current.contains(event.target)
-    ) {
+    if (this.anchorRef.current && this.anchorRef.current.contains(event.target)) {
       return;
     }
     this.setState({ userMenuOpen: false });
@@ -57,23 +54,14 @@ class UserMenu extends Component {
             <Fade {...TransitionProps}>
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList
-                    autoFocusItem={Boolean(this.state.userMenuOpen)}
-                    id='menu-list-grow'>
-                    <MenuItem 
-                      onClick={this.handleClose}
-                      to="/account"
-                      component={RouterLink}  
-                    
-                    >My account</MenuItem>
+                  <MenuList autoFocusItem={Boolean(this.state.userMenuOpen)} id='menu-list-grow'>
+                    <MenuItem onClick={this.handleClose} to='/account' component={RouterLink}>
+                      My account
+                    </MenuItem>
                     <MenuItem onClick={this.handleClose}>Setting</MenuItem>
-                    <MenuItem 
-                      onClick={this.handleClose}
-                      to="/signin"
-                      component={RouterLink}
-                    >  
-                        {this.state.auth ? 'Login' : 'Logout'}
-                      </MenuItem>
+                    <MenuItem onClick={this.handleClose} to='/signin' component={RouterLink}>
+                      {this.state.auth ? 'Login' : 'Logout'}
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
