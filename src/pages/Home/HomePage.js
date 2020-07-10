@@ -28,7 +28,7 @@ export default function HomePage() {
     <div className={classes.homePage}>
       <Link 
           component={RouterLink} 
-          to="/choosegame">
+          to="/wordcards">
       <Button variant='contained' color='primary' size='large' onClick={ handlePLayClick }>
         Let's Play RsLang
       </Button>

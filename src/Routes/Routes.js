@@ -42,35 +42,3 @@ function Routes() {
 }
 
 export default Routes;
-
-
-    //
-    //   <Box
-    //     display="flex" 
-    //     flexDirection="row-reverse"
-    //   >
-    //     <ButtonGroup 
-    //       disableElevation 
-    //       variant="contained" 
-    //       color="primary"
-    //       >
-    //         <Button>
-    //           <Link 
-    //             to='./signin'
-    //             style={{ 
-    //               textDecoration: 'none', 
-    //               color: 'white'
-    //             }}
-    //           >Sign In</Link>
-    //         </Button>
-    //         <Button>
-    //           <Link 
-    //             to='./signup'
-    //             style={{ 
-    //               textDecoration: 'none', 
-    //               color: 'white'
-    //             }} 
-    //           >Sign Up</Link>
-    //           </Button>
-    //     </ButtonGroup>
-      // </Box>
