@@ -1,18 +1,24 @@
 import React from 'react';
-// import './Dictionary.css';
 import {URL} from './constants';
 import {getWords} from './getWords.js';
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Pagination from '@material-ui/lab/Pagination';
-import {ListItem, ListItemText} from '@material-ui/core';
+import {ListItem, ListItemText, withStyles} from '@material-ui/core';
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import './Dictionary.scss';
+
+const styles = {
+  listDictionary: {
+    overflow: 'auto',
+    maxHeight: '60vh',
+  },
+};
 
 class Dictionary extends React.Component {
-
   constructor(props) {
     super(props);
     this.audio = null;
@@ -57,14 +63,19 @@ class Dictionary extends React.Component {
   }
 
   getNextWords = (data) => {
-    let words;
-    let audios;
+    let words = [];
+    let audios = [];
     data.forEach(item => {
       audios.push(item.audio);
     });
     words = data.map((el, index) => {
       return (
-        <ListItem key={index}>
+        <ListItem key={index}
+                  button
+                  onClick={() => {
+                    this.playAudioWords(`${URL}${audios[index]}`);
+                  }}
+        >
           <ListItemText
             primary={`${index + 1}. ${el.word} - ${el.transcription} - ${el.wordTranslate}`}
           />
@@ -97,14 +108,17 @@ class Dictionary extends React.Component {
   };
 
   render() {
+    const {classes} = this.props;
     return (
-      <Container>
+      <Container className={'dictionaryRoot'}>
         <Typography variant="h4" component="h2">
           Dictionary
         </Typography>
         <p className="select-category"><i>Category: </i></p>
         <Pagination count={6} size="medium" onChange={this.handleCategoryChange.bind(this)}/>
-        <List dense={true}> {this.state.content}</List>
+        <List className={classes.listDictionary}
+              dense={true}
+        > {this.state.content}</List>
         {this.state.pageLoaded && <Pagination count={30}
                                               size="medium"
                                               onChange={this.handleCountChange.bind(this)}/>}
@@ -113,4 +127,5 @@ class Dictionary extends React.Component {
   }
 }
 
-export default Dictionary;
+export default withStyles(styles)(Dictionary);
+
