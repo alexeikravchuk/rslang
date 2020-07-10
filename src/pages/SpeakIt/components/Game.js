@@ -33,7 +33,6 @@ function createStyles() {
     backdrop: {
       position: 'relative',
       minHeight: '100%',
-      overflowX: 'hidden',
       width: '100%',
       background: `url(${backdropBackgroundImg})`,
       backgroundSize: 'cover',

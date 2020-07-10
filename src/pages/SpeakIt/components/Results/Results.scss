@@ -49,6 +49,11 @@ $mobile-big-width: 414px;
       top: 5px;
     }
   }
+
+  .errors, .succes {
+    margin-bottom: 10px;
+  }
+
   .errors-num {
     background-color: #da5b4c;
     color: #fff;

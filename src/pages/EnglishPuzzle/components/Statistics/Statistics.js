@@ -28,11 +28,7 @@ const Statistics = ({ statistics, showData }) => {
 
 Statistics.propTypes = {
   statistics: PropTypes.object.isRequired,
-  showData: PropTypes.func,
-};
-
-Statistics.defaultProps = {
-  showData: () => console.log('click'),
+  showData: PropTypes.func.isRequired,
 };
 
 export { Statistics };

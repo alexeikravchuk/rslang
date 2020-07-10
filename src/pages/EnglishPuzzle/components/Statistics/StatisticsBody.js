@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 export const StatisticsBody = ({ statistics, onClick }) => {
   const { optional } = statistics;
-  const keys = Object.keys(optional);
+  const keys = Object.keys(optional).sort(
+    (a, b) => +a.split('-')[0] * 100 + +a.split('-')[1] - +b.split('-')[0] * 100 + +b.split('-')[1]
+  );
 
   const countLearnedWords = (results) => {
     return results.reduce((acc, result) => (result ? acc + 1 : acc), 0);
@@ -19,7 +21,7 @@ export const StatisticsBody = ({ statistics, onClick }) => {
           <td>{optional[key].results.length - countLearnedWords(optional[key].results)}</td>
           <td>
             <button className='result-link' onClick={() => onClick(key)}>
-              Try again
+              Show
             </button>
           </td>
         </tr>

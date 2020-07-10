@@ -26,7 +26,6 @@ const getDefaultState = () => {
     draggablePuzzle: null,
     painting: null,
     isShowResults: false,
-    isShowStatistics: false,
   };
 };
 
