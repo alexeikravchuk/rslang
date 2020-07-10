@@ -1,20 +1,21 @@
 import React from 'react';
 import './App.scss';
-// import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-// import PrimaryAppBar from './components/AppBar/AppBar';
-// import SignIn from './components/Registration/SignIn';
-// import SignUp from './components/Registration/SignUp';
-import WordCards from './components/WordCards/WordCards';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import PrimaryAppBar from './components/AppBar/AppBar';
+import SignIn from './components/Registration/SignIn';
+import SignUp from './components/Registration/SignUp';
+
 function App() {
   return (
-    <WordCards />
-    // <Router>
-    //   <Switch>
-    //     <Route path='/signin' component={SignIn}/>
-    //     <Route path='/signup' component={SignUp}/>
-    //     <Route path='/' component={PrimaryAppBar}/>
-    //   </Switch>
-    // </Router>
+    <Router>
+      <Switch>
+        <Route path='/signin' component={SignIn}/>
+        <Route path='/signup' component={SignUp}/>
+        <Route path='/'>
+         <PrimaryAppBar/>
+        </Route> 
+      </Switch>
+    </Router>
   );
 }
 

@@ -3,56 +3,50 @@
     padding: 0;
 }
 
-html {
-    position: relative;
-    scroll-behavior: smooth;
-}
-
-body {
+.learning-card-wrapper {
     width: 100vw;
     height: 100vh;
     background: #ddfaff;
-    overflow: hidden;
-}
-
-.wrapper {
     margin: 0 auto;
+    padding-top: 100px;
     overflow: hidden;
 }
 
-.word-cards {
+.learning-word-cards {
     display: flex;
+    /* justify-content: center; */
     width: 700px;
     height: 400px;
     margin: 50px auto 10px auto;
 }
 
-.card-prev {
+.learning-card-prev {
     width: 50px;
 }
 
-.card-prev p {
+.learning-card-prev p {
     font-size: 50px;
     margin: 160px 4px;
+    cursor: pointer;
 }
 
-.card {
+.learning-card {
     width: 600px;
     height: 420px;
     background-color: #4b909b;
     border-radius: .5rem;
 }
 
-.card-next {
+.learning-card-next {
     width: 50px;
 }
 
-.card-next p {
+.learning-card-next p {
     font-size: 50px;
     margin: 160px 4px;
 }
 
-.card-header {
+.learning-card-header {
     display: flex;
     height: 50px;
     padding: 1rem;
@@ -79,17 +73,17 @@ body {
     margin: 1rem .125rem;
 }
 
-.description {
+.learning-word-description {
     color: white;
     margin: 0 1rem;
 }
 
-.selectPage {
+.select-learning-page {
     color: white;
     margin: 10px .5rem;
 }
 
-.selectCategory {
+.select-learning-category {
     color: white;
     margin: 10px .5rem;
 }
@@ -114,52 +108,51 @@ body {
     text-decoration: underline;
 }
 
-.card-main {
+.learning-card-main {
     height: 230px;
 }
 
-.word-wrapper {
+.learning-word-wrapper {
     display: flex;
     justify-content: space-between;
     padding: 0 50px;
 }
 
-.word-translation {
+.learning-word-translation {
     font-size: 30px;
     padding-bottom: 10px;
 }
 
-.transcription {
+.learning-word-transcription {
     padding-bottom: 10px;
 }
 
-.input-word {
+.learning-word-input {
     align-items: center;
 }
 
-.input {
+.word-answer-input {
     height: 50px;
     font-size: 20px;
-    /* color: transparent; */
     padding: 0 .5em;
 }
 
-.word-image {
+.learning-word-image {
     width: 200px;
     height: 135px;
     position: relative;
 }
 
-.word-examples {
+.learning-word-examples {
     padding: 1.5rem 1rem 1rem 1rem;
 }
 
-.word-examples div {
+.learning-word-examples div {
     font-size: 14px;
     padding: 4px 0;
 }
 
-.meaning, .example{
+.learning-word-meaning, .learning-word-example{
     display: flex;
     flex-direction: row;
 }
@@ -168,21 +161,14 @@ body {
     cursor: pointer;
 }
 
-/* .meaning-translate {
-    visibility: hidden;
-}
-
-.example-translate {
-    visibility: hidden;
-} */
-
 .button-reactions {
-    display: flex;
     margin-top: 50px;
+    display: flex;
+    justify-content: center;
 }
 
-.button-check {
-    width: 120px;
+.learning-word-button-check {
+    width: 130px;
     height: 40px;
     color: white;
     text-align: center;
@@ -193,7 +179,7 @@ body {
     margin: 0 10px;
 }
 
-.button-show {
+.learning-word-button-show {
     width: 135px;
     height: 40px;
     color: white;
@@ -202,7 +188,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     padding-top: 10px;
-    margin: 0 10px 0 40%;
+    margin: 0 10px;
 }
 
 .spell {
@@ -216,13 +202,15 @@ body {
 
 .prev:hover {
     color: white;
+    cursor: pointer;
 }
 
 .next:hover {
     color: white;
+    cursor: pointer;
 }
 
-.notification {
+.learning-word-notification {
     width: 568px;
     height: 20px;
     text-align: center;
@@ -232,7 +220,7 @@ body {
     padding: 1rem;
 }
 
-.stage {
+.learning-word-stage {
     display: flex;
     margin: 20px 29%;
 }
@@ -264,12 +252,4 @@ body {
     width: 1.5rem;
     text-align: end;
     line-height: .8;
-}
-
-.prev {
-    cursor: pointer;
-}
-
-.next {
-    cursor: pointer;
 }
