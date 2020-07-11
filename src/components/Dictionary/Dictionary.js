@@ -1,120 +1,172 @@
 import React from 'react';
-import './Dictionary.css';
-import { URL } from './constants';
-import { getWords } from './getWords.js'
+import {URL} from './constants';
+import {getWords} from './getWords.js';
+import Pagination from '@material-ui/lab/Pagination';
+import {RecordVoiceOver} from '@material-ui/icons';
+import {
+  ListItemText,
+  withStyles,
+  ListItem,
+  Grid,
+  List,
+  Typography,
+  Divider,
+  Tooltip,
+  ListItemIcon,
+} from '@material-ui/core';
+import './Dictionary.scss';
+
+const styles = theme => ({
+  titleDictionary: {
+    color: 'primary',
+  },
+  listDictionary: {
+    overflow: 'auto',
+    maxHeight: '50vh',
+    maxWidth: '70%',
+    [`${theme.breakpoints.down('sm')} and (orientation: landscape)`]: {
+      maxWidth: '100%',
+      maxHeight: '30vh',
+    },
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: '100%',
+    },
+  },
+  tooltip: {
+    backgroundColor: 'rgba(1,1,1,1)',
+    color: 'rgba(0, 0, 0, 0.87)',
+  },
+});
 
 class Dictionary extends React.Component {
-  
-  constructor(props){
+  constructor(props) {
     super(props);
     this.audio = null;
     this.state = {
-      content: 'Please select a category',
-      category: 1,
+      content: 'Page NOT LOADED',
+      category: 0,
       count: 0,
-    }
+      pageLoaded: true,
+    };
+  }
+
+  handleCategoryChange(event, value) {
+    this.setState(() => (
+      {category: value - 1, count: 0}
+    ), () => this.handleCategory(this.state.category));
+  }
+
+  handleCountChange(event, value) {
+    this.setState(() => ({count: value - 1}), () => this.handleMoreWords());
   }
 
   componentDidMount() {
-    document.title = `Results page ${this.state.count}`;
-  }
-  componentDidUpdate() {
-    document.title = `Results page ${this.state.count}`;
+    this.handleCategory(this.state.category);
   }
 
-  playAudioWords(audioSrc) {
-    if (!this.audio) {
-      this.audio = new Audio(audioSrc);
-      this.audio.play();
-      this.audio.addEventListener('ended', () => { this.audio = null; });
-      console.log(audioSrc);
-    }
-  }
-
-  getNewWords = (data, category) => {
-    let words = []
-    let transcriptions = []
-    let translations = []
-    let audios = []
-    data.forEach(item => {
-      words.push(item.word)
-      transcriptions.push(item.transcription)
-      translations.push(item.wordTranslate)
-      audios.push(item.audio)
-    })
-    words = words.map((item, index) => 
-    <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span>
-    <button onClick={()=>{this.playAudioWords(`${URL}${audios[index]}`)}}>Spell IT</button></div>)
-    this.setState({
-      content: words,
-      category: category,
-      count: 1
-    });
-  };
-
-  getNextWords = (data, counter) => {
-    // const URL = "https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/";
-    if(this.state.count < 1){
-      this.setState({
-        count: 0
-      });
-    }
-    else if (this.state.count < 30) {
-      let words = []
-      let transcriptions = []
-      let translations = []
-      let audios = []
-      data.forEach(item => {
-        words.push(item.word)
-        transcriptions.push(item.transcription)
-        translations.push(item.wordTranslate)
-        audios.push(item.audio)
+  playAudioWords(path) {
+    let audio = new Audio(path);
+    let audioPromise = audio.play();
+    if (audioPromise !== undefined) {
+      audioPromise.then(_ => {
+        audio.pause();
       })
-      words = words.map((item, index) => 
-      <div><span> {item} </span><span className="transcription"> {transcriptions[index]} </span><span> {translations[index]} </span>
-      <button onClick={()=>{this.playAudioWords(`${URL}${audios[index]}`)}}>Spell IT</button></div>)
-      this.setState({
-        content: words,
-        count: counter + 1
-      });
+        .catch(error => {
+          console.log(error);
+        });
     }
-    else {
-      this.setState({
-        count: 30
-      });
-    }
+  }
+
+  getNextWords = (data) => {
+    let words = [];
+    let audios = [];
+    data.forEach(item => {
+      audios.push(item.audio);
+    });
+    words = data.map((el, index) => {
+      return (
+        <ListItem key={index}
+                  button
+                  alignItems={'center'}
+                  onClick={() => {
+                    this.playAudioWords(`${URL}${audios[index]}`);
+                  }}
+        >
+          <ListItemIcon>
+            <RecordVoiceOver/>
+          </ListItemIcon>
+          <Tooltip title={<Typography
+            variant='h6'
+            align={'left'}
+            color={'white'}>{el.transcription}</Typography>}
+                   placement='top'>
+            <ListItemText
+              primary={<Typography variant='h6' align={'left'} color={'primary'}>{el.word}</Typography>}
+            />
+          </Tooltip>
+          <ListItemText
+            primary={<Typography variant='h6' align={'right'} color={'textPrimary'}>{el.wordTranslate}</Typography>}
+          />
+        </ListItem>
+      );
+    });
+    this.setState({content: words});
   };
 
   handleCategory = (categoryNumber) => {
-    getWords(0, categoryNumber).then((data)=>{this.getNewWords(data, categoryNumber)})
-  }
+    getWords(0, categoryNumber).then((data) => {
+      this.getNextWords(data, categoryNumber);
+    });
+  };
 
   handleMoreWords = () => {
-    getWords(this.state.count, this.state.category).then((data)=>{this.getNextWords(data, this.state.count)})
-  }
- 
-  render(){
+    this.setState({pageLoaded: true});
+    getWords(this.state.count, this.state.category).then((data) => {
+      this.setState({pageLoaded: true});
+      this.getNextWords(data, this.state.count);
+    });
+  };
+
+  render() {
+    const {classes} = this.props;
     return (
-      <div className ="wrapper">
-        <h2>Word Categories</h2>
-        <p className="select-category"><i>Select a category</i></p>
-        <div className="category">
-          <a onClick={()=>this.handleCategory(0)} href="#anchor">category1</a>
-          <a onClick={()=>this.handleCategory(1)} href="#anchor">category2</a>
-          <a onClick={()=>this.handleCategory(2)} href="#anchor">category3</a>
-          <a onClick={()=>this.handleCategory(3)} href="#anchor">category4</a>
-          <a onClick={()=>this.handleCategory(4)} href="#anchor">category5</a>
-          <a onClick={()=>this.handleCategory(5)} href="#anchor">category6</a>
-        </div>
-        <h2 id="anchor">Essential english words</h2>
-        <div className="dictionaryPage">{this.state.content}</div>
-        <button className="show">
-          <a onClick={()=>this.handleMoreWords()} className="more" href="#anchor">Show more words</a>
-        </button>
-        <p className="page">Results page {this.state.count}</p>
-      </div>
-    )
+      <Grid container
+            className={'dictionaryRoot'}
+            align='center'
+            justify='center'
+            alignItems='center'>
+        <Grid item xs={12}>
+          <Typography variant='h4'
+                      component='h2'
+                      align={'center'}
+                      color='primary'>
+            Dictionary
+          </Typography>
+        </Grid>
+        <Grid item>
+          <p><i>Category: </i></p>
+          <Pagination count={6}
+                      size='medium'
+                      color='primary'
+                      hidePrevButton
+                      hideNextButton
+                      onChange={this.handleCategoryChange.bind(this)}/>
+        </Grid>
+        <Grid item xs={12}>
+          <Divider/>
+          <List className={classes.listDictionary}
+                dense={true}
+          >{this.state.content}</List>
+          <Divider/>
+        </Grid>
+        <Grid item align='center'>
+          {this.state.pageLoaded && <Pagination count={30}
+                                                size='medium'
+                                                onChange={this.handleCountChange.bind(this)}/>}
+        </Grid>
+      </Grid>
+    );
   }
 }
-  
-export default Dictionary;
+
+export default withStyles(styles)(Dictionary);
