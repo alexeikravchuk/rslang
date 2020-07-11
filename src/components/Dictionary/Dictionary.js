@@ -1,30 +1,49 @@
 import React from 'react';
 import {URL} from './constants';
 import {getWords} from './getWords.js';
-import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
-import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
-import {ListItem, ListItemText, withStyles} from '@material-ui/core';
-import List from '@material-ui/core/List';
-import IconButton from '@material-ui/core/IconButton';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import {RecordVoiceOver} from '@material-ui/icons';
+import {
+  ListItemText,
+  withStyles,
+  ListItem,
+  Grid,
+  List,
+  Typography,
+  Divider,
+  Tooltip,
+} from '@material-ui/core';
 import './Dictionary.scss';
-import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 
-const styles = {
+const styles = theme => ({
+  titleDictionary: {
+    color: 'primary',
+  },
   listDictionary: {
     overflow: 'auto',
     maxHeight: '50vh',
+    maxWidth: '70%',
+    [`${theme.breakpoints.down('sm')} and (orientation: landscape)`]: {
+      maxWidth: '100%',
+      maxHeight: '30vh',
+    },
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: '100%',
+    },
   },
-};
+  tooltip: {
+    backgroundColor: 'rgba(1,1,1,1)',
+    color: 'rgba(0, 0, 0, 0.87)',
+  },
+});
 
 class Dictionary extends React.Component {
   constructor(props) {
     super(props);
     this.audio = null;
     this.state = {
-      content: 'Please select a category',
+      content: 'Page NOT LOADED',
       category: 0,
       count: 0,
       pageLoaded: true,
@@ -42,12 +61,7 @@ class Dictionary extends React.Component {
   }
 
   componentDidMount() {
-    document.title = `Results page ${this.state.count}`;
     this.handleCategory(this.state.category);
-  }
-
-  componentDidUpdate() {
-    document.title = `Results page ${this.state.count}`;
   }
 
   playAudioWords(path) {
@@ -73,23 +87,26 @@ class Dictionary extends React.Component {
       return (
         <ListItem key={index}
                   button
+                  alignItems={'center'}
                   onClick={() => {
                     this.playAudioWords(`${URL}${audios[index]}`);
                   }}
         >
+          <ListItemIcon>
+            <RecordVoiceOver/>
+          </ListItemIcon>
+          <Tooltip title={<Typography
+            variant='h6'
+            align={'left'}
+            color={'white'}>{el.transcription}</Typography>}
+                   placement='top'>
+            <ListItemText
+              primary={<Typography variant='h6' align={'left'} color={'primary'}>{el.word}</Typography>}
+            />
+          </Tooltip>
           <ListItemText
-            primary={`${index + 1}. ${el.word} - ${el.transcription} - ${el.wordTranslate}`}
+            primary={<Typography variant='h6' align={'right'} color={'textPrimary'}>{el.wordTranslate}</Typography>}
           />
-          <Hidden xsDown>
-            <ListItemSecondaryAction>
-              <IconButton edge="end"
-                          onClick={() => {
-                            this.playAudioWords(`${URL}${audios[index]}`);
-                          }}>
-                <RecordVoiceOverIcon/>
-              </IconButton>
-            </ListItemSecondaryAction>
-          </Hidden>
         </ListItem>
       );
     });
@@ -115,34 +132,41 @@ class Dictionary extends React.Component {
     return (
       <Grid container
             className={'dictionaryRoot'}
-            spacing={1}
-            align="center"
-            justify="center"
-            alignItems="center">
+            align='center'
+            justify='center'
+            alignItems='center'>
         <Grid item xs={12}>
-          <Typography variant="h4" component="h2" align={'center'}>
+          <Typography variant='h4'
+                      component='h2'
+                      align={'center'}
+                      color='primary'>
             Dictionary
           </Typography>
         </Grid>
         <Grid item>
           <p><i>Category: </i></p>
-          <Pagination count={6} size="medium" onChange={this.handleCategoryChange.bind(this)}/>;
+          <Pagination count={6}
+                      size='medium'
+                      color='primary'
+                      hidePrevButton
+                      hideNextButton
+                      onChange={this.handleCategoryChange.bind(this)}/>
         </Grid>
         <Grid item xs={12}>
+          <Divider/>
           <List className={classes.listDictionary}
                 dense={true}
-          > {this.state.content}</List>
+          >{this.state.content}</List>
+          <Divider/>
         </Grid>
-        <Grid item align="center">
+        <Grid item align='center'>
           {this.state.pageLoaded && <Pagination count={30}
-                                                size="medium"
+                                                size='medium'
                                                 onChange={this.handleCountChange.bind(this)}/>}
         </Grid>
       </Grid>
-    )
-      ;
+    );
   }
 }
 
 export default withStyles(styles)(Dictionary);
-
