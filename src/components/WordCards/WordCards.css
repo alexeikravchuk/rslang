@@ -14,10 +14,18 @@
 
 .learning-word-cards {
   display: flex;
-  /* justify-content: center; */
   width: 700px;
   height: 400px;
   margin: 50px auto 10px auto;
+}
+
+
+.word-error{
+  color: red;
+}
+
+.word-correct{
+  color: green;
 }
 
 .learning-card-prev {
@@ -49,7 +57,7 @@
 .learning-card-header {
   display: flex;
   height: 50px;
-  padding: 1rem;
+  margin: 1rem;
   justify-content: space-between;
 }
 
@@ -59,18 +67,6 @@
   background: transparent;
   border-radius: 0.5rem;
   display: flex;
-}
-
-.dots {
-  display: flex;
-}
-
-.dot {
-  background-color: white;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin: 1rem 0.125rem;
 }
 
 .learning-word-description {
@@ -129,6 +125,14 @@
 
 .learning-word-input {
   align-items: center;
+}
+
+.learning-check-input {
+  display: flex;
+}
+
+.check-input {
+  margin: 12px 15px;
 }
 
 .word-answer-input {
