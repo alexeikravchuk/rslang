@@ -12,9 +12,9 @@ import {
   Typography,
   Divider,
   Tooltip,
+  ListItemIcon,
 } from '@material-ui/core';
 import './Dictionary.scss';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 const styles = theme => ({
   titleDictionary: {
