@@ -31,7 +31,6 @@ const SideBar = ({ classes, onClick, open }) => {
 
 function createStyles(theme) {
   const drawerWidth = 210;
-  const isMobile = window.innerWidth < 600 ? true : false;
   return {
     chevron: {
       display: 'flex',
@@ -41,7 +40,7 @@ function createStyles(theme) {
       ...theme.mixins.toolbar,
     },
     drawer: {
-      position: isMobile ? 'fixed' : '',
+      position: 'fixed',
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: 'nowrap',
@@ -62,7 +61,6 @@ function createStyles(theme) {
       }),
       overflowX: 'hidden',
       width: 0,
-      left: '-1px',
       zIndex: 1000,
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(7) + 1,
