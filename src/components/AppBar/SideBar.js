@@ -1,38 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { Drawer, IconButton, Divider, withStyles } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import SideMenuList from './SideMenuList';
 
-class SideBar extends Component {
-  render() {
-    return (
-      <Drawer
-        variant='permanent'
-        className={clsx(this.props.classes.drawer, {
-          [this.props.classes.drawerOpen]: this.props.open,
-          [this.props.classes.drawerClose]: !this.props.open,
-        })}
-        classes={{
-          paper: clsx({
-            [this.props.classes.drawerOpen]: this.props.open,
-            [this.props.classes.drawerClose]: !this.props.open,
-          }),
-        }}>
-        <div className={this.props.classes.chevron}>
-          <IconButton onClick={() => this.props.onShewronClick()}>
-            {this.props.open ? <ChevronLeft /> : <ChevronRight />}
-          </IconButton>
-        </div>
-        <Divider />
-        <SideMenuList />
-      </Drawer>
-    );
-  }
-}
+const SideBar = ({ classes, onClick, open }) => {
+  const { drawer, drawerOpen, drawerClose, chevron } = classes;
+
+  return (
+    <Drawer
+      variant='permanent'
+      className={clsx(drawer, {
+        [drawerOpen]: open,
+        [drawerClose]: !open,
+      })}
+      classes={{
+        paper: clsx({
+          [drawerOpen]: open,
+          [drawerClose]: !open,
+        }),
+      }}>
+      <div className={chevron}>
+        <IconButton onClick={onClick}>{open ? <ChevronLeft /> : <ChevronRight />}</IconButton>
+      </div>
+      <Divider />
+      <SideMenuList onClick={onClick} />
+    </Drawer>
+  );
+};
 
 function createStyles(theme) {
   const drawerWidth = 210;
+  const isMobile = window.innerWidth < 600 ? true : false;
   return {
     chevron: {
       display: 'flex',
@@ -42,12 +41,14 @@ function createStyles(theme) {
       ...theme.mixins.toolbar,
     },
     drawer: {
+      position: isMobile ? 'fixed' : '',
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: 'nowrap',
     },
     drawerOpen: {
       width: drawerWidth,
+      zIndex: 1000,
       backgroundColor: 'rgba(243,245,255,1)',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -60,7 +61,9 @@ function createStyles(theme) {
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
+      width: 0,
+      left: '-1px',
+      zIndex: 1000,
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(7) + 1,
       },
