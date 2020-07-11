@@ -75,7 +75,10 @@ class UserMenu extends Component {
 function createStyles(theme) {
   return {
     accountBtn: {
-      marginRight: theme.spacing(2),
+      marginRight: 0,
+      [theme.breakpoints.up('sm')]: {
+        marginRight: theme.spacing(2),
+      },
     },
   };
 }

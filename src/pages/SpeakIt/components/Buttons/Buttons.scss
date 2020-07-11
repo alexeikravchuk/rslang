@@ -49,6 +49,15 @@ $mobile-small-width: 320px;
       max-width: 40%;
     }
 
+    @media screen and (max-width: $mobile-big-width) {
+      padding: 10px 5px;
+      white-space: pre-line;
+      margin: 0px 5px 20px 5px;
+      min-width: 50%;
+      &.voice {
+        width: 30vw;
+      }
+    }
     @media (max-width: $tablet-width) {
       padding: 10px 5px;
       white-space: pre-line;
@@ -58,19 +67,12 @@ $mobile-small-width: 320px;
         width: 30vw;
       }
     }
-
-    @media (max-width: $mobile-big-width) {
-      padding: 10px 5px;
-      white-space: pre-line;
-      margin: 0px 5px 20px 5px;
-      min-width: 50%;
-      &.voice {
-        width: 30vw;
-      }
-    }
-    @media (max-width: $mobile-small-width) {
+    @media screen and (max-width: $mobile-big-width) {
       min-width: 80%;
       margin-bottom: 10px;
+      &-res {
+        min-width: 80%;
+      }
     }
   }
 }

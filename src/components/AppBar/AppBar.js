@@ -33,6 +33,7 @@ class PrimaryAppBar extends Component {
   };
 
   handleDrawerClose = () => {
+    document.body.style.overflow = 'auto';
     this.setState({ drawerOpen: false });
   };
 
@@ -62,7 +63,7 @@ class PrimaryAppBar extends Component {
               </AppBar>
             </Grid>
             <Grid item xs={12}>
-              <Grid container>
+              <Grid container wrap='nowrap'>
                 <Grid item>
                   <SideBar open={this.state.drawerOpen} onClick={this.handleDrawerClose} />
                 </Grid>
@@ -105,8 +106,14 @@ function createStyles(theme) {
       flexFlow: 'column',
     },
     mainContainer: {
+      position: 'relative',
       right: 0,
       height: `calc(100vh - ${toolbarHeight})`,
+      maxWidth: `100vw`,
+      [theme.breakpoints.up('sm')]: {
+        maxWidth: `calc(100% - ${theme.spacing(7) + 1}px)`,
+        marginLeft: theme.spacing(7) + 1,
+      },
     },
     appBar: {
       height: `${toolbarHeight}`,
@@ -125,8 +132,11 @@ function createStyles(theme) {
       transition: '0.3s ease-in',
     },
     menuButton: {
-      marginLeft: theme.spacing(2),
+      marginLeft: theme.spacing(0),
       color: '#005',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(2),
+      },
     },
     appBarShift: {
       marginLeft: drawerWidth,
