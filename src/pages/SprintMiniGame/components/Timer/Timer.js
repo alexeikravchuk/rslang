@@ -32,14 +32,15 @@ function Timer(props) {
   React.useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + fullProgress / roundDuration));
-      if (progress >= 10) {
-        props.isTimerFinished()
-      }
     }, 1000);
     return () => {
       clearInterval(timer);
     };
-  }, [progress, props]);
+  }, [progress]);
+
+  if (progress >= 100) {
+    props.isTimerFinished()
+  }
 
   return (
     <div className={classes.timer}>
