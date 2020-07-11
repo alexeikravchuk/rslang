@@ -21,8 +21,8 @@ import {
   CHANGE_ROUND,
   TIMER_FINISHED,
   CLOSE_WINDOW,
-  ADD_LEARNED_WORDS,
-  ADD_WRONG_WORDS,
+  LEARNED_WORDS,
+  WRONG_WORDS,
  } from '../actions';
 
 
@@ -93,10 +93,10 @@ const sprintReducer = ( state = defaultState, action) => {
         xpLevelStepper: (state.xpLevelStepper < XP_STEPPER_NUMBER && action.answer) ? state.xpLevelStepper + 1 : INITIAL_XP_STEPPER_VALUE,
       };
     }
-    case ADD_LEARNED_WORDS: {
+    case LEARNED_WORDS: {
       return {...state, learnedWords: state.learnedWords.add(action.payload)};
     }
-    case ADD_WRONG_WORDS: {
+    case WRONG_WORDS: {
       return {
         ...state,
         wrongWords: state.wrongWords.add(action.payload),

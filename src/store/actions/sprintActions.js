@@ -26,8 +26,8 @@ export const END_GAME = 'END_GAME';
 export const CHANGE_ROUND = 'CHANGE_ROUND';
 export const TIMER_FINISHED = 'TIMER_FINISHED';
 export const CLOSE_WINDOW = 'CLOSE_WINDOW';
-export const ADD_LEARNED_WORDS = 'LEARNED_WORDS';
-export const ADD_WRONG_WORDS = 'CLOSE_WINDOW';
+export const LEARNED_WORDS = 'LEARNED_WORDS';
+export const WRONG_WORDS = 'WRONG_WORDS';
 
 
 export const hideWelcomeDialog = () => {
@@ -168,14 +168,14 @@ export const loadGame = (userWords, difficulty, round, id, token) => {
 
 export const addLearnedWord = (wordIndex) => {
   return ({
-    type: ADD_LEARNED_WORDS,
+    type: LEARNED_WORDS,
     payload: wordIndex,
   })
 }
 
 export const addWrongWord = (wordIndex) => {
   return ({
-    type: ADD_WRONG_WORDS,
+    type: WRONG_WORDS,
     payload: wordIndex,
   })
 }
