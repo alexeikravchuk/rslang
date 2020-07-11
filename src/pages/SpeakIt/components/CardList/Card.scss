@@ -2,7 +2,7 @@ $tablet-width: 768px;
 $mobile-big-width: 414px;
 $mobile-small-width: 320px;
 
-.card {
+.main-page .card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -37,12 +37,14 @@ $mobile-small-width: 320px;
   }
   .word,
   .translation {
+    display: block;
     color: #0e1e25;
     font-size: 22px;
     padding: 0px 5px;
     margin: 0;
   }
   .transcription {
+    display: block;
     color: rgba(14, 30, 37, 0.7);
     font-size: 18px;
     padding: 0px 5px;

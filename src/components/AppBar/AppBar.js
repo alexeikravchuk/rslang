@@ -10,6 +10,8 @@ import Logo from './Logo';
 import SideBar from './SideBar';
 
 import Dictionary from '../Dictionary/Dictionary';
+import WordCards from '../WordCards/WordCards';
+
 import {
   HomePage,
   AccountInfo,
@@ -74,6 +76,7 @@ class PrimaryAppBar extends Component {
                 <Grid item xs className={classes.mainContainer}>
                   <Switch>
                     <Route path='/home' component={HomePage} />
+                    <Route path='/wordcards' component={WordCards} />
                     <Route path='/about' component={AboutTeamPage} />
                     <Route path='/savannah' component={Savannah} />
                     <Route path='/dictionary' component={Dictionary} />

@@ -4,12 +4,13 @@ import {
   Grid,
   Typography,
   Container,
-  Paper,
   Link,
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
+  Card,
+  CardMedia,
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,14 +23,9 @@ import EqualizerOutlinedIcon from '@material-ui/icons/EqualizerOutlined';
 
 const useStyles = makeStyles({
   container: {
-    width: '100%',
-    height: '100%',
-    backgroundImage: "url(" + Background + ")",
+    backgroundImage: 'url(' + Background +')',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-  },
-  image: {
-    maxWidth: '400px',
   },
   green: {
     color: '#73ff77',
@@ -54,10 +50,14 @@ const useStyles = makeStyles({
     border: '2px solid #73ff77',
     padding: '5px',
   },
-  paper: {
-    width: 'min-content',
-    margin: '0 auto',
+  root: {
+    minWidth: '320px',
+    maxWidth: '450px',
   },
+  media: {
+    height: '0',
+    paddingTop: '56.25%',
+  }
 });
 
 export const PromoPage = () => {
@@ -70,12 +70,13 @@ export const PromoPage = () => {
     >
       <Grid
         container
-        justify="space-around"
-        alignItems="center"
-        spacing={2}
+        direction='row'
+        justify='space-around'
+        alignItems='center'
+        spacing={4}
       >
         <Grid
-          item lg={4} md='auto' sm='auto' xs='auto'
+          item lg={5}
         >
           <div className={classes.englishEasy}>
             <Typography
@@ -100,7 +101,7 @@ export const PromoPage = () => {
             </p>
               <Link
                 component={RouterLink}
-                to="/choosegame"
+                to='/home'
                 className={classes.playNowLink}
               >
                 Play Now
@@ -109,22 +110,22 @@ export const PromoPage = () => {
           </div>
         </Grid>
         <Grid
-          item lg={5} md='auto' sm='auto' xs='auto'
+          item lg={5}
         >
-          <Paper
-            elevation={2}
-            className={classes.paper}
+          <Card
+            className={classes.root}
           >
-            <img
-              src={firstImage}
-              alt='first'
-              className={classes.image}
-            />
-          </Paper>
+            <CardMedia
+              className={classes.media}
+              image={firstImage}
+              style={{backgroundSize: 'contain'}}
+            >
+            </CardMedia>
+          </Card>
         </Grid>
 
         <Grid
-          item lg={5} md='auto' sm='auto' xs='auto'
+          item lg={5}
         >
           <Typography
             color='secondary'
@@ -136,7 +137,7 @@ export const PromoPage = () => {
                     <VideogameAssetOutlinedIcon className={classes.green} fontSize='large' />
                   </Avatar>
                 </ListItemIcon>
-                <ListItemText primary='GAMES' secondary='Play different games to show your skill'/>
+                <ListItemText primary='GAMES' secondary='Play different games to show your skill' />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
@@ -158,18 +159,18 @@ export const PromoPage = () => {
           </Typography>
         </Grid>
         <Grid
-          item lg={5} md='auto' sm='auto' xs='auto'
+          item lg={5}
         >
-          <Paper
-            elevation={3}
-            className={classes.paper}
+          <Card
+            className={classes.root}
           >
-            <img
-              src={secondImage}
-              alt='second'
-              className={classes.image}
-            />
-          </Paper>
+            <CardMedia
+              className={classes.media}
+              image={secondImage}
+              style={{backgroundSize: 'contain'}}
+            >
+            </CardMedia>
+          </Card>
         </Grid>
       </Grid>
     </Container>

@@ -104,7 +104,7 @@ export default function SignUp() {
                 id='firstName'
                 label='First Name'
                 autoFocus
-                onInput={e => setFirstName(e.target.value)}
+                onInput={(e) => setFirstName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -112,11 +112,11 @@ export default function SignUp() {
                 variant='outlined'
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onInput={e => setLastName(e.target.value)}
+                id='lastName'
+                label='Last Name'
+                name='lastName'
+                autoComplete='lname'
+                onInput={(e) => setLastName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -158,16 +158,16 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <Box component='span' display='block'>
-                Use 8 or more english characters with a mix of letters (one
-                upper and one lower case), numbers and symbols
+                Use 8 or more english characters with a mix of letters (one upper and one lower
+                case), numbers and symbols
               </Box>
             </Grid>
           </Grid>
-          <Login 
-            firstNameInput = {firstNameInput}
-            lastNameInput = {lastNameInput}
-            emailInput = {emailInput}
-            passwordInput = {passwordInput}
+          <Login
+            firstNameInput={firstNameInput}
+            lastNameInput={lastNameInput}
+            emailInput={emailInput}
+            passwordInput={passwordInput}
             email={emailError}
             password={passwordError}
             action='register'>
@@ -175,11 +175,7 @@ export default function SignUp() {
           </Login>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link
-                component={RouterLink}
-                to='/signin'
-                href='#'
-                variant='body2'>
+              <Link component={RouterLink} to='/signin' href='#' variant='body2'>
                 Already have an account? Sign in
               </Link>
             </Grid>

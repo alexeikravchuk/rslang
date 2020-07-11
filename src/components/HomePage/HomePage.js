@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Img from './HomePageImg/homepagebg.png';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
   homePage: {
@@ -23,8 +24,14 @@ function HomePage() {
     console.log('Play Button Clicked');
   }
   return (
-    <Container className={classes.homePage }>
-      <Button variant='contained' color='primary' size='large' onClick={handlePLayClick}>
+    <Container className={classes.homePage}>
+      <Button
+        component={RouterLink}
+        to='/wordcards'
+        variant='contained'
+        color='primary'
+        size='large'
+        onClick={handlePLayClick}>
         Let's Play RsLang
       </Button>
     </Container>

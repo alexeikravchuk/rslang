@@ -1,0 +1,257 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.learning-card-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background: #ddfaff;
+  margin: 0 auto;
+  padding-top: 100px;
+  overflow: hidden;
+}
+
+.learning-word-cards {
+  display: flex;
+  /* justify-content: center; */
+  width: 700px;
+  height: 400px;
+  margin: 50px auto 10px auto;
+}
+
+.learning-card-prev {
+  width: 50px;
+}
+
+.learning-card-prev p {
+  font-size: 50px;
+  margin: 160px 4px;
+  cursor: pointer;
+}
+
+.learning-card {
+  width: 600px;
+  height: 420px;
+  background-color: #4b909b;
+  border-radius: 0.5rem;
+}
+
+.learning-card-next {
+  width: 50px;
+}
+
+.learning-card-next p {
+  font-size: 50px;
+  margin: 160px 4px;
+}
+
+.learning-card-header {
+  display: flex;
+  height: 50px;
+  padding: 1rem;
+  justify-content: space-between;
+}
+
+.current-word {
+  padding: 0;
+  align-items: center;
+  background: transparent;
+  border-radius: 0.5rem;
+  display: flex;
+}
+
+.dots {
+  display: flex;
+}
+
+.dot {
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 1rem 0.125rem;
+}
+
+.learning-word-description {
+  color: white;
+  margin: 0 1rem;
+}
+
+.select-learning-page {
+  color: white;
+  margin: 10px 0.5rem;
+}
+
+.select-learning-category {
+  color: white;
+  margin: 10px 0.5rem;
+}
+
+.word-notes span {
+  font-size: 30px;
+  cursor: pointer;
+  margin: 4px 8px 0 0;
+}
+
+.word-notes span:hover {
+  color: white;
+}
+
+.dropdown div {
+  color: white;
+  cursor: pointer;
+  font-size: small;
+}
+
+.dropdown div:hover {
+  text-decoration: underline;
+}
+
+.learning-card-main {
+  height: 230px;
+}
+
+.learning-word-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+.learning-word-translation {
+  font-size: 30px;
+  padding-bottom: 10px;
+}
+
+.learning-word-transcription {
+  padding-bottom: 10px;
+}
+
+.learning-word-input {
+  align-items: center;
+}
+
+.word-answer-input {
+  height: 50px;
+  font-size: 20px;
+  padding: 0 0.5em;
+}
+
+.learning-word-image {
+  width: 200px;
+  height: 135px;
+  position: relative;
+}
+
+.learning-word-examples {
+  padding: 1.5rem 1rem 1rem 1rem;
+}
+
+.learning-word-examples div {
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.learning-word-meaning,
+.learning-word-example {
+  display: flex;
+  flex-direction: row;
+}
+
+.meaning-sentence:hover,
+.example-sentence:hover {
+  cursor: pointer;
+}
+
+.button-reactions {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.learning-word-button-check {
+  width: 130px;
+  height: 40px;
+  color: white;
+  text-align: center;
+  background-color: #4b909b;
+  border-radius: 5px;
+  cursor: pointer;
+  padding-top: 10px;
+  margin: 0 10px;
+}
+
+.learning-word-button-show {
+  width: 135px;
+  height: 40px;
+  color: white;
+  text-align: center;
+  background-color: #4b909b;
+  border-radius: 5px;
+  cursor: pointer;
+  padding-top: 10px;
+  margin: 0 10px;
+}
+
+.spell {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.spell:hover {
+  color: white;
+}
+
+.prev:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.next:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.learning-word-notification {
+  width: 568px;
+  height: 20px;
+  text-align: center;
+  border-color: #4b909b;
+  border-radius: 0.2rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.learning-word-stage {
+  display: flex;
+  margin: 20px 29%;
+}
+
+.number-start {
+  position: relative;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #338c99;
+  padding: 0 0.5rem;
+  width: 1.5rem;
+  text-align: end;
+  line-height: 0.8;
+}
+
+.number-progress {
+  width: calc(100% - 1rem);
+  height: 0.5rem;
+  background: #b1d6db;
+  border-radius: 0.312rem;
+}
+
+.number-end {
+  position: relative;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #338c99;
+  padding: 0 0.5rem;
+  width: 1.5rem;
+  text-align: end;
+  line-height: 0.8;
+}

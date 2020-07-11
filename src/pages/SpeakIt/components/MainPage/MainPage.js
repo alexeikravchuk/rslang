@@ -5,12 +5,7 @@ import { CardList } from '../CardList';
 import { Buttons } from '../Buttons';
 import { Results } from '../Results';
 
-import {
-  getWords,
-  runSpeechRecognition,
-  saveResult,
-  playCardsAudio,
-} from '../../helpers';
+import { getWords, runSpeechRecognition, saveResult, playCardsAudio } from '../../helpers';
 import { MAX_LEVEL } from '../../constants/constants';
 
 class MainPage extends Component {
@@ -62,8 +57,7 @@ class MainPage extends Component {
     );
   };
 
-  setRecognizedWord = (transcript) =>
-    this.setState({ recognizedWord: transcript });
+  setRecognizedWord = (transcript) => this.setState({ recognizedWord: transcript });
 
   checkRecognitionMode = () => this.state.isRecognitionMode;
 
@@ -107,11 +101,8 @@ class MainPage extends Component {
 
   handleCardClick = (targetWord) => {
     if (!this.state.isRecognitionMode) {
-      const wordIndex = this.state.words.findIndex(
-        (word) => word.word === targetWord
-      );
-      !this.state.isResultsDisplayed &&
-        this.setState({ activeCardIndexes: [wordIndex] });
+      const wordIndex = this.state.words.findIndex((word) => word.word === targetWord);
+      !this.state.isResultsDisplayed && this.setState({ activeCardIndexes: [wordIndex] });
       playCardsAudio(targetWord, this.state.words);
     }
   };
@@ -124,8 +115,10 @@ class MainPage extends Component {
       return this.enableRecognitionMode();
     }
     if (classList.contains('result')) {
+      document.body.style.overflow = 'hidden';
       return this.showResults();
     }
+    document.body.style.overflow = 'auto';
     if (classList.contains('return')) {
       return this.setState({ isResultsDisplayed: false });
     }
@@ -145,17 +138,11 @@ class MainPage extends Component {
       isResultsDisplayed,
     } = this.state;
 
-    const activeCard = activeCardIndexes.length
-      ? words[activeCardIndexes.slice(-1)]
-      : null;
+    const activeCard = activeCardIndexes.length ? words[activeCardIndexes.slice(-1)] : null;
 
     return (
       <div className='main-page'>
-        <StatusBar
-          level={level}
-          score={score}
-          onLevelChange={this.handleLevelChange}
-        />
+        <StatusBar level={level} score={score} onLevelChange={this.handleLevelChange} />
         <ImagesBlock
           word={activeCard}
           isRecognitionMode={isRecognitionMode}

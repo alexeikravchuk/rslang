@@ -54,88 +54,89 @@ $mobile-small-width: 320px;
       width: 90%;
     }
   }
-}
-.points {
-  list-style: none;
-  display: flex;
-  padding: 15px 0 0 15px;
-  margin: 0;
-  .point {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.1em;
-    color: $color-nav-text;
-    text-shadow: 1px 1px 3px $color-train-2;
-    width: 18px;
-    height: 18px;
-    padding: 18px;
-    margin-top: -15px;
-    border-radius: 50%;
-    background-color: $color-train;
-    background: radial-gradient(
-      $color-train 0%,
-      $color-train 46%,
-      $color-train-2 51%,
-      transparent 59%,
-      transparent 100%
-    );
-    margin-right: 17px;
-    box-shadow: 0 0 0 2px rgba($color-background, 0.4);
-    cursor: pointer;
-    transition: 0.5s;
-    &:nth-child(n + 2):before {
-      content: '';
-      width: 35px;
-      height: 4px;
-      position: absolute;
-      top: 16px;
-      left: -28px;
-      background-color: $color-train;
-    }
-    &-active,
-    &:hover {
-      box-shadow: 0 0 3px 2px $color-train, inset 0 0 0 2px $color-background,
-        inset 0 0 1px 3px $color-train-2;
-    }
-  }
 
-  @media (max-width: $tablet-width) {
+  .points {
+    list-style: none;
+    display: flex;
+    padding: 15px 0 0 15px;
+    margin: 0;
     .point {
-      width: 16px;
-      height: 16px;
-      padding: 16px;
-      font-size: 1.6em;
-      margin-right: 15px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1em;
+      color: $color-nav-text;
+      text-shadow: 1px 1px 3px $color-train-2;
+      width: 18px;
+      height: 18px;
+      padding: 18px;
+      margin-top: -15px;
+      border-radius: 50%;
+      background-color: $color-train;
+      background: radial-gradient(
+        $color-train 0%,
+        $color-train 46%,
+        $color-train-2 51%,
+        transparent 59%,
+        transparent 100%
+      );
+      margin-right: 17px;
+      box-shadow: 0 0 0 2px rgba($color-background, 0.4);
+      cursor: pointer;
+      transition: 0.5s;
       &:nth-child(n + 2):before {
         content: '';
-        width: 27px;
-        height: 3px;
+        width: 35px;
+        height: 4px;
         position: absolute;
-        top: 15px;
-        left: -21px;
+        top: 16px;
+        left: -28px;
         background-color: $color-train;
       }
+      &-active,
+      &:hover {
+        box-shadow: 0 0 3px 2px $color-train, inset 0 0 0 2px $color-background,
+          inset 0 0 1px 3px $color-train-2;
+      }
     }
-  }
 
-  @media (max-width: $mobile-big-width) {
-    padding: 15px 0px 0px 10px;
-    .point {
-      width: 14px;
-      height: 14px;
-      padding: 14px;
-      font-size: 1.4em;
-      margin-right: 15px;
-      &:nth-child(n + 2):before {
-        content: '';
-        width: 26px;
-        height: 3px;
-        position: absolute;
-        top: 13px;
-        left: -20px;
-        background-color: $color-train;
+    @media (max-width: $tablet-width) {
+      .point {
+        width: 16px;
+        height: 16px;
+        padding: 16px;
+        font-size: 1.6em;
+        margin-right: 15px;
+        &:nth-child(n + 2):before {
+          content: '';
+          width: 27px;
+          height: 3px;
+          position: absolute;
+          top: 15px;
+          left: -21px;
+          background-color: $color-train;
+        }
+      }
+    }
+
+    @media (max-width: $mobile-big-width) {
+      padding: 15px 0px 0px 10px;
+      .point {
+        width: 14px;
+        height: 14px;
+        padding: 14px;
+        font-size: 1.4em;
+        margin-right: 15px;
+        &:nth-child(n + 2):before {
+          content: '';
+          width: 26px;
+          height: 3px;
+          position: absolute;
+          top: 13px;
+          left: -20px;
+          background-color: $color-train;
+        }
       }
     }
   }
