@@ -39,11 +39,9 @@ function StatisticDialog(props) {
   const { userId, token } = props.sprintState.authReducer;
 
   const data = {
-    "optional": {
-      "scoreRecord": scoreRecord,
-      "totalScore": totalScore,
-      "gameCounter": gameCounter,
-    }
+    "scoreRecord": scoreRecord,
+    "totalScore": totalScore,
+    "gameCounter": gameCounter,
   }
 
   return (

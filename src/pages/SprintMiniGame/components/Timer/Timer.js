@@ -24,29 +24,30 @@ const useStyles = makeStyles((theme) => ({
 function Timer(props) {
   const classes = useStyles();
 
-
   const [progress, setProgress] = React.useState(0);
   const fullProgress = 100;
   const roundDuration = 60;
 
+  const progressCounter = () => {
+    setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + fullProgress / roundDuration));
+  }
+
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + fullProgress / roundDuration));
-    }, 1000);
+    const timer = setTimeout(progressCounter, 1000)
+    if (progress >= 100) {
+      props.isTimerFinished()
+    }
     return () => {
-      clearInterval(timer);
+      clearTimeout(timer);
     };
   }, [progress]);
 
-  if (progress >= 100) {
-    props.isTimerFinished()
-  }
 
   return (
     <div className={classes.timer}>
       <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 100 } />
       <Typography variant="h4" component="h4" className={classes.timerValue}>
-        {Math.floor(progress * roundDuration / fullProgress)}
+        {Math.round(progress * roundDuration / fullProgress)}
       </Typography>
     </div>
   );

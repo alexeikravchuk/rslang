@@ -71,9 +71,9 @@ const sprintReducer = ( state = defaultState, action) => {
         gameWords: action.words,
         learnedWords: new Set(),
         wrongWords: new Set(),
-        scoreRecord: action.stats.optional.scoreRecord,
-        totalScore: action.stats.optional.totalScore,
-        gameCounter: action.stats.optional.gameCounter,
+        scoreRecord: action.stats.optional.sprint.scoreRecord,
+        totalScore: action.stats.optional.sprint.totalScore,
+        gameCounter: action.stats.optional.sprint.gameCounter,
       };
     }
     case SHOW_LOADER: {

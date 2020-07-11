@@ -133,10 +133,12 @@ export const getStatistics = async (id, token) => {
   } catch (e) {
     return {
       "optional": {
-        "scoreRecord": 0,
-        "scoreAverage": 0,
-        "totalScore": 0,
-        "gameCounter": 0,
+        "sprint": {
+          "scoreRecord": 0,
+          "scoreAverage": 0,
+          "totalScore": 0,
+          "gameCounter": 0,
+        }
       }
     }
   }
@@ -253,6 +255,15 @@ export const closeWindow = () => {
 }
 
 export const setStatistics = async (data, id, token) => {
+  const stats = await getStatistics(id, token);
+  const statsData = {
+    learnedWords: stats.learnedWords,
+    optional: {
+      ...stats.optional,
+      sprint: data
+    }
+  }
+  console.log(statsData)
   await fetch(`${SERVER_URL}users/${id}/statistics`, {
       method: 'PUT',
       withCredentials: true,
@@ -261,7 +272,7 @@ export const setStatistics = async (data, id, token) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(statsData)
     })
     .then(response => {
       if (response.status === 404) {
