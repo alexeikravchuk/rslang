@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
-import { Link, Avatar, Typography, withStyles } from '@material-ui/core';
-import logo from '../../assets/logo.png';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { Link, Avatar, Typography, withStyles } from '@material-ui/core';
+import logoImg from '../../assets/logo.png';
 
-class Logo extends Component {
-  render() {
-    return (
-      <Link to='/home' component={RouterLink} className={this.props.classes.mainLink}>
-        <Avatar alt='logo' src={logo} className={this.props.classes.logo} />
-        <Typography variant='h6' className={this.props.classes.title}>
-          RS Lang
-        </Typography>
-      </Link>
-    );
-  }
-}
+const Logo = ({ classes: { mainLink, logo, title } }) => {
+  return (
+    <Link to='/home' component={RouterLink} className={mainLink}>
+      <Avatar alt='logo' src={logoImg} className={logo} />
+      <Typography variant='h6' className={title}>
+        RS Lang
+      </Typography>
+    </Link>
+  );
+};
 
 function createStyles(theme) {
   return {
     title: {
       flexGrow: 1,
+      whiteSpace: 'nowrap',
     },
     mainLink: {
       display: 'flex',

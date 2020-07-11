@@ -24,13 +24,9 @@ import {
 } from '../../pages';
 
 class PrimaryAppBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      auth: false,
-      drawerOpen: false,
-    };
-  }
+  state = {
+    drawerOpen: false,
+  };
 
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
@@ -68,10 +64,7 @@ class PrimaryAppBar extends Component {
             <Grid item xs={12}>
               <Grid container>
                 <Grid item>
-                  <SideBar
-                    open={this.state.drawerOpen}
-                    onShewronClick={() => this.handleDrawerClose()}
-                  />
+                  <SideBar open={this.state.drawerOpen} onClick={this.handleDrawerClose} />
                 </Grid>
                 <Grid item xs className={classes.mainContainer}>
                   <Switch>
@@ -106,15 +99,16 @@ function createStyles(theme) {
       height: '100vh',
     },
     grid: {
+      position: 'relative',
       height: '100vh',
       display: 'flex',
       flexFlow: 'column',
     },
     mainContainer: {
+      right: 0,
       height: `calc(100vh - ${toolbarHeight})`,
     },
     appBar: {
-      // position: 'fixed',
       height: `${toolbarHeight}`,
       background:
         'linear-gradient(0deg, rgba(71,71,74,1) 0%, rgba(123,123,158,1) 10%, rgba(233,251,255,1) 100%)',

@@ -19,10 +19,10 @@
     align-items: center;
     margin-bottom: 5px;
     width: 100%;
-    @media screen and (max-width: 549px) {
+    @media screen and (max-width: 529px) {
       &:after {
         position: relative;
-        content: 'Please, rotate the screen. Puzzles available on the screen width from 550px and more.';
+        content: 'Please, rotate the screen. Puzzles available on the screen width from 530px and more.';
         width: 90%;
         height: 180px;
         font-size: 28px;

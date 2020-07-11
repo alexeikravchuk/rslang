@@ -35,6 +35,7 @@ function createStyles() {
       background: `url(${backdropBackgroundImg})`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
+      overflowX: 'hidden',
       zIndex: 100,
     },
   };
