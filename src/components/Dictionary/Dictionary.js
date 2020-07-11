@@ -3,18 +3,19 @@ import {URL} from './constants';
 import {getWords} from './getWords.js';
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import Pagination from '@material-ui/lab/Pagination';
 import {ListItem, ListItemText, withStyles} from '@material-ui/core';
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import './Dictionary.scss';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 const styles = {
   listDictionary: {
     overflow: 'auto',
-    maxHeight: '60vh',
+    maxHeight: '50vh',
   },
 };
 
@@ -79,14 +80,16 @@ class Dictionary extends React.Component {
           <ListItemText
             primary={`${index + 1}. ${el.word} - ${el.transcription} - ${el.wordTranslate}`}
           />
-          <ListItemSecondaryAction>
-            <IconButton edge="end"
-                        onClick={() => {
-                          this.playAudioWords(`${URL}${audios[index]}`);
-                        }}>
-              <RecordVoiceOverIcon/>
-            </IconButton>
-          </ListItemSecondaryAction>
+          <Hidden xsDown>
+            <ListItemSecondaryAction>
+              <IconButton edge="end"
+                          onClick={() => {
+                            this.playAudioWords(`${URL}${audios[index]}`);
+                          }}>
+                <RecordVoiceOverIcon/>
+              </IconButton>
+            </ListItemSecondaryAction>
+          </Hidden>
         </ListItem>
       );
     });
@@ -110,20 +113,34 @@ class Dictionary extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <Container className={'dictionaryRoot'}>
-        <Typography variant="h4" component="h2">
-          Dictionary
-        </Typography>
-        <p className="select-category"><i>Category: </i></p>
-        <Pagination count={6} size="medium" onChange={this.handleCategoryChange.bind(this)}/>
-        <List className={classes.listDictionary}
-              dense={true}
-        > {this.state.content}</List>
-        {this.state.pageLoaded && <Pagination count={30}
-                                              size="medium"
-                                              onChange={this.handleCountChange.bind(this)}/>}
-      </Container>
-    );
+      <Grid container
+            className={'dictionaryRoot'}
+            spacing={1}
+            align="center"
+            justify="center"
+            alignItems="center">
+        <Grid item xs={12}>
+          <Typography variant="h4" component="h2" align={'center'}>
+            Dictionary
+          </Typography>
+        </Grid>
+        <Grid item>
+          <p><i>Category: </i></p>
+          <Pagination count={6} size="medium" onChange={this.handleCategoryChange.bind(this)}/>;
+        </Grid>
+        <Grid item xs={12}>
+          <List className={classes.listDictionary}
+                dense={true}
+          > {this.state.content}</List>
+        </Grid>
+        <Grid item align="center">
+          {this.state.pageLoaded && <Pagination count={30}
+                                                size="medium"
+                                                onChange={this.handleCountChange.bind(this)}/>}
+        </Grid>
+      </Grid>
+    )
+      ;
   }
 }
 
