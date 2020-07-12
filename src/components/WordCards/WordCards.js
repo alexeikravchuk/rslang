@@ -24,6 +24,7 @@ class WordCards extends React.Component {
       valueCategory: 0,
       dropdown: false,
       notification: '',
+      description: 'Success rate',
       translation: cardInfo.translation,
       transcription: cardInfo.transcription,
       word: cardInfo.word,
@@ -166,8 +167,8 @@ class WordCards extends React.Component {
       transcription: currentObj.transcription,
       word: currentObj.word,
       image: `${URL}${currentObj.image}`,
-      meaning: this.removeTags(currentObj.textMeaning, 'i'), // remove  tag <i> from sentence
-      example: this.removeTags(currentObj.textExample, 'b'), // remove  tag <b> from sentence
+      meaning: this.removeTags(currentObj.textMeaning, 'i'),
+      example: this.removeTags(currentObj.textExample, 'b'),
       meaningTranslate: currentObj.textMeaningTranslate,
       exampleTranslate: currentObj.textExampleTranslate,
       audioWord: `${URL}${currentObj.audio}`,
@@ -205,6 +206,23 @@ class WordCards extends React.Component {
     this.setState({ value: event.target.value });
     this.setState({ showAnswer: false });
     if (event.target.value.length === this.state.word.length) {
+      let resultInputWord = this.checkAnswer(event.target.value, this.state.word);
+      resultInputWord = resultInputWord.map(item => item.props.className);
+      let errorCount = 0;
+      for(var i = 0; i < resultInputWord.length; ++i){
+        if(resultInputWord[i] === "word-error")
+        errorCount++;
+      }
+      if(errorCount === 0 ){
+        this.setState({colorDots: 'green'});
+        this.setState({ description: 'Great :)' });
+      } else if((resultInputWord.length / errorCount) < 2){
+        this.setState({colorDots: 'red'});
+        this.setState({ description: 'Try again !' });
+      } else if((resultInputWord.length / errorCount) > 2){
+        this.setState({colorDots: 'orange'});
+        this.setState({ description: 'Almost ...' });
+      } 
       this.checkAnswer(event.target.value, this.state.word);
       this.setState({ showAnswer: true})
     } else {
@@ -214,31 +232,19 @@ class WordCards extends React.Component {
 
   checkAnswer(input, word) {
     let answer = [];
-    // let errorCount = 0;
-    
       for (let i = 0; i < input.length; i++) {
         if (input[i] !== word[i]) {
           answer.push(<span className='word-error' key={i}>{input[i]}</span>);
-          // errorCount = errorCount + 1;
         }
         else {
           answer.push(<span className='word-correct' key={i}>{input[i]}</span>);
         }
     } 
-
-    // if(errorCount === input.length ){
-    //   this.setState({colorDots: 'red'});
-    // } else if((input.length / errorCount) > 2){
-    //   this.setState({colorDots: 'orange'});
-    // } else {
-    //   this.setState({colorDots: 'green'});
-    // }
-
     return answer;
   }
 
   handleChangePage(event) {
-    this.setState({ valuePage: event.target.value - 1 }, () => {
+    this.setState({ valuePage: event.target.value }, () => {
       this.generateWords(this.state.valuePage, this.state.valueCategory);
     });
   }
@@ -348,7 +354,7 @@ class WordCards extends React.Component {
                   <span>&#10687;</span>
                 </div>
                 <div className='learning-word-description'>
-                  <span>New word</span>
+                  <span>{this.state.description}</span>
                 </div>
                 <form className='select-learning-page'>
                   Page:
