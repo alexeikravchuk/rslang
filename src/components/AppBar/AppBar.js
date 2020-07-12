@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { AppBar, Toolbar, IconButton, Grid, withStyles } from '@material-ui/core';
@@ -9,8 +9,15 @@ import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
+import {SignIn } from '../Registration/SignIn'
+import {SignUp } from '../Registration/SignUp'
+
+
 import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
+
+import { connect } from 'react-redux';
+
 
 import {
   HomePage,
@@ -23,11 +30,21 @@ import {
   SprintMiniGame,
 } from '../../pages';
 
-class PrimaryAppBar extends Component {
-  state = {
-    drawerOpen: false,
-  };
 
+const CheckRoute = ({ isLoggedIn, ...props }) => 
+  isLoggedIn
+    ? <Route { ...props } />
+    : <Redirect to="/signin" />
+
+
+class PrimaryAppBar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      drawerOpen: false,
+    };
+  }
+  
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
   };
@@ -69,18 +86,20 @@ class PrimaryAppBar extends Component {
                 </Grid>
                 <Grid item xs className={classes.mainContainer}>
                   <Switch>
-                    <Route path='/home' component={HomePage} />
-                    <Route path='/wordcards' component={WordCards} />
-                    <Route path='/about' component={AboutTeamPage} />
-                    <Route path='/savannah' component={Savannah} />
-                    <Route path='/dictionary' component={Dictionary} />
-                    <Route path='/speakit' component={SpeakIt} />
-                    <Route path='/puzzle' component={EnglishPuzzle} />
-                    <Route path='/sprint' component={SprintMiniGame} />
-                    <Route path='/audiocall' component={AudioCall} />
-                    <Route path='/account'>
+                  <Route path='/signin' component={SignIn}/>
+                  <Route path='/signup' component={SignUp}/>
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/home' component={HomePage} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/wordcards' component={WordCards} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/about' component={AboutTeamPage} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/savannah' component={Savannah} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/dictionary' component={Dictionary} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/speakit' component={SpeakIt} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/puzzle' component={EnglishPuzzle} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/sprint' component={SprintMiniGame} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/audiocall' component={AudioCall} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/account'>
                       <AccountInfo />
-                    </Route>
+                    </CheckRoute>
                   </Switch>
                 </Grid>
               </Grid>
@@ -153,4 +172,11 @@ function createStyles(theme) {
   };
 }
 
-export default withStyles(createStyles)(PrimaryAppBar);
+
+function mapState({authReducer: { authStatus } } ) {
+  return {
+    authStatus
+  };
+}
+
+export default connect(mapState)(withStyles(createStyles)(PrimaryAppBar));
