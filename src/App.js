@@ -1,9 +1,13 @@
 import React from 'react';
-
+import './App.scss';
+import {BrowserRouter as Router, Route } from 'react-router-dom';
+import PrimaryAppBar from './components/AppBar/AppBar';
 
 function App() {
   return (
-    <canvas id='canvas' width='900px' height='600px'></canvas>
+    <Router>
+      <Route path='/'><PrimaryAppBar/></Route> 
+    </Router>
   );
 }
 
