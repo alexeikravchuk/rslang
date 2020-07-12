@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Fade,
   Paper,
@@ -10,19 +11,15 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
-import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux'
 
 class UserMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      auth: false,
-      userMenuOpen: false,
-    };
-    this.anchorRef = React.createRef();
-  }
+  state = {
+    userMenuOpen: false,
+  };
+  anchorRef = React.createRef();
 
-  handleProfileMenuOpen = (event) => {
+  handleProfileMenuOpen = () => {
     this.setState({ userMenuOpen: (prevOpen) => !prevOpen });
   };
 
@@ -34,18 +31,20 @@ class UserMenu extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+    const { userMenuOpen } = this.state;
     return (
       <div>
         <Button
           ref={this.anchorRef}
-          aria-controls={this.state.userMenuOpen ? 'menu-list-grow' : undefined}
+          aria-controls={userMenuOpen ? 'menu-list-grow' : undefined}
           aria-haspopup='true'
           onClick={this.handleProfileMenuOpen}
-          className={this.props.classes.accountBtn}>
+          className={classes.accountBtn}>
           <AccountCircle />
         </Button>
         <Popper
-          open={Boolean(this.state.userMenuOpen)}
+          open={Boolean(userMenuOpen)}
           anchorEl={this.anchorRef.current}
           role={undefined}
           transition
@@ -54,13 +53,13 @@ class UserMenu extends Component {
             <Fade {...TransitionProps}>
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList autoFocusItem={Boolean(this.state.userMenuOpen)} id='menu-list-grow'>
+                  <MenuList autoFocusItem={Boolean(userMenuOpen)} id='menu-list-grow'>
                     <MenuItem onClick={this.handleClose} to='/account' component={RouterLink}>
                       My account
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>Setting</MenuItem>
                     <MenuItem onClick={this.handleClose} to='/signin' component={RouterLink}>
-                      {this.state.auth ? 'Login' : 'Logout'}
+                      {this.props.authStatus ? 'Logout' : 'Login'}
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -76,9 +75,20 @@ class UserMenu extends Component {
 function createStyles(theme) {
   return {
     accountBtn: {
-      marginRight: theme.spacing(2),
+      marginRight: 0,
+      [theme.breakpoints.up('sm')]: {
+        marginRight: theme.spacing(2),
+      },
     },
   };
 }
 
-export default withStyles(createStyles)(UserMenu);
+function mapState({authReducer: { authStatus } } ) {
+  return {
+    authStatus
+  };
+}
+
+export default connect(mapState)(withStyles(createStyles)(UserMenu));
+
+

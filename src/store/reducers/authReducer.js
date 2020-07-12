@@ -4,6 +4,7 @@ import {
     EMAIL,
     TOKEN,
     USER_ID,
+    AUTH_STATUS,
     UserData,
 } from '../actions/authAction'
 
@@ -12,11 +13,17 @@ const initialState = {
     lastName: UserData.LAST_NAME,
     email: UserData.EMAIL,
     token: UserData.TOKEN,
-    userId: UserData.USER_ID
+    userId: UserData.USER_ID,
+    authStatus: UserData.AUTH_STATUS
 }
 
 function authReducer(state = initialState, action) {
     switch (action.type) {
+      case AUTH_STATUS:
+        return {
+          ...state,
+          authStatus: action.authStatus
+        };
       case FIRST_NAME:
         return {
           ...state,

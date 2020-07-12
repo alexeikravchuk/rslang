@@ -1,15 +1,7 @@
-import { getSavedResult } from './getSavedResult.js';
-import { getWords } from './getWords.js';
-import { playCardsAudio } from './playCardsAudio.js';
-import { runSpeechRecognition } from './runSpeechRecognition.js';
-import { saveResult } from './saveResult.js';
-import { separateWords } from './separateWords.js';
+import { getWords } from './getWords';
+import { playCardsAudio } from './playCardsAudio';
+import { runSpeechRecognition } from './runSpeechRecognition';
+import { buildNewStatistics } from './buildNewStatistics';
+import { separateWords } from './separateWords';
 
-export {
-  getSavedResult,
-  getWords,
-  playCardsAudio,
-  runSpeechRecognition,
-  saveResult,
-  separateWords,
-};
+export { getWords, playCardsAudio, runSpeechRecognition, buildNewStatistics, separateWords };
