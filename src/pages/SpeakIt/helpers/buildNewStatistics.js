@@ -1,3 +1,5 @@
+import { STATISTICS_LENGTH } from '../constants/constants';
+
 export function buildNewStatistics(statistics, activeCardIndexes) {
   const isStatLoaded = localStorage.isStatLoaded && JSON.parse(localStorage.isStatLoaded);
   let newStatistics = null;
@@ -20,7 +22,7 @@ export function buildNewStatistics(statistics, activeCardIndexes) {
     };
 
     const keys = Object.keys(data);
-    if (keys.length > 20) {
+    if (keys.length > STATISTICS_LENGTH) {
       data = filterData(data);
     }
 
@@ -34,7 +36,7 @@ export function buildNewStatistics(statistics, activeCardIndexes) {
 function filterData(data) {
   const keys = Object.keys(data).sort((a, b) => a - b);
   const newData = {};
-  keys.slice(-20).forEach((key) => {
+  keys.slice(-STATISTICS_LENGTH).forEach((key) => {
     newData[key] = data[key];
   });
   return newData;

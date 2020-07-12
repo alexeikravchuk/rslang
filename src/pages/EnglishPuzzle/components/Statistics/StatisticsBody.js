@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const StatisticsBody = ({ statistics, onClick }) => {
-  const { optional } = statistics;
-  const keys = Object.keys(optional).sort(
+  const { stat } = statistics;
+  const keys = Object.keys(stat).sort(
     (a, b) => +a.split('-')[0] * 100 + +a.split('-')[1] - +b.split('-')[0] * 100 + +b.split('-')[1]
   );
 
@@ -16,9 +16,9 @@ export const StatisticsBody = ({ statistics, onClick }) => {
       {keys.map((key) => (
         <tr key={key}>
           <td>{key}</td>
-          <td>{new Date(optional[key].date).toLocaleString()}</td>
-          <td>{countLearnedWords(optional[key].results)}</td>
-          <td>{optional[key].results.length - countLearnedWords(optional[key].results)}</td>
+          <td>{new Date(stat[key].dt).toLocaleString()}</td>
+          <td>{countLearnedWords(stat[key].rs)}</td>
+          <td>{stat[key].rs.length - countLearnedWords(stat[key].rs)}</td>
           <td>
             <button className='result-link' onClick={() => onClick(key)}>
               Show

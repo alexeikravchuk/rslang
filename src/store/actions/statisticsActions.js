@@ -1,7 +1,6 @@
 import { BACKEND_URL } from '../../constants/urlsRequests';
 
-export const LOAD_STATISTICS = 'LOAD_STATISTICS';
-export const SAVE_STATISTICS = 'SAVE_STATISTICS';
+export const STATISTICS = 'STATISTICS';
 
 export function loadStatistics(userId, token) {
   return async (dispatch) => {
@@ -15,7 +14,7 @@ export function loadStatistics(userId, token) {
     });
 
     const content = await rawResponse.json();
-    dispatch({ type: LOAD_STATISTICS, payload: content.optional });
+    dispatch({ type: STATISTICS, payload: content.optional });
   };
 }
 
@@ -33,6 +32,6 @@ export function saveStatistics(userId, token, statistics) {
 
     const content = await rawResponse.json();
 
-    dispatch({ type: LOAD_STATISTICS, payload: content.optional });
+    dispatch({ type: STATISTICS, payload: content.optional });
   };
 }

@@ -1,8 +1,8 @@
-import { WORDS_LINK } from '../constants/constants';
+import { WORD_REQUEST_URL } from '../../../constants/urlsRequests';
 
 //returns randomly the first or second half of 20 words
 async function getWords(group, page, part) {
-  const url = `${WORDS_LINK}group=${group}&page=${page}`;
+  const url = `${WORD_REQUEST_URL}group=${group}&page=${page}`;
   const result = await fetch(url);
   const cardList = await result.json();
 

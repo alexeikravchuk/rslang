@@ -1,4 +1,4 @@
-import { LOAD_STATISTICS, SAVE_STATISTICS } from '../actions/statisticsActions';
+import { STATISTICS } from '../actions/statisticsActions';
 
 const initialState = {
   learnedWords: 0,
@@ -11,9 +11,7 @@ const initialState = {
 
 export const statisticsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_STATISTICS:
-      return { ...state, optional: action.payload };
-    case SAVE_STATISTICS:
+    case STATISTICS:
       return { ...state, optional: action.payload };
     default:
       return state;

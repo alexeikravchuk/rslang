@@ -1,9 +1,9 @@
-import { DATA_SRC } from '../constants/constants';
+import { DATA_LINK } from '../../../constants/urlsRequests';
 
 let audio = null;
 
 const playSentence = (word) => {
-  const audioSrc = DATA_SRC + word.audioExample;
+  const audioSrc = DATA_LINK + word.audioExample;
   try {
     if (audio && audio.played) {
       audio.pause();

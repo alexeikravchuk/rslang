@@ -1,5 +1,5 @@
-import { WORDS_PER_PAGE, WORDS_PER_SENTENCE, BACKEND_URL } from '../constants/constants';
-
+import { WORDS_PER_PAGE, WORDS_PER_SENTENCE } from '../constants/constants';
+import { BACKEND_URL } from '../../../constants/urlsRequests';
 async function getNumberOfPages(group) {
   const url = `${BACKEND_URL}/words/count?group=${group}&wordsPerExampleSentenceLTE=${WORDS_PER_PAGE}&wordsPerPage=${WORDS_PER_SENTENCE}`;
   try {
