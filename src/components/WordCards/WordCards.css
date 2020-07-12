@@ -8,25 +8,30 @@
   height: 100vh;
   background: #ddfaff;
   margin: 0 auto;
-  padding-top: 100px;
-  overflow: hidden;
+  padding-top: 5px;
 }
 
 .learning-word-cards {
   display: flex;
-  /* justify-content: center; */
   width: 700px;
   height: 400px;
   margin: 50px auto 10px auto;
+}
+
+.word-error{
+  color: red;
+}
+
+.word-correct{
+  color: green;
 }
 
 .learning-card-prev {
   width: 50px;
 }
 
-.learning-card-prev p {
-  font-size: 50px;
-  margin: 160px 4px;
+.prev {
+  margin: 185px 13px;
   cursor: pointer;
 }
 
@@ -41,15 +46,15 @@
   width: 50px;
 }
 
-.learning-card-next p {
-  font-size: 50px;
-  margin: 160px 4px;
+.next {
+  margin: 185px 10px;
+  cursor: pointer;
 }
 
 .learning-card-header {
   display: flex;
   height: 50px;
-  padding: 1rem;
+  margin: 1rem;
   justify-content: space-between;
 }
 
@@ -59,18 +64,6 @@
   background: transparent;
   border-radius: 0.5rem;
   display: flex;
-}
-
-.dots {
-  display: flex;
-}
-
-.dot {
-  background-color: white;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin: 1rem 0.125rem;
 }
 
 .learning-word-description {
@@ -86,6 +79,12 @@
 .select-learning-category {
   color: white;
   margin: 10px 0.5rem;
+}
+
+.dropdown-notes {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }
 
 .word-notes span {
@@ -129,6 +128,14 @@
 
 .learning-word-input {
   align-items: center;
+}
+
+.learning-check-input {
+  display: flex;
+}
+
+.check-input {
+  margin: 12px 15px;
 }
 
 .word-answer-input {
@@ -243,6 +250,7 @@
   height: 0.5rem;
   background: #b1d6db;
   border-radius: 0.312rem;
+  margin-bottom: 50px;
 }
 
 .number-end {
@@ -254,4 +262,163 @@
   width: 1.5rem;
   text-align: end;
   line-height: 0.8;
+}
+
+@media screen and (max-width: 800px) {
+  .learning-word-cards {
+    margin: 50px auto 10px 80px;
+  }
+  .learning-card-wrapper {
+    height: 780px;
+  }
+  .learning-card-header {
+    height: 80px;
+  }
+  .dropdown {
+    width: 195px;
+  }
+  .learning-card {
+    width: 550px;
+    height: 480px;
+  }
+  .button-reactions {
+    margin-top: 120px;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  .learning-word-cards {
+    width: 650px;
+    margin: 50px auto 10px 70px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .learning-word-cards {
+    width: 600px;
+    margin: 50px auto 10px 65px;
+  }
+}
+
+@media screen and (max-width: 725px) {
+  .learning-word-cards {
+    width: 550px;
+    margin: 50px auto 10px 60px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .learning-word-cards {
+    width: 450px;
+    margin: 50px auto 10px 55px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .learning-word-cards {
+    width: 400px;
+    margin: 50px auto 10px 120px;
+  }
+  .learning-card-header {
+    display: contents;
+    height: 100px;
+    padding: 20px;
+  }
+  .learning-card {
+    width: 400px;
+    height: 780px;
+  }
+  .current-word {
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .dropdown-notes {
+    padding: 20px;
+  }
+  .learning-card-wrapper {
+    height: 1067px;
+  }
+  .learning-word-wrapper {
+    height: 1100px;
+    display: contents;
+    padding: 0 50px;
+  }
+  .learning-word-info {
+    padding: 20px;
+  }
+  .learning-word-image {
+    width: 250px;
+    height: 180px;
+    padding: 20px;
+  }
+  .prev {
+    margin: 270px 10px;
+  }
+  .next {
+    margin: 270px 10px;
+  }
+  .button-reactions {
+    margin-top: 440px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .learning-word-cards {
+    width: 400px;
+    margin: 50px auto 10px 100px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .learning-word-cards {
+    width: 300px;
+    margin: 50px auto 10px 90px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .learning-word-cards {
+    width: 200px;
+    margin: 50px auto 10px 80px;
+  }
+  .learning-word-notification {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .learning-word-cards {
+    width: 250px;
+    margin: 50px auto 10px 70px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .learning-word-cards {
+    margin: 50px auto 10px 60px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .learning-word-cards {
+    width: 200px;
+    margin: 50px auto 10px 50px;
+  }
+  .button-reactions {
+    margin-left: 40px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .learning-word-cards {
+    margin: 50px auto 10px 40px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .learning-word-cards {
+    width: 150px;
+    margin: 50px auto 10px 30px;
+  }
 }

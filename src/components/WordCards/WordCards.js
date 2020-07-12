@@ -1,7 +1,9 @@
 import React from 'react';
 import './WordCards.css';
 import { URL, cardInfo, wordRequestURL, maxPage, maxCategory } from './constants';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { LinearProgress } from '@material-ui/core';
+import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
+import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
 
 class WordCards extends React.Component {
   constructor(props) {
@@ -16,6 +18,8 @@ class WordCards extends React.Component {
       category: 1,
       counter: 0,
       value: '',
+      colorDots: 'white',
+      showAnswer: false,
       valuePage: 0,
       valueCategory: 0,
       dropdown: false,
@@ -55,10 +59,6 @@ class WordCards extends React.Component {
 
   componentDidMount() {
     this.generateWords(0, 0);
-  }
-
-  componentDidUpdate() {
-    document.title = `Word ${this.state.counter + 1}`;
   }
 
   async getWords(page, category) {
@@ -124,7 +124,6 @@ class WordCards extends React.Component {
           progress: 100,
         },
         () => {
-          alert('Day plan is completed!');
           this.setState({
             notification: 'Day plan is completed!',
           });
@@ -204,19 +203,38 @@ class WordCards extends React.Component {
 
   handleChange(event) {
     this.setState({ value: event.target.value });
+    this.setState({ showAnswer: false });
     if (event.target.value.length === this.state.word.length) {
-      this.checkAnswer(event.target.value);
+      this.checkAnswer(event.target.value, this.state.word);
+      this.setState({ showAnswer: true})
+    } else {
+      this.setState({showAnswer: false})
     }
   }
 
-  checkAnswer(input) {
-    let word = this.state.word;
-    if (input !== word) {
-      this.setState({ value: '?' });
-    } else {
-      this.setState({ value: input });
-      this.setCountPlus();
-    }
+  checkAnswer(input, word) {
+    let answer = [];
+    // let errorCount = 0;
+    
+      for (let i = 0; i < input.length; i++) {
+        if (input[i] !== word[i]) {
+          answer.push(<span className='word-error' key={i}>{input[i]}</span>);
+          // errorCount = errorCount + 1;
+        }
+        else {
+          answer.push(<span className='word-correct' key={i}>{input[i]}</span>);
+        }
+    } 
+
+    // if(errorCount === input.length ){
+    //   this.setState({colorDots: 'red'});
+    // } else if((input.length / errorCount) > 2){
+    //   this.setState({colorDots: 'orange'});
+    // } else {
+    //   this.setState({colorDots: 'green'});
+    // }
+
+    return answer;
   }
 
   handleChangePage(event) {
@@ -315,19 +333,19 @@ class WordCards extends React.Component {
       <div className='learning-card-wrapper'>
         <div className='learning-word-cards'>
           <div className='learning-card-prev'>
-            <p onClick={() => this.setCountMinus()} className='prev'>
+            <ArrowBackIosTwoToneIcon onClick={() => this.setCountMinus()} className='prev'>
               ⮜
-            </p>
+            </ArrowBackIosTwoToneIcon>
           </div>
           <div className='learning-card'>
             <div className='learning-card-header'>
               <div className='current-word'>
-                <div className='dots'>
-                  <span className='dot'></span>
-                  <span className='dot'></span>
-                  <span className='dot'></span>
-                  <span className='dot'></span>
-                  <span className='dot'></span>
+                <div style={{color: this.state.colorDots}} >
+                  <span>&#10687;</span>
+                  <span>&#10687;</span>
+                  <span>&#10687;</span>
+                  <span>&#10687;</span>
+                  <span>&#10687;</span>
                 </div>
                 <div className='learning-word-description'>
                   <span>New word</span>
@@ -348,36 +366,38 @@ class WordCards extends React.Component {
                   <select name='category'>{this.selectPage(maxCategory)}</select>
                 </form>
               </div>
-              <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
-                <div
-                  onClick={() => {
-                    this.createLearningWords();
-                  }}
-                  className='learning'>
-                  Добавить в Изучаемые слова
+              <div className='dropdown-notes'>
+                <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
+                  <div
+                    onClick={() => {
+                      this.createLearningWords();
+                    }}
+                    className='learning'>
+                    Добавить в Изучаемые слова
+                  </div>
+                  <div
+                    onClick={() => {
+                      this.createCompoundWords();
+                    }}
+                    className='compound'>
+                    Пометить как Сложное слово
+                  </div>
+                  <div
+                    onClick={() => {
+                      this.createDeletedWords();
+                    }}
+                    className='deleted'>
+                    Удалить из списка слов
+                  </div>
                 </div>
-                <div
-                  onClick={() => {
-                    this.createCompoundWords();
-                  }}
-                  className='compound'>
-                  Пометить как Сложное слово
+                <div className='word-notes'>
+                  <span
+                    onClick={() => {
+                      this.toggleDropdown();
+                    }}>
+                    ⚑
+                  </span>
                 </div>
-                <div
-                  onClick={() => {
-                    this.createDeletedWords();
-                  }}
-                  className='deleted'>
-                  Удалить из списка слов
-                </div>
-              </div>
-              <div className='word-notes'>
-                <span
-                  onClick={() => {
-                    this.toggleDropdown();
-                  }}>
-                  ⚑
-                </span>
               </div>
             </div>
             <div className='learning-card-main'>
@@ -395,17 +415,20 @@ class WordCards extends React.Component {
                   </div>
                   <div className='learning-word-transcription'>{transcription}</div>
                   <div className='learning-word-input'>
-                    <input
-                      id='input'
-                      value={value}
-                      onChange={this.handleChange}
-                      className='word-answer-input'
-                      style={{ width: `${wordLength * 12}px` }}
-                      type='text'
-                      maxLength={wordLength}
-                      autoComplete='off'
-                      autoFocus
-                    />
+                    <div className="learning-check-input">
+                      <input
+                        id='input'
+                        value={value}
+                        onChange={this.handleChange}
+                        className='word-answer-input'
+                        style={{ width: `${wordLength * 16}px`}}
+                        type='text'
+                        maxLength={wordLength}
+                        autoComplete='off'
+                        autoFocus
+                      />
+                      <div className="check-input">{ this.state.showAnswer ? this.checkAnswer(this.state.value, this.state.word) : null }</div>
+                    </div>
                   </div>
                 </div>
                 <img className='learning-word-image' src={image} alt='' />
@@ -441,9 +464,9 @@ class WordCards extends React.Component {
             </div>
           </div>
           <div className='learning-card-next'>
-            <p onClick={() => this.setCountPlus()} className='next'>
+            <ArrowForwardIosTwoToneIcon onClick={() => this.setCountPlus()} className='next'>
               ⮞
-            </p>
+            </ArrowForwardIosTwoToneIcon>
           </div>
         </div>
         <div className='button-reactions'>
@@ -452,10 +475,10 @@ class WordCards extends React.Component {
               this.getAnswer();
             }}
             className='learning-word-button-show'>
-            Показать ответ
+            Show answer
           </div>
           <div onClick={() => this.setCountPlus()} className='learning-word-button-check'>
-            Дальше
+            Next card
           </div>
         </div>
         <div className='learning-word-notification'>{notification}</div>
