@@ -47,7 +47,7 @@ function GameCard({ sprintState, checkAnswer }) {
       <Button
         variant="contained"
         color="primary"
-        size="large"
+        size="medium"
         startIcon={<KeyboardArrowLeftIcon />}
         value="right"
         onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
@@ -57,7 +57,7 @@ function GameCard({ sprintState, checkAnswer }) {
       <Button
         variant="contained"
         color="secondary"
-        size="large"
+        size="medium"
         endIcon={<KeyboardArrowRightIcon />}
         value="wrong"
         onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}

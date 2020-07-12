@@ -26,8 +26,8 @@ export const END_GAME = 'END_GAME';
 export const CHANGE_ROUND = 'CHANGE_ROUND';
 export const TIMER_FINISHED = 'TIMER_FINISHED';
 export const CLOSE_WINDOW = 'CLOSE_WINDOW';
-export const ADD_LEARNED_WORDS = 'LEARNED_WORDS';
-export const ADD_WRONG_WORDS = 'CLOSE_WINDOW';
+export const LEARNED_WORDS = 'LEARNED_WORDS';
+export const WRONG_WORDS = 'WRONG_WORDS';
 
 
 export const hideWelcomeDialog = () => {
@@ -133,10 +133,11 @@ export const getStatistics = async (id, token) => {
   } catch (e) {
     return {
       "optional": {
-        "scoreRecord": 0,
-        "scoreAverage": 0,
-        "totalScore": 0,
-        "gameCounter": 0,
+        "sprint": {
+          "rec": 0,
+          "score": 0,
+          "count": 0,
+        }
       }
     }
   }
@@ -168,14 +169,14 @@ export const loadGame = (userWords, difficulty, round, id, token) => {
 
 export const addLearnedWord = (wordIndex) => {
   return ({
-    type: ADD_LEARNED_WORDS,
+    type: LEARNED_WORDS,
     payload: wordIndex,
   })
 }
 
 export const addWrongWord = (wordIndex) => {
   return ({
-    type: ADD_WRONG_WORDS,
+    type: WRONG_WORDS,
     payload: wordIndex,
   })
 }
@@ -253,6 +254,14 @@ export const closeWindow = () => {
 }
 
 export const setStatistics = async (data, id, token) => {
+  const stats = await getStatistics(id, token);
+  const statsData = {
+    learnedWords: stats.learnedWords,
+    optional: {
+      ...stats.optional,
+      sprint: data
+    }
+  }
   await fetch(`${SERVER_URL}users/${id}/statistics`, {
       method: 'PUT',
       withCredentials: true,
@@ -261,7 +270,7 @@ export const setStatistics = async (data, id, token) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(statsData)
     })
     .then(response => {
       if (response.status === 404) {

@@ -19,6 +19,7 @@ const styles = {
 }
 
   const { learnedWords, wrongWords, gameWords } = props.props.sprintState.sprintReducer
+
   return (
     <div style={styles.dialogBody}>
       <DialogContent dividers style={styles.wordsContainer}>
