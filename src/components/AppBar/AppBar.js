@@ -9,6 +9,10 @@ import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
+import {SignIn } from '../Registration/SignIn'
+import {SignUp } from '../Registration/SignUp'
+
+
 import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
 
@@ -81,6 +85,8 @@ class PrimaryAppBar extends Component {
                 </Grid>
                 <Grid item xs className={classes.mainContainer}>
                   <Switch>
+                  <Route path='/signin' component={SignIn}/>
+                  <Route path='/signup' component={SignUp}/>
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/home' component={HomePage} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/wordcards' component={WordCards} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/about' component={AboutTeamPage} />

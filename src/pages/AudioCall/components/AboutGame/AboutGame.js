@@ -22,7 +22,7 @@ class AboutGame extends React.Component {
   render(){
   return (
       <div>
-        <Button variant="outlined" color="primary" onClick={this.runInstructions}>
+        <Button variant="contained" color="primary" onClick={this.runInstructions}>
           About Game
         </Button>
           <Dialog

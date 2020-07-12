@@ -16,7 +16,6 @@ import { connect } from 'react-redux'
 class UserMenu extends Component {
   state = {
     userMenuOpen: false,
-    auth: this.props.authStatus
   };
   anchorRef = React.createRef();
 
@@ -33,7 +32,7 @@ class UserMenu extends Component {
 
   render() {
     const { classes } = this.props;
-    const { userMenuOpen, auth } = this.state;
+    const { userMenuOpen } = this.state;
     return (
       <div>
         <Button
@@ -60,7 +59,7 @@ class UserMenu extends Component {
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>Setting</MenuItem>
                     <MenuItem onClick={this.handleClose} to='/signin' component={RouterLink}>
-                      {auth ? 'Logout' : 'Login'}
+                      {this.props.authStatus ? 'Logout' : 'Login'}
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>

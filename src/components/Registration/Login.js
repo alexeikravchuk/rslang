@@ -48,7 +48,7 @@ function Alert(props) {
         }
       };
       loginUser({ email: emailInput, password: passwordInput }).then((entryData) => {
-        if (typeof entryData !== undefined) {
+        if (typeof entryData !== 'undefined') {
           setTitle('Login success');
           doTransition('/home');
           props.dispatch(authStatus(true))
@@ -84,7 +84,7 @@ function Alert(props) {
         }
       };
       createUser({ email: emailInput, password: passwordInput }).then((regData) => {
-        if (typeof regData !== undefined) {
+        if (typeof regData === 'undefined') {
           setTitle('Server error');
         } else if ('error' in regData) {
           setTitle('Registration error');

@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export  function SignUp() {
   const [firstNameInput, setFirstName] = useState('');
   const [lastNameInput, setLastName] = useState('');
   const [emailInput, setEmailInput] = useState('');
