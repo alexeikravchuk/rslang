@@ -11,11 +11,12 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
+import { connect } from 'react-redux'
 
 class UserMenu extends Component {
   state = {
-    auth: false,
     userMenuOpen: false,
+    auth: this.props.authStatus
   };
   anchorRef = React.createRef();
 
@@ -59,7 +60,7 @@ class UserMenu extends Component {
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>Setting</MenuItem>
                     <MenuItem onClick={this.handleClose} to='/signin' component={RouterLink}>
-                      {auth ? 'Login' : 'Logout'}
+                      {auth ? 'Logout' : 'Login'}
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -80,4 +81,12 @@ function createStyles(theme) {
   };
 }
 
-export default withStyles(createStyles)(UserMenu);
+function mapState({authReducer: { authStatus } } ) {
+  return {
+    authStatus
+  };
+}
+
+export default connect(mapState)(withStyles(createStyles)(UserMenu));
+
+

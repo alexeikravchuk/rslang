@@ -17,6 +17,7 @@ import {
   addEmail,
   addToken,
   addUserId,
+  authStatus
 } from '../../store/actions/authAction';
 import { connect } from 'react-redux';
 
@@ -49,7 +50,8 @@ function Alert(props) {
       loginUser({ email: emailInput, password: passwordInput }).then((entryData) => {
         if (typeof entryData !== undefined) {
           setTitle('Login success');
-          doTransition('/main');
+          doTransition('/home');
+          props.dispatch(authStatus(true))
           props.dispatch(addEmail(emailInput));
           props.dispatch(addToken(entryData.token));
           props.dispatch(addUserId(entryData.userId));

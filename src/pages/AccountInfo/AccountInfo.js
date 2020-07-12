@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AccountInfo(props) {
-    console.log(props)
     const classes = useStyles();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
