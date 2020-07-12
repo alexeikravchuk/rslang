@@ -1,7 +1,9 @@
 import React from 'react';
 import './WordCards.css';
 import { URL, cardInfo, wordRequestURL, maxPage, maxCategory } from './constants';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { LinearProgress } from '@material-ui/core';
+import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
+import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
 
 class WordCards extends React.Component {
   constructor(props) {
@@ -122,7 +124,6 @@ class WordCards extends React.Component {
           progress: 100,
         },
         () => {
-          alert('Day plan is completed!');
           this.setState({
             notification: 'Day plan is completed!',
           });
@@ -236,9 +237,6 @@ class WordCards extends React.Component {
     return answer;
   }
 
-
-
-
   handleChangePage(event) {
     this.setState({ valuePage: event.target.value - 1 }, () => {
       this.generateWords(this.state.valuePage, this.state.valueCategory);
@@ -335,9 +333,9 @@ class WordCards extends React.Component {
       <div className='learning-card-wrapper'>
         <div className='learning-word-cards'>
           <div className='learning-card-prev'>
-            <p onClick={() => this.setCountMinus()} className='prev'>
+            <ArrowBackIosTwoToneIcon onClick={() => this.setCountMinus()} className='prev'>
               ⮜
-            </p>
+            </ArrowBackIosTwoToneIcon>
           </div>
           <div className='learning-card'>
             <div className='learning-card-header'>
@@ -368,36 +366,38 @@ class WordCards extends React.Component {
                   <select name='category'>{this.selectPage(maxCategory)}</select>
                 </form>
               </div>
-              <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
-                <div
-                  onClick={() => {
-                    this.createLearningWords();
-                  }}
-                  className='learning'>
-                  Добавить в Изучаемые слова
+              <div className='dropdown-notes'>
+                <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
+                  <div
+                    onClick={() => {
+                      this.createLearningWords();
+                    }}
+                    className='learning'>
+                    Добавить в Изучаемые слова
+                  </div>
+                  <div
+                    onClick={() => {
+                      this.createCompoundWords();
+                    }}
+                    className='compound'>
+                    Пометить как Сложное слово
+                  </div>
+                  <div
+                    onClick={() => {
+                      this.createDeletedWords();
+                    }}
+                    className='deleted'>
+                    Удалить из списка слов
+                  </div>
                 </div>
-                <div
-                  onClick={() => {
-                    this.createCompoundWords();
-                  }}
-                  className='compound'>
-                  Пометить как Сложное слово
+                <div className='word-notes'>
+                  <span
+                    onClick={() => {
+                      this.toggleDropdown();
+                    }}>
+                    ⚑
+                  </span>
                 </div>
-                <div
-                  onClick={() => {
-                    this.createDeletedWords();
-                  }}
-                  className='deleted'>
-                  Удалить из списка слов
-                </div>
-              </div>
-              <div className='word-notes'>
-                <span
-                  onClick={() => {
-                    this.toggleDropdown();
-                  }}>
-                  ⚑
-                </span>
               </div>
             </div>
             <div className='learning-card-main'>
@@ -464,9 +464,9 @@ class WordCards extends React.Component {
             </div>
           </div>
           <div className='learning-card-next'>
-            <p onClick={() => this.setCountPlus()} className='next'>
+            <ArrowForwardIosTwoToneIcon onClick={() => this.setCountPlus()} className='next'>
               ⮞
-            </p>
+            </ArrowForwardIosTwoToneIcon>
           </div>
         </div>
         <div className='button-reactions'>
