@@ -28,6 +28,7 @@ import {
   AudioCall,
   AboutTeamPage,
   SprintMiniGame,
+  PromoPage,
 } from '../../pages';
 
 
@@ -97,6 +98,7 @@ class PrimaryAppBar extends Component {
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/puzzle' component={EnglishPuzzle} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/sprint' component={SprintMiniGame} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/audiocall' component={AudioCall} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/promo' component={PromoPage} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/account'>
                       <AccountInfo />
                     </CheckRoute>
