@@ -1,3 +1,4 @@
+import { BACKEND_URL } from '../../../constants/urlsRequests';
 const email = 'krava@tut.by';
 const password = 'kravA21!';
 const tokenLife = 10800000;
@@ -6,7 +7,7 @@ let token;
 let tokenTime = 0;
 
 const loginUser = async () => {
-  const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/signin', {
+  const rawResponse = await fetch(`${BACKEND_URL}/signin`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -29,17 +30,14 @@ const loginUser = async () => {
 
 const getStatistics = async () => {
   await loginUser();
-  const rawResponse = await fetch(
-    `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+  const rawResponse = await fetch(`${BACKEND_URL}/users/${userId}/statistics`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
 
   const content = await rawResponse.json();
   return content;
@@ -51,7 +49,7 @@ const saveStaistics = async (statistics) => {
     await loginUser();
   }
 
-  await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`, {
+  await fetch(`${BACKEND_URL}/users/${userId}/statistics`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
