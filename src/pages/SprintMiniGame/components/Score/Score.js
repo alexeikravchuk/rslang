@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
 }));
 
@@ -17,10 +17,10 @@ function Score(props) {
   const classes = useStyles();
   return (
     <div className={classes.score}>
-      <Typography variant="h2" component="h2">
+      <Typography variant="h4" component="h4">
         {props.sprintState.score}
       </Typography>
-      <Typography variant="h4" component="h4" style={{textAlign: 'center'}}>
+      <Typography variant="h6" component="h6" style={{textAlign: 'center'}}>
         +{props.sprintState.xp * props.sprintState.xpLevel} points per word
       </Typography>
     </div>

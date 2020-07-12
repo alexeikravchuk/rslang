@@ -8,7 +8,7 @@ import { isTimerFinished } from '../../../../store/actions/sprintActions';
 const useStyles = makeStyles((theme) => ({
   timer: {
     position: 'relative',
-    marginBottom: '2rem',
+    marginBottom: '0.5rem',
   },
   timerValue: {
     position: 'absolute',
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: '0',
     right: '0',
     textAlign: 'center',
-    lineHeight: '100px',
+    lineHeight: '70px',
   }
 }));
 
@@ -45,8 +45,8 @@ function Timer(props) {
 
   return (
     <div className={classes.timer}>
-      <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 100 } />
-      <Typography variant="h4" component="h4" className={classes.timerValue}>
+      <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 70 } />
+      <Typography variant="h5" component="h5" className={classes.timerValue}>
         {Math.round(progress * roundDuration / fullProgress)}
       </Typography>
     </div>
