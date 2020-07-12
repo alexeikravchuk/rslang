@@ -1,4 +1,5 @@
-import { WORDS_PER_PAGE, WORDS_PER_SENTENCE, DATA_SRC, BACKEND_URL } from '../constants/constants';
+import { WORDS_PER_PAGE, WORDS_PER_SENTENCE } from '../constants/constants';
+import { BACKEND_URL, DATA_LINK } from '../../../constants/urlsRequests';
 
 async function getCurrentPageWords(group, page) {
   const url = `${BACKEND_URL}/words?group=${group}&page=${page}&wordsPerExampleSentenceLTE=${WORDS_PER_PAGE}&wordsPerPage=${WORDS_PER_SENTENCE}`;
@@ -19,7 +20,7 @@ async function getCurrentPageWords(group, page) {
     throw Error('error getting current page words');
   } catch (e) {
     console.log(e.message);
-    const response = await fetch(`${DATA_SRC}/data/book${group}.js`);
+    const response = await fetch(`${DATA_LINK}/data/book${group}.js`);
     const allWords = await response.text();
     const currentPageWords = JSON.parse(allWords.split(' = ')[1].split(';\n')[0]).splice(
       (page - 1) * 10,

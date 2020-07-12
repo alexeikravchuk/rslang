@@ -1,9 +1,12 @@
 import React, { Fragment, Component } from 'react';
+import { connect } from 'react-redux';
+
 import { ControlBar } from '../ControlBar';
 import { Puzzle } from '../Puzzle';
 import { Buttons } from '../Buttons';
 import { ControlBarContext, PuzzleContext } from '../context';
 import { ROW_TYPE, BLANK_IMG, SENTENCE_STATUS, BUTTONS_NAME } from '../../constants/constants';
+import { loadStatistics, saveStatistics } from '../../../../store/actions/statisticsActions';
 
 import {
   getImageSrc,
@@ -14,7 +17,6 @@ import {
   saveTipsSetting,
   playSentence,
   getButtonsInfo,
-  getStatistics,
   updateStatistics,
 } from '../../helpers';
 import { Results } from '../Results';
@@ -24,7 +26,8 @@ class MainPage extends Component {
 
   componentDidMount = async () => {
     await this.setData();
-    await this.setStatistics();
+    const { loadStatistics, userId, token } = this.props;
+    loadStatistics(userId, token);
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -93,21 +96,16 @@ class MainPage extends Component {
     this.setState({ whitePuzzles });
   };
 
-  setStatistics = async () => {
-    const statistics = await getStatistics();
-    delete statistics.id;
-    this.setState({ statistics });
-  };
-
   saveStatistics = () => {
+    const { saveStatistics, userId, token, statistics } = this.props;
     const {
-      statistics,
       level: { current: currentLevel },
       page: { current: currentPage },
       results,
     } = this.state;
     const newStatistics = updateStatistics({ statistics, currentLevel, currentPage, results });
-    this.setState({ statistics: newStatistics });
+    console.log(newStatistics);
+    saveStatistics(userId, token, newStatistics);
   };
 
   changeLevel = ({ target: { value } }) => {
@@ -482,7 +480,6 @@ class MainPage extends Component {
       page,
       words,
       results,
-      statistics,
       painting,
       sentenceStatus,
       puzzles,
@@ -495,6 +492,7 @@ class MainPage extends Component {
       isCorrectOrder,
       isShowResults,
     } = this.state;
+    const { puzzle: statistics } = this.props.statistics.optional;
     return (
       <div className='game--wrapper'>
         {isShowResults ? (
@@ -547,4 +545,17 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+const mapStateToProps = (store) => {
+  const {
+    statisticsReducer,
+    authReducer: { token, userId },
+  } = store;
+  return { statistics: statisticsReducer, token, userId };
+};
+
+const mapDispatchToProps = {
+  loadStatistics,
+  saveStatistics,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

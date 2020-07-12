@@ -1,4 +1,4 @@
-import { DATA_LINK } from '../constants/constants';
+import { DATA_LINK } from '../../../constants/urlsRequests';
 
 let audio = null;
 
