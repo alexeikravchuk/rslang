@@ -134,10 +134,9 @@ export const getStatistics = async (id, token) => {
     return {
       "optional": {
         "sprint": {
-          "scoreRecord": 0,
-          "scoreAverage": 0,
-          "totalScore": 0,
-          "gameCounter": 0,
+          "rec": 0,
+          "score": 0,
+          "count": 0,
         }
       }
     }
@@ -263,7 +262,6 @@ export const setStatistics = async (data, id, token) => {
       sprint: data
     }
   }
-  console.log(statsData)
   await fetch(`${SERVER_URL}users/${id}/statistics`, {
       method: 'PUT',
       withCredentials: true,
