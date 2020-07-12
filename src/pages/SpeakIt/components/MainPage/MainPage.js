@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+
 import { StatusBar } from '../StatusBar';
 import { ImagesBlock } from '../ImagesBlock';
 import { CardList } from '../CardList';
 import { Buttons } from '../Buttons';
 import { Results } from '../Results';
-
-import { getWords, runSpeechRecognition, saveResult, playCardsAudio } from '../../helpers';
+import { getWords, runSpeechRecognition, playCardsAudio } from '../../helpers';
 import { MAX_LEVEL } from '../../constants/constants';
 
 class MainPage extends Component {
@@ -28,7 +28,8 @@ class MainPage extends Component {
 
   setWords = async (group) => {
     const page = parseInt(Math.random() * 30, 10);
-    const words = await getWords(group, page);
+    const part = parseInt(Math.random() * 2, 10);
+    const words = await getWords(group - 1, page, part);
     this.setState({ words });
   };
 
@@ -83,9 +84,7 @@ class MainPage extends Component {
   };
 
   startNewGame = () => {
-    const { words, activeCardIndexes, level } = this.state;
-    console.log(activeCardIndexes);
-    saveResult(words, activeCardIndexes);
+    const { level } = this.state;
     this.restartStudyCurrentPage();
     this.setWords(level.current);
   };

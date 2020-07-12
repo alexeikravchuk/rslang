@@ -8,12 +8,12 @@ export const StatisticsBody = ({ statistics, onClick }) => {
     <tbody>
       {keys.map((key) => (
         <tr key={key}>
-          <td>{key.split(', ')[0]}</td>
-          <td>{key.split(', ')[1]}</td>
-          <td>{statistics[key].succes}</td>
-          <td>{statistics[key].errors}</td>
+          <td>{new Date(+key).toLocaleDateString()}</td>
+          <td>{new Date(+key).toLocaleTimeString()}</td>
+          <td>{statistics[key].ok.length}</td>
+          <td>{10 - statistics[key].ok.length}</td>
           <td>
-            <button className='result-link' onClick={onClick}>
+            <button className='result-link' onClick={(e) => onClick(e, key)}>
               Show
             </button>
           </td>

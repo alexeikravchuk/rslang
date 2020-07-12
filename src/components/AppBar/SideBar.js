@@ -60,10 +60,11 @@ function createStyles(theme) {
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: 0,
+      width: theme.spacing(7) + 1,
+      left: '-100%',
       zIndex: 1000,
       [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(7) + 1,
+        left: 0,
       },
       backgroundColor: 'rgba(243,245,255,1)',
     },
