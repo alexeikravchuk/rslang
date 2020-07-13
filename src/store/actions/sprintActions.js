@@ -29,7 +29,6 @@ export const CLOSE_WINDOW = 'CLOSE_WINDOW';
 export const LEARNED_WORDS = 'LEARNED_WORDS';
 export const WRONG_WORDS = 'WRONG_WORDS';
 
-
 export const hideWelcomeDialog = () => {
   return ({
     type: HIDE_WELCOME_DIALOG,
@@ -118,31 +117,6 @@ export const getCommonWords = async (difficulty, round) => {
     return words
 }
 
-export const getStatistics = async (id, token) => {
-  try {
-    const response = await fetch(`${SERVER_URL}users/${id}/statistics`, {
-      method: 'GET',
-      withCredentials: true,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-      }
-    })
-    const statistics = await response.json()
-    return statistics
-  } catch (e) {
-    return {
-      "optional": {
-        "sprint": {
-          "rec": 0,
-          "score": 0,
-          "count": 0,
-        }
-      }
-    }
-  }
-}
-
 export const loadGame = (userWords, difficulty, round, id, token) => {
   return async dispatch => {
     dispatch(hideWelcomeDialog())
@@ -157,9 +131,8 @@ export const loadGame = (userWords, difficulty, round, id, token) => {
     } else {
       words = await getCommonWords(difficulty, round)
     }
-    const stats = await getStatistics(id, token);
     setTimeout(() => {
-      dispatch({ type: LOAD_GAME, words, stats })
+      dispatch({ type: LOAD_GAME, words})
       dispatch(hideLoader())
       playSound(START_SOUND)
       dispatch(showCard(words.length))
@@ -253,40 +226,9 @@ export const closeWindow = () => {
   })
 }
 
-export const setStatistics = async (data, id, token) => {
-  const stats = await getStatistics(id, token);
-  const statsData = {
-    learnedWords: stats.learnedWords,
-    optional: {
-      ...stats.optional,
-      sprint: data
-    }
-  }
-  await fetch(`${SERVER_URL}users/${id}/statistics`, {
-      method: 'PUT',
-      withCredentials: true,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(statsData)
-    })
-    .then(response => {
-      if (response.status === 404) {
-        throw new Error('404');
-      } else if (response.status === 401) {
-        throw new Error('401');
-      } else {
-        return response.json()
-      }
-    })
-  }
-
-export const endGame = (data, id, token) => {
+export const endGame = () => {
   return async dispatch => {
     try {
-      await setStatistics(data, id, token)
       dispatch({ type: END_GAME })
     } catch (e) {
       dispatch({ type: END_GAME })

@@ -14,6 +14,7 @@ import {
   Spellcheck,
 } from '@material-ui/icons';
 import { endGame } from '../../../../store/actions/sprintActions';
+import { saveStatistics } from '../../../../store/actions/statisticsActions';
 import { StatisticDialogDescription } from '../StatisticDialogDescription/StatisticDialogDescription';
 import { StatisticDialogWords } from '../StatisticDialogWords/StatisticDialogWords'
 
@@ -35,13 +36,27 @@ function StatisticDialog(props) {
     setValue(newValue);
   };
 
-  const { scoreRecord, totalScore, gameCounter, showStatistic } = props.sprintState.sprintReducer;
+  const { showStatistic, score } = props.sprintState.sprintReducer;
   const { userId, token } = props.sprintState.authReducer;
+  const { scoreRecord, totalScore, gameCounter } = props.sprintState.statisticsReducer.optional.sprint;
+  const { endGame, saveStatistics } = props;
+  const appStats = props.sprintState.statisticsReducer;
 
-  const data = {
-    "rec": scoreRecord,
-    "score": totalScore,
-    "count": gameCounter,
+  const statistics = {
+    learnedWords: appStats.learnedWords,
+    optional: {
+      ...appStats.optional,
+      sprint: {
+        "scoreRecord": (Math.max(score, scoreRecord)) || 0,
+        "totalScore": (totalScore + score) || 0,
+        "gameCounter": (gameCounter + 1) || 0,
+      }
+    }
+  }
+
+  const finishGame = (userId, token, statistics) => {
+    saveStatistics(userId, token, statistics);
+    endGame();
   }
 
   return (
@@ -64,7 +79,7 @@ function StatisticDialog(props) {
         <Tab icon={<Spellcheck />} />
       </Tabs>
       <MuiDialogActions>
-        <Button autoFocus onClick={() => props.endGame(data, userId, token)} color="primary">
+        <Button autoFocus onClick={() => finishGame(userId, token, statistics)} color="primary">
           Close
         </Button>
       </MuiDialogActions>
@@ -80,7 +95,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    endGame: (data, id, token) => dispatch(endGame(data, id, token)),
+    endGame: () => dispatch(endGame()),
+    saveStatistics: (userId, token, statistics) => dispatch(saveStatistics(userId, token, statistics))
   }
 }
 
