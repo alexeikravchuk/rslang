@@ -6,7 +6,6 @@
 .learning-card-wrapper {
   width: 100%;
   height: 100%;
-  background: #ddfaff;
   margin: 0 auto;
   padding-top: 5px;
 }
@@ -14,8 +13,8 @@
 .learning-word-cards {
   display: flex;
   width: 700px;
-  height: 400px;
-  margin: 50px auto 10px auto;
+  height: 420px;
+  margin: 30px auto;
 }
 
 .word-error {
@@ -27,6 +26,7 @@
 }
 
 .learning-card-prev {
+  height: 420px;
   width: 50px;
 }
 
@@ -43,6 +43,7 @@
 }
 
 .learning-card-next {
+  height: 420px;
   width: 50px;
 }
 
@@ -84,7 +85,7 @@
 .dropdown-notes {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  height: 50px;
 }
 
 .word-notes span {
@@ -95,6 +96,10 @@
 
 .word-notes span:hover {
   color: white;
+}
+
+.dropdown {
+  padding-right: 20px;
 }
 
 .dropdown div {
@@ -108,7 +113,7 @@
 }
 
 .learning-card-main {
-  height: 230px;
+  height: 338px;
 }
 
 .learning-word-wrapper {
@@ -151,6 +156,7 @@
 }
 
 .learning-word-examples {
+  height: 203px;
   padding: 1.5rem 1rem 1rem 1rem;
 }
 
@@ -171,7 +177,6 @@
 }
 
 .button-reactions {
-  margin-top: 50px;
   display: flex;
   justify-content: center;
 }
@@ -220,7 +225,7 @@
 }
 
 .learning-word-notification {
-  width: 568px;
+  width: 100%;
   height: 20px;
   text-align: center;
   border-color: #4b909b;
@@ -250,7 +255,7 @@
   height: 0.5rem;
   background: #b1d6db;
   border-radius: 0.312rem;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .number-end {
@@ -266,78 +271,111 @@
 
 @media screen and (max-width: 800px) {
   .learning-word-cards {
-    margin: 50px auto 10px 80px;
+    width: 644px;
+    height: 480px;
+    margin-left: 5%;
   }
   .learning-card-wrapper {
-    height: 780px;
+    height: 695px;
+  }
+  .learning-card-prev {
+    height: 480px;
+  }
+  .prev {
+    margin: 225px 13px;
+  }
+  .learning-card-next {
+    height: 480px;
+  }
+  .next {
+    margin: 225px 13px;
   }
   .learning-card-header {
     height: 80px;
   }
+  .learning-word-description {
+    width: 55px;
+    margin: 0 .5rem;
+  }
+  .dropdown-notes {
+    height: 80px;
+    padding-top: 15px;
+  }
   .dropdown {
     width: 195px;
+    padding-right: 5px;
+  }
+  .learning-card-main {
+    height: 368px;
+  }
+  .learning-word-examples {
+    height: 233px;
   }
   .learning-card {
     width: 550px;
     height: 480px;
   }
-  .button-reactions {
-    margin-top: 120px;
-  }
-}
-
-@media screen and (max-width: 775px) {
-  .learning-word-cards {
-    width: 650px;
-    margin: 50px auto 10px 70px;
-  }
 }
 
 @media screen and (max-width: 750px) {
+  .learning-card-wrapper {
+    height: 695px;
+  }
   .learning-word-cards {
-    width: 600px;
-    margin: 50px auto 10px 65px;
+    width: 640px;
+    height: 480px;
+    margin: 30px 2%;
   }
 }
 
 @media screen and (max-width: 725px) {
   .learning-word-cards {
-    width: 550px;
-    margin: 50px auto 10px 60px;
+    width: 635px;
+    height: 480px;
+    margin: 30px 1%;
   }
 }
 
 @media screen and (max-width: 700px) {
   .learning-word-cards {
-    width: 450px;
-    margin: 50px auto 10px 55px;
-  }
-}
-
-@media screen and (max-width: 670px) {
-  .learning-word-cards {
-    width: 400px;
-    margin: 50px auto 10px 120px;
+    width: 420px;
+    height: 750px;
+    margin-left: 16%;
   }
   .learning-card-header {
     display: contents;
     height: 100px;
-    padding: 20px;
   }
   .learning-card {
     width: 400px;
-    height: 780px;
+    height: 750px;
+  }
+  .learning-card-prev {
+    height: 750px;
+  }
+  .prev {
+    margin: 300px 13px;
+  }
+  .learning-card-next {
+    height: 750px;
+  }
+  .next {
+    margin: 300px 13px;
   }
   .current-word {
     width: 100%;
     justify-content: space-between;
-    padding: 20px;
+    padding: 5px 20px;
   }
   .dropdown-notes {
-    padding: 20px;
+    height: 65px;
+    padding: 5px 20px;
   }
   .learning-card-wrapper {
-    height: 1067px;
+    height: 965px;
+  }
+  .learning-card-main {
+    height: 597px;
   }
   .learning-word-wrapper {
     height: 1100px;
@@ -345,12 +383,15 @@
     padding: 0 50px;
   }
   .learning-word-info {
-    padding: 20px;
+    padding: 10px 20px;
   }
   .learning-word-image {
     width: 250px;
     height: 180px;
-    padding: 20px;
+    padding: 10px 20px;
+  }
+  .learning-word-examples {
+    padding: 10px 20px;
   }
   .prev {
     margin: 270px 10px;
@@ -358,67 +399,47 @@
   .next {
     margin: 270px 10px;
   }
-  .button-reactions {
-    margin-top: 440px;
-  }
+  
 }
 
 @media screen and (max-width: 650px) {
   .learning-word-cards {
-    width: 400px;
-    margin: 50px auto 10px 100px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .learning-word-cards {
-    width: 300px;
-    margin: 50px auto 10px 90px;
-  }
-}
-
-@media screen and (max-width: 575px) {
-  .learning-word-cards {
-    width: 200px;
-    margin: 50px auto 10px 80px;
-  }
-  .learning-word-notification {
-    text-align: center;
+    margin: 30px 13%;
   }
 }
 
 @media screen and (max-width: 550px) {
   .learning-word-cards {
-    width: 250px;
-    margin: 50px auto 10px 70px;
-  }
-}
-
-@media screen and (max-width: 525px) {
-  .learning-word-cards {
-    margin: 50px auto 10px 60px;
+    margin: 30px 10%;
   }
 }
 
 @media screen and (max-width: 500px) {
   .learning-word-cards {
-    width: 200px;
-    margin: 50px auto 10px 50px;
+    margin: 30px 6%;
   }
-  .button-reactions {
-    margin-left: 40px;
+}
+
+@media screen and (max-width: 475px) {
+  .learning-word-cards {
+    margin: 30px 4%;
   }
 }
 
 @media screen and (max-width: 450px) {
   .learning-word-cards {
-    margin: 50px auto 10px 40px;
+    margin: 30px 2%;
+  }
+  .prev {
+    margin: 270px 5px;
+  }
+  .next {
+    margin: 270px 5px;
   }
 }
 
 @media screen and (max-width: 400px) {
   .learning-word-cards {
-    width: 150px;
-    margin: 50px auto 10px 30px;
+    margin: 30px 0;
   }
 }

@@ -118,6 +118,8 @@ class WordCards extends React.Component {
 
   setCountPlus = () => {
     this.clearInput();
+    this.setState({colorDots: 'white'});
+    this.setState({description: 'Success rate'})
     if (this.state.counter === this.state.lastNumber - 1) {
       this.setState(
         {
@@ -227,6 +229,8 @@ class WordCards extends React.Component {
       this.setState({ showAnswer: true})
     } else {
       this.setState({showAnswer: false})
+      this.setState({colorDots: 'white'});
+      this.setState({description: 'Success rate'})
     }
   }
 
