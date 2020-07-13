@@ -17,8 +17,6 @@ import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
 import Settings from '../Settings/Settings';
 
-import { pageLinks } from '../../constants/pageLinks';
-
 import {
   HomePage,
   AccountInfo,
@@ -62,17 +60,6 @@ class PrimaryAppBar extends Component {
     return false;
   };
 
-  checkPathName = ({ path, auth }) => {
-    const paths = pageLinks.map((item) => item.link).concat('/signin', '/signup');
-    const isValidPath = paths.some((item) => item === path);
-    if (!isValidPath) {
-      return window.location.replace(`${auth ? '/home' : '/signin'}`);
-    }
-    if ((path === '/signin' || path === '/signup') && auth) {
-      return window.location.replace('/home');
-    }
-  };
-
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
   };
@@ -86,7 +73,6 @@ class PrimaryAppBar extends Component {
     const { classes } = this.props;
     const { drawerOpen } = this.state;
     const auth = this.checkAuthorization();
-    this.checkPathName({ path: window.location.pathname, auth });
     return (
       <React.Fragment>
         <div className={classes.appContainer}>
