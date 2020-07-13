@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import './Login.scss';
 import {
   Button,
   Dialog,
@@ -7,8 +10,9 @@ import {
   DialogContentText,
   DialogTitle,
   Link,
+  CircularProgress,
 } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+
 import { signURL, createURL } from '../../constants/authURL';
 
 import {
@@ -19,7 +23,6 @@ import {
   addUserId,
   authStatus,
 } from '../../store/actions/authAction';
-import { connect } from 'react-redux';
 
 function Alert(props) {
   function getResponse(emailInput, passwordInput) {
@@ -151,7 +154,11 @@ function Alert(props) {
         onClose={handleClose}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'>
-        <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
+        {title ? (
+          <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
+        ) : (
+          <CircularProgress color='secondary' />
+        )}
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>{emailTitle}</DialogContentText>
           <DialogContentText id='alert-dialog-description'>{passwordTitle}</DialogContentText>
