@@ -16,6 +16,8 @@ import { SignUp } from '../Registration/SignUp';
 import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
 import Settings from '../Settings/Settings';
+import Statistics from '../Statistics/Statistics'
+import { connect } from 'react-redux';
 
 import {
   HomePage,
@@ -27,6 +29,7 @@ import {
   AboutTeamPage,
   SprintMiniGame,
   PromoPage,
+ 
 } from '../../pages';
 
 import { addToken, addUserId, authStatus } from '../../store/actions/authAction';
@@ -103,25 +106,22 @@ class PrimaryAppBar extends Component {
                 </Grid>
                 <Grid item xs className={classes.mainContainer}>
                   <Switch>
-                    <Route path='/signin' component={SignIn} />
-                    <Route path='/signup' component={SignUp} />
-                    <CheckRoute isLoggedIn={auth} path='/home' component={HomePage} />
-                    <CheckRoute isLoggedIn={auth} path='/wordcards' component={WordCards} />
-                    <CheckRoute isLoggedIn={auth} path='/about' component={AboutTeamPage} />
-                    <CheckRoute isLoggedIn={auth} path='/savannah' component={Savannah} />
-                    <CheckRoute isLoggedIn={auth} path='/dictionary' component={Dictionary} />
-                    <CheckRoute isLoggedIn={auth} path='/speakit' component={SpeakIt} />
-                    <CheckRoute isLoggedIn={auth} path='/puzzle' component={EnglishPuzzle} />
-                    <CheckRoute isLoggedIn={auth} path='/sprint' component={SprintMiniGame} />
-                    <CheckRoute isLoggedIn={auth} path='/audiocall' component={AudioCall} />
-                    <CheckRoute isLoggedIn={auth} path='/promo' component={PromoPage} />
-                    <CheckRoute
-                      isLoggedIn={auth}
-                      path='/settings'
-                      render={() => <Settings {...this.props} />}
-                    />
-                    <CheckRoute isLoggedIn={auth} path='/account'>
-                      <AccountInfo />
+                  <Route path='/signin' component={SignIn}/>
+                  <Route path='/signup' component={SignUp}/>
+                    <CheckRoute isLoggedIn={ auth }  path='/home' component={HomePage} />
+                    <CheckRoute isLoggedIn={ auth }  path='/wordcards' component={WordCards} />
+                    <CheckRoute isLoggedIn={ auth }  path='/statistics' component={Statistics} />
+                    <CheckRoute isLoggedIn={ auth }  path='/about' component={AboutTeamPage} />
+                    <CheckRoute isLoggedIn={ auth }  path='/savannah' component={Savannah} />
+                    <CheckRoute isLoggedIn={ auth }  path='/dictionary' component={Dictionary} />
+                    <CheckRoute isLoggedIn={ auth }  path='/speakit' component={SpeakIt} />
+                    <CheckRoute isLoggedIn={ auth }  path='/puzzle' component={EnglishPuzzle} />
+                    <CheckRoute isLoggedIn={ auth }  path='/sprint' component={SprintMiniGame} />
+                    <CheckRoute isLoggedIn={ auth }  path='/audiocall' component={AudioCall} />
+                    <CheckRoute isLoggedIn={ auth }  path='/promo' component={PromoPage} />
+                    <CheckRoute isLoggedIn={ auth }  path='/settings' render={() => <Settings {...this.props}/>} />
+                    <CheckRoute isLoggedIn={ auth }  path='/account'>
+                    <AccountInfo />
                     </CheckRoute>
                   </Switch>
                 </Grid>
