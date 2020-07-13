@@ -15,6 +15,7 @@ import {SignUp } from '../Registration/SignUp'
 
 import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
+import Settings from '../Settings/Settings';
 
 import { connect } from 'react-redux';
 
@@ -28,6 +29,8 @@ import {
   AudioCall,
   AboutTeamPage,
   SprintMiniGame,
+  ownGame,
+  PromoPage,
 } from '../../pages';
 
 
@@ -96,7 +99,10 @@ class PrimaryAppBar extends Component {
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/speakit' component={SpeakIt} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/puzzle' component={EnglishPuzzle} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/sprint' component={SprintMiniGame} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/ownGame' component={ownGame} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/audiocall' component={AudioCall} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/promo' component={PromoPage} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/settings' render={() => <Settings {...this.props}/>} />
                     <CheckRoute isLoggedIn={ this.props.authStatus }  path='/account'>
                       <AccountInfo />
                     </CheckRoute>
@@ -173,9 +179,11 @@ function createStyles(theme) {
 }
 
 
-function mapState({authReducer: { authStatus } } ) {
+function mapState({authReducer: { authStatus, token, userId } } ) {
   return {
-    authStatus
+    authStatus,
+    token,
+    userId
   };
 }
 

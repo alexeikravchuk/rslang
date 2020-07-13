@@ -1,3 +1,4 @@
-export const signURL = 'https://afternoon-falls-25894.herokuapp.com/signin';
-export const createURL = 'https://afternoon-falls-25894.herokuapp.com/users';
+import { BACKEND_URL } from './urlsRequests';
 
+export const signURL = `${BACKEND_URL}/signin`;
+export const createURL = `${BACKEND_URL}/users`;

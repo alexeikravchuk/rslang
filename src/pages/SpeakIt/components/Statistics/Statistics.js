@@ -6,19 +6,15 @@ import { NoStatisticsMessage } from './NoStatisticsMessage';
 
 class Statistics extends Component {
   static propTypes = {
+    statistics: PropTypes.object,
     onClick: PropTypes.func.isRequired,
   };
-
-  getStatistics = () => {
-    if (!localStorage.stat) {
-      return null;
-    }
-    return JSON.parse(localStorage.stat);
+  static defaultProps = {
+    statistics: {},
   };
 
   render() {
-    const statistics = this.getStatistics();
-    const { onClick } = this.props;
+    const { onClick, statistics } = this.props;
 
     return (
       <div className='stat-container'>
@@ -33,9 +29,7 @@ class Statistics extends Component {
               <th className='th-option'>Link</th>
             </tr>
           </thead>
-          {statistics && (
-            <StatisticsBody statistics={statistics} onClick={onClick} />
-          )}
+          {statistics && <StatisticsBody statistics={statistics} onClick={onClick} />}
         </table>
         {!statistics && <NoStatisticsMessage />}
         <button className='btn btn-stat return' onClick={onClick}>

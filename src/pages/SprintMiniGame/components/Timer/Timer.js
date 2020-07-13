@@ -8,7 +8,7 @@ import { isTimerFinished } from '../../../../store/actions/sprintActions';
 const useStyles = makeStyles((theme) => ({
   timer: {
     position: 'relative',
-    marginBottom: '2rem',
+    marginBottom: '0.5rem',
   },
   timerValue: {
     position: 'absolute',
@@ -17,35 +17,37 @@ const useStyles = makeStyles((theme) => ({
     bottom: '0',
     right: '0',
     textAlign: 'center',
-    lineHeight: '100px',
+    lineHeight: '70px',
   }
 }));
 
 function Timer(props) {
   const classes = useStyles();
 
-
   const [progress, setProgress] = React.useState(0);
   const fullProgress = 100;
   const roundDuration = 60;
 
+  const progressCounter = () => {
+    setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + fullProgress / roundDuration));
+  }
+
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= fullProgress ? 0 : prevProgress + fullProgress / roundDuration));
-      if (progress >= 10) {
-        props.isTimerFinished()
-      }
-    }, 1000);
+    const timer = setTimeout(progressCounter, 1000)
+    if (progress >= 100) {
+      props.isTimerFinished()
+    }
     return () => {
-      clearInterval(timer);
+      clearTimeout(timer);
     };
-  }, [progress, props]);
+  }, [progress]);
+
 
   return (
     <div className={classes.timer}>
-      <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 100 } />
-      <Typography variant="h4" component="h4" className={classes.timerValue}>
-        {Math.floor(progress * roundDuration / fullProgress)}
+      <CircularProgress variant="static" value={progress} thickness={ 5 } size={ 70 } />
+      <Typography variant="h5" component="h5" className={classes.timerValue}>
+        {Math.round(progress * roundDuration / fullProgress)}
       </Typography>
     </div>
   );

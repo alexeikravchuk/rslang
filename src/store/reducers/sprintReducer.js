@@ -21,8 +21,8 @@ import {
   CHANGE_ROUND,
   TIMER_FINISHED,
   CLOSE_WINDOW,
-  ADD_LEARNED_WORDS,
-  ADD_WRONG_WORDS,
+  LEARNED_WORDS,
+  WRONG_WORDS,
  } from '../actions';
 
 
@@ -71,9 +71,9 @@ const sprintReducer = ( state = defaultState, action) => {
         gameWords: action.words,
         learnedWords: new Set(),
         wrongWords: new Set(),
-        scoreRecord: action.stats.optional.scoreRecord,
-        totalScore: action.stats.optional.totalScore,
-        gameCounter: action.stats.optional.gameCounter,
+        scoreRecord: action.stats.optional.sprint.rec,
+        totalScore: action.stats.optional.sprint.score,
+        gameCounter: action.stats.optional.sprint.count,
       };
     }
     case SHOW_LOADER: {
@@ -93,14 +93,17 @@ const sprintReducer = ( state = defaultState, action) => {
         xpLevelStepper: (state.xpLevelStepper < XP_STEPPER_NUMBER && action.answer) ? state.xpLevelStepper + 1 : INITIAL_XP_STEPPER_VALUE,
       };
     }
-    case ADD_LEARNED_WORDS: {
-      return {...state, learnedWords: state.learnedWords.add(action.payload)};
+    case LEARNED_WORDS: {
+      return {
+        ...state,
+        learnedWords: state.wrongWords.has(action.payload) ? state.learnedWords : state.learnedWords.add(action.payload)
+      };
     }
-    case ADD_WRONG_WORDS: {
+    case WRONG_WORDS: {
       return {
         ...state,
         wrongWords: state.wrongWords.add(action.payload),
-        learnedWords: state.learnedWords.delete(action.payload) ? state.learnedWords : state.learnedWords,
+        learnedWords: state.learnedWords.delete(action.payload) ? state.learnedWords : state.learnedWords
       };
     }
     case XP_LEVEL: {
@@ -117,12 +120,13 @@ const sprintReducer = ( state = defaultState, action) => {
       };
     }
     case TIMER_FINISHED: {
-      return {...state,
-       showStatistic: true,
-       showCard: false,
-       scoreRecord: Math.max(state.score, state.scoreRecord),
-       totalScore: state.totalScore + state.score,
-       gameCounter: state.gameCounter + 1,
+      return {
+        ...state,
+        showStatistic: true,
+        showCard: false,
+        scoreRecord: Math.max(state.score, state.scoreRecord),
+        totalScore: state.totalScore + state.score,
+        gameCounter: state.gameCounter + 1,
       };
     }
     case CLOSE_WINDOW: {

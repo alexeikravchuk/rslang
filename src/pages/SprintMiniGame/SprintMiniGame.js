@@ -54,14 +54,14 @@ function SprintMiniGame(props) {
             sayCardWord(TRANSLATE_LANGUAGE)
           }}
         >
-          <VolumeUp style={{ fontSize: 60 }} />
+          <VolumeUp style={{ fontSize: 30 }} />
         </IconButton>
         <IconButton
           component={Link}
           to='/home'
           onClick={props.endGame}
         >
-          <ExitToApp style={{ fontSize: 60 }}/>
+          <ExitToApp style={{ fontSize: 30 }}/>
         </IconButton>
       </div>
     )

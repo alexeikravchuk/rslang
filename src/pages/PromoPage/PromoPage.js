@@ -26,6 +26,8 @@ const useStyles = makeStyles({
     backgroundImage: 'url(' + Background +')',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
+    height: '100%',
+    width: '100%',
   },
   green: {
     color: '#73ff77',
@@ -57,7 +59,10 @@ const useStyles = makeStyles({
   media: {
     height: '0',
     paddingTop: '56.25%',
-  }
+  },
+  gridItem: {
+    padding: '10px',
+  },
 });
 
 export const PromoPage = () => {
@@ -72,11 +77,12 @@ export const PromoPage = () => {
         container
         direction='row'
         justify='space-around'
-        alignItems='center'
-        spacing={4}
+        alignItems='flex-start'
+        style={{height: '100%'}}
       >
         <Grid
           item lg={5}
+          className={classes.gridItem}
         >
           <div className={classes.englishEasy}>
             <Typography
@@ -111,6 +117,7 @@ export const PromoPage = () => {
         </Grid>
         <Grid
           item lg={5}
+          className={classes.gridItem}
         >
           <Card
             className={classes.root}
@@ -126,6 +133,7 @@ export const PromoPage = () => {
 
         <Grid
           item lg={5}
+          className={classes.gridItem}
         >
           <Typography
             color='secondary'
@@ -160,6 +168,7 @@ export const PromoPage = () => {
         </Grid>
         <Grid
           item lg={5}
+          className={classes.gridItem}
         >
           <Card
             className={classes.root}

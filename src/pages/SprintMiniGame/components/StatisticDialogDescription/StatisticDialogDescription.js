@@ -30,10 +30,10 @@ export function StatisticDialogDescription(props) {
 
   return (
     <MuiDialogConten>
-      <Typography variant="h2" id="discrete-slider" gutterBottom >
+      <Typography variant="h4" id="discrete-slider" gutterBottom >
         {score} points
       </Typography>
-      <Typography variant="h5" component="h3">
+      <Typography variant="h5" component="h5">
         Your record: {scoreRecord} points
       </Typography>
       <DialogContentText>

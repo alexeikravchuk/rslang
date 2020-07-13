@@ -9,6 +9,7 @@ import {
   DirectionsRun,
   People,
   Slideshow,
+  VideoLabel,
   Settings,
 } from '@material-ui/icons';
 import React from 'react';
@@ -60,6 +61,12 @@ export const pageLinks = [
     title: 'Sprint',
     link: '/sprint',
     icon: <DirectionsRun color='secondary' />,
+    type: 'game',
+  },
+  {
+    title: 'ownGame',
+    link: 'ownGame',
+    icon: <VideoLabel color='secondary' />,
     type: 'game',
   },
   {
