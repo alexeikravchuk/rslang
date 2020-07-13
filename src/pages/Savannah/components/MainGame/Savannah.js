@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {withStyles, Container, CircularProgress, Grid} from '@material-ui/core';
+import {withStyles, Container, CircularProgress, Grid, LinearProgress} from '@material-ui/core';
 import {connect} from 'react-redux';
 import GameToolbar from '../GameToolbar/Toolbar';
 import {Statistics} from '../Statistics';
@@ -46,7 +46,7 @@ class Savannah extends Component {
   }
 
   render() {
-    const {classes, loading, gameStarted, onClose, gameEnd, fetchWords} = this.props;
+    const {classes, loading, gameStarted, onClose, gameEnd, fetchWords, gamePoints} = this.props;
     return (
       <div className={'mainGame'}>
         {loading && this.loader(classes.loader)}
@@ -57,6 +57,9 @@ class Savannah extends Component {
         >
           <Grid item xs={12}>
             {(gameStarted && !loading) && <GameToolbar title={''} onClose={onClose} to={'/savannah'}/>}
+            {(gameStarted && !loading) && <LinearProgress color={'secondary'}
+                                                          variant="determinate"
+                                                          value={gamePoints}/>}
           </Grid>
           <Grid item xs={12}>
             <Container className={'savannahRoot'}>
