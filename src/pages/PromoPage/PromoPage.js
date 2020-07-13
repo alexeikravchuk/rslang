@@ -185,3 +185,4 @@ export const PromoPage = () => {
     </Container>
   )
 }
+export default PromoPage
