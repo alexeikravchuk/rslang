@@ -46,7 +46,7 @@ export const pageLinks = [
   },
   {
     title: 'Savannah',
-    link: './savannah',
+    link: '/savannah',
     icon: <Pets color='secondary' />,
     type: 'game',
   },
@@ -64,7 +64,7 @@ export const pageLinks = [
   },
   {
     title: 'About us',
-    link: './about',
+    link: '/about',
     icon: <People />,
     type: 'addition',
   },

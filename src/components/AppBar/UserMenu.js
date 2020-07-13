@@ -11,7 +11,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 class UserMenu extends Component {
   state = {
@@ -57,7 +57,6 @@ class UserMenu extends Component {
                     <MenuItem onClick={this.handleClose} to='/account' component={RouterLink}>
                       My account
                     </MenuItem>
-                    <MenuItem onClick={this.handleClose}>Setting</MenuItem>
                     <MenuItem onClick={this.handleClose} to='/signin' component={RouterLink}>
                       {this.props.authStatus ? 'Logout' : 'Login'}
                     </MenuItem>
@@ -83,12 +82,10 @@ function createStyles(theme) {
   };
 }
 
-function mapState({authReducer: { authStatus } } ) {
+function mapState({ authReducer: { authStatus } }) {
   return {
-    authStatus
+    authStatus,
   };
 }
 
 export default connect(mapState)(withStyles(createStyles)(UserMenu));
-
-
