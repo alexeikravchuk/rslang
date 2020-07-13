@@ -66,7 +66,10 @@ class PrimaryAppBar extends Component {
     const paths = pageLinks.map((item) => item.link).concat('/signin', '/signup');
     const isValidPath = paths.some((item) => item === path);
     if (!isValidPath) {
-      window.location.replace(`${auth ? '/home' : '/signin'}`);
+      return window.location.replace(`${auth ? '/home' : '/signin'}`);
+    }
+    if ((path === '/signin' || path === '/signup') && auth) {
+      return window.location.replace('/home');
     }
   };
 
@@ -91,7 +94,7 @@ class PrimaryAppBar extends Component {
             <Grid item xs={12}>
               <AppBar
                 className={clsx(classes.appBar, {
-                  [classes.appBarShift]: this.state.drawerOpen,
+                  [classes.appBarShift]: drawerOpen,
                 })}>
                 <Toolbar className={classes.toolbar}>
                   <IconButton
@@ -103,7 +106,7 @@ class PrimaryAppBar extends Component {
                     <MenuIcon />
                   </IconButton>
                   <Logo />
-                  <UserMenu />
+                  <UserMenu auth={auth} />
                 </Toolbar>
               </AppBar>
             </Grid>
