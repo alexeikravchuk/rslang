@@ -42,9 +42,6 @@ const defaultState = {
   translateIndex: 0,
   answer: null,
   score: 0,
-  scoreRecord: 0,
-  totalScore: 0,
-  gameCounter: 0,
   xp: BASIC_XP,
   xpLevel: INITIAL_XP_LEVEL,
   xpLevelStepper: INITIAL_XP_STEPPER_VALUE,
@@ -71,9 +68,6 @@ const sprintReducer = ( state = defaultState, action) => {
         gameWords: action.words,
         learnedWords: new Set(),
         wrongWords: new Set(),
-        scoreRecord: action.stats.optional.sprint.rec,
-        totalScore: action.stats.optional.sprint.score,
-        gameCounter: action.stats.optional.sprint.count,
       };
     }
     case SHOW_LOADER: {
@@ -124,9 +118,6 @@ const sprintReducer = ( state = defaultState, action) => {
         ...state,
         showStatistic: true,
         showCard: false,
-        scoreRecord: Math.max(state.score, state.scoreRecord),
-        totalScore: state.totalScore + state.score,
-        gameCounter: state.gameCounter + 1,
       };
     }
     case CLOSE_WINDOW: {
