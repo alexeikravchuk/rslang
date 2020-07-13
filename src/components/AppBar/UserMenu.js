@@ -11,11 +11,12 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 class UserMenu extends Component {
   state = {
     userMenuOpen: false,
+    auth: this.props.auth,
   };
   anchorRef = React.createRef();
 
@@ -24,6 +25,9 @@ class UserMenu extends Component {
   };
 
   handleClose = (event) => {
+    if (event.target.innerText === 'Logout') {
+      localStorage.removeItem('token');
+    }
     if (this.anchorRef.current && this.anchorRef.current.contains(event.target)) {
       return;
     }
@@ -31,7 +35,7 @@ class UserMenu extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, auth } = this.props;
     const { userMenuOpen } = this.state;
     return (
       <div>
@@ -57,9 +61,8 @@ class UserMenu extends Component {
                     <MenuItem onClick={this.handleClose} to='/account' component={RouterLink}>
                       My account
                     </MenuItem>
-                    <MenuItem onClick={this.handleClose}>Setting</MenuItem>
                     <MenuItem onClick={this.handleClose} to='/signin' component={RouterLink}>
-                      {this.props.authStatus ? 'Logout' : 'Login'}
+                      {auth ? 'Logout' : 'Login'}
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -83,12 +86,10 @@ function createStyles(theme) {
   };
 }
 
-function mapState({authReducer: { authStatus } } ) {
+function mapState({ authReducer: { authStatus } }) {
   return {
-    authStatus
+    authStatus,
   };
 }
 
 export default connect(mapState)(withStyles(createStyles)(UserMenu));
-
-

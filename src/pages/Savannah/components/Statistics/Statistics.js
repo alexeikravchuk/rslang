@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   ListItem,
   ListItemText,
   Divider,
@@ -63,11 +62,6 @@ function Statistics({learnedWords, missedWords, onReset}) {
               );
             })}
           </List>
-        </DialogContent>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
-            Each small step brings closer to your goal...
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button variant='outlined' color='primary' onClick={handleClose}>

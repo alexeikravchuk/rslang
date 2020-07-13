@@ -17,7 +17,7 @@ import {
   addEmail,
   addToken,
   addUserId,
-  authStatus
+  authStatus,
 } from '../../store/actions/authAction';
 import { connect } from 'react-redux';
 
@@ -51,10 +51,13 @@ function Alert(props) {
         if (typeof entryData !== 'undefined') {
           setTitle('Login success');
           doTransition('/home');
-          props.dispatch(authStatus(true))
+          console.log(props);
+          const { token, userId } = entryData;
+          saveDataToLocalStorage(token, userId);
+          props.dispatch(authStatus(true));
           props.dispatch(addEmail(emailInput));
-          props.dispatch(addToken(entryData.token));
-          props.dispatch(addUserId(entryData.userId));
+          props.dispatch(addToken(token));
+          props.dispatch(addUserId(userId));
         }
       });
     }
@@ -97,6 +100,11 @@ function Alert(props) {
       });
     }
   }
+
+  const saveDataToLocalStorage = (token, userId) => {
+    const time = Date.now();
+    localStorage.setItem('token', window.btoa(JSON.stringify({ time, token, userId })));
+  };
 
   const [title, setTitle] = useState('');
   const [emailTitle, setEmailStatus] = useState('');

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
 
 import { AppBar, Toolbar, IconButton, Grid, withStyles } from '@material-ui/core';
@@ -9,16 +10,15 @@ import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
-import {SignIn } from '../Registration/SignIn'
-import {SignUp } from '../Registration/SignUp'
-
+import { SignIn } from '../Registration/SignIn';
+import { SignUp } from '../Registration/SignUp';
 
 import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
 import Settings from '../Settings/Settings';
 import Statistics from '../Statistics/Statistics'
 import { connect } from 'react-redux';
-
+import { pageLinks } from '../../constants/pageLinks';
 
 import {
   HomePage,
@@ -33,21 +33,48 @@ import {
  
 } from '../../pages';
 
+import { addToken, addUserId, authStatus } from '../../store/actions/authAction';
 
-const CheckRoute = ({ isLoggedIn, ...props }) => 
-  isLoggedIn
-    ? <Route { ...props } />
-    : <Redirect to="/signin" />
+import { LIFE_TIME_TOKEN } from '../../constants/lifeTimeToken';
 
+const CheckRoute = ({ isLoggedIn, ...props }) =>
+  isLoggedIn ? <Route {...props} /> : <Redirect to='/signin' />;
 
 class PrimaryAppBar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      drawerOpen: false,
-    };
-  }
-  
+  state = {
+    drawerOpen: false,
+  };
+
+  checkAuthorization = () => {
+    if (localStorage.token) {
+      try {
+        const { dispatch } = this.props;
+        const data = JSON.parse(window.atob(localStorage.token));
+        const tokenTime = data.time && Date.now() - data.time;
+        if (tokenTime < LIFE_TIME_TOKEN) {
+          dispatch(authStatus(true));
+          dispatch(addToken(data.token));
+          dispatch(addUserId(data.userId));
+          return true;
+        }
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  };
+
+  checkPathName = ({ path, auth }) => {
+    const paths = pageLinks.map((item) => item.link).concat('/signin', '/signup');
+    const isValidPath = paths.some((item) => item === path);
+    if (!isValidPath) {
+      return window.location.replace(`${auth ? '/home' : '/signin'}`);
+    }
+    if ((path === '/signin' || path === '/signup') && auth) {
+      return window.location.replace('/home');
+    }
+  };
+
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
   };
@@ -59,33 +86,36 @@ class PrimaryAppBar extends Component {
 
   render() {
     const { classes } = this.props;
+    const { drawerOpen } = this.state;
+    const auth = this.checkAuthorization();
+    this.checkPathName({ path: window.location.pathname, auth });
     return (
       <React.Fragment>
         <div className={classes.appContainer}>
           <Grid container className={classes.grid}>
             <Grid item xs={12}>
               <AppBar
-                className={clsx(this.props.classes.appBar, {
-                  [this.props.classes.appBarShift]: this.state.drawerOpen,
+                className={clsx(classes.appBar, {
+                  [classes.appBarShift]: drawerOpen,
                 })}>
-                <Toolbar className={this.props.classes.toolbar}>
+                <Toolbar className={classes.toolbar}>
                   <IconButton
                     onClick={this.handleDrawerOpen}
                     edge='start'
-                    className={clsx(this.props.classes.menuButton, {
-                      [this.props.classes.hide]: this.state.drawerOpen,
+                    className={clsx(classes.menuButton, {
+                      [classes.hide]: drawerOpen,
                     })}>
                     <MenuIcon />
                   </IconButton>
                   <Logo />
-                  <UserMenu />
+                  <UserMenu auth={auth} />
                 </Toolbar>
               </AppBar>
             </Grid>
             <Grid item xs={12}>
               <Grid container wrap='nowrap'>
                 <Grid item>
-                  <SideBar open={this.state.drawerOpen} onClick={this.handleDrawerClose} />
+                  <SideBar open={drawerOpen} onClick={this.handleDrawerClose} />
                 </Grid>
                 <Grid item xs className={classes.mainContainer}>
                   <Switch>
@@ -178,12 +208,11 @@ function createStyles(theme) {
   };
 }
 
-
-function mapState({authReducer: { authStatus, token, userId } } ) {
+function mapState({ authReducer: { authStatus, token, userId } }) {
   return {
     authStatus,
     token,
-    userId
+    userId,
   };
 }
 

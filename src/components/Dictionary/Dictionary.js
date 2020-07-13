@@ -65,15 +65,15 @@ class Dictionary extends React.Component {
   }
 
   playAudioWords(path) {
-    let audio = new Audio(path);
-    let audioPromise = audio.play();
-    if (audioPromise !== undefined) {
-      audioPromise.then(_ => {
+    let audio = null;
+    try {
+      if (audio && audio.played) {
         audio.pause();
-      })
-        .catch(error => {
-          console.log(error);
-        });
+      }
+      audio = new Audio(path);
+      audio.play().catch((e) => console.log(e.message));
+    } catch (e) {
+      console.log(e.message);
     }
   }
 
