@@ -17,7 +17,6 @@ import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
 import Settings from '../Settings/Settings';
 import Statistics from '../Statistics/Statistics'
-import { connect } from 'react-redux';
 
 import {
   HomePage,
@@ -29,7 +28,7 @@ import {
   AboutTeamPage,
   SprintMiniGame,
   PromoPage,
- 
+
 } from '../../pages';
 
 import { addToken, addUserId, authStatus } from '../../store/actions/authAction';
