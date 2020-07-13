@@ -11,7 +11,7 @@ class Results extends Component {
   state = { ...this.props };
 
   showStatistiInfo = async (key) => {
-    const { level, page, results } = this.state.statistics.optional[key];
+    const { lv: level, pg: page, rs: results } = this.state.statistics.stat[key];
 
     const painting = getImageSrc(level, page);
     const words = await getCurrentPageWords(level - 1, page - 1);
@@ -82,8 +82,11 @@ Results.propTypes = {
     name: PropTypes.string,
     year: PropTypes.string,
   }).isRequired,
+  statistics: PropTypes.shape({
+    lw: PropTypes.number.isRequired,
+    stat: PropTypes.object.isRequired,
+  }),
   onBtnClick: PropTypes.func.isRequired,
-  showStatisticsData: PropTypes.func.isRequired,
 };
 
 export { Results };

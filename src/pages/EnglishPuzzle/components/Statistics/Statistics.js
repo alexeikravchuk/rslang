@@ -7,7 +7,7 @@ const Statistics = ({ statistics, showData }) => {
   return (
     <div className='statistics-container'>
       <h3 className='statistics-title'>Statistics</h3>
-      <p className='statistics-learned'>{`Total correctly collected ${statistics.learnedWords} sentences`}</p>
+      <p className='statistics-learned'>{`Total correctly collected ${statistics.lw} sentences`}</p>
       <div className='table-container'>
         <table className='table-stat'>
           <thead>

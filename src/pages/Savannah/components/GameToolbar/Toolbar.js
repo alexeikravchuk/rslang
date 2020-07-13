@@ -27,7 +27,7 @@ function lifeCounterFunction(lifeCounter) {
 }
 
 function GameToolbar(props) {
-  const {classes, title, to, onClose, gameStarted, lifeCounter, gameLevel} = props;
+  const {classes, title, to, onClose, gameStarted, lifeCounter, gameLevel, points} = props;
   return (
     <Toolbar className={classes.toolBar}>
       {gameStarted &&
@@ -37,7 +37,10 @@ function GameToolbar(props) {
         {title}
       </Typography>
       {gameStarted && <Typography variant={'h6'} className={''}>
-        Ваш уровень: {gameLevel}
+        Points: {points} |
+      </Typography>}
+      {gameStarted && <Typography variant={'h6'} className={''}>
+        Level: {gameLevel}
       </Typography>}
       <Link to={to}>
         <CloseButton onClick={onClose}/>
@@ -46,8 +49,8 @@ function GameToolbar(props) {
   );
 }
 
-const mapStateToProps = ({savannahReducer: {lifeCounter, gameStarted, gameLevel}}) => {
-  return {lifeCounter, gameStarted, gameLevel};
+const mapStateToProps = ({savannahReducer: {lifeCounter, gameStarted, gameLevel, points}}) => {
+  return {lifeCounter, gameStarted, gameLevel, points};
 };
 
 export default connect(mapStateToProps)(withStyles(styles)(GameToolbar));

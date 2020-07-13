@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import Img from './SettingsImg/bg.png';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = {
   mainContainer: {
@@ -40,10 +41,9 @@ class Settings extends Component {
   constructor(props) {
     super(props);
 
-    this.id = '5ef9e4aba0d86400172933fa';
-    this.token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjllNGFiYTBkODY0MDAxNzI5MzNmYSIsImlhdCI6MTU5MzQ1OTQ4OCwiZXhwIjoxNTkzNDczODg4fQ.pGbvA96sbP08m0kg-PH8wL0fXBJxAtKeoCQvKT2IHfs';
-
+    this.id = props.userId;
+    this.token = props.token;
+    console.log(this.id , this.token);
     this.onSave = this.onSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -188,6 +188,8 @@ class Settings extends Component {
                 Save Settings
               </Button>
               <Button
+                component={RouterLink}
+                to='/home'
                 color='primary'
                 variant='contained'
                 style={styles.textField}

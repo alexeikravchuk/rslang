@@ -127,10 +127,7 @@ class Results extends Component {
 }
 
 const mapStateToProps = (store) => {
-  const {
-    statisticsReducer,
-    authReducer: { token, userId },
-  } = store;
+  const { statisticsReducer, authReducer: { token, userId } } = store;
   return { statistics: statisticsReducer, token, userId };
 };
 
