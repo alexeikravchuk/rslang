@@ -91,20 +91,19 @@ class PrimaryAppBar extends Component {
                   <Switch>
                   <Route path='/signin' component={SignIn}/>
                   <Route path='/signup' component={SignUp}/>
-                            {/* this.props.authStatus  */}
-                    <CheckRoute isLoggedIn={ true }  path='/home' component={HomePage} />
-                    <CheckRoute isLoggedIn={ true }  path='/wordcards' component={WordCards} />
-                    <CheckRoute isLoggedIn={ true }  path='/statistics' component={Statistics} />
-                    <CheckRoute isLoggedIn={ true }  path='/about' component={AboutTeamPage} />
-                    <CheckRoute isLoggedIn={ true }  path='/savannah' component={Savannah} />
-                    <CheckRoute isLoggedIn={ true }  path='/dictionary' component={Dictionary} />
-                    <CheckRoute isLoggedIn={ true }  path='/speakit' component={SpeakIt} />
-                    <CheckRoute isLoggedIn={ true }  path='/puzzle' component={EnglishPuzzle} />
-                    <CheckRoute isLoggedIn={ true }  path='/sprint' component={SprintMiniGame} />
-                    <CheckRoute isLoggedIn={ true }  path='/audiocall' component={AudioCall} />
-                    <CheckRoute isLoggedIn={ true }  path='/promo' component={PromoPage} />
-                    <CheckRoute isLoggedIn={ true }  path='/settings' render={() => <Settings {...this.props}/>} />
-                    <CheckRoute isLoggedIn={ true }  path='/account'>
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/home' component={HomePage} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/wordcards' component={WordCards} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/statistics' component={Statistics} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/about' component={AboutTeamPage} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/savannah' component={Savannah} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/dictionary' component={Dictionary} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/speakit' component={SpeakIt} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/puzzle' component={EnglishPuzzle} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/sprint' component={SprintMiniGame} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/audiocall' component={AudioCall} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/promo' component={PromoPage} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/settings' render={() => <Settings {...this.props}/>} />
+                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/account'>
                     <AccountInfo />
                     </CheckRoute>
                   </Switch>
