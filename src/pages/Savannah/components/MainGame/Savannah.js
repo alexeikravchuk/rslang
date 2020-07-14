@@ -13,6 +13,8 @@ import {
   loadWordsSuccess,
 } from '../../../../store/actions/savannahAction';
 import {playFileSound, pubAudioPath} from '../../utils/utils';
+import authReducer from '../../../../store/reducers/authReducer';
+import {loadStatistics, saveStatistics} from '../../../../store/actions/statisticsActions';
 
 const gameEndSound = pubAudioPath('roundEnd');
 const styles = {
@@ -43,6 +45,25 @@ class Savannah extends Component {
 
   componentWillUnmount() {
     this.props.onUnmount();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const {gameEnd, userId, token, load, save, statistics} = this.props;
+    if (prevProps.gameEnd !== gameEnd && gameEnd) {
+      load(userId, token).then(() => save(userId, token, {
+        ...statistics,
+        optional: {...statistics.optional, savannah: this.getData()},
+      }));
+    }
+  }
+
+  getData() {
+    const {points, difficulty, gameLevel} = this.props;
+    return {
+      points: points,
+      level: gameLevel,
+      difficulty: difficulty,
+    };
   }
 
   render() {
@@ -78,11 +99,17 @@ class Savannah extends Component {
 }
 
 function mapStateToProps(store) {
-  const {savannahReducer} = store;
-  return {...savannahReducer};
+  const {
+    savannahReducer,
+    statisticsReducer,
+    authReducer: {token, userId},
+  } = store;
+  return {...savannahReducer, statistics: statisticsReducer, token, userId};
 }
 
 const mapDispatchToProps = dispatch => ({
+  load: (token, userId) => dispatch(loadStatistics(token, userId)),
+  save: (token, userId, statistics) => dispatch(saveStatistics(token, userId, statistics)),
   fetchWords: (page, category) => {
     dispatch(loadWords());
     getWords(page, category)
