@@ -4,13 +4,18 @@ import { URL, cardInfo, wordRequestURL, maxPage, maxCategory } from './constants
 import { LinearProgress } from '@material-ui/core';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
+import { getSettings } from '../../store/actions/appSettingsAction';
+import { connect } from 'react-redux';
 
 class WordCards extends React.Component {
   constructor(props) {
     super(props);
     this.audio = null;
+
+    this.id = props.userId;
+    this.token = props.token;
+    
     this.state = {
-      lastNumber: 20,
       dataRandom: [],
       learning: [],
       compound: [],
@@ -56,6 +61,11 @@ class WordCards extends React.Component {
       this.getNewWords(data[this.state.counter]);
       this.setState({ dataRandom: data });
     });
+  }
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(getSettings(this.id, this.token));
   }
 
   componentDidMount() {
@@ -118,8 +128,8 @@ class WordCards extends React.Component {
 
   setCountPlus = () => {
     this.clearInput();
-    this.setState({colorDots: 'white'});
-    this.setState({description: 'Success rate'})
+    this.setState({ colorDots: 'white' });
+    this.setState({ description: 'Success rate' })
     if (this.state.counter === this.state.lastNumber - 1) {
       this.setState(
         {
@@ -211,39 +221,39 @@ class WordCards extends React.Component {
       let resultInputWord = this.checkAnswer(event.target.value, this.state.word);
       resultInputWord = resultInputWord.map(item => item.props.className);
       let errorCount = 0;
-      for(var i = 0; i < resultInputWord.length; ++i){
-        if(resultInputWord[i] === "word-error")
-        errorCount++;
+      for (var i = 0; i < resultInputWord.length; ++i) {
+        if (resultInputWord[i] === "word-error")
+          errorCount++;
       }
-      if(errorCount === 0 ){
-        this.setState({colorDots: 'green'});
+      if (errorCount === 0) {
+        this.setState({ colorDots: 'green' });
         this.setState({ description: 'Great :)' });
-      } else if((resultInputWord.length / errorCount) < 2){
-        this.setState({colorDots: 'red'});
+      } else if ((resultInputWord.length / errorCount) < 2) {
+        this.setState({ colorDots: 'red' });
         this.setState({ description: 'Try again !' });
-      } else if((resultInputWord.length / errorCount) > 2){
-        this.setState({colorDots: 'orange'});
+      } else if ((resultInputWord.length / errorCount) > 2) {
+        this.setState({ colorDots: 'orange' });
         this.setState({ description: 'Almost ...' });
-      } 
+      }
       this.checkAnswer(event.target.value, this.state.word);
-      this.setState({ showAnswer: true})
+      this.setState({ showAnswer: true })
     } else {
-      this.setState({showAnswer: false})
-      this.setState({colorDots: 'white'});
-      this.setState({description: 'Success rate'})
+      this.setState({ showAnswer: false })
+      this.setState({ colorDots: 'white' });
+      this.setState({ description: 'Success rate' })
     }
   }
 
   checkAnswer(input, word) {
     let answer = [];
-      for (let i = 0; i < input.length; i++) {
-        if (input[i] !== word[i]) {
-          answer.push(<span className='word-error' key={i}>{input[i]}</span>);
-        }
-        else {
-          answer.push(<span className='word-correct' key={i}>{input[i]}</span>);
-        }
-    } 
+    for (let i = 0; i < input.length; i++) {
+      if (input[i] !== word[i]) {
+        answer.push(<span className='word-error' key={i}>{input[i]}</span>);
+      }
+      else {
+        answer.push(<span className='word-correct' key={i}>{input[i]}</span>);
+      }
+    }
     return answer;
   }
 
@@ -278,7 +288,9 @@ class WordCards extends React.Component {
       },
       () => {
         this.toggleDropdown();
-        console.log(this.state.learning); //need to be pushed to the store
+        console.log(this.state.learning); 
+        let uniqueLearningCollection = [...new Set(this.state.learning)];
+        console.log(uniqueLearningCollection); //need to be pushed to the store
       }
     );
   }
@@ -290,7 +302,9 @@ class WordCards extends React.Component {
       },
       () => {
         this.toggleDropdown();
-        console.log(this.state.compound); //need to be pushed to the store
+        console.log(this.state.compound);
+        let uniqueCompoundCollection = [...new Set(this.state.compound)];
+        console.log(uniqueCompoundCollection); //need to be pushed to the store
       }
     );
   }
@@ -302,7 +316,9 @@ class WordCards extends React.Component {
       },
       () => {
         this.toggleDropdown();
-        console.log(this.state.deleted); //need to be pushed to the store
+        console.log(this.state.deleted); 
+        let uniqueDeletedCollection = [...new Set(this.state.deleted)];
+        console.log(uniqueDeletedCollection); //need to be pushed to the store
       }
     );
   }
@@ -315,6 +331,8 @@ class WordCards extends React.Component {
   }
 
   render() {
+    const { data } = this.props;
+    console.log(data); // дефолтный стейт настроек
     let wordLength = this.state.word.length;
     const {
       translation,
@@ -324,7 +342,6 @@ class WordCards extends React.Component {
       exampleTranslate,
       notification,
       progress,
-      lastNumber,
       showMeaning,
       showExample,
       meaning,
@@ -350,7 +367,7 @@ class WordCards extends React.Component {
           <div className='learning-card'>
             <div className='learning-card-header'>
               <div className='current-word'>
-                <div style={{color: this.state.colorDots}} >
+                <div style={{ color: this.state.colorDots }} >
                   <span>&#10687;</span>
                   <span>&#10687;</span>
                   <span>&#10687;</span>
@@ -383,21 +400,21 @@ class WordCards extends React.Component {
                       this.createLearningWords();
                     }}
                     className='learning'>
-                    Добавить в Изучаемые слова
+                    Add to Learning Words
                   </div>
                   <div
                     onClick={() => {
                       this.createCompoundWords();
                     }}
                     className='compound'>
-                    Пометить как Сложное слово
+                    Mark as Compound Word
                   </div>
                   <div
                     onClick={() => {
                       this.createDeletedWords();
                     }}
                     className='deleted'>
-                    Удалить из списка слов
+                    Remove from word list
                   </div>
                 </div>
                 <div className='word-notes'>
@@ -431,13 +448,13 @@ class WordCards extends React.Component {
                         value={value}
                         onChange={this.handleChange}
                         className='word-answer-input'
-                        style={{ width: `${wordLength * 16}px`}}
+                        style={{ width: `${wordLength * 16}px` }}
                         type='text'
                         maxLength={wordLength}
                         autoComplete='off'
                         autoFocus
                       />
-                      <div className="check-input">{ this.state.showAnswer ? this.checkAnswer(this.state.value, this.state.word) : null }</div>
+                      <div className="check-input">{this.state.showAnswer ? this.checkAnswer(this.state.value, this.state.word) : null}</div>
                     </div>
                   </div>
                 </div>
@@ -497,11 +514,18 @@ class WordCards extends React.Component {
           <div className='number-progress'>
             <LinearProgress variant='determinate' value={progress} />
           </div>
-          <div className='number-end'>{lastNumber}</div>
+          <div className='number-end'>{data.wordsPerDay}</div>
         </div>
       </div>
     );
   }
 }
 
-export default WordCards;
+const mapStateToProps = (state) => {
+  const { appStateReducer } = state;
+  return {
+    data: appStateReducer.data,
+  };
+};
+
+export default connect(mapStateToProps)(WordCards);
