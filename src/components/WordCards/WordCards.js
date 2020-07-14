@@ -313,8 +313,9 @@ class WordCards extends React.Component {
   render() {
     const { data } = this.props;
     console.log(data); // дефолтный стейт настроек
-    let wordLength = this.state.word.length;
+
     const {
+      word,
       translation,
       transcription,
       value,
@@ -335,7 +336,11 @@ class WordCards extends React.Component {
       audioMeaning,
       audioExample,
       image,
+      colorDots,
+      description,
+      showAnswer,
     } = this.state;
+    let wordLength = word.length;
     return (
       <div className='learning-card-wrapper'>
         <div className='learning-word-cards'>
@@ -347,7 +352,7 @@ class WordCards extends React.Component {
           <div className='learning-card'>
             <div className='learning-card-header'>
               <div className='current-word'>
-                <div style={{ color: this.state.colorDots }}>
+                <div style={{ color: colorDots }}>
                   <span>&#10687;</span>
                   <span>&#10687;</span>
                   <span>&#10687;</span>
@@ -355,7 +360,7 @@ class WordCards extends React.Component {
                   <span>&#10687;</span>
                 </div>
                 <div className='learning-word-description'>
-                  <span>{this.state.description}</span>
+                  <span>{description}</span>
                 </div>
                 <form className='select-learning-page'>
                   Page:
@@ -435,9 +440,7 @@ class WordCards extends React.Component {
                         autoFocus
                       />
                       <div className='check-input'>
-                        {this.state.showAnswer
-                          ? this.checkAnswer(this.state.value, this.state.word)
-                          : null}
+                        {showAnswer ? this.checkAnswer(value, word) : null}
                       </div>
                     </div>
                   </div>
