@@ -108,7 +108,6 @@ class PrimaryAppBar extends Component {
                     <Route path='/signin' component={SignIn} />
                     <Route path='/signup' component={SignUp} />
                     <CheckRoute isLoggedIn={auth} path='/home' component={HomePage} />
-                    <CheckRoute isLoggedIn={auth} path='/wordcards' component={WordCards} />
                     <CheckRoute isLoggedIn={auth} path='/statistics' component={Statistics} />
                     <CheckRoute isLoggedIn={auth} path='/about' component={AboutTeamPage} />
                     <CheckRoute isLoggedIn={auth} path='/savannah' component={Savannah} />
@@ -122,6 +121,11 @@ class PrimaryAppBar extends Component {
                       isLoggedIn={auth}
                       path='/settings'
                       render={() => <Settings {...this.props} />}
+                    />
+                    <CheckRoute 
+                      isLoggedIn={auth} 
+                      path='/wordcards'
+                      render={() => <WordCards {...this.props} />}
                     />
                     <CheckRoute isLoggedIn={auth} path='/account'>
                       <AccountInfo />
