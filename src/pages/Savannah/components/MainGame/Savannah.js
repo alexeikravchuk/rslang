@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {withStyles, Container, CircularProgress, Grid, LinearProgress} from '@material-ui/core';
+import {CircularProgress, Container, Grid, LinearProgress, withStyles} from '@material-ui/core';
 import {connect} from 'react-redux';
 import GameToolbar from '../GameToolbar/Toolbar';
 import {Statistics} from '../Statistics';
@@ -7,13 +7,8 @@ import {getWords} from '../../utils/wordRequest';
 import {StartGame} from '../StartGame';
 import GameButtonGroup from '../ButtonGroup/ButtonGroup';
 import './savannah.scss';
-import {
-  gameEnding, gameReset,
-  loadWords,
-  loadWordsSuccess,
-} from '../../../../store/actions/savannahAction';
+import {gameEnding, gameReset, loadWords, loadWordsSuccess} from '../../../../store/actions/savannahAction';
 import {playFileSound, pubAudioPath} from '../../utils/utils';
-import authReducer from '../../../../store/reducers/authReducer';
 import {loadStatistics, saveStatistics} from '../../../../store/actions/statisticsActions';
 
 const gameEndSound = pubAudioPath('roundEnd');
@@ -52,17 +47,21 @@ class Savannah extends Component {
     if (prevProps.gameEnd !== gameEnd && gameEnd) {
       load(userId, token).then(() => save(userId, token, {
         ...statistics,
-        optional: {...statistics.optional, savannah: this.getData()},
+        optional: {...statistics.optional, savannah: this.getData(statistics)},
       }));
     }
   }
 
-  getData() {
+  getData(statistics) {
+    let data = statistics.optional.savannah || {};
     const {points, difficulty, gameLevel} = this.props;
     return {
-      points: points,
-      level: gameLevel,
-      difficulty: difficulty,
+      ...data,
+      [difficulty]: {
+        points: points,
+        level: gameLevel,
+        dt: Date.now(),
+      },
     };
   }
 
