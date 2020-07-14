@@ -7,13 +7,14 @@ import {
   maxPage,
   maxCategory,
   DOTS_COLOR,
-  RESULTS_DESCRIPRION,
+  RESULTS_DESCRIPTION,
   LETTER_CLASS,
   NOTIFICATION,
 } from './constants';
 import { LinearProgress } from '@material-ui/core';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
+import disabled from '../../assets/disabled.jpg';
 import { getSettings } from '../../store/actions/appSettingsAction';
 import { connect } from 'react-redux';
 
@@ -35,17 +36,19 @@ class WordCards extends React.Component {
       value: '',
       colorDots: DOTS_COLOR.white,
       showAnswer: false,
+      lastNumber: 20,
       valuePage: 0,
       valueCategory: 0,
       dropdown: false,
       notification: '',
-      description: RESULTS_DESCRIPRION.succes,
+      description: RESULTS_DESCRIPTION.success,
       translation: cardInfo.translation,
       transcription: cardInfo.transcription,
       word: cardInfo.word,
       image: cardInfo.image,
       meaning: cardInfo.meaning,
       example: cardInfo.example,
+      translateShow: false,
       meaningTranslate: cardInfo.meaningTranslate,
       exampleTranslate: cardInfo.exampleTranslate,
       audioWord: cardInfo.audioWord,
@@ -116,7 +119,7 @@ class WordCards extends React.Component {
   setCountPlus = () => {
     const { counter, progress, lastNumber, dataRandom } = this.state;
     this.clearInput();
-    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPRION.succes });
+    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success });
     if (counter === lastNumber - 1) {
       return this.setState(
         {
@@ -209,11 +212,11 @@ class WordCards extends React.Component {
         if (resultInputWord[i] === LETTER_CLASS.error) errorCount++;
       }
       if (!errorCount) {
-        this.setState({ colorDots: DOTS_COLOR.green, description: RESULTS_DESCRIPRION.greate });
+        this.setState({ colorDots: DOTS_COLOR.green, description: RESULTS_DESCRIPTION.great });
       } else if (resultInputWord.length / errorCount < 2) {
-        this.setState({ colorDots: DOTS_COLOR.red, description: RESULTS_DESCRIPRION.tryAgain });
+        this.setState({ colorDots: DOTS_COLOR.red, description: RESULTS_DESCRIPTION.tryAgain });
       } else if (resultInputWord.length / errorCount > 2) {
-        this.setState({ colorDots: DOTS_COLOR.orange, description: RESULTS_DESCRIPRION.almost });
+        this.setState({ colorDots: DOTS_COLOR.orange, description: RESULTS_DESCRIPTION.almost });
       }
       this.checkAnswer(value, word);
       this.setState({ showAnswer: true });
@@ -221,7 +224,7 @@ class WordCards extends React.Component {
       this.setState({
         showAnswer: false,
         colorDots: DOTS_COLOR.white,
-        description: RESULTS_DESCRIPRION.succes,
+        description: RESULTS_DESCRIPTION.success,
       });
     }
   };
@@ -323,6 +326,7 @@ class WordCards extends React.Component {
       exampleTranslate,
       notification,
       progress,
+      translateShow,
       showMeaning,
       showExample,
       meaning,
@@ -416,7 +420,7 @@ class WordCards extends React.Component {
               <div className='learning-word-wrapper'>
                 <div className='learning-word-info'>
                   <div className='learning-word-translation'>
-                    {translation}
+                    {data.optional.translate ? translation : null}
                     <span
                       onClick={() => {
                         this.playAudioWords(audioWord);
@@ -425,7 +429,7 @@ class WordCards extends React.Component {
                       🕬
                     </span>
                   </div>
-                  <div className='learning-word-transcription'>{transcription}</div>
+                  <div className='learning-word-transcription'>{data.optional.transcription ? transcription : null}</div>
                   <div className='learning-word-input'>
                     <div className='learning-check-input'>
                       <input
@@ -445,12 +449,12 @@ class WordCards extends React.Component {
                     </div>
                   </div>
                 </div>
-                <img className='learning-word-image' src={image} alt='' />
+                <img className='learning-word-image' src={data.optional.image ? image : disabled} alt='' />
               </div>
               <div className='learning-word-examples'>
                 <div className='learning-word-meaning'>
                   <div className='meaning-sentence' onClick={this.showMeaningWord}>
-                    {showMeaning ? meaning : meaningHide}
+                  {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
                   </div>
                   <span
                     onClick={() => {
@@ -462,7 +466,7 @@ class WordCards extends React.Component {
                 </div>
                 <div className='learning-word-example'>
                   <div className='example-sentence' onClick={this.showExampleWord}>
-                    {showExample ? example : exampleHide}
+                    {!data.optional.example ? null : showExample ? example : exampleHide}
                   </div>
                   <span
                     onClick={() => {
@@ -472,8 +476,8 @@ class WordCards extends React.Component {
                     🕬
                   </span>
                 </div>
-                <div className='meaning-translate'>{meaningTranslate}</div>
-                <div className='example-translate'>{exampleTranslate}</div>
+                <div className='meaning-translate'>{translateShow ? meaningTranslate : null}</div>
+                <div className='example-translate'>{translateShow ? exampleTranslate : null}</div>
               </div>
             </div>
           </div>
@@ -501,7 +505,7 @@ class WordCards extends React.Component {
           <div className='number-progress'>
             <LinearProgress variant='determinate' value={progress} />
           </div>
-          <div className='number-end'>{data.wordsPerDay}</div>
+          <div className='number-end'>{this.state.lastNumber}</div>
         </div>
       </div>
     );

@@ -25,11 +25,11 @@ const DOTS_COLOR = {
   white: 'white',
 };
 
-const RESULTS_DESCRIPRION = {
-  greate: 'Great :)',
+const RESULTS_DESCRIPTION = {
+  great: 'Great :)',
   tryAgain: 'Try again !',
   almost: 'Almost ...',
-  succes: 'Success rate',
+  success: 'Success rate',
 };
 
 const LETTER_CLASS = {
@@ -46,7 +46,7 @@ export {
   maxPage,
   maxCategory,
   DOTS_COLOR,
-  RESULTS_DESCRIPRION,
+  RESULTS_DESCRIPTION,
   LETTER_CLASS,
   NOTIFICATION,
 };
