@@ -108,6 +108,7 @@ class PrimaryAppBar extends Component {
                     <Route path='/signin' component={SignIn} />
                     <Route path='/signup' component={SignUp} />
                     <CheckRoute isLoggedIn={auth} path='/home' component={HomePage} />
+                    <CheckRoute isLoggedIn={auth} path='/wordcards' component={WordCards} />
                     <CheckRoute isLoggedIn={auth} path='/statistics' component={Statistics} />
                     <CheckRoute isLoggedIn={auth} path='/about' component={AboutTeamPage} />
                     <CheckRoute isLoggedIn={auth} path='/savannah' component={Savannah} />
@@ -117,16 +118,7 @@ class PrimaryAppBar extends Component {
                     <CheckRoute isLoggedIn={auth} path='/sprint' component={SprintMiniGame} />
                     <CheckRoute isLoggedIn={auth} path='/audiocall' component={AudioCall} />
                     <CheckRoute isLoggedIn={auth} path='/promo' component={PromoPage} />
-                    <CheckRoute
-                      isLoggedIn={auth}
-                      path='/settings'
-                      render={() => <Settings {...this.props} />}
-                    />
-                    <CheckRoute 
-                      isLoggedIn={auth} 
-                      path='/wordcards'
-                      render={() => <WordCards {...this.props} />}
-                    />
+                    <CheckRoute isLoggedIn={auth} path='/settings' component={Settings} />
                     <CheckRoute isLoggedIn={auth} path='/account'>
                       <AccountInfo />
                     </CheckRoute>
@@ -202,11 +194,9 @@ function createStyles(theme) {
   };
 }
 
-function mapState({ authReducer: { authStatus, token, userId } }) {
+function mapState({ authReducer: { authStatus } }) {
   return {
-    authStatus,
-    token,
-    userId,
+    authStatus
   };
 }
 

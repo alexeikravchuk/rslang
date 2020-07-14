@@ -41,25 +41,17 @@ class Settings extends Component {
   constructor(props) {
     super(props);
 
-    this.id = props.userId;
-    this.token = props.token;
-    console.log(this.id , this.token);
+    const { dispatch, userId, token } = this.props;
+    dispatch(getSettings(userId, token));
+
     this.onSave = this.onSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(getSettings(this.id, this.token));
-  }
-
   onSave() {
     const { optional, wordsPerDay } = this.props.data;
-    this.props.dispatch(setSettings({ optional, wordsPerDay }, this.id, this.token));
-  }
-
-  onClose() {
-    console.log('Go Home!');
+    const { userId, token } = this.props;
+    this.props.dispatch(setSettings({ optional, wordsPerDay }, userId, token));
   }
 
   handleChange(event) {
@@ -193,7 +185,7 @@ class Settings extends Component {
                 color='primary'
                 variant='contained'
                 style={styles.textField}
-                onClick={this.onClose}>
+              >
                 Close Settings &#10006;
               </Button>
             </FormGroup>
@@ -205,11 +197,13 @@ class Settings extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { appStateReducer } = state;
+  const { appStateReducer, authReducer } = state;
   return {
     loading: appStateReducer.loading,
     data: appStateReducer.data,
     error: appStateReducer.error,
+    userId: authReducer.userId,
+    token: authReducer.token,
   };
 };
 
