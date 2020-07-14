@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
 } from '@material-ui/core';
+import { switchers, ALL_WORDS, NEW_WORDS } from './constants';
 import Img from './SettingsImg/bg.png';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Link as RouterLink } from 'react-router-dom';
@@ -20,7 +21,7 @@ const styles = {
     backgroundImage: `url(${Img})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    height: '100vh',
+    minHeight: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -41,25 +42,17 @@ class Settings extends Component {
   constructor(props) {
     super(props);
 
-    this.id = props.userId;
-    this.token = props.token;
-    console.log(this.id , this.token);
+    const { dispatch, userId, token } = this.props;
+    dispatch(getSettings(userId, token));
+
     this.onSave = this.onSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(getSettings(this.id, this.token));
-  }
-
   onSave() {
     const { optional, wordsPerDay } = this.props.data;
-    this.props.dispatch(setSettings({ optional, wordsPerDay }, this.id, this.token));
-  }
-
-  onClose() {
-    console.log('Go Home!');
+    const { userId, token } = this.props;
+    this.props.dispatch(setSettings({ optional, wordsPerDay }, userId, token));
   }
 
   handleChange(event) {
@@ -97,69 +90,27 @@ class Settings extends Component {
             <FormGroup style={styles.formGroup}>
               User Settings:
               <Divider />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={data.optional.translate}
-                    onChange={this.handleChange}
-                    name='translate'
-                    color='primary'
+              {switchers.map((switcher) =>
+                <React.Fragment key={switcher.name}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={data.optional[`${switcher.name}`]}
+                        onChange={this.handleChange}
+                        name={switcher.name}
+                        color={switcher.color}
+                      />
+                    }
+                    label={switcher.label}
                   />
-                }
-                label='Show word translate'
-              />
-              <Divider />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={data.optional.description}
-                    onChange={this.handleChange}
-                    name='description'
-                    color='primary'
-                  />
-                }
-                label='Show word description'
-              />
-              <Divider />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={data.optional.example}
-                    onChange={this.handleChange}
-                    name='example'
-                    color='primary'
-                  />
-                }
-                label='Show word example'
-              />
-              <Divider />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={data.optional.transcription}
-                    onChange={this.handleChange}
-                    name='transcription'
-                    color='primary'
-                  />
-                }
-                label='Show word transcription'
-              />
-              <Divider />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={data.optional.image}
-                    onChange={this.handleChange}
-                    name='image'
-                    color='primary'
-                  />
-                }
-                label='Show word image'
-              />
+                  <Divider />
+                </React.Fragment>
+              )}
+
               <TextField
                 style={styles.textField}
                 id='newWords'
-                label='New Words per Day'
+                label={NEW_WORDS}
                 type='number'
                 defaultValue={data.optional.newWords}
                 onChange={this.handleChange}
@@ -171,7 +122,7 @@ class Settings extends Component {
               <TextField
                 style={styles.textField}
                 id='allWords'
-                label='All Words per Day'
+                label={ALL_WORDS}
                 type='number'
                 defaultValue={data.wordsPerDay}
                 onChange={this.handleChange}
@@ -193,7 +144,7 @@ class Settings extends Component {
                 color='primary'
                 variant='contained'
                 style={styles.textField}
-                onClick={this.onClose}>
+              >
                 Close Settings &#10006;
               </Button>
             </FormGroup>
@@ -204,13 +155,10 @@ class Settings extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { appStateReducer } = state;
-  return {
-    loading: appStateReducer.loading,
-    data: appStateReducer.data,
-    error: appStateReducer.error,
-  };
+const mapStateToProps = ({ appStateReducer, authReducer }) => {
+  const { loading, data, error } = appStateReducer;
+  const { userId, token } = authReducer;
+  return { loading, data, error, userId, token };
 };
 
 export default connect(mapStateToProps)(Settings);

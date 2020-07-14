@@ -118,11 +118,7 @@ class PrimaryAppBar extends Component {
                     <CheckRoute isLoggedIn={auth} path='/sprint' component={SprintMiniGame} />
                     <CheckRoute isLoggedIn={auth} path='/audiocall' component={AudioCall} />
                     <CheckRoute isLoggedIn={auth} path='/promo' component={PromoPage} />
-                    <CheckRoute
-                      isLoggedIn={auth}
-                      path='/settings'
-                      render={() => <Settings {...this.props} />}
-                    />
+                    <CheckRoute isLoggedIn={auth} path='/settings' component={Settings} />
                     <CheckRoute isLoggedIn={auth} path='/account'>
                       <AccountInfo />
                     </CheckRoute>
@@ -198,11 +194,9 @@ function createStyles(theme) {
   };
 }
 
-function mapState({ authReducer: { authStatus, token, userId } }) {
+function mapState({ authReducer: { authStatus } }) {
   return {
-    authStatus,
-    token,
-    userId,
+    authStatus
   };
 }
 
