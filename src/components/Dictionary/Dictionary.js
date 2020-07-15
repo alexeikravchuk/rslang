@@ -2,7 +2,6 @@ import React from 'react';
 import {URL} from './constants';
 import {getWords} from './getWords.js';
 import Pagination from '@material-ui/lab/Pagination';
-import {RecordVoiceOver} from '@material-ui/icons';
 import {
   ListItemText,
   withStyles,
@@ -14,19 +13,19 @@ import {
   Tooltip,
   ListItemIcon,
   Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  BottomNavigationAction,
+  BottomNavigation,
 } from '@material-ui/core';
 import './Dictionary.scss';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import Storefront from '@material-ui/icons/Storefront';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {RecordVoiceOver, Storefront} from '@material-ui/icons';
 import {connect} from 'react-redux';
 import {WordsList} from './components';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 
 const styles = theme => ({
   titleDictionary: {
