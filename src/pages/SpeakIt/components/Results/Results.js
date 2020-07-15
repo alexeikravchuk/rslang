@@ -119,10 +119,7 @@ class Results extends Component {
           </div>
         )}
         {isShowStatistics && (
-          <Statistics
-            onClick={this.handleButtonClick}
-            statistics={Object.keys(statistics).length && statistics}
-          />
+          <Statistics onClick={this.handleButtonClick} statistics={statistics} />
         )}
       </Backdrop>
     );
