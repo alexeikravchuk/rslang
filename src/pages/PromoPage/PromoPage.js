@@ -15,15 +15,15 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Background from './PromoPageImages/PromoBg.png';
-import firstImage from './PromoPageImages/1.jpg';
 import secondImage from './PromoPageImages/2.jpg';
 import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined';
 import MenuBookOutlinedIcon from '@material-ui/icons/MenuBookOutlined';
 import EqualizerOutlinedIcon from '@material-ui/icons/EqualizerOutlined';
+import { PROMO_LINK } from './constants';
 
 const useStyles = makeStyles({
   container: {
-    backgroundImage: 'url(' + Background +')',
+    backgroundImage: 'url(' + Background + ')',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     height: '100%',
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
     padding: '5px',
   },
   root: {
-    minWidth: '320px',
+    minWidth: '300px',
     maxWidth: '450px',
   },
   media: {
@@ -62,6 +62,14 @@ const useStyles = makeStyles({
   },
   gridItem: {
     padding: '10px',
+  },
+  displayFlex: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  video: {
+    width: '100%',
+    minHeight: '300px',
   },
 });
 
@@ -78,13 +86,15 @@ export const PromoPage = () => {
         direction='row'
         justify='space-around'
         alignItems='flex-start'
-        style={{height: '100%'}}
+        style={{ height: '100%' }}
       >
         <Grid
-          item lg={5}
+          item lg={6} md={6} sm={12}
           className={classes.gridItem}
         >
-          <div className={classes.englishEasy}>
+          <div
+            className={classes.englishEasy}
+          >
             <Typography
               color='secondary'
               variant='h2'
@@ -116,24 +126,28 @@ export const PromoPage = () => {
           </div>
         </Grid>
         <Grid
-          item lg={5}
-          className={classes.gridItem}
+          item lg={6} md={6} sm={12}
+          className={`${classes.gridItem} ${classes.displayFlex}`}
         >
           <Card
             className={classes.root}
+            style={{ width: '100%' }}
           >
-            <CardMedia
-              className={classes.media}
-              image={firstImage}
-              style={{backgroundSize: 'contain'}}
+            <iframe
+              className={classes.video}
+              title='RsLang'
+              src={PROMO_LINK}
+              frameborder='0'
+              allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+              allowfullscreen
             >
-            </CardMedia>
+            </iframe>
           </Card>
         </Grid>
 
         <Grid
-          item lg={5}
-          className={classes.gridItem}
+          item lg={6} md={6} sm={12}
+          className={`${classes.gridItem} ${classes.displayFlex}`}
         >
           <Typography
             color='secondary'
@@ -142,47 +156,61 @@ export const PromoPage = () => {
               <ListItem>
                 <ListItemIcon>
                   <Avatar>
-                    <VideogameAssetOutlinedIcon className={classes.green} fontSize='large' />
+                    <VideogameAssetOutlinedIcon
+                      className={classes.green}
+                      fontSize='large' />
                   </Avatar>
                 </ListItemIcon>
-                <ListItemText primary='GAMES' secondary='Play different games to show your skill' />
+                <ListItemText
+                  primary='GAMES'
+                  secondary='Play different games to show your skill'
+                />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <Avatar>
-                    <MenuBookOutlinedIcon className={classes.white} fontSize='large' />
+                    <MenuBookOutlinedIcon
+                      className={classes.white}
+                      fontSize='large' />
                   </Avatar>
                 </ListItemIcon>
-                <ListItemText primary='DICTIONARY' secondary='Improve your vocabulary' />
+                <ListItemText
+                  primary='DICTIONARY'
+                  secondary='Improve your vocabulary' />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
                   <Avatar>
-                    <EqualizerOutlinedIcon color='secondary' fontSize='large' />
+                    <EqualizerOutlinedIcon
+                      color='secondary'
+                      fontSize='large' />
                   </Avatar>
                 </ListItemIcon>
-                <ListItemText primary='STATS' secondary='Check your progress' />
+                <ListItemText
+                  primary='STATS'
+                  secondary='Check your progress' />
               </ListItem>
             </List>
           </Typography>
         </Grid>
         <Grid
-          item lg={5}
-          className={classes.gridItem}
+          item lg={6} md={6} sm={12}
+          className={`${classes.gridItem} ${classes.displayFlex}`}
         >
           <Card
             className={classes.root}
+            style={{ width: '100%' }}
           >
             <CardMedia
               className={classes.media}
               image={secondImage}
-              style={{backgroundSize: 'contain'}}
+              style={{ backgroundSize: 'contain' }}
             >
             </CardMedia>
           </Card>
         </Grid>
-      </Grid>
-    </Container>
+      </Grid >
+    </Container >
   )
 }
 export default PromoPage
