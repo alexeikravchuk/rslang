@@ -36,12 +36,9 @@ function StatisticDialog(props) {
     setValue(newValue);
   };
 
-  const { showStatistic, score } = props.sprintState.sprintReducer;
+  const { showStatistic, score, learnedWords, wrongWords, gameWords } = props.sprintState.sprintReducer;
   const { userId, token } = props.sprintState.authReducer;
-  const { sprint: sprintStatistics } = props.sprintState.statisticsReducer.optional;
-  const scoreRecord = sprintStatistics.scoreRecord || 0;
-  const totalScore = sprintStatistics.totalScore || 0;
-  const gameCounter = sprintStatistics.gameCounter || 0;
+  const { scoreRecord, totalScore, gameCounter } = props.sprintState.statisticsReducer.optional.sprint;
   const { endGame, saveStatistics } = props;
   const appStats = props.sprintState.statisticsReducer;
 
@@ -69,8 +66,8 @@ function StatisticDialog(props) {
       open={showStatistic}
     >
       <DialogTitle>Sprint Results</DialogTitle>
-      {value === 0 && <StatisticDialogDescription props={props}/>}
-      {value === 1 && <StatisticDialogWords props={props}/>}
+      {value === 0 && <StatisticDialogDescription props={{ score, scoreRecord, totalScore, gameCounter }}/>}
+      {value === 1 && <StatisticDialogWords props={{ learnedWords, wrongWords, gameWords }}/>}
       <Tabs
         value={value}
         onChange={handleChange}

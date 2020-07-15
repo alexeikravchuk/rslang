@@ -18,13 +18,15 @@ function GameCard({ sprintState, checkAnswer }) {
   const wordTranslate = wordList[sprintState.translateIndex].wordTranslate;
 
   React.useEffect(() => {
+
     const onKeydown = e => {
-      if (e.keyCode === RIGHT_ARROW_KEY_CODE) {
+      if (e.keyCode === RIGHT_ARROW_KEY_CODE && !e.repeat) {
         checkAnswer(RIGHT_BTN_VALUE, sprintState)
-      } else if (e.keyCode === LEFW_ARROW_KEY_CODE) {
+      } else if (e.keyCode === LEFW_ARROW_KEY_CODE && !e.repeat) {
         checkAnswer(WRONG_BTN_VALUE, sprintState)
       }
     };
+
     document.addEventListener('keydown', onKeydown);
     return () => {
       document.removeEventListener('keydown', onKeydown);
@@ -32,9 +34,9 @@ function GameCard({ sprintState, checkAnswer }) {
   }, [checkAnswer, sprintState]);
 
   return (
-    <Card className='root'>
+    <Card className="root">
       <Stepper />
-      <CardContent className='content'>
+      <CardContent className="content">
         <Typography variant="h3" component="h3">
           {word}
         </Typography>
