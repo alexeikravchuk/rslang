@@ -38,7 +38,10 @@ function StatisticDialog(props) {
 
   const { showStatistic, score } = props.sprintState.sprintReducer;
   const { userId, token } = props.sprintState.authReducer;
-  const { scoreRecord, totalScore, gameCounter } = props.sprintState.statisticsReducer.optional.sprint;
+  const { sprint: sprintStatistics } = props.sprintState.statisticsReducer.optional;
+  const scoreRecord = sprintStatistics.scoreRecord || 0;
+  const totalScore = sprintStatistics.totalScore || 0;
+  const gameCounter = sprintStatistics.gameCounter || 0;
   const { endGame, saveStatistics } = props;
   const appStats = props.sprintState.statisticsReducer;
 
