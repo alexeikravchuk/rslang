@@ -67,6 +67,16 @@
   display: flex;
 }
 
+.current-success {
+  display: flex;
+  justify-content: space-around;
+}
+
+.page-and-category {
+  display: flex;
+  justify-content: space-around;
+}
+
 .learning-word-description {
   color: white;
   margin: 0 1rem;
@@ -399,7 +409,6 @@
   .next {
     margin: 270px 10px;
   }
-  
 }
 
 @media screen and (max-width: 650px) {
@@ -441,5 +450,81 @@
 @media screen and (max-width: 400px) {
   .learning-word-cards {
     margin: 30px 0;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .learning-word-cards {
+    margin: 15px 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .learning-word-cards {
+    width: 237px;
+    height: 830px;
+  }
+  .current-word {
+    display: contents;
+  }
+  .current-success {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+  }
+  .page-and-category {
+    display: flex;
+    justify-content: space-around;
+  }
+  .select-learning-page {
+    margin: 5px 0.5rem;
+  }
+  .select-learning-category {
+    margin: 5px 0.5rem;
+  }
+  .dropdown-notes {
+    height: 75px;
+    justify-content: space-around;
+    padding: 10px 15px;
+  }
+  .learning-word-description {
+    width: 90px;
+    margin: 0;
+  }
+  .learning-card {
+    width: 237px;
+    height: 830px;
+  }
+  .learning-word-image {
+    width: 230px;
+    height: 160px;
+  }
+  .learning-card-main {
+    height: 659px;
+  }
+  .learning-word-examples {
+    height: 344px;
+  }
+  .learning-card-prev {
+    width: 35px;
+    height: 830px;
+  }
+  .learning-card-next {
+    width: 35px;
+    height: 830px;
+  }
+  .prev {
+    margin: 280px 5px;
+  }
+  .next {
+    margin: 280px 5px;
+  }
+  .learning-word-button-show {
+    width: 110px;
+    margin: 0 5px;
+  }
+  .learning-word-button-check {
+    width: 110px;
+    margin: 0 5px;
   }
 }
