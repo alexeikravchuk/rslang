@@ -462,6 +462,7 @@
 @media screen and (max-width: 320px) {
   .learning-word-cards {
     width: 237px;
+    height: 830px;
   }
   .current-word {
     display: contents;
@@ -492,25 +493,31 @@
   }
   .learning-card {
     width: 237px;
+    height: 830px;
   }
   .learning-word-image {
     width: 230px;
     height: 160px;
   }
   .learning-card-main {
-    height: 580px;
+    height: 659px;
   }
   .learning-word-examples {
-    height: 244px;
+    height: 344px;
   }
   .learning-card-prev {
     width: 35px;
+    height: 830px;
   }
   .learning-card-next {
     width: 35px;
+    height: 830px;
   }
-  .button-reactions {
-    margin-left: 10px;
+  .prev {
+    margin: 280px 5px;
+  }
+  .next {
+    margin: 280px 5px;
   }
   .learning-word-button-show {
     width: 110px;
