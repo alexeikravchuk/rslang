@@ -17,6 +17,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import { Loader } from '../Loader/Loader'
 import { userWords, changeDifficulty, loadGame, changeRound, endGame } from '../../../../store/actions/sprintActions';
+import { loadStatistics } from '../../../../store/actions/statisticsActions'
 
 const MuiDialogContent = withStyles((theme) => ({
   root: {
@@ -44,8 +45,14 @@ const MuiAvatar = withStyles((theme) => ({
 
 function WelcomeDialog(props) {
 
-  const { gameLoading, userWords, difficulty, round, open, disabled, checked } = props.sprintState.sprintReducer
+  const { gameLoading, userWords, difficulty, round, open, disabled, checked } = props.sprintState.sprintReducer;
   const { userId, token } = props.sprintState.authReducer;
+  const { loadGame, loadStatistics } = props;
+
+  const startGame = (userWords, difficulty, round, userId, token) => {
+    loadStatistics(userId, token);
+    loadGame(userWords, difficulty, round, userId, token);
+  }
 
   if (gameLoading) {
     return (
@@ -106,7 +113,7 @@ function WelcomeDialog(props) {
             control={<Checkbox checked={checked} onChange={props.handleChange} />}
             label="Use my dictionary"
           />
-          <Button autoFocus onClick={() => {props.loadGame(userWords, difficulty, round, userId, token)}} color="primary">
+          <Button autoFocus onClick={() => {startGame(userWords, difficulty, round, userId, token)}} color="primary">
             Start game!
           </Button>
         </MuiDialogActions>
@@ -128,6 +135,7 @@ const mapDispatchToProps = dispatch => {
     changeRound: (value) => dispatch(changeRound(value)),
     loadGame: (userWords, difficulty, round, id, token) => dispatch(loadGame(userWords, difficulty, round, id, token)),
     endGame: () => dispatch(endGame()),
+    loadStatistics: (userId, token) => dispatch(loadStatistics(userId, token))
   }
 }
 

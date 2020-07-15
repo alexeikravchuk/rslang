@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
 
 import { AppBar, Toolbar, IconButton, Grid, withStyles } from '@material-ui/core';
@@ -9,16 +10,13 @@ import UserMenu from './UserMenu';
 import Logo from './Logo';
 import SideBar from './SideBar';
 
-import {SignIn } from '../Registration/SignIn'
-import {SignUp } from '../Registration/SignUp'
-
+import { SignIn } from '../Registration/SignIn';
+import { SignUp } from '../Registration/SignUp';
 
 import Dictionary from '../Dictionary/Dictionary';
 import WordCards from '../WordCards/WordCards';
 import Settings from '../Settings/Settings';
-
-import { connect } from 'react-redux';
-
+import Statistics from '../Statistics/Statistics';
 
 import {
   HomePage,
@@ -27,27 +25,43 @@ import {
   EnglishPuzzle,
   Savannah,
   AudioCall,
+  ownGame,
   AboutTeamPage,
   SprintMiniGame,
-  ownGame,
   PromoPage,
 } from '../../pages';
 
+import { addToken, addUserId, authStatus } from '../../store/actions/authAction';
 
-const CheckRoute = ({ isLoggedIn, ...props }) => 
-  isLoggedIn
-    ? <Route { ...props } />
-    : <Redirect to="/signin" />
+import { LIFE_TIME_TOKEN } from '../../constants/lifeTimeToken';
 
+const CheckRoute = ({ isLoggedIn, ...props }) =>
+  isLoggedIn ? <Route {...props} /> : <Redirect to='/signin' />;
 
 class PrimaryAppBar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      drawerOpen: false,
-    };
-  }
-  
+  state = {
+    drawerOpen: false,
+  };
+
+  checkAuthorization = () => {
+    if (localStorage.token) {
+      try {
+        const { dispatch } = this.props;
+        const data = JSON.parse(window.atob(localStorage.token));
+        const tokenTime = data.time && Date.now() - data.time;
+        if (tokenTime < LIFE_TIME_TOKEN) {
+          dispatch(authStatus(true));
+          dispatch(addToken(data.token));
+          dispatch(addUserId(data.userId));
+          return true;
+        }
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  };
+
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
   };
@@ -59,51 +73,55 @@ class PrimaryAppBar extends Component {
 
   render() {
     const { classes } = this.props;
+    const { drawerOpen } = this.state;
+    const auth = this.checkAuthorization();
     return (
       <React.Fragment>
         <div className={classes.appContainer}>
           <Grid container className={classes.grid}>
             <Grid item xs={12}>
               <AppBar
-                className={clsx(this.props.classes.appBar, {
-                  [this.props.classes.appBarShift]: this.state.drawerOpen,
+                className={clsx(classes.appBar, {
+                  [classes.appBarShift]: drawerOpen,
                 })}>
-                <Toolbar className={this.props.classes.toolbar}>
+                <Toolbar className={classes.toolbar}>
                   <IconButton
                     onClick={this.handleDrawerOpen}
                     edge='start'
-                    className={clsx(this.props.classes.menuButton, {
-                      [this.props.classes.hide]: this.state.drawerOpen,
+                    className={clsx(classes.menuButton, {
+                      [classes.hide]: drawerOpen,
                     })}>
                     <MenuIcon />
                   </IconButton>
                   <Logo />
-                  <UserMenu />
+                  <UserMenu auth={auth} />
                 </Toolbar>
               </AppBar>
             </Grid>
             <Grid item xs={12}>
               <Grid container wrap='nowrap'>
                 <Grid item>
-                  <SideBar open={this.state.drawerOpen} onClick={this.handleDrawerClose} />
+                  <SideBar open={drawerOpen} onClick={this.handleDrawerClose} />
                 </Grid>
                 <Grid item xs className={classes.mainContainer}>
+                  {auth ? <Redirect to='./home' /> : <Redirect to='./signin' />}
                   <Switch>
-                  <Route path='/signin' component={SignIn}/>
-                  <Route path='/signup' component={SignUp}/>
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/home' component={HomePage} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/wordcards' component={WordCards} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/about' component={AboutTeamPage} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/savannah' component={Savannah} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/dictionary' component={Dictionary} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/speakit' component={SpeakIt} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/puzzle' component={EnglishPuzzle} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/sprint' component={SprintMiniGame} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/ownGame' component={ownGame} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/audiocall' component={AudioCall} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/promo' component={PromoPage} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/settings' render={() => <Settings {...this.props}/>} />
-                    <CheckRoute isLoggedIn={ this.props.authStatus }  path='/account'>
+                    <Route path='/signin' component={SignIn} />
+                    <Route path='/signup' component={SignUp} />
+                    <CheckRoute isLoggedIn={auth} path='/home' component={HomePage} />
+                    <CheckRoute isLoggedIn={auth} path='/wordcards' component={WordCards} />
+                    <CheckRoute isLoggedIn={auth} path='/statistics' component={Statistics} />
+                    <CheckRoute isLoggedIn={auth} path='/about' component={AboutTeamPage} />
+                    <CheckRoute isLoggedIn={auth} path='/savannah' component={Savannah} />
+                    <CheckRoute isLoggedIn={auth} path='/dictionary' component={Dictionary} />
+                    <CheckRoute isLoggedIn={auth} path='/speakit' component={SpeakIt} />
+                    <CheckRoute isLoggedIn={auth} path='/puzzle' component={EnglishPuzzle} />
+                    <CheckRoute isLoggedIn={auth} path='/sprint' component={SprintMiniGame} />
+                    <CheckRoute isLoggedIn={auth}  path='/ownGame' component={ownGame} />
+                    <CheckRoute isLoggedIn={auth} path='/audiocall' component={AudioCall} />
+                    <CheckRoute isLoggedIn={auth} path='/promo' component={PromoPage} />
+                    <CheckRoute isLoggedIn={auth} path='/settings' component={Settings} />
+                    <CheckRoute isLoggedIn={auth} path='/account'>
                       <AccountInfo />
                     </CheckRoute>
                   </Switch>
@@ -178,12 +196,9 @@ function createStyles(theme) {
   };
 }
 
-
-function mapState({authReducer: { authStatus, token, userId } } ) {
+function mapState({ authReducer: { authStatus } }) {
   return {
-    authStatus,
-    token,
-    userId
+    authStatus
   };
 }
 

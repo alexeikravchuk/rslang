@@ -19,9 +19,9 @@ function GameCard({ sprintState, checkAnswer }) {
 
   React.useEffect(() => {
     const onKeydown = e => {
-      if (e.keyCode === LEFW_ARROW_KEY_CODE) {
+      if (e.keyCode === RIGHT_ARROW_KEY_CODE) {
         checkAnswer(RIGHT_BTN_VALUE, sprintState)
-      } else if (e.keyCode === RIGHT_ARROW_KEY_CODE) {
+      } else if (e.keyCode === LEFW_ARROW_KEY_CODE) {
         checkAnswer(WRONG_BTN_VALUE, sprintState)
       }
     };
@@ -46,23 +46,23 @@ function GameCard({ sprintState, checkAnswer }) {
       <CardActions>
       <Button
         variant="contained"
-        color="primary"
-        size="medium"
-        startIcon={<KeyboardArrowLeftIcon />}
-        value="right"
-        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
-        >
-        right
-      </Button>
-      <Button
-        variant="contained"
         color="secondary"
         size="medium"
-        endIcon={<KeyboardArrowRightIcon />}
+        startIcon={<KeyboardArrowLeftIcon />}
         value="wrong"
         onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
         >
         wrong
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        size="medium"
+        endIcon={<KeyboardArrowRightIcon />}
+        value="right"
+        onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
+        >
+        right
       </Button>
       </CardActions>
     </Card>

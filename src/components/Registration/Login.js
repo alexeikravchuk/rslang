@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   Button,
   Dialog,
@@ -7,8 +9,10 @@ import {
   DialogContentText,
   DialogTitle,
   Link,
+  CircularProgress,
+  Container,
 } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+
 import { signURL, createURL } from '../../constants/authURL';
 
 import {
@@ -17,9 +21,20 @@ import {
   addEmail,
   addToken,
   addUserId,
-  authStatus
+  authStatus,
 } from '../../store/actions/authAction';
-import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/styles';
+
+const styles = {
+  contentDialog: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 10,
+    minWidth: 200,
+  },
+};
 
 function Alert(props) {
   function getResponse(emailInput, passwordInput) {
@@ -51,10 +66,13 @@ function Alert(props) {
         if (typeof entryData !== 'undefined') {
           setTitle('Login success');
           doTransition('/home');
-          props.dispatch(authStatus(true))
+          console.log(props);
+          const { token, userId } = entryData;
+          saveDataToLocalStorage(token, userId);
+          props.dispatch(authStatus(true));
           props.dispatch(addEmail(emailInput));
-          props.dispatch(addToken(entryData.token));
-          props.dispatch(addUserId(entryData.userId));
+          props.dispatch(addToken(token));
+          props.dispatch(addUserId(userId));
         }
       });
     }
@@ -97,6 +115,11 @@ function Alert(props) {
       });
     }
   }
+
+  const saveDataToLocalStorage = (token, userId) => {
+    const time = Date.now();
+    localStorage.setItem('token', window.btoa(JSON.stringify({ time, token, userId })));
+  };
 
   const [title, setTitle] = useState('');
   const [emailTitle, setEmailStatus] = useState('');
@@ -143,18 +166,24 @@ function Alert(props) {
         onClose={handleClose}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'>
-        <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>{emailTitle}</DialogContentText>
-          <DialogContentText id='alert-dialog-description'>{passwordTitle}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Link component={RouterLink} to={transition}>
-            <Button onClick={handleClose} color='primary' autoFocus>
-              OK
-            </Button>
-          </Link>
-        </DialogActions>
+        <Container className={props.classes.contentDialog}>
+          {title ? (
+            <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
+          ) : (
+            <CircularProgress color='secondary' />
+          )}
+          <DialogContent>
+            <DialogContentText>{emailTitle}</DialogContentText>
+            <DialogContentText>{passwordTitle}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Link component={RouterLink} to={transition}>
+              <Button onClick={handleClose} color='primary' autoFocus>
+                OK
+              </Button>
+            </Link>
+          </DialogActions>
+        </Container>
       </Dialog>
     </div>
   );
@@ -164,4 +193,4 @@ function mapState(state) {
   return state;
 }
 
-export default connect(mapState)(Alert);
+export default connect(mapState)(withStyles(styles)(Alert));

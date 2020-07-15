@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Timer(props) {
   const classes = useStyles();
+  const {isTimerFinished} = props
 
   const [progress, setProgress] = React.useState(0);
   const fullProgress = 100;
@@ -35,12 +36,12 @@ function Timer(props) {
   React.useEffect(() => {
     const timer = setTimeout(progressCounter, 1000)
     if (progress >= 100) {
-      props.isTimerFinished()
+      isTimerFinished()
     }
     return () => {
       clearTimeout(timer);
     };
-  }, [progress]);
+  }, [progress, isTimerFinished]);
 
 
   return (

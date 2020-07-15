@@ -22,6 +22,11 @@ function TeamCard({ card }) {
         <Typography gutterBottom variant="subtitle1">
             { card.role }
         </Typography>
+        <Typography gutterBottom variant="subtitle2" style={{textDecoration: "underline"}}>
+          { card.contribution }
+        </Typography>
+      </CardContent>
+      <CardContent>
         <Typography variant="body2">
           { card.description }
         </Typography>

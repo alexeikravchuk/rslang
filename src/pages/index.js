@@ -2,13 +2,12 @@ import HomePage from './Home/HomePage';
 import AccountInfo from './AccountInfo/AccountInfo';
 import { SpeakIt } from './SpeakIt';
 import { Savannah } from './Savannah';
+import { ownGame } from './ownGame';
 import { AudioCall } from './AudioCall';
 import { AboutTeamPage } from './AboutTeamPage';
 import { SprintMiniGame } from './SprintMiniGame';
-import { ownGame } from './ownGame';
 import { EnglishPuzzle } from './EnglishPuzzle';
 import { PromoPage } from './PromoPage/PromoPage';
-
 
 export {
   HomePage,
@@ -18,7 +17,7 @@ export {
   Savannah,
   AudioCall,
   SprintMiniGame,
+  ownGame,
   AccountInfo,
   PromoPage,
-  ownGame,
 };
