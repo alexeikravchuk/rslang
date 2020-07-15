@@ -15,11 +15,11 @@ const defaultState = {
   data: {
     optional: {
       translate: true,
-      description: false,
-      example: false,
-      transcription: false,
-      image: false,
-      newWords: 10,
+      description: true,
+      example: true,
+      transcription: true,
+      image: true,
+      newWords: 20,
     },
     wordsPerDay: 20,
   },
