@@ -13,12 +13,27 @@ import {
   Divider,
   Tooltip,
   ListItemIcon,
+  Card,
 } from '@material-ui/core';
 import './Dictionary.scss';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import Storefront from '@material-ui/icons/Storefront';
+import SpellcheckIcon from '@material-ui/icons/Spellcheck';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import DeleteIcon from '@material-ui/icons/Delete';
+import {connect} from 'react-redux';
+import {WordsList} from './components';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
 
 const styles = theme => ({
   titleDictionary: {
     color: 'primary',
+  },
+  rootCard: {
+    maxWidth: 320,
   },
   listDictionary: {
     overflow: 'auto',
@@ -47,6 +62,7 @@ class Dictionary extends React.Component {
       category: 0,
       count: 0,
       pageLoaded: true,
+      navValue: 0,
     };
   }
 
@@ -98,7 +114,7 @@ class Dictionary extends React.Component {
           <Tooltip title={<Typography
             variant='h6'
             align={'left'}
-            color={'white'}>{el.transcription}</Typography>}
+          >{el.transcription}</Typography>}
                    placement='top'>
             <ListItemText
               primary={<Typography variant='h6' align={'left'} color={'primary'}>{el.word}</Typography>}
@@ -112,7 +128,6 @@ class Dictionary extends React.Component {
     });
     this.setState({content: words});
   };
-
   handleCategory = (categoryNumber) => {
     getWords(0, categoryNumber).then((data) => {
       this.getNextWords(data, categoryNumber);
@@ -127,46 +142,129 @@ class Dictionary extends React.Component {
     });
   };
 
+  renderHTML(text) {
+    return (
+      <div dangerouslySetInnerHTML={{__html: text}}>
+      </div>
+    );
+  }
+
+  renderImage(data) {
+    const image = new Image();
+    image.src = `data:image/jpg;base64,${data}`;
+    return image.src;
+  }
+
   render() {
     const {classes} = this.props;
     return (
       <Grid container
             className={'dictionaryRoot'}
             align='center'
-            justify='center'
-            alignItems='center'>
+            justify='flex-start'
+            alignItems='flex-start'>
         <Grid item xs={12}>
-          <Typography variant='h4'
-                      component='h2'
-                      align={'center'}
-                      color='primary'>
-            Dictionary
-          </Typography>
+          <BottomNavigation
+            value={this.state.navValue}
+            onChange={(event, newValue) => {
+              this.setState({navValue: newValue});
+            }}
+            showLabels
+            className={classes.root}
+          >
+            <BottomNavigationAction label="All collection" icon={<Storefront/>}/>
+            <BottomNavigationAction label="Learned words" icon={<SpellcheckIcon/>}/>
+            <BottomNavigationAction label="Hard words" icon={<FitnessCenterIcon/>}/>
+            <BottomNavigationAction label="Deleted words" icon={<DeleteIcon/>}/>
+          </BottomNavigation>
         </Grid>
-        <Grid item>
-          <p><i>Category: </i></p>
-          <Pagination count={6}
-                      size='medium'
-                      color='primary'
-                      hidePrevButton
-                      hideNextButton
-                      onChange={this.handleCategoryChange.bind(this)}/>
-        </Grid>
+        {(this.state.navValue > 0) && <Grid item xs={12}>
+          <Card className={classes.rootCard}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                alt="Contemplative Reptile"
+                height="140"
+                image={this.renderImage(this.props.currentWord.image)}
+                title={this.props.currentWord.word}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h6" component="h2">
+                  {this.props.currentWord.word}
+                </Typography>
+                <Divider/>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {`${this.props.currentWord.transcription} - ${this.props.currentWord.wordTranslate}`}
+                  {this.renderHTML(this.props.currentWord.textExample)}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>}
         <Grid item xs={12}>
-          <Divider/>
-          <List className={classes.listDictionary}
-                dense={true}
-          >{this.state.content}</List>
-          <Divider/>
-        </Grid>
-        <Grid item align='center'>
-          {this.state.pageLoaded && <Pagination count={30}
-                                                size='medium'
-                                                onChange={this.handleCountChange.bind(this)}/>}
+          {(this.state.navValue === 1) && <Grid container
+                                                align='center'
+                                                justify='center'
+                                                alignItems='flex-start'>
+            <Grid item xs={12}>
+              <WordsList wordsArray={this.props.learnedWords}/>
+            </Grid>
+          </Grid>}
+          {(this.state.navValue === 2) && <Grid container
+                                                align='center'
+                                                justify='center'
+                                                alignItems='flex-start'>
+            <Grid item xs={12}>
+              <WordsList wordsArray={this.props.hardWords}/>
+            </Grid>
+          </Grid>}
+          {(this.state.navValue === 3) && <Grid container
+                                                align='center'
+                                                justify='center'
+                                                alignItems='flex-start'>
+            <Grid item xs={12}>
+              <WordsList wordsArray={this.props.deletedWords}/>
+            </Grid>
+          </Grid>}
+          {(this.state.navValue === 0) && <Grid container
+                                                align='center'
+                                                justify='center'
+                                                alignItems='center'>
+            <Grid item>
+              <p><i>Category: </i></p>
+              <Pagination count={6}
+                          size='medium'
+                          color='primary'
+                          hidePrevButton
+                          hideNextButton
+                          onChange={this.handleCategoryChange.bind(this)}/>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider/>
+              <List className={classes.listDictionary}
+                    dense={true}
+              >{this.state.content}</List>
+              <Divider/>
+            </Grid>
+            <Grid item align='center'>
+              {this.state.pageLoaded && <Pagination count={30}
+                                                    size='medium'
+                                                    onChange={this.handleCountChange.bind(this)}/>}
+            </Grid>
+          </Grid>}
         </Grid>
       </Grid>
     );
   }
 }
 
-export default withStyles(styles)(Dictionary);
+const mapStateToProps = store => {
+  const {wordsReducer} = store;
+  return {...wordsReducer};
+};
+
+// const mapDispatchToProps = dispatch => {
+//
+// };
+
+export default connect(mapStateToProps)(withStyles(styles)(Dictionary));
