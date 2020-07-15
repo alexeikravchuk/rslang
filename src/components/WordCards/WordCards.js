@@ -230,7 +230,7 @@ class WordCards extends React.Component {
   };
 
   checkAnswer = (input, word) => {
-    return input.split().map((letter, i) => (
+    return input.split('').map((letter, i) => (
       <span className={letter === word[i] ? LETTER_CLASS.correct : LETTER_CLASS.error} key={i}>
         {letter}
       </span>
@@ -356,31 +356,35 @@ class WordCards extends React.Component {
           <div className='learning-card'>
             <div className='learning-card-header'>
               <div className='current-word'>
-                <div style={{ color: colorDots }}>
-                  <span>&#10687;</span>
-                  <span>&#10687;</span>
-                  <span>&#10687;</span>
-                  <span>&#10687;</span>
-                  <span>&#10687;</span>
+                <div className='current-success'>
+                  <div style={{ color: colorDots }}>
+                    <span>&#10687;</span>
+                    <span>&#10687;</span>
+                    <span>&#10687;</span>
+                    <span>&#10687;</span>
+                    <span>&#10687;</span>
+                  </div>
+                  <span className='learning-word-description'>
+                    {description}
+                  </span>
                 </div>
-                <div className='learning-word-description'>
-                  <span>{description}</span>
+                <div className='page-and-category'>
+                  <form className='select-learning-page'>
+                    Page:
+                    <br />
+                    <select value={valuePage} onChange={this.handleChangePage} name='page'>
+                      {this.selectPage(maxPage)}
+                    </select>
+                  </form>
+                  <form
+                    value={valueCategory}
+                    onChange={this.handleChangeCategory}
+                    className='select-learning-category'>
+                    Category:
+                    <br />
+                    <select name='category'>{this.selectPage(maxCategory)}</select>
+                  </form>
                 </div>
-                <form className='select-learning-page'>
-                  Page:
-                  <br />
-                  <select value={valuePage} onChange={this.handleChangePage} name='page'>
-                    {this.selectPage(maxPage)}
-                  </select>
-                </form>
-                <form
-                  value={valueCategory}
-                  onChange={this.handleChangeCategory}
-                  className='select-learning-category'>
-                  Category:
-                  <br />
-                  <select name='category'>{this.selectPage(maxCategory)}</select>
-                </form>
               </div>
               <div className='dropdown-notes'>
                 <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
