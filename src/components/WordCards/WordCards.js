@@ -15,7 +15,7 @@ import { LinearProgress } from '@material-ui/core';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
 import disabled from '../../assets/disabled.jpg';
-import cardground from '../../assets/cardground.jpg';
+import cardground from '../../assets/cardground.JPG';
 import { getSettings } from '../../store/actions/appSettingsAction';
 import { connect } from 'react-redux';
 
@@ -169,6 +169,7 @@ class WordCards extends React.Component {
       translation: currentObj.wordTranslate,
       transcription: currentObj.transcription,
       word: currentObj.word,
+      id: currentObj.id,
       image: `${URL}${currentObj.image}`,
       meaning: this.removeTags(currentObj.textMeaning, 'i'),
       example: this.removeTags(currentObj.textExample, 'b'),
@@ -198,16 +199,18 @@ class WordCards extends React.Component {
   };
 
   getAnswer = () => {
+    const { learning, word, id } = this.state
     this.setState({
       value: this.state.word,
       showMeaning: true,
       showExample: true,
+      learning: learning.concat([{word: word, id: id}])
     });
   };
 
   handleChange = ({ target: { value } }) => {
     this.setState({ value, showAnswer: false });
-    const { word } = this.state;
+    const { learning, word, id } = this.state;
     if (value.length === word.length) {
       let resultInputWord = this.checkAnswer(value, word);
       resultInputWord = resultInputWord.map((item) => item.props.className);
@@ -216,23 +219,18 @@ class WordCards extends React.Component {
         if (resultInputWord[i] === LETTER_CLASS.error) errorCount++;
       }
       if (!errorCount) {
-        this.setState({
-          colorDots: DOTS_COLOR.green,
-          description: RESULTS_DESCRIPTION.great,
-          translateMeaningShow: true,
-          translateExampleShow: true,
-        });
+        this.setState({ colorDots: DOTS_COLOR.green, description: RESULTS_DESCRIPTION.great, translateMeaningShow: true, translateExampleShow: true });
       } else if (resultInputWord.length / errorCount < 2) {
-        this.setState({ colorDots: DOTS_COLOR.red, description: RESULTS_DESCRIPTION.tryAgain });
+        this.setState({ colorDots: DOTS_COLOR.red, description: RESULTS_DESCRIPTION.tryAgain, learning: learning.concat([{word: word, id: id}])});
       } else if (resultInputWord.length / errorCount > 2) {
-        this.setState({ colorDots: DOTS_COLOR.orange, description: RESULTS_DESCRIPTION.almost });
+        this.setState({ colorDots: DOTS_COLOR.orange, description: RESULTS_DESCRIPTION.almost, learning: learning.concat([{word: word, id: id}])});
       }
       this.checkAnswer(value, word);
       this.setState({ showAnswer: true });
     } else {
       this.setState({
         showAnswer: false,
-        translateMeaningShow: false,
+        translateMeaningShow: false, 
         translateExampleShow: false,
         colorDots: DOTS_COLOR.white,
         description: RESULTS_DESCRIPTION.success,
@@ -273,47 +271,43 @@ class WordCards extends React.Component {
   };
 
   createLearningWords = () => {
-    const { learning, word } = this.state;
+    const { learning, word, id } = this.state;
     this.setState(
       {
-        learning: learning.concat([word]),
+        learning: learning.concat([{word: word, id: id}]), //uniq need to be pushed to the store
       },
       () => {
         this.toggleDropdown();
-        console.log(learning);
-        let uniqueLearningCollection = [...new Set(learning)];
-        console.log(uniqueLearningCollection); //need to be pushed to the store
-        console.log(this.state.id);
+        // let uniqueLearningCollection = [...new Set(learning)];
+        // console.log(uniqueLearningCollection); 
       }
     );
   };
 
   createCompoundWords = () => {
-    const { compound, word } = this.state;
+    const { compound, word, id } = this.state;
     this.setState(
       {
-        compound: compound.concat(word),
+        compound: compound.concat([{word: word, id: id}]), //uniq need to be pushed to the store
       },
       () => {
         this.toggleDropdown();
-        console.log(compound);
-        let uniqueCompoundCollection = [...new Set(compound)];
-        console.log(uniqueCompoundCollection); //need to be pushed to the store
+        // let uniqueCompoundCollection = [...new Set(compound)];
+        // console.log(uniqueCompoundCollection); 
       }
     );
   };
 
   createDeletedWords = () => {
-    const { deleted, word } = this.state;
+    const { deleted, word, id } = this.state;
     this.setState(
       {
-        deleted: deleted.concat([word]),
+        deleted: deleted.concat([{word: word, id: id}]), //uniq need to be pushed to the store
       },
       () => {
         this.toggleDropdown();
-        console.log(deleted);
-        let uniqueDeletedCollection = [...new Set(deleted)];
-        console.log(uniqueDeletedCollection); //need to be pushed to the store
+        // let uniqueDeletedCollection = [...new Set(deleted)];
+        // console.log(uniqueDeletedCollection);
       }
     );
   };
@@ -357,9 +351,7 @@ class WordCards extends React.Component {
     } = this.state;
     let wordLength = word.length;
     return (
-      <div
-        className='learning-card-wrapper'
-        style={{ background: `url(${cardground}) no-repeat`, backgroundSize: 'cover' }}>
+      <div className='learning-card-wrapper' style={{ background: `url(${cardground}) no-repeat`, backgroundSize: '100% 100%' }}>
         <div className='learning-word-cards'>
           <div className='learning-card-prev'>
             <ArrowBackIosTwoToneIcon onClick={() => this.setCountMinus()} className='prev'>
@@ -377,7 +369,9 @@ class WordCards extends React.Component {
                     <span>&#10687;</span>
                     <span>&#10687;</span>
                   </div>
-                  <span className='learning-word-description'>{description}</span>
+                  <span className='learning-word-description'>
+                    {description}
+                  </span>
                 </div>
                 <div className='page-and-category'>
                   <form className='select-learning-page'>
@@ -399,7 +393,7 @@ class WordCards extends React.Component {
               </div>
               <div className='dropdown-notes'>
                 <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
-                  <div
+                  <div 
                     onClick={() => {
                       this.createLearningWords();
                     }}
@@ -444,9 +438,7 @@ class WordCards extends React.Component {
                       🕬
                     </span>
                   </div>
-                  <div className='learning-word-transcription'>
-                    {data.optional.transcription ? transcription : null}
-                  </div>
+                  <div className='learning-word-transcription'>{data.optional.transcription ? transcription : null}</div>
                   <div className='learning-word-input'>
                     <div className='learning-check-input'>
                       <input
@@ -466,16 +458,12 @@ class WordCards extends React.Component {
                     </div>
                   </div>
                 </div>
-                <img
-                  className='learning-word-image'
-                  src={data.optional.image ? image : disabled}
-                  alt=''
-                />
+                <img className='learning-word-image' src={data.optional.image ? image : disabled} alt='' />
               </div>
               <div className='learning-word-examples'>
                 <div className='learning-word-meaning'>
                   <div className='meaning-sentence' onClick={this.showMeaningWord}>
-                    {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
+                  {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
                   </div>
                   <span
                     onClick={() => {
@@ -497,16 +485,8 @@ class WordCards extends React.Component {
                     🕬
                   </span>
                 </div>
-                <div className='meaning-translate'>
-                  {!data.optional.description
-                    ? null
-                    : translateMeaningShow
-                    ? meaningTranslate
-                    : null}
-                </div>
-                <div className='example-translate'>
-                  {!data.optional.example ? null : translateExampleShow ? exampleTranslate : null}
-                </div>
+                <div className='meaning-translate'>{!data.optional.description ? null : translateMeaningShow ? meaningTranslate : null}</div>
+                <div className='example-translate'>{!data.optional.example ? null : translateExampleShow ? exampleTranslate : null}</div>
               </div>
             </div>
           </div>
