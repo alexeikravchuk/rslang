@@ -24,7 +24,7 @@ const MuiDialogConten = withStyles((theme) => ({
 export function StatisticDialogDescription(props) {
   const { score } = props.props.sprintState.sprintReducer;
   const { totalScore, scoreRecord, gameCounter } = props.props.sprintState.statisticsReducer.optional.sprint;
-  const scoreAverage = Math.round(totalScore + score / gameCounter + 1);
+  const scoreAverage = Math.round((totalScore + score) / (gameCounter + 1));
 
 
   const stars = Math.round(5 * score / scoreAverage)
