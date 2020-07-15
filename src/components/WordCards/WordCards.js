@@ -15,6 +15,7 @@ import { LinearProgress } from '@material-ui/core';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
 import disabled from '../../assets/disabled.jpg';
+import cardground from '../../assets/cardground.JPG';
 import { getSettings } from '../../store/actions/appSettingsAction';
 import { connect } from 'react-redux';
 
@@ -45,6 +46,7 @@ class WordCards extends React.Component {
       description: RESULTS_DESCRIPTION.success,
       translation: cardInfo.translation,
       transcription: cardInfo.transcription,
+      id: cardInfo.id,
       word: cardInfo.word,
       image: cardInfo.image,
       meaning: cardInfo.meaning,
@@ -276,6 +278,7 @@ class WordCards extends React.Component {
         console.log(learning);
         let uniqueLearningCollection = [...new Set(learning)];
         console.log(uniqueLearningCollection); //need to be pushed to the store
+        console.log(this.state.id);
       }
     );
   };
@@ -319,8 +322,6 @@ class WordCards extends React.Component {
 
   render() {
     const { data } = this.props;
-    console.log(data); // дефолтный стейт настроек
-
     const {
       word,
       translation,
@@ -351,7 +352,7 @@ class WordCards extends React.Component {
     } = this.state;
     let wordLength = word.length;
     return (
-      <div className='learning-card-wrapper'>
+      <div className='learning-card-wrapper' style={{ background: `url(${cardground}) no-repeat`, backgroundSize: '100% 100%' }}>
         <div className='learning-word-cards'>
           <div className='learning-card-prev'>
             <ArrowBackIosTwoToneIcon onClick={() => this.setCountMinus()} className='prev'>
@@ -393,7 +394,7 @@ class WordCards extends React.Component {
               </div>
               <div className='dropdown-notes'>
                 <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
-                  <div
+                  <div 
                     onClick={() => {
                       this.createLearningWords();
                     }}
