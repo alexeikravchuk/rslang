@@ -2,12 +2,9 @@ $color-train: #90add3;
 $color-train-2: #e274fd;
 
 $mobile-big-width: 414px;
+$tablet-width: 768px;
 
 .stat-container {
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   .title-stat {
     text-align: center;
     font-size: 44px;
@@ -24,9 +21,11 @@ $mobile-big-width: 414px;
       background-color: #e274fd55;
       width: 20%;
     }
-    th, td {
+    th,
+    td {
       border: 2px solid $color-train;
       text-align: center;
+      padding: 2px 4px;
     }
     .result-link {
       border: none;
@@ -53,9 +52,19 @@ $mobile-big-width: 414px;
     height: 45px;
     margin: 20px auto;
   }
+
+  @media (max-width: $tablet-width) {
+    padding: 20px 10px;
+    .table-stat {
+      font-size: 18px;
+      width: 95%;
+    }
+  }
+
   @media (max-width: $mobile-big-width) {
     padding: 20px 5px;
     .table-stat {
+      font-size: 14px;
       width: 95%;
     }
   }

@@ -119,7 +119,10 @@ class Results extends Component {
           </div>
         )}
         {isShowStatistics && (
-          <Statistics onClick={this.handleButtonClick} statistics={statistics} />
+          <Statistics
+            onClick={this.handleButtonClick}
+            statistics={Object.keys(statistics).length && statistics}
+          />
         )}
       </Backdrop>
     );
@@ -127,7 +130,10 @@ class Results extends Component {
 }
 
 const mapStateToProps = (store) => {
-  const { statisticsReducer, authReducer: { token, userId } } = store;
+  const {
+    statisticsReducer,
+    authReducer: { token, userId },
+  } = store;
   return { statistics: statisticsReducer, token, userId };
 };
 

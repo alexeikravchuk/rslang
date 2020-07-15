@@ -15,7 +15,7 @@ import { LinearProgress } from '@material-ui/core';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
 import disabled from '../../assets/disabled.jpg';
-import cardground from '../../assets/cardground.JPG';
+import cardground from '../../assets/cardground.jpg';
 import { getSettings } from '../../store/actions/appSettingsAction';
 import { connect } from 'react-redux';
 
@@ -216,7 +216,12 @@ class WordCards extends React.Component {
         if (resultInputWord[i] === LETTER_CLASS.error) errorCount++;
       }
       if (!errorCount) {
-        this.setState({ colorDots: DOTS_COLOR.green, description: RESULTS_DESCRIPTION.great, translateMeaningShow: true, translateExampleShow: true });
+        this.setState({
+          colorDots: DOTS_COLOR.green,
+          description: RESULTS_DESCRIPTION.great,
+          translateMeaningShow: true,
+          translateExampleShow: true,
+        });
       } else if (resultInputWord.length / errorCount < 2) {
         this.setState({ colorDots: DOTS_COLOR.red, description: RESULTS_DESCRIPTION.tryAgain });
       } else if (resultInputWord.length / errorCount > 2) {
@@ -227,7 +232,7 @@ class WordCards extends React.Component {
     } else {
       this.setState({
         showAnswer: false,
-        translateMeaningShow: false, 
+        translateMeaningShow: false,
         translateExampleShow: false,
         colorDots: DOTS_COLOR.white,
         description: RESULTS_DESCRIPTION.success,
@@ -352,7 +357,9 @@ class WordCards extends React.Component {
     } = this.state;
     let wordLength = word.length;
     return (
-      <div className='learning-card-wrapper' style={{ background: `url(${cardground}) no-repeat`, backgroundSize: '100% 100%' }}>
+      <div
+        className='learning-card-wrapper'
+        style={{ background: `url(${cardground}) no-repeat`, backgroundSize: 'cover' }}>
         <div className='learning-word-cards'>
           <div className='learning-card-prev'>
             <ArrowBackIosTwoToneIcon onClick={() => this.setCountMinus()} className='prev'>
@@ -370,9 +377,7 @@ class WordCards extends React.Component {
                     <span>&#10687;</span>
                     <span>&#10687;</span>
                   </div>
-                  <span className='learning-word-description'>
-                    {description}
-                  </span>
+                  <span className='learning-word-description'>{description}</span>
                 </div>
                 <div className='page-and-category'>
                   <form className='select-learning-page'>
@@ -394,7 +399,7 @@ class WordCards extends React.Component {
               </div>
               <div className='dropdown-notes'>
                 <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
-                  <div 
+                  <div
                     onClick={() => {
                       this.createLearningWords();
                     }}
@@ -439,7 +444,9 @@ class WordCards extends React.Component {
                       🕬
                     </span>
                   </div>
-                  <div className='learning-word-transcription'>{data.optional.transcription ? transcription : null}</div>
+                  <div className='learning-word-transcription'>
+                    {data.optional.transcription ? transcription : null}
+                  </div>
                   <div className='learning-word-input'>
                     <div className='learning-check-input'>
                       <input
@@ -459,12 +466,16 @@ class WordCards extends React.Component {
                     </div>
                   </div>
                 </div>
-                <img className='learning-word-image' src={data.optional.image ? image : disabled} alt='' />
+                <img
+                  className='learning-word-image'
+                  src={data.optional.image ? image : disabled}
+                  alt=''
+                />
               </div>
               <div className='learning-word-examples'>
                 <div className='learning-word-meaning'>
                   <div className='meaning-sentence' onClick={this.showMeaningWord}>
-                  {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
+                    {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
                   </div>
                   <span
                     onClick={() => {
@@ -486,8 +497,16 @@ class WordCards extends React.Component {
                     🕬
                   </span>
                 </div>
-                <div className='meaning-translate'>{!data.optional.description ? null : translateMeaningShow ? meaningTranslate : null}</div>
-                <div className='example-translate'>{!data.optional.example ? null : translateExampleShow ? exampleTranslate : null}</div>
+                <div className='meaning-translate'>
+                  {!data.optional.description
+                    ? null
+                    : translateMeaningShow
+                    ? meaningTranslate
+                    : null}
+                </div>
+                <div className='example-translate'>
+                  {!data.optional.example ? null : translateExampleShow ? exampleTranslate : null}
+                </div>
               </div>
             </div>
           </div>

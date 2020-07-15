@@ -15,7 +15,7 @@ class Statistics extends Component {
 
   render() {
     const { onClick, statistics } = this.props;
-
+    console.log(statistics);
     return (
       <div className='stat-container'>
         <h3 className='title-stat'>Statistics</h3>
@@ -29,7 +29,7 @@ class Statistics extends Component {
               <th className='th-option'>Link</th>
             </tr>
           </thead>
-          {statistics && <StatisticsBody statistics={statistics} onClick={onClick} />}
+          {statistics ? <StatisticsBody statistics={statistics} onClick={onClick} /> : ''}
         </table>
         {!statistics && <NoStatisticsMessage />}
         <button className='btn btn-stat return' onClick={onClick}>
