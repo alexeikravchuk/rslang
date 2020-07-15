@@ -60,7 +60,7 @@ class Settings extends Component {
       value = undefined;
     if (event.target.id) {
       name = event.target.id;
-      value = event.target.value;
+      value = event.target.value <= 0 ? 1 : event.target.value;
     } else {
       name = event.target.name;
       value = event.target.checked;
@@ -70,6 +70,10 @@ class Settings extends Component {
 
   render() {
     const { loading, data } = this.props;
+
+    if (data.optional.newWords > data.wordsPerDay) {
+      data.optional.newWords = data.wordsPerDay;
+    }
 
     if (loading) {
       return (
@@ -88,7 +92,7 @@ class Settings extends Component {
         <Container maxWidth={false} disableGutters={true} style={styles.mainContainer}>
           <Typography color={'primary'} variant={'h3'}>
             <FormGroup style={styles.formGroup}>
-              User Settings:
+              User Settings
               <Divider />
               {switchers.map((switcher) =>
                 <React.Fragment key={switcher.name}>
@@ -112,6 +116,7 @@ class Settings extends Component {
                 id='newWords'
                 label={NEW_WORDS}
                 type='number'
+                inputProps={{min: "1"}}
                 defaultValue={data.optional.newWords}
                 onChange={this.handleChange}
                 InputLabelProps={{
@@ -124,6 +129,7 @@ class Settings extends Component {
                 id='allWords'
                 label={ALL_WORDS}
                 type='number'
+                inputProps={{min: "1"}}
                 defaultValue={data.wordsPerDay}
                 onChange={this.handleChange}
                 InputLabelProps={{

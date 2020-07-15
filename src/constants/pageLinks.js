@@ -64,7 +64,7 @@ export const pageLinks = [
     type: 'game',
   },
   {
-    title: 'ownGame',
+    title: 'OwnGame',
     link: 'ownGame',
     icon: <VideoLabel color='secondary' />,
     type: 'game',

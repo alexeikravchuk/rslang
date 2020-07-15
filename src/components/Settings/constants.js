@@ -1,20 +1,10 @@
-const ALL_WORDS = 'All Words per Day';
-const NEW_WORDS = 'New Words per Day';
+const ALL_WORDS = 'Max Words';
+const NEW_WORDS = 'New Words(Less or equal Max Words)';
 
 export const switchers = [
   {
     name: 'translate',
     label: 'Show word translate',
-    color: 'primary',
-  },
-  {
-    name: 'description',
-    label: 'Show word description',
-    color: 'primary',
-  },
-  {
-    name: 'example',
-    label: 'Show word example',
     color: 'primary',
   },
   {
@@ -25,6 +15,16 @@ export const switchers = [
   {
     name: 'image',
     label: 'Show word image',
+    color: 'primary',
+  },
+  {
+    name: 'description',
+    label: 'Show word description',
+    color: 'primary',
+  },
+  {
+    name: 'example',
+    label: 'Show word example',
     color: 'primary',
   },
 ];
