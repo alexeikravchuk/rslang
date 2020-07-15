@@ -5,6 +5,9 @@ $mobile-big-width: 414px;
 $tablet-width: 768px;
 
 .stat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .title-stat {
     text-align: center;
     font-size: 44px;
