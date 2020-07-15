@@ -25,6 +25,7 @@ class WordCards extends React.Component {
 
     const { dispatch, userId, token } = this.props;
     dispatch(getSettings(userId, token));
+    const { data } = this.props;
 
     this.state = {
       dataRandom: [],
@@ -36,11 +37,11 @@ class WordCards extends React.Component {
       value: '',
       colorDots: DOTS_COLOR.white,
       showAnswer: false,
-      lastNumber: 20,
       valuePage: 0,
       valueCategory: 0,
       dropdown: false,
       notification: '',
+      lastNumber: data.wordsPerDay,
       description: RESULTS_DESCRIPTION.success,
       translation: cardInfo.translation,
       transcription: cardInfo.transcription,
@@ -48,7 +49,8 @@ class WordCards extends React.Component {
       image: cardInfo.image,
       meaning: cardInfo.meaning,
       example: cardInfo.example,
-      translateShow: false,
+      translateMeaningShow: false,
+      translateExampleShow: false,
       meaningTranslate: cardInfo.meaningTranslate,
       exampleTranslate: cardInfo.exampleTranslate,
       audioWord: cardInfo.audioWord,
@@ -212,7 +214,7 @@ class WordCards extends React.Component {
         if (resultInputWord[i] === LETTER_CLASS.error) errorCount++;
       }
       if (!errorCount) {
-        this.setState({ colorDots: DOTS_COLOR.green, description: RESULTS_DESCRIPTION.great });
+        this.setState({ colorDots: DOTS_COLOR.green, description: RESULTS_DESCRIPTION.great, translateMeaningShow: true, translateExampleShow: true });
       } else if (resultInputWord.length / errorCount < 2) {
         this.setState({ colorDots: DOTS_COLOR.red, description: RESULTS_DESCRIPTION.tryAgain });
       } else if (resultInputWord.length / errorCount > 2) {
@@ -223,6 +225,8 @@ class WordCards extends React.Component {
     } else {
       this.setState({
         showAnswer: false,
+        translateMeaningShow: false, 
+        translateExampleShow: false,
         colorDots: DOTS_COLOR.white,
         description: RESULTS_DESCRIPTION.success,
       });
@@ -326,7 +330,8 @@ class WordCards extends React.Component {
       exampleTranslate,
       notification,
       progress,
-      translateShow,
+      translateMeaningShow,
+      translateExampleShow,
       showMeaning,
       showExample,
       meaning,
@@ -480,8 +485,8 @@ class WordCards extends React.Component {
                     🕬
                   </span>
                 </div>
-                <div className='meaning-translate'>{translateShow ? meaningTranslate : null}</div>
-                <div className='example-translate'>{translateShow ? exampleTranslate : null}</div>
+                <div className='meaning-translate'>{!data.optional.description ? null : translateMeaningShow ? meaningTranslate : null}</div>
+                <div className='example-translate'>{!data.optional.example ? null : translateExampleShow ? exampleTranslate : null}</div>
               </div>
             </div>
           </div>
