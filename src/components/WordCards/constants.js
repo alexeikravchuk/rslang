@@ -16,6 +16,7 @@ const cardInfo = {
   audioWord: 'озвучка слова',
   audioMeaning: 'озвучка значения',
   audioExampleWord: 'озвучка примера',
+  id: 'id'
 };
 
 const DOTS_COLOR = {
