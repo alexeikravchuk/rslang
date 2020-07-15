@@ -49,7 +49,7 @@ function GameCard({ sprintState, checkAnswer }) {
         color="secondary"
         size="medium"
         startIcon={<KeyboardArrowLeftIcon />}
-        value="right"
+        value="wrong"
         onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
         >
         wrong
@@ -59,7 +59,7 @@ function GameCard({ sprintState, checkAnswer }) {
         color="primary"
         size="medium"
         endIcon={<KeyboardArrowRightIcon />}
-        value="wrong"
+        value="right"
         onClick={(event) => checkAnswer(event.currentTarget.value, sprintState)}
         >
         right
