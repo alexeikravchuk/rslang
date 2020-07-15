@@ -1,4 +1,4 @@
-import { WORD_REQUEST_URL } from "../../constants/urlsRequests";
+import { WORD_REQUEST_URL } from '../../constants/urlsRequests';
 
 const URL = 'https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/';
 const wordRequestURL = WORD_REQUEST_URL;
@@ -18,4 +18,35 @@ const cardInfo = {
   audioExampleWord: 'озвучка примера',
 };
 
-export { URL, cardInfo, wordRequestURL, maxPage, maxCategory };
+const DOTS_COLOR = {
+  green: 'green',
+  red: 'red',
+  orange: 'orange',
+  white: 'white',
+};
+
+const RESULTS_DESCRIPTION = {
+  great: 'Great :)',
+  tryAgain: 'Try again !',
+  almost: 'Almost ...',
+  success: 'Success rate',
+};
+
+const LETTER_CLASS = {
+  correct: 'word-correct',
+  error: 'word-error',
+};
+
+const NOTIFICATION = 'Day plan is completed!';
+
+export {
+  URL,
+  cardInfo,
+  wordRequestURL,
+  maxPage,
+  maxCategory,
+  DOTS_COLOR,
+  RESULTS_DESCRIPTION,
+  LETTER_CLASS,
+  NOTIFICATION,
+};

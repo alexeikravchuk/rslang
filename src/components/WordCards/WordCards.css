@@ -99,7 +99,7 @@
 }
 
 .dropdown {
-  padding-right: 20px;
+  padding-right: 35px;
 }
 
 .dropdown div {
@@ -303,7 +303,7 @@
   }
   .dropdown {
     width: 195px;
-    padding-right: 5px;
+    padding: 0 10px;
   }
   .learning-card-main {
     height: 368px;

@@ -1,16 +1,32 @@
 import React from 'react';
 import './WordCards.css';
-import { URL, cardInfo, wordRequestURL, maxPage, maxCategory } from './constants';
+import {
+  URL,
+  cardInfo,
+  wordRequestURL,
+  maxPage,
+  maxCategory,
+  DOTS_COLOR,
+  RESULTS_DESCRIPTION,
+  LETTER_CLASS,
+  NOTIFICATION,
+} from './constants';
 import { LinearProgress } from '@material-ui/core';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
 import ArrowBackIosTwoToneIcon from '@material-ui/icons/ArrowBackIosTwoTone';
+import disabled from '../../assets/disabled.jpg';
+import { getSettings } from '../../store/actions/appSettingsAction';
+import { connect } from 'react-redux';
 
 class WordCards extends React.Component {
   constructor(props) {
     super(props);
     this.audio = null;
+
+    const { dispatch, userId, token } = this.props;
+    dispatch(getSettings(userId, token));
+
     this.state = {
-      lastNumber: 20,
       dataRandom: [],
       learning: [],
       compound: [],
@@ -18,19 +34,21 @@ class WordCards extends React.Component {
       category: 1,
       counter: 0,
       value: '',
-      colorDots: 'white',
+      colorDots: DOTS_COLOR.white,
       showAnswer: false,
+      lastNumber: 20,
       valuePage: 0,
       valueCategory: 0,
       dropdown: false,
       notification: '',
-      description: 'Success rate',
+      description: RESULTS_DESCRIPTION.success,
       translation: cardInfo.translation,
       transcription: cardInfo.transcription,
       word: cardInfo.word,
       image: cardInfo.image,
       meaning: cardInfo.meaning,
       example: cardInfo.example,
+      translateShow: false,
       meaningTranslate: cardInfo.meaningTranslate,
       exampleTranslate: cardInfo.exampleTranslate,
       audioWord: cardInfo.audioWord,
@@ -42,34 +60,27 @@ class WordCards extends React.Component {
       showExample: false,
       progress: 0,
     };
-    this.playAudioWords = this.playAudioWords.bind(this);
-    this.setCountPlus = this.setCountPlus.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.showMeaningWord = this.showMeaningWord.bind(this);
-    this.showExampleWord = this.showExampleWord.bind(this);
-    this.handleChangePage = this.handleChangePage.bind(this);
-    this.handleChangeCategory = this.handleChangeCategory.bind(this);
   }
 
-  generateWords(page, category) {
+  generateWords = (page, category) => {
     this.getWords(page, category).then((data) => {
       this.getNewWords(data[this.state.counter]);
       this.setState({ dataRandom: data });
     });
-  }
+  };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.generateWords(0, 0);
-  }
+  };
 
-  async getWords(page, category) {
+  getWords = async (page, category) => {
     const response = await fetch(`${wordRequestURL}?page=${page}&group=${category}`);
     const data = await response.json();
     let dataRandom = this.getShuffle(data);
     return dataRandom;
-  }
+  };
 
-  getShuffle(array) {
+  getShuffle = (array) => {
     let m = array.length,
       t,
       i;
@@ -80,70 +91,56 @@ class WordCards extends React.Component {
       array[i] = t;
     }
     return array;
-  }
+  };
 
-  clearInput() {
+  clearInput = () => {
     this.setState({
       value: '',
       showMeaning: false,
       showExample: false,
     });
-  }
+  };
 
-  setCountMinus() {
+  setCountMinus = () => {
+    const { counter, progress, lastNumber, dataRandom } = this.state;
     this.clearInput();
-    if (this.state.counter === 0) {
-      this.setState(
+    if (counter) {
+      return this.setState(
         {
-          counter: 0,
-          progress: 0,
+          counter: counter - 1,
+          progress: progress - 100 / lastNumber,
         },
-        () => {
-          this.getNewWords(this.state.dataRandom[this.state.counter]);
-        }
-      );
-    } else {
-      this.setState({ progress: this.state.progress - 10 });
-      this.setState(
-        {
-          counter: this.state.counter - 1,
-          progress: this.state.progress - 100 / this.state.lastNumber,
-        },
-        () => {
-          this.getNewWords(this.state.dataRandom[this.state.counter]);
-        }
+        () => this.getNewWords(dataRandom[counter])
       );
     }
-  }
+    return this.setState({ progress: 0 }, () => this.getNewWords(dataRandom[counter]));
+  };
 
   setCountPlus = () => {
+    const { counter, progress, lastNumber, dataRandom } = this.state;
     this.clearInput();
-    this.setState({colorDots: 'white'});
-    this.setState({description: 'Success rate'})
-    if (this.state.counter === this.state.lastNumber - 1) {
-      this.setState(
+    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success });
+    if (counter === lastNumber - 1) {
+      return this.setState(
         {
-          counter: this.state.lastNumber - 1,
+          counter: lastNumber - 1,
           progress: 100,
         },
         () => {
           this.setState({
-            notification: 'Day plan is completed!',
+            notification: NOTIFICATION,
           });
-          this.getNewWords(this.state.dataRandom[this.state.counter]);
-        }
-      );
-    } else {
-      this.setState(
-        {
-          counter: this.state.counter + 1,
-          progress: this.state.progress + 100 / this.state.lastNumber,
-        },
-        () => {
-          this.getNewWords(this.state.dataRandom[this.state.counter]);
+          this.getNewWords(dataRandom[counter]);
         }
       );
     }
+    return this.setState(
+      {
+        counter: counter + 1,
+        progress: progress + 100 / lastNumber,
+      },
+      () => this.getNewWords(dataRandom[counter])
+    );
   };
 
   removeTags = (seq, tag) => {
@@ -179,144 +176,149 @@ class WordCards extends React.Component {
     });
   };
 
-  playAudioWords(audioSrc) {
+  playAudioWords = (audioSrc) => {
     if (!this.audio) {
       this.audio = new Audio(audioSrc);
-      this.audio.play();
+      this.audio.play().catch((e) => console.log(e.message));
       this.audio.addEventListener('ended', () => {
         this.audio = null;
       });
     }
-  }
+  };
 
-  toggleDropdown() {
+  toggleDropdown = () => {
     const { dropdown } = this.state;
     this.setState({
       dropdown: !dropdown,
     });
-  }
+  };
 
-  getAnswer() {
+  getAnswer = () => {
     this.setState({
       value: this.state.word,
       showMeaning: true,
       showExample: true,
     });
-  }
+  };
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-    this.setState({ showAnswer: false });
-    if (event.target.value.length === this.state.word.length) {
-      let resultInputWord = this.checkAnswer(event.target.value, this.state.word);
-      resultInputWord = resultInputWord.map(item => item.props.className);
+  handleChange = ({ target: { value } }) => {
+    this.setState({ value, showAnswer: false });
+    const { word } = this.state;
+    if (value.length === word.length) {
+      let resultInputWord = this.checkAnswer(value, word);
+      resultInputWord = resultInputWord.map((item) => item.props.className);
       let errorCount = 0;
-      for(var i = 0; i < resultInputWord.length; ++i){
-        if(resultInputWord[i] === "word-error")
-        errorCount++;
+      for (var i = 0; i < resultInputWord.length; ++i) {
+        if (resultInputWord[i] === LETTER_CLASS.error) errorCount++;
       }
-      if(errorCount === 0 ){
-        this.setState({colorDots: 'green'});
-        this.setState({ description: 'Great :)' });
-      } else if((resultInputWord.length / errorCount) < 2){
-        this.setState({colorDots: 'red'});
-        this.setState({ description: 'Try again !' });
-      } else if((resultInputWord.length / errorCount) > 2){
-        this.setState({colorDots: 'orange'});
-        this.setState({ description: 'Almost ...' });
-      } 
-      this.checkAnswer(event.target.value, this.state.word);
-      this.setState({ showAnswer: true})
+      if (!errorCount) {
+        this.setState({ colorDots: DOTS_COLOR.green, description: RESULTS_DESCRIPTION.great });
+      } else if (resultInputWord.length / errorCount < 2) {
+        this.setState({ colorDots: DOTS_COLOR.red, description: RESULTS_DESCRIPTION.tryAgain });
+      } else if (resultInputWord.length / errorCount > 2) {
+        this.setState({ colorDots: DOTS_COLOR.orange, description: RESULTS_DESCRIPTION.almost });
+      }
+      this.checkAnswer(value, word);
+      this.setState({ showAnswer: true });
     } else {
-      this.setState({showAnswer: false})
-      this.setState({colorDots: 'white'});
-      this.setState({description: 'Success rate'})
+      this.setState({
+        showAnswer: false,
+        colorDots: DOTS_COLOR.white,
+        description: RESULTS_DESCRIPTION.success,
+      });
     }
-  }
+  };
 
-  checkAnswer(input, word) {
-    let answer = [];
-      for (let i = 0; i < input.length; i++) {
-        if (input[i] !== word[i]) {
-          answer.push(<span className='word-error' key={i}>{input[i]}</span>);
-        }
-        else {
-          answer.push(<span className='word-correct' key={i}>{input[i]}</span>);
-        }
-    } 
-    return answer;
-  }
+  checkAnswer = (input, word) => {
+    return input.split().map((letter, i) => (
+      <span className={letter === word[i] ? LETTER_CLASS.correct : LETTER_CLASS.error} key={i}>
+        {letter}
+      </span>
+    ));
+  };
 
-  handleChangePage(event) {
-    this.setState({ valuePage: event.target.value }, () => {
-      this.generateWords(this.state.valuePage, this.state.valueCategory);
-    });
-  }
+  handleChangePage = ({ target }) => {
+    const { valuePage, valueCategory } = this.state;
+    this.setState({ valuePage: target.value }, () => this.generateWords(valuePage, valueCategory));
+  };
 
-  handleChangeCategory(event) {
-    this.setState({ valueCategory: event.target.value - 1 }, () => {
-      this.generateWords(this.state.valuePage, this.state.valueCategory);
-    });
-  }
+  handleChangeCategory = ({ target }) => {
+    const { valuePage, valueCategory } = this.state;
+    this.setState({ valueCategory: target.value - 1 }, () =>
+      this.generateWords(valuePage, valueCategory)
+    );
+  };
 
-  showMeaningWord() {
+  showMeaningWord = () => {
     this.setState((state) => ({
       showMeaning: !state.showMeaning,
     }));
-  }
+  };
 
-  showExampleWord() {
+  showExampleWord = () => {
     this.setState((state) => ({
       showExample: !state.showExample,
     }));
-  }
+  };
 
-  createLearningWords() {
+  createLearningWords = () => {
+    const { learning, word } = this.state;
     this.setState(
       {
-        learning: this.state.learning.concat([this.state.word]),
+        learning: learning.concat([word]),
       },
       () => {
         this.toggleDropdown();
-        console.log(this.state.learning); //need to be pushed to the store
+        console.log(learning);
+        let uniqueLearningCollection = [...new Set(learning)];
+        console.log(uniqueLearningCollection); //need to be pushed to the store
       }
     );
-  }
+  };
 
-  createCompoundWords() {
+  createCompoundWords = () => {
+    const { compound, word } = this.state;
     this.setState(
       {
-        compound: this.state.compound.concat(this.state.word),
+        compound: compound.concat(word),
       },
       () => {
         this.toggleDropdown();
-        console.log(this.state.compound); //need to be pushed to the store
+        console.log(compound);
+        let uniqueCompoundCollection = [...new Set(compound)];
+        console.log(uniqueCompoundCollection); //need to be pushed to the store
       }
     );
-  }
+  };
 
-  createDeletedWords() {
+  createDeletedWords = () => {
+    const { deleted, word } = this.state;
     this.setState(
       {
-        deleted: this.state.deleted.concat([this.state.word]),
+        deleted: deleted.concat([word]),
       },
       () => {
         this.toggleDropdown();
-        console.log(this.state.deleted); //need to be pushed to the store
+        console.log(deleted);
+        let uniqueDeletedCollection = [...new Set(deleted)];
+        console.log(uniqueDeletedCollection); //need to be pushed to the store
       }
     );
-  }
+  };
 
-  selectPage(array) {
+  selectPage = (array) => {
     let newArr = new Array(array)
       .fill(1)
       .map((item, i) => <option key={`page-${i}`}>{item + i}</option>);
     return newArr;
-  }
+  };
 
   render() {
-    let wordLength = this.state.word.length;
+    const { data } = this.props;
+    console.log(data); // дефолтный стейт настроек
+
     const {
+      word,
       translation,
       transcription,
       value,
@@ -324,7 +326,7 @@ class WordCards extends React.Component {
       exampleTranslate,
       notification,
       progress,
-      lastNumber,
+      translateShow,
       showMeaning,
       showExample,
       meaning,
@@ -338,7 +340,11 @@ class WordCards extends React.Component {
       audioMeaning,
       audioExample,
       image,
+      colorDots,
+      description,
+      showAnswer,
     } = this.state;
+    let wordLength = word.length;
     return (
       <div className='learning-card-wrapper'>
         <div className='learning-word-cards'>
@@ -350,7 +356,7 @@ class WordCards extends React.Component {
           <div className='learning-card'>
             <div className='learning-card-header'>
               <div className='current-word'>
-                <div style={{color: this.state.colorDots}} >
+                <div style={{ color: colorDots }}>
                   <span>&#10687;</span>
                   <span>&#10687;</span>
                   <span>&#10687;</span>
@@ -358,7 +364,7 @@ class WordCards extends React.Component {
                   <span>&#10687;</span>
                 </div>
                 <div className='learning-word-description'>
-                  <span>{this.state.description}</span>
+                  <span>{description}</span>
                 </div>
                 <form className='select-learning-page'>
                   Page:
@@ -383,21 +389,21 @@ class WordCards extends React.Component {
                       this.createLearningWords();
                     }}
                     className='learning'>
-                    Добавить в Изучаемые слова
+                    Add to Learning Words
                   </div>
                   <div
                     onClick={() => {
                       this.createCompoundWords();
                     }}
                     className='compound'>
-                    Пометить как Сложное слово
+                    Mark as Compound Word
                   </div>
                   <div
                     onClick={() => {
                       this.createDeletedWords();
                     }}
                     className='deleted'>
-                    Удалить из списка слов
+                    Remove from word list
                   </div>
                 </div>
                 <div className='word-notes'>
@@ -414,7 +420,7 @@ class WordCards extends React.Component {
               <div className='learning-word-wrapper'>
                 <div className='learning-word-info'>
                   <div className='learning-word-translation'>
-                    {translation}
+                    {data.optional.translate ? translation : null}
                     <span
                       onClick={() => {
                         this.playAudioWords(audioWord);
@@ -423,30 +429,32 @@ class WordCards extends React.Component {
                       🕬
                     </span>
                   </div>
-                  <div className='learning-word-transcription'>{transcription}</div>
+                  <div className='learning-word-transcription'>{data.optional.transcription ? transcription : null}</div>
                   <div className='learning-word-input'>
-                    <div className="learning-check-input">
+                    <div className='learning-check-input'>
                       <input
                         id='input'
                         value={value}
                         onChange={this.handleChange}
                         className='word-answer-input'
-                        style={{ width: `${wordLength * 16}px`}}
+                        style={{ width: `${wordLength * 16}px` }}
                         type='text'
                         maxLength={wordLength}
                         autoComplete='off'
                         autoFocus
                       />
-                      <div className="check-input">{ this.state.showAnswer ? this.checkAnswer(this.state.value, this.state.word) : null }</div>
+                      <div className='check-input'>
+                        {showAnswer ? this.checkAnswer(value, word) : null}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <img className='learning-word-image' src={image} alt='' />
+                <img className='learning-word-image' src={data.optional.image ? image : disabled} alt='' />
               </div>
               <div className='learning-word-examples'>
                 <div className='learning-word-meaning'>
                   <div className='meaning-sentence' onClick={this.showMeaningWord}>
-                    {showMeaning ? meaning : meaningHide}
+                  {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
                   </div>
                   <span
                     onClick={() => {
@@ -458,7 +466,7 @@ class WordCards extends React.Component {
                 </div>
                 <div className='learning-word-example'>
                   <div className='example-sentence' onClick={this.showExampleWord}>
-                    {showExample ? example : exampleHide}
+                    {!data.optional.example ? null : showExample ? example : exampleHide}
                   </div>
                   <span
                     onClick={() => {
@@ -468,8 +476,8 @@ class WordCards extends React.Component {
                     🕬
                   </span>
                 </div>
-                <div className='meaning-translate'>{meaningTranslate}</div>
-                <div className='example-translate'>{exampleTranslate}</div>
+                <div className='meaning-translate'>{translateShow ? meaningTranslate : null}</div>
+                <div className='example-translate'>{translateShow ? exampleTranslate : null}</div>
               </div>
             </div>
           </div>
@@ -497,11 +505,15 @@ class WordCards extends React.Component {
           <div className='number-progress'>
             <LinearProgress variant='determinate' value={progress} />
           </div>
-          <div className='number-end'>{lastNumber}</div>
+          <div className='number-end'>{this.state.lastNumber}</div>
         </div>
       </div>
     );
   }
 }
 
-export default WordCards;
+const mapStateToProps = ({ appStateReducer: { data }, authReducer: { token, userId } }) => {
+  return { data, userId, token };
+};
+
+export default connect(mapStateToProps)(WordCards);

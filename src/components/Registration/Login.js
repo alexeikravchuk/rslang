@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   Button,
   Dialog,
@@ -7,8 +9,10 @@ import {
   DialogContentText,
   DialogTitle,
   Link,
+  CircularProgress,
+  Container,
 } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+
 import { signURL, createURL } from '../../constants/authURL';
 
 import {
@@ -19,7 +23,18 @@ import {
   addUserId,
   authStatus,
 } from '../../store/actions/authAction';
-import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/styles';
+
+const styles = {
+  contentDialog: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 10,
+    minWidth: 200,
+  },
+};
 
 function Alert(props) {
   function getResponse(emailInput, passwordInput) {
@@ -151,18 +166,24 @@ function Alert(props) {
         onClose={handleClose}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'>
-        <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>{emailTitle}</DialogContentText>
-          <DialogContentText id='alert-dialog-description'>{passwordTitle}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Link component={RouterLink} to={transition}>
-            <Button onClick={handleClose} color='primary' autoFocus>
-              OK
-            </Button>
-          </Link>
-        </DialogActions>
+        <Container className={props.classes.contentDialog}>
+          {title ? (
+            <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
+          ) : (
+            <CircularProgress color='secondary' />
+          )}
+          <DialogContent>
+            <DialogContentText>{emailTitle}</DialogContentText>
+            <DialogContentText>{passwordTitle}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Link component={RouterLink} to={transition}>
+              <Button onClick={handleClose} color='primary' autoFocus>
+                OK
+              </Button>
+            </Link>
+          </DialogActions>
+        </Container>
       </Dialog>
     </div>
   );
@@ -172,4 +193,4 @@ function mapState(state) {
   return state;
 }
 
-export default connect(mapState)(Alert);
+export default connect(mapState)(withStyles(styles)(Alert));
