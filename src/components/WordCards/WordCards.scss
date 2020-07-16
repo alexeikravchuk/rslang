@@ -53,6 +53,10 @@
     }
   }
   &-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     min-height: 338px;
   }
 }
@@ -149,7 +153,8 @@
     width: 200px;
     height: 135px;
     position: relative;
-    box-shadow: 0 0 3px blue;
+    box-shadow: 2px 4px 7px #2c2c49;
+    border-radius: 3px;
   }
   &-translation {
     display: flex;
@@ -167,6 +172,7 @@
     flex-direction: column;
     justify-content: center;
     min-height: 150px;
+    width: 100%;
     max-width: 500px;
     padding: 1.5rem 1rem 1rem 1rem;
     div {

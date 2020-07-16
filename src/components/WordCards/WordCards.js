@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './WordCards.scss';
 import {
   URL,
@@ -11,7 +11,7 @@ import {
   LETTER_CLASS,
   NOTIFICATION,
 } from './constants';
-import { LinearProgress, Button } from '@material-ui/core';
+import { LinearProgress, Button, CircularProgress } from '@material-ui/core';
 import { ArrowForwardIos, ArrowBackIos, VolumeUp, Flag } from '@material-ui/icons';
 import disabled from '../../assets/disabled.jpg';
 import cardground from '../../assets/cardground.JPG';
@@ -431,52 +431,65 @@ class WordCards extends React.Component {
               </div>
             </div>
             <div className='learning-card-main'>
-              <div className='learning-word-wrapper'>
-                <div className='learning-word-info'>
-                  <div className='learning-word-translation'>
-                    {data.optional.translate ? translation : null}
-                    <VolumeUp className='spell' onClick={() => this.playAudioWords(audioWord)} />
-                  </div>
-                  <div className='learning-word-transcription'>
-                    {data.optional.transcription ? transcription : null}
-                  </div>
-                  <div className='learning-word-input'>
-                    <div className='learning-check-input'>
-                      <input
-                        id='input'
-                        value={value}
-                        onChange={this.handleChange}
-                        className='word-answer-input'
-                        style={{ width: `${wordLength * 16}px` }}
-                        type='text'
-                        maxLength={wordLength}
-                        autoComplete='off'
-                        autoFocus
-                      />
-                      <div className='check-input'>
-                        {showAnswer ? this.checkAnswer(value, word) : null}
+              {word ? (
+                <Fragment>
+                  <div className='learning-word-wrapper'>
+                    <div className='learning-word-info'>
+                      <div className='learning-word-translation'>
+                        {data.optional.translate ? translation : null}
+                        <VolumeUp
+                          className='spell'
+                          onClick={() => this.playAudioWords(audioWord)}
+                        />
+                      </div>
+                      <div className='learning-word-transcription'>
+                        {data.optional.transcription ? transcription : null}
+                      </div>
+                      <div className='learning-word-input'>
+                        <div className='learning-check-input'>
+                          <input
+                            id='input'
+                            value={value}
+                            onChange={this.handleChange}
+                            className='word-answer-input'
+                            style={{ width: `${wordLength * 16}px` }}
+                            type='text'
+                            maxLength={wordLength}
+                            autoComplete='off'
+                            autoFocus
+                          />
+                          <div className='check-input'>
+                            {showAnswer ? this.checkAnswer(value, word) : null}
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    <img
+                      className='learning-word-image'
+                      src={data.optional.image ? image : disabled}
+                      alt=''
+                    />
                   </div>
-                </div>
-                <img
-                  className='learning-word-image'
-                  src={data.optional.image ? image : disabled}
-                  alt=''
-                />
-              </div>
+                </Fragment>
+              ) : (
+                <CircularProgress color='secondary' />
+              )}
               <div className='learning-word-examples'>
                 <div className='learning-word-meaning'>
                   <div className='meaning-sentence' onClick={this.showMeaningWord}>
                     {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
                   </div>
-                  <VolumeUp onClick={() => this.playAudioWords(audioMeaning)} className='spell' />
+                  {word && (
+                    <VolumeUp onClick={() => this.playAudioWords(audioMeaning)} className='spell' />
+                  )}
                 </div>
                 <div className='learning-word-example'>
                   <div className='example-sentence' onClick={this.showExampleWord}>
                     {!data.optional.example ? null : showExample ? example : exampleHide}
                   </div>
-                  <VolumeUp className='spell' onClick={() => this.playAudioWords(audioExample)} />
+                  {word && (
+                    <VolumeUp className='spell' onClick={() => this.playAudioWords(audioExample)} />
+                  )}
                 </div>
                 <div className='meaning-translate'>
                   {!data.optional.description
