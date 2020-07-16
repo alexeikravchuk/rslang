@@ -70,8 +70,8 @@ class Settings extends Component {
 
   render() {
     const { loading, data } = this.props;
-    if (data.optional.newWords > data.wordsPerDay) {
-      data.optional.newWords = data.wordsPerDay;
+    if (data.wordsPerDay < data.optional.newWords) {
+      data.wordsPerDay = data.optional.newWords;
     }
 
     if (loading) {
