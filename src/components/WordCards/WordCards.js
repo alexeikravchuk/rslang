@@ -182,12 +182,14 @@ class WordCards extends React.Component {
   };
 
   playAudioWords = (audioSrc) => {
-    if (!this.audio) {
+    try {
+      if (this.audio && this.audio.played) {
+        this.pause();
+      }
       this.audio = new Audio(audioSrc);
       this.audio.play().catch((e) => console.log(e.message));
-      this.audio.addEventListener('ended', () => {
-        this.audio = null;
-      });
+    } catch (e) {
+      console.log(e.message);
     }
   };
 

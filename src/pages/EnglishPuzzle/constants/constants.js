@@ -18,12 +18,12 @@ const SENTENCE_STATUS = {
 };
 
 const BUTTONS_NAME = {
-  DONT_KNOW: 'KNOW',
-  CHECK: 'CHECK',
-  CONTINUE: 'CONTINUE',
-  RESULTS: 'RESULTS',
-  STATISTICS: 'STATISTICS',
-  TRY_AGAIN: 'TRY AGAIN',
+  DONT_KNOW: 'know',
+  CHECK: 'check',
+  CONTINUE: 'continue',
+  RESULTS: 'results',
+  STATISTICS: 'statistics',
+  TRY_AGAIN: 'try again',
 };
 
 export {

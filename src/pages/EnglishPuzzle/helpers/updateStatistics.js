@@ -7,7 +7,8 @@ const updateStatistics = ({ statistics, currentLevel, currentPage, results }) =>
 
   let data = statistics.optional.puzzle || { lw: 0, stat: {} }; // lw - learnedWords, stat - statistics
 
-  const oldLearnedWords = data.stat[statKey] ? countLearnedWords(data.stat[statKey].rs) : 0;
+  const oldLearnedWords =
+    data.stat && data.stat[statKey] ? countLearnedWords(data.stat[statKey].rs) : 0;
   const newLearnedWords = countLearnedWords(results);
   const learnedWords = data.lw ? data.lw - oldLearnedWords + newLearnedWords : newLearnedWords;
 

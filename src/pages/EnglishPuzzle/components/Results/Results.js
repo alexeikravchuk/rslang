@@ -20,10 +20,10 @@ class Results extends Component {
 
   handleBtnClick = (event) => {
     const { currentTarget } = event;
-    if (currentTarget.innerText === BUTTONS_NAME.STATISTICS) {
+    if (currentTarget.innerText.toLowerCase() === BUTTONS_NAME.STATISTICS) {
       return this.setState({ isShowStatistics: true });
     }
-    if (currentTarget.innerText === BUTTONS_NAME.RESULTS) {
+    if (currentTarget.innerText.toLowerCase() === BUTTONS_NAME.RESULTS) {
       return this.setState({ isShowStatistics: false });
     }
     const { level, page } = this.state;

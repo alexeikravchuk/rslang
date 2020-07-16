@@ -7,6 +7,7 @@ export const initialState = {
   optional: {
     speakIt: {},
     puzzle: { lw: 0, stat: {} },
+    call: {},
     sprint: {
       scoreRecord: 0,
       totalScore: 0,
