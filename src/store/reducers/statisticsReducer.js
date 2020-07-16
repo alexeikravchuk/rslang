@@ -4,11 +4,11 @@ const initialState = {
   learnedWords: 0,
   optional: {
     speakIt: {},
-    puzzle: {},
+    puzzle: { lw: 0, stat: {} },
     sprint: {
       scoreRecord: 0,
       totalScore: 0,
-      gameCounter: 0
+      gameCounter: 0,
     },
   },
 };
