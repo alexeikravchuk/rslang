@@ -1,85 +1,80 @@
 import React from 'react';
-import { withStyles, Button, Avatar, ButtonGroup, Typography, Fade  } from '@material-ui/core';
+import { withStyles, Button, Avatar, ButtonGroup, Typography, Fade } from '@material-ui/core';
 import speaker from '../../../../assets/speaker.png';
-import { apiData } from '../../constants/constants';
+import { DATA_LINK } from '../../../../constants/urlsRequests';
+import { playAudio } from '../../helpers/playAudio';
 
 class Statistics extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state={
-      page: true
-    }
-    this.showCorrect=this.showCorrect.bind(this);
-    this.showWrong=this.showWrong.bind(this)
-  }
+  state = {
+    page: true,
+  };
 
-  playAudio(src) {
-    if (!this.audio) {
-      this.audio = new Audio(src);
-      this.audio.play();
-      this.audio.addEventListener('ended', () => { this.audio = null; });
-    }
-  }
-
-  generateAnswers(answersObj){
+  generateAnswers = (answersObj) => {
     const { classes } = this.props;
-    let answers = answersObj.map((item, index) => 
-      <div key = {index} className={classes.root}>
-        <Avatar className={classes.small} src={speaker} onClick={this.playAudio.bind(this,`${apiData}${item.audio}`)}/>
+    let answers = answersObj.map((item, index) => (
+      <div key={index} className={classes.root}>
+        <Avatar
+          className={classes.small}
+          src={speaker}
+          onClick={() => playAudio(`${DATA_LINK}${item.audio}`)}
+        />
         <Typography>{item.word}</Typography>
         <span> - </span>
         <Typography>{item.wordTranslate}</Typography>
       </div>
-    )
-    return answers
-  }
+    ));
+    return answers;
+  };
 
-  showCorrect(){
-    this.setState({ page: true })
-  }
+  showCorrect = () => {
+    this.setState({ page: true });
+  };
 
-  showWrong(){
-    this.setState({ page: false })
-  }
+  showWrong = () => {
+    this.setState({ page: false });
+  };
 
-  render(){
-      let show;
-      const { classes, correctAnswers, wrongAnswers, finishGame } = this.props;
-      const { page } = this.state;
-      if (page) {
-        show = 
-        <div>
-          <Typography>You know - {correctAnswers.length}</Typography>
-            <div>
-                  {this.generateAnswers(correctAnswers)}
-            </div>
-        </div>
-      } else {
-        show = 
-        <div>
+  render() {
+    const { classes, correctAnswers, wrongAnswers, finishGame } = this.props;
+    const { page } = this.state;
+    const show = page ? (
+      <div>
+        <Typography>You know - {correctAnswers.length}</Typography>
+        <div>{this.generateAnswers(correctAnswers)}</div>
+      </div>
+    ) : (
+      <div>
         <Typography>Need to learn - {wrongAnswers.length}</Typography>
-          <div>
-                {this.generateAnswers(wrongAnswers)}
-          </div>
+        <div>{this.generateAnswers(wrongAnswers)}</div>
       </div>
-      }
-      return (
+    );
+
+    return (
       <Fade in={true}>
-      <div className={classes.main} >
-        <Typography variant="h4">Score</Typography>
-        <ButtonGroup className={classes.buttons} variant="contained"  aria-label="contained primary button group">
-          <Button color="primary" onClick={this.showCorrect}>Correct</Button>
-          <Button color="secondary" onClick={this.showWrong}>Wrong</Button>
-        </ButtonGroup>
-        <div open={true}>
-          {show}
+        <div className={classes.main}>
+          <Typography variant='h4'>Score</Typography>
+          <ButtonGroup
+            className={classes.buttons}
+            variant='contained'
+            aria-label='contained primary button group'>
+            <Button color='primary' onClick={this.showCorrect}>
+              Correct
+            </Button>
+            <Button color='secondary' onClick={this.showWrong}>
+              Wrong
+            </Button>
+          </ButtonGroup>
+          <div open={true}>{show}</div>
+          <Button
+            className={classes.buttons}
+            variant='contained'
+            color='secondary'
+            onClick={finishGame}>
+            Try again
+          </Button>
         </div>
-        <Button className={classes.buttons} variant="contained" color="secondary"  onClick={finishGame}>
-          Try again
-        </Button>
-      </div>
       </Fade>
-      );
+    );
   }
 }
 
@@ -105,8 +100,8 @@ function createStyles(theme) {
     small: {
       width: theme.spacing(3),
       height: theme.spacing(3),
+      cursor: 'pointer',
     },
-
   };
 }
 

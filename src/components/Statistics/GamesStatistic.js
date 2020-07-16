@@ -20,6 +20,8 @@ class GamesStatistic extends Component {
         return this.setSpeakItData();
       case 1:
         return this.setEnglishPuzzleData();
+      case 3:
+        return this.setAudioCallData();
       default:
         return this.setState({ difficulty: 1, correctAnswers: 0, wrongAnswers: 0 });
     }
@@ -46,9 +48,26 @@ class GamesStatistic extends Component {
     try {
       const { puzzle } = this.props.statistics.optional;
       const correctAnswers = puzzle.lw;
-      const items = Object.keys(puzzle.stat).length;
+      const items = puzzle.stat ? Object.keys(puzzle.stat).length : 0;
       const wrongAnswers = items * 10 - correctAnswers;
       const difficulty = Math.ceil(((correctAnswers + 1) / 2090) * 6);
+      this.setState({ difficulty, correctAnswers, wrongAnswers });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  setAudioCallData = () => {
+    try {
+      const { call } = this.props.statistics.optional;
+      let correctAnswers = 0,
+        wrongAnswers = 0;
+      const keys = Object.keys(call);
+      keys.forEach((key) => {
+        correctAnswers += call[key].c.length;
+        wrongAnswers += 10 - call[key].w.length;
+      });
+      const difficulty = Math.ceil(((correctAnswers + 1) / 3600) * 6);
       this.setState({ difficulty, correctAnswers, wrongAnswers });
     } catch (e) {
       console.log(e.message);

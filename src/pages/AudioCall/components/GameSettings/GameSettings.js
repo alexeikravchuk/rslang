@@ -1,42 +1,40 @@
 import React from 'react';
-import { withStyles, Typography, Slider} from '@material-ui/core';
+import { withStyles, Typography, Slider } from '@material-ui/core';
 import { marks } from '../../constants/constants';
 
 class GameSettings extends React.Component {
-  render(){
-    const { classes, сhangeDifficulty, handleDragStop, сhangeRound } = this.props;
-  return (
-    <div className={classes.root}>
-        <Typography id="discrete-slider-always" gutterBottom>
-            Choose difficulty level
+  render() {
+    const { classes, сhangeDifficulty, сhangeRound } = this.props;
+    return (
+      <div className={classes.root}>
+        <Typography id='discrete-slider-always' gutterBottom>
+          Choose difficulty level
         </Typography>
         <Slider
           onChange={сhangeDifficulty}
-          onDragStop={handleDragStop}
           defaultValue={1}
           min={1}
           max={6}
           step={1}
-          aria-labelledby="discrete-slider-always"
+          aria-labelledby='discrete-slider-always'
           marks={marks}
-          valueLabelDisplay="auto"
+          valueLabelDisplay='auto'
         />
-        <Typography id="round-select" gutterBottom>
-            Choose round
+        <Typography id='round-select' gutterBottom>
+          Choose round
         </Typography>
         <Slider
           onChange={сhangeRound}
-          onDragStop={handleDragStop} 
           defaultValue={1}
           min={1}
           max={30}
           step={1}
           marks
-          aria-labelledby="discrete-slider-always"
-          valueLabelDisplay="auto"
+          aria-labelledby='discrete-slider-always'
+          valueLabelDisplay='auto'
         />
-    </div>
-  );
+      </div>
+    );
   }
 }
 

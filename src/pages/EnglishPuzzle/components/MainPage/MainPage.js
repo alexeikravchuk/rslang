@@ -442,19 +442,25 @@ class MainPage extends Component {
   };
 
   startLevelAgain = (level, page) => {
+    const {
+      level: { current: currentLevel },
+      page: { current: currentPage },
+    } = this.state;
+    if (level === currentLevel && page === currentPage) {
+      return this.resetLevel();
+    }
     if (level && page) {
       return this.setState({ level: { current: level }, page: { current: page } });
     }
-
     return this.resetLevel();
   };
 
   handleBtnClick = ({ currentTarget }, level, page) => {
     const { currentSentence, puzzleResults, sentenceStatus } = this.state;
-    if (currentTarget.innerText === BUTTONS_NAME.CHECK) {
+    if (currentTarget.innerText.toLowerCase() === BUTTONS_NAME.CHECK) {
       return this.checkResult();
     }
-    if (currentTarget.innerText === BUTTONS_NAME.CONTINUE) {
+    if (currentTarget.innerText.toLowerCase() === BUTTONS_NAME.CONTINUE) {
       if (sentenceStatus === SENTENCE_STATUS.FINISH) {
         return this.nextLevel();
       }
@@ -464,10 +470,10 @@ class MainPage extends Component {
       }
       return this.nextSentence();
     }
-    if (currentTarget.innerText === BUTTONS_NAME.RESULTS) {
+    if (currentTarget.innerText.toLowerCase() === BUTTONS_NAME.RESULTS) {
       return this.setState({ isShowResults: true });
     }
-    if (currentTarget.innerText === BUTTONS_NAME.TRY_AGAIN) {
+    if (currentTarget.innerText.toLowerCase() === BUTTONS_NAME.TRY_AGAIN) {
       return this.startLevelAgain(level, page);
     }
 
