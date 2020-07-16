@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles, Box, ButtonGroup, Button } from '@material-ui/core';
 import { Timeline, Update } from '@material-ui/icons';
-import { loadStatistics } from '../../store/actions/statisticsActions';
 import CardsStatistic from './CardsStatistic';
 import GamesStatistic from './GamesStatistic';
 import statisticBackground from '../../assets/statistics.jpg';
@@ -15,17 +14,12 @@ class Statistics extends Component {
     wrongAnswers: 0,
   };
 
-  componentDidMount = () => {
-    const { loadStatistics, userId, token } = this.props;
-    loadStatistics(userId, token);
-  };
-
   setStatisticsType = (type) => {
     this.setState({ type });
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, statistics } = this.props;
     return (
       <div className={classes.root}>
         <div className={classes.children}>
@@ -43,7 +37,7 @@ class Statistics extends Component {
           </div>
           <Box className={classes.box}>
             <CardsStatistic />
-            <GamesStatistic />
+            <GamesStatistic statistics={statistics} />
           </Box>
         </div>
       </div>
@@ -79,12 +73,8 @@ function createStyles(theme) {
   };
 }
 
-const mapStateToProps = ({ statisticsReducer, authReducer: { token, userId } }) => {
-  return { statistics: statisticsReducer, token, userId };
+const mapStateToProps = ({ statisticsReducer }) => {
+  return { statistics: statisticsReducer };
 };
 
-const mapDispatchToProps = {
-  loadStatistics,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(createStyles)(Statistics));
+export default connect(mapStateToProps)(withStyles(createStyles)(Statistics));
