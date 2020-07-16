@@ -1,7 +1,3 @@
-import { WORD_REQUEST_URL } from '../../constants/urlsRequests';
-
-const URL = 'https://raw.githubusercontent.com/alexeikravchuk/rslang-data/master/';
-const wordRequestURL = WORD_REQUEST_URL;
 const maxPage = 30;
 const maxCategory = 6;
 const cardInfo = {
@@ -16,7 +12,7 @@ const cardInfo = {
   audioWord: 'озвучка слова',
   audioMeaning: 'озвучка значения',
   audioExampleWord: 'озвучка примера',
-  id: 'id'
+  id: 'id',
 };
 
 const DOTS_COLOR = {
@@ -41,9 +37,7 @@ const LETTER_CLASS = {
 const NOTIFICATION = 'Day plan is completed!';
 
 export {
-  URL,
   cardInfo,
-  wordRequestURL,
   maxPage,
   maxCategory,
   DOTS_COLOR,

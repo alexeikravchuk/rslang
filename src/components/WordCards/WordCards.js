@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
 import './WordCards.scss';
 import {
-  URL,
   cardInfo,
-  wordRequestURL,
   maxPage,
   maxCategory,
   DOTS_COLOR,
@@ -11,6 +9,7 @@ import {
   LETTER_CLASS,
   NOTIFICATION,
 } from './constants';
+import { DATA_LINK, WORD_REQUEST_URL } from '../../constants/urlsRequests';
 import { LinearProgress, Button, CircularProgress } from '@material-ui/core';
 import { ArrowForwardIos, ArrowBackIos, VolumeUp, Flag } from '@material-ui/icons';
 import disabled from '../../assets/disabled.jpg';
@@ -77,7 +76,7 @@ class WordCards extends React.Component {
   };
 
   getWords = async (page, category) => {
-    const response = await fetch(`${wordRequestURL}?page=${page}&group=${category}`);
+    const response = await fetch(`${WORD_REQUEST_URL}?page=${page}&group=${category}`);
     const data = await response.json();
     let dataRandom = this.getShuffle(data);
     return dataRandom;
@@ -108,13 +107,11 @@ class WordCards extends React.Component {
     const { counter, progress, lastNumber, dataRandom } = this.state;
     this.clearInput();
     if (counter) {
-      return this.setState(
-        {
-          counter: counter - 1,
-          progress: progress - 100 / lastNumber,
-        },
-        () => this.getNewWords(dataRandom[counter])
-      );
+      this.getNewWords(dataRandom[counter - 1]);
+      return this.setState({
+        counter: counter - 1,
+        progress: progress - 100 / lastNumber,
+      });
     }
     return this.setState({ progress: 0 }, () => this.getNewWords(dataRandom[counter]));
   };
@@ -137,13 +134,11 @@ class WordCards extends React.Component {
         }
       );
     }
-    return this.setState(
-      {
-        counter: counter + 1,
-        progress: progress + 100 / lastNumber,
-      },
-      () => this.getNewWords(dataRandom[counter])
-    );
+    this.getNewWords(dataRandom[counter + 1]);
+    return this.setState({
+      counter: counter + 1,
+      progress: progress + 100 / lastNumber,
+    });
   };
 
   removeTags = (seq, tag) => {
@@ -169,14 +164,14 @@ class WordCards extends React.Component {
       transcription: currentObj.transcription,
       word: currentObj.word,
       id: currentObj.id,
-      image: `${URL}${currentObj.image}`,
+      image: `${DATA_LINK}${currentObj.image}`,
       meaning: this.removeTags(currentObj.textMeaning, 'i'),
       example: this.removeTags(currentObj.textExample, 'b'),
       meaningTranslate: currentObj.textMeaningTranslate,
       exampleTranslate: currentObj.textExampleTranslate,
-      audioWord: `${URL}${currentObj.audio}`,
-      audioMeaning: `${URL}${currentObj.audioMeaning}`,
-      audioExample: `${URL}${currentObj.audioExample}`,
+      audioWord: `${DATA_LINK}${currentObj.audio}`,
+      audioMeaning: `${DATA_LINK}${currentObj.audioMeaning}`,
+      audioExample: `${DATA_LINK}${currentObj.audioExample}`,
     });
   };
 
@@ -472,7 +467,7 @@ class WordCards extends React.Component {
                   </div>
                 </Fragment>
               ) : (
-                <CircularProgress color='secondary' />
+                <CircularProgress color='secondary' style={{ marginTop: 50 }} />
               )}
               <div className='learning-word-examples'>
                 <div className='learning-word-meaning'>
