@@ -2,6 +2,8 @@ import React from 'react';
 import {URL} from './constants';
 import {getWords} from './getWords.js';
 import Pagination from '@material-ui/lab/Pagination';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+
 import {
   ListItemText,
   withStyles,
@@ -13,7 +15,6 @@ import {
   Tooltip,
   ListItemIcon,
   Card,
-  CardActionArea,
   CardMedia,
   CardContent,
   BottomNavigationAction,
@@ -26,6 +27,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {RecordVoiceOver, Storefront} from '@material-ui/icons';
 import {connect} from 'react-redux';
 import {WordsList} from './components';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   titleDictionary: {
@@ -33,6 +35,11 @@ const styles = theme => ({
   },
   rootCard: {
     maxWidth: 320,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   },
   listDictionary: {
     overflow: 'auto',
@@ -90,6 +97,24 @@ class Dictionary extends React.Component {
     } catch (e) {
       console.log(e.message);
     }
+  }
+
+  playCodedAudio(code) {
+    let audio = null;
+    try {
+      if (audio && audio.played) {
+        audio.pause();
+      }
+      audio = new Audio();
+      audio.src = `data:audio/mpeg;base64,${code}`;
+      audio.play().catch((e) => console.log(e.message));
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+  handleAudioClick(codeAudio) {
+    this.playCodedAudio(codeAudio);
   }
 
   getNextWords = (data) => {
@@ -179,25 +204,27 @@ class Dictionary extends React.Component {
         </Grid>
         {(this.state.navValue > 0) && (this.state.navValue !== 3) && <Grid item xs={12}>
           <Card className={classes.rootCard}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="Contemplative Reptile"
-                height="140"
-                image={this.renderImage(this.props.currentWord.image)}
-                title={this.props.currentWord.word}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h6" component="h2">
-                  {this.props.currentWord.word}
-                </Typography>
-                <Divider/>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {`${this.props.currentWord.transcription} - ${this.props.currentWord.wordTranslate}`}
-                  {this.renderHTML(this.props.currentWord.textExample)}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
+            <CardMedia
+              component="img"
+              alt="Contemplative Reptile"
+              height="140"
+              image={this.renderImage(this.props.currentWord.image)}
+              title={this.props.currentWord.word}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="h2">
+                {this.props.currentWord.word}
+                {this.props.currentWord.audio && <IconButton aria-label="play/pause"
+                                                             onClick={() => this.handleAudioClick(this.props.currentWord.audio)}>
+                  <RecordVoiceOverIcon/>
+                </IconButton>}
+              </Typography>
+              <Divider/>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {`${this.props.currentWord.transcription} - ${this.props.currentWord.wordTranslate}`}
+                {this.renderHTML(this.props.currentWord.textExample)}
+              </Typography>
+            </CardContent>
           </Card>
         </Grid>}
         <Grid item xs={12}>
@@ -267,9 +294,5 @@ const mapStateToProps = store => {
   const {wordsReducer} = store;
   return {...wordsReducer};
 };
-
-// const mapDispatchToProps = dispatch => {
-//
-// };
 
 export default connect(mapStateToProps)(withStyles(styles)(Dictionary));
