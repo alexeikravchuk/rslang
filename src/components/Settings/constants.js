@@ -1,5 +1,5 @@
 const ALL_WORDS = 'Max Words';
-const NEW_WORDS = 'New Words(Less or equal Max Words)';
+const NEW_WORDS = 'New Words(Always Less or Equal then Max)';
 
 export const switchers = [
   {
