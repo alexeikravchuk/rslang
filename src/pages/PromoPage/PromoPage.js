@@ -19,7 +19,7 @@ import secondImage from './PromoPageImages/2.jpg';
 import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined';
 import MenuBookOutlinedIcon from '@material-ui/icons/MenuBookOutlined';
 import EqualizerOutlinedIcon from '@material-ui/icons/EqualizerOutlined';
-import { PROMO_LINK } from './constants';
+import { PROMO_LINK, REPO_LINK } from './constants';
 
 const useStyles = makeStyles({
   container: {
@@ -71,6 +71,12 @@ const useStyles = makeStyles({
     width: '100%',
     minHeight: '300px',
   },
+  link: {
+    cursor: 'pointer',
+    fontSize: '24px',
+    textDecoration: 'none',
+    marginLeft: '5px',
+  }
 });
 
 export const PromoPage = () => {
@@ -208,6 +214,25 @@ export const PromoPage = () => {
             >
             </CardMedia>
           </Card>
+        </Grid>
+        <Grid
+          item lg={12} md={12} sm={12}
+          className={`${classes.gridItem} ${classes.displayFlex}`}
+        >
+          <Typography
+            variant='h6'
+            color='primary'
+          >
+            Stay tuned for updates on our
+            <a
+              href={REPO_LINK}
+              target='_blank'
+              rel="noopener noreferrer"
+              className={`${classes.orange} ${classes.link}`}
+            >
+              GitHub
+            </a>
+          </Typography>
         </Grid>
       </Grid >
     </Container >
