@@ -177,7 +177,7 @@ class Dictionary extends React.Component {
             <BottomNavigationAction label="Deleted words" icon={<DeleteIcon/>}/>
           </BottomNavigation>
         </Grid>
-        {(this.state.navValue > 0) && <Grid item xs={12}>
+        {(this.state.navValue > 0) && (this.state.navValue !== 3) && <Grid item xs={12}>
           <Card className={classes.rootCard}>
             <CardActionArea>
               <CardMedia
@@ -204,25 +204,31 @@ class Dictionary extends React.Component {
           {(this.state.navValue === 1) && <Grid container
                                                 align='center'
                                                 justify='center'
-                                                alignItems='flex-start'>
+                                                alignItems='flex-start'
+          >
             <Grid item xs={12}>
-              <WordsList wordsArray={this.props.learnedWords}/>
+              <WordsList wordsArray={this.props.learnedWords}
+                         pageType={'learning'}/>
             </Grid>
           </Grid>}
           {(this.state.navValue === 2) && <Grid container
                                                 align='center'
                                                 justify='center'
-                                                alignItems='flex-start'>
+                                                alignItems='flex-start'
+          >
             <Grid item xs={12}>
-              <WordsList wordsArray={this.props.hardWords}/>
+              <WordsList wordsArray={this.props.hardWords}
+                         pageType={'hard'}/>
             </Grid>
           </Grid>}
           {(this.state.navValue === 3) && <Grid container
                                                 align='center'
                                                 justify='center'
-                                                alignItems='flex-start'>
+                                                alignItems='flex-start'
+          >
             <Grid item xs={12}>
-              <WordsList wordsArray={this.props.deletedWords}/>
+              <WordsList wordsArray={this.props.deletedWords}
+                         pageType={'restore'}/>
             </Grid>
           </Grid>}
           {(this.state.navValue === 0) && <Grid container
