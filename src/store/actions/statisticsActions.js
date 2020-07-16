@@ -2,6 +2,19 @@ import { BACKEND_URL } from '../../constants/urlsRequests';
 
 export const STATISTICS = 'STATISTICS';
 
+export const initialState = {
+  learnedWords: 0,
+  optional: {
+    speakIt: {},
+    puzzle: { lw: 0, stat: {} },
+    sprint: {
+      scoreRecord: 0,
+      totalScore: 0,
+      gameCounter: 0,
+    },
+  },
+};
+
 export function loadStatistics(userId, token) {
   return async (dispatch) => {
     try {
@@ -29,6 +42,10 @@ export function loadStatistics(userId, token) {
       console.log(e.message);
     }
   };
+}
+
+export function resetStatistics() {
+  return (dispatch) => dispatch({ type: STATISTICS, payload: initialState.optional });
 }
 
 export function saveStatistics(userId, token, statistics) {

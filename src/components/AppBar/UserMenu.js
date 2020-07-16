@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { connect } from 'react-redux';
+import { resetStatistics } from '../../store/actions/statisticsActions';
 
 class UserMenu extends Component {
   state = {
@@ -27,6 +28,8 @@ class UserMenu extends Component {
   handleClose = (event) => {
     if (event.target.innerText === 'Logout') {
       localStorage.removeItem('token');
+      const { dispatch } = this.props;
+      dispatch(resetStatistics());
     }
     if (this.anchorRef.current && this.anchorRef.current.contains(event.target)) {
       return;
