@@ -4,7 +4,7 @@ import {
   RECOVER_FROM_DELETED,
   RECOVER_FROM_HARD,
   REQUEST_WORD_INFO,
-  REQUEST_WORD_INFO_SUCCESS, RESET_CURRENT,
+  REQUEST_WORD_INFO_SUCCESS, RESET_CURRENT, SET_TO_DELETED, SET_TO_HARD,
 } from '../actions/wordsAction';
 
 const template = {
@@ -17,7 +17,7 @@ const template = {
 
 const defaultState = {
     hardWords: [],
-    learnedWords: [{word: 'agree', id: '5e9f5ee35eb9e72bc21af4a1'}, {word: 'alcohol', id: '5e9f5ee35eb9e72bc21af4a0'}],
+    learnedWords: [],
     deletedWords: [],
     newWords: [],
     currentWord: template,
@@ -83,16 +83,46 @@ const wordReducer = (state = defaultState, action) => {
         };
       }
       case
-      SET_LEARNED: {
-        return {...state};
-      }
-      case
       REQUEST_WORD_INFO: {
         return {...state, loadingWord: true};
       }
       case
       REQUEST_WORD_INFO_SUCCESS: {
         return {...state, currentWord: action.word, loadingWord: false};
+      }
+      case
+      SET_TO_HARD: {
+        const hardCopy = state.hardWords;
+        const index = getSearchIndex(hardCopy, action.word.id);
+        if (index === -1) {
+          hardCopy.push(action.word);
+        }
+        return {
+          ...state,
+          learnedWords: state.learnedWords.filter((item) => item.id !== action.word.id),
+          hardWords: hardCopy,
+        };
+      }
+      case SET_TO_DELETED: {
+        const deletedCopy = state.deletedWords;
+        const index = getSearchIndex(deletedCopy, action.word.id);
+        if (index === -1) {
+          deletedCopy.push(action.word);
+        }
+        return {
+          ...state,
+          deletedWords: deletedCopy,
+          learnedWords: state.learnedWords.filter((item) => item.id !== action.word.id),
+          hardWords: state.hardWords.filter((item) => item.id !== action.word.id),
+        };
+      }
+      case SET_LEARNED: {
+        const learnedCopy = state.learnedWords;
+        const index = getSearchIndex(learnedCopy, action.word.id);
+        if (index === -1) {
+          learnedCopy.push(action.word);
+        }
+        return {...state, learnedWords: learnedCopy};
       }
       default: {
         return {...state};

@@ -7,6 +7,8 @@ export const REQUEST_WORD_INFO = 'REQUEST_WORD_INFO';
 export const RECOVER_FROM_DELETED = 'RECOVER_FROM_DELETED';
 export const RECOVER_FROM_HARD = 'RECOVER_FROM_HARD';
 export const RESET_CURRENT = 'RESET_CURRENT';
+export const SET_TO_HARD = 'SET_TO_HARD';
+export const SET_TO_DELETED = 'SET_TO_DELETED';
 
 export const requestWordInfo = () => {
   return ({
@@ -57,8 +59,24 @@ export const resetCurrent = () => {
   });
 };
 
-export const setLearned = () => {
+export const setToHard = (word) => {
+  return ({
+    type: SET_TO_HARD,
+    word,
+
+  });
+};
+
+export const setToDeleted = (word) => {
+  return ({
+    type: SET_TO_DELETED,
+    word,
+  });
+};
+
+export const setLearned = (word) => {
   return ({
     type: SET_LEARNED,
+    word,
   });
 };
