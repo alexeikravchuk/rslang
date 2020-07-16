@@ -1,17 +1,4 @@
-import { STATISTICS } from '../actions/statisticsActions';
-
-const initialState = {
-  learnedWords: 0,
-  optional: {
-    speakIt: {},
-    puzzle: { lw: 0, stat: {} },
-    sprint: {
-      scoreRecord: 0,
-      totalScore: 0,
-      gameCounter: 0,
-    },
-  },
-};
+import { STATISTICS, initialState } from '../actions/statisticsActions';
 
 export const statisticsReducer = (state = initialState, action) => {
   switch (action.type) {
