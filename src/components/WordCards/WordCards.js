@@ -23,8 +23,8 @@ class WordCards extends React.Component {
     super(props);
     this.audio = null;
 
-    const {dispatch, userId, token} = this.props;
-    dispatch(getSettings(userId, token));
+    const {load, userId, token} = this.props;
+    load(userId, token);
     const {data} = this.props;
 
     this.state = {
@@ -542,6 +542,7 @@ const mapStateToProps = ({appStateReducer: {data}, authReducer: {token, userId}}
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  load: (token, userId) => dispatch(getSettings(userId, token)),
   setWordToHard: (word) => dispatch(setToHard(word)),
   setWordToLearning: (word) => dispatch(setLearned(word)),
   setWordToDeleted: (word) => dispatch(setToDeleted(word)),
