@@ -24,7 +24,7 @@ class WordCards extends React.Component {
     this.audio = null;
 
     const {dispatch, userId, token} = this.props;
-    //dispatch(getSettings(userId, token));
+    dispatch(getSettings(userId, token));
     const {data} = this.props;
 
     this.state = {
