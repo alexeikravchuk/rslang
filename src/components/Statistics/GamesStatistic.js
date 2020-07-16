@@ -18,8 +18,10 @@ class GamesStatistic extends Component {
     switch (index) {
       case 0:
         return this.setSpeakItData();
+      case 1:
+        return this.setEnglishPuzzleData();
       default:
-        return 0;
+        return this.setState({ difficulty: 1, correctAnswers: 0, wrongAnswers: 0 });
     }
   };
 
@@ -35,8 +37,19 @@ class GamesStatistic extends Component {
       });
       const difficulty = Math.ceil(((correctAnswers + 1) / 3600) * 6);
       this.setState({ difficulty, correctAnswers, wrongAnswers });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
-      console.log(speakIt);
+  setEnglishPuzzleData = () => {
+    try {
+      const { puzzle } = this.props.statistics.optional;
+      const correctAnswers = puzzle.lw;
+      const items = Object.keys(puzzle.stat).length;
+      const wrongAnswers = items * 10 - correctAnswers;
+      const difficulty = Math.ceil(((correctAnswers + 1) / 2090) * 6);
+      this.setState({ difficulty, correctAnswers, wrongAnswers });
     } catch (e) {
       console.log(e.message);
     }
