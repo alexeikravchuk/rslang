@@ -21,7 +21,7 @@ class WordCards extends React.Component {
   constructor(props) {
     super(props);
     this.audio = null;
-
+    
     const { dispatch, userId, token } = this.props;
     dispatch(getSettings(userId, token));
     const { data } = this.props;
@@ -119,7 +119,7 @@ class WordCards extends React.Component {
   setCountPlus = () => {
     const { counter, progress, lastNumber, dataRandom } = this.state;
     this.clearInput();
-    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success });
+    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success, translateMeaningShow: false, translateExampleShow: false, });
     if (counter === lastNumber - 1) {
       return this.setState(
         {
@@ -286,7 +286,6 @@ class WordCards extends React.Component {
       () => {
         this.toggleDropdown();
         // let uniqueLearningCollection = [...new Set(learning)];
-        // console.log(uniqueLearningCollection);
       }
     );
   };
@@ -300,7 +299,6 @@ class WordCards extends React.Component {
       () => {
         this.toggleDropdown();
         // let uniqueCompoundCollection = [...new Set(compound)];
-        // console.log(uniqueCompoundCollection);
       }
     );
   };
@@ -314,7 +312,6 @@ class WordCards extends React.Component {
       () => {
         this.toggleDropdown();
         // let uniqueDeletedCollection = [...new Set(deleted)];
-        // console.log(uniqueDeletedCollection);
       }
     );
   };
