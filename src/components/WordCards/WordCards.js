@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import './WordCards.scss';
 import {
   cardInfo,
@@ -9,22 +9,23 @@ import {
   LETTER_CLASS,
   NOTIFICATION,
 } from './constants';
-import { DATA_LINK, WORD_REQUEST_URL } from '../../constants/urlsRequests';
-import { LinearProgress, Button, CircularProgress } from '@material-ui/core';
-import { ArrowForwardIos, ArrowBackIos, VolumeUp, Flag } from '@material-ui/icons';
+import {DATA_LINK, WORD_REQUEST_URL} from '../../constants/urlsRequests';
+import {LinearProgress, Button, CircularProgress} from '@material-ui/core';
+import {ArrowForwardIos, ArrowBackIos, VolumeUp, Flag} from '@material-ui/icons';
 import disabled from '../../assets/disabled.jpg';
 import cardground from '../../assets/cardground.JPG';
-import { getSettings } from '../../store/actions/appSettingsAction';
-import { connect } from 'react-redux';
+import {getSettings} from '../../store/actions/appSettingsAction';
+import {connect} from 'react-redux';
+import {setLearned, setToDeleted, setToHard} from '../../store/actions/wordsAction';
 
 class WordCards extends React.Component {
   constructor(props) {
     super(props);
     this.audio = null;
-    
-    const { dispatch, userId, token } = this.props;
-    dispatch(getSettings(userId, token));
-    const { data } = this.props;
+
+    const {load, userId, token} = this.props;
+    load(userId, token);
+    const {data} = this.props;
 
     this.state = {
       dataRandom: [],
@@ -67,7 +68,7 @@ class WordCards extends React.Component {
   generateWords = (page, category) => {
     this.getWords(page, category).then((data) => {
       this.getNewWords(data[this.state.counter]);
-      this.setState({ dataRandom: data });
+      this.setState({dataRandom: data});
     });
   };
 
@@ -104,7 +105,7 @@ class WordCards extends React.Component {
   };
 
   setCountMinus = () => {
-    const { counter, progress, lastNumber, dataRandom } = this.state;
+    const {counter, progress, lastNumber, dataRandom} = this.state;
     this.clearInput();
     if (counter) {
       this.getNewWords(dataRandom[counter - 1]);
@@ -113,13 +114,18 @@ class WordCards extends React.Component {
         progress: progress - 100 / lastNumber,
       });
     }
-    return this.setState({ progress: 0 }, () => this.getNewWords(dataRandom[counter]));
+    return this.setState({progress: 0}, () => this.getNewWords(dataRandom[counter]));
   };
 
   setCountPlus = () => {
-    const { counter, progress, lastNumber, dataRandom } = this.state;
+    const {counter, progress, lastNumber, dataRandom} = this.state;
     this.clearInput();
-    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success, translateMeaningShow: false, translateExampleShow: false, });
+    this.setState({
+      colorDots: DOTS_COLOR.white,
+      description: RESULTS_DESCRIPTION.success,
+      translateMeaningShow: false,
+      translateExampleShow: false,
+    });
     if (counter === lastNumber - 1) {
       return this.setState(
         {
@@ -131,7 +137,7 @@ class WordCards extends React.Component {
             notification: NOTIFICATION,
           });
           this.getNewWords(dataRandom[counter]);
-        }
+        },
       );
     }
     this.getNewWords(dataRandom[counter + 1]);
@@ -186,25 +192,25 @@ class WordCards extends React.Component {
   };
 
   toggleDropdown = () => {
-    const { dropdown } = this.state;
+    const {dropdown} = this.state;
     this.setState({
       dropdown: !dropdown,
     });
   };
 
   getAnswer = () => {
-    const { learning, word, id } = this.state;
+    const {learning, word, id} = this.state;
     this.setState({
       value: this.state.word,
       showMeaning: true,
       showExample: true,
-      learning: learning.concat([{ word: word, id: id }]),
+      learning: learning.concat([{word: word, id: id}]),
     });
   };
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ value, showAnswer: false });
-    const { learning, word, id } = this.state;
+  handleChange = ({target: {value}}) => {
+    this.setState({value, showAnswer: false});
+    const {learning, word, id} = this.state;
     if (value.length === word.length) {
       let resultInputWord = this.checkAnswer(value, word);
       resultInputWord = resultInputWord.map((item) => item.props.className);
@@ -223,17 +229,17 @@ class WordCards extends React.Component {
         this.setState({
           colorDots: DOTS_COLOR.red,
           description: RESULTS_DESCRIPTION.tryAgain,
-          learning: learning.concat([{ word: word, id: id }]),
+          learning: learning.concat([{word: word, id: id}]),
         });
       } else if (resultInputWord.length / errorCount > 2) {
         this.setState({
           colorDots: DOTS_COLOR.orange,
           description: RESULTS_DESCRIPTION.almost,
-          learning: learning.concat([{ word: word, id: id }]),
+          learning: learning.concat([{word: word, id: id}]),
         });
       }
       this.checkAnswer(value, word);
-      this.setState({ showAnswer: true });
+      this.setState({showAnswer: true});
     } else {
       this.setState({
         showAnswer: false,
@@ -253,15 +259,15 @@ class WordCards extends React.Component {
     ));
   };
 
-  handleChangePage = ({ target }) => {
-    const { valuePage, valueCategory } = this.state;
-    this.setState({ valuePage: target.value }, () => this.generateWords(valuePage, valueCategory));
+  handleChangePage = ({target}) => {
+    const {valuePage, valueCategory} = this.state;
+    this.setState({valuePage: target.value}, () => this.generateWords(valuePage, valueCategory));
   };
 
-  handleChangeCategory = ({ target }) => {
-    const { valuePage, valueCategory } = this.state;
-    this.setState({ valueCategory: target.value - 1 }, () =>
-      this.generateWords(valuePage, valueCategory)
+  handleChangeCategory = ({target}) => {
+    const {valuePage, valueCategory} = this.state;
+    this.setState({valueCategory: target.value - 1}, () =>
+      this.generateWords(valuePage, valueCategory),
     );
   };
 
@@ -278,41 +284,42 @@ class WordCards extends React.Component {
   };
 
   createLearningWords = () => {
-    const { learning, word, id } = this.state;
+    const {learning, word, id} = this.state;
+    this.props.setWordToLearning({word: word, id: id});
     this.setState(
       {
-        learning: learning.concat([{ word: word, id: id }]), //uniq need to be pushed to the store
+        learning: learning.concat([{word: word, id: id}]),
       },
       () => {
         this.toggleDropdown();
-        // let uniqueLearningCollection = [...new Set(learning)];
-      }
+
+      },
     );
   };
 
   createCompoundWords = () => {
-    const { compound, word, id } = this.state;
+    const {compound, word, id} = this.state;
+    this.props.setWordToHard({word: word, id: id});
     this.setState(
       {
-        compound: compound.concat([{ word: word, id: id }]), //uniq need to be pushed to the store
+        compound: compound.concat([{word: word, id: id}]),
       },
       () => {
         this.toggleDropdown();
-        // let uniqueCompoundCollection = [...new Set(compound)];
-      }
+      },
     );
   };
 
   createDeletedWords = () => {
-    const { deleted, word, id } = this.state;
+    const {deleted, word, id} = this.state;
+    this.props.setWordToDeleted({word: word, id: id});
     this.setState(
       {
-        deleted: deleted.concat([{ word: word, id: id }]), //uniq need to be pushed to the store
+        deleted: deleted.concat([{word: word, id: id}]),
       },
       () => {
         this.toggleDropdown();
-        // let uniqueDeletedCollection = [...new Set(deleted)];
-      }
+      },
     );
   };
 
@@ -324,7 +331,7 @@ class WordCards extends React.Component {
   };
 
   render() {
-    const { data } = this.props;
+    const {data} = this.props;
     const {
       word,
       translation,
@@ -357,16 +364,16 @@ class WordCards extends React.Component {
     return (
       <div
         className='learning-card-wrapper'
-        style={{ background: `url(${cardground}) no-repeat`, backgroundSize: '100% 100%' }}>
+        style={{background: `url(${cardground}) no-repeat`, backgroundSize: '100% 100%'}}>
         <div className='learning-word-cards'>
           <div className='learning-card-prev'>
-            <ArrowBackIos onClick={() => this.setCountMinus()} className='prev' />
+            <ArrowBackIos onClick={() => this.setCountMinus()} className='prev'/>
           </div>
           <div className='learning-card'>
             <div className='learning-card-header'>
               <div className='current-word'>
                 <div className='current-success'>
-                  <div style={{ color: colorDots }}>
+                  <div style={{color: colorDots}}>
                     <span>&#10687;</span>
                     <span>&#10687;</span>
                     <span>&#10687;</span>
@@ -378,7 +385,7 @@ class WordCards extends React.Component {
                 <div className='page-and-category'>
                   <form className='select-learning-page'>
                     Page:
-                    <br />
+                    <br/>
                     <select value={valuePage} onChange={this.handleChangePage} name='page'>
                       {this.selectPage(maxPage)}
                     </select>
@@ -388,13 +395,13 @@ class WordCards extends React.Component {
                     onChange={this.handleChangeCategory}
                     className='select-learning-category'>
                     Category:
-                    <br />
+                    <br/>
                     <select name='category'>{this.selectPage(maxCategory)}</select>
                   </form>
                 </div>
               </div>
               <div className='dropdown-notes'>
-                <div className='dropdown' style={{ display: dropdown ? 'block' : 'none' }}>
+                <div className='dropdown' style={{display: dropdown ? 'block' : 'none'}}>
                   <div
                     onClick={() => {
                       this.createLearningWords();
@@ -418,7 +425,7 @@ class WordCards extends React.Component {
                   </div>
                 </div>
                 <div className='word-notes'>
-                  <Flag onClick={this.toggleDropdown} />
+                  <Flag onClick={this.toggleDropdown}/>
                 </div>
               </div>
             </div>
@@ -444,7 +451,7 @@ class WordCards extends React.Component {
                             value={value}
                             onChange={this.handleChange}
                             className='word-answer-input'
-                            style={{ width: `${wordLength * 16}px` }}
+                            style={{width: `${wordLength * 16}px`}}
                             type='text'
                             maxLength={wordLength}
                             autoComplete='off'
@@ -464,7 +471,7 @@ class WordCards extends React.Component {
                   </div>
                 </Fragment>
               ) : (
-                <CircularProgress color='secondary' style={{ marginTop: 50 }} />
+                <CircularProgress color='secondary' style={{marginTop: 50}}/>
               )}
               <div className='learning-word-examples'>
                 <div className='learning-word-meaning'>
@@ -472,7 +479,7 @@ class WordCards extends React.Component {
                     {!data.optional.description ? null : showMeaning ? meaning : meaningHide}
                   </div>
                   {word && (
-                    <VolumeUp onClick={() => this.playAudioWords(audioMeaning)} className='spell' />
+                    <VolumeUp onClick={() => this.playAudioWords(audioMeaning)} className='spell'/>
                   )}
                 </div>
                 <div className='learning-word-example'>
@@ -480,15 +487,15 @@ class WordCards extends React.Component {
                     {!data.optional.example ? null : showExample ? example : exampleHide}
                   </div>
                   {word && (
-                    <VolumeUp className='spell' onClick={() => this.playAudioWords(audioExample)} />
+                    <VolumeUp className='spell' onClick={() => this.playAudioWords(audioExample)}/>
                   )}
                 </div>
                 <div className='meaning-translate'>
                   {!data.optional.description
                     ? null
                     : translateMeaningShow
-                    ? meaningTranslate
-                    : null}
+                      ? meaningTranslate
+                      : null}
                 </div>
                 <div className='example-translate'>
                   {!data.optional.example ? null : translateExampleShow ? exampleTranslate : null}
@@ -497,7 +504,7 @@ class WordCards extends React.Component {
             </div>
           </div>
           <div className='learning-card-next'>
-            <ArrowForwardIos onClick={this.setCountPlus} className='next' />
+            <ArrowForwardIos onClick={this.setCountPlus} className='next'/>
           </div>
         </div>
         <div className='button-reactions'>
@@ -520,7 +527,7 @@ class WordCards extends React.Component {
         <div className='learning-word-stage'>
           <div className='number-start'>0</div>
           <div className='number-progress'>
-            <LinearProgress variant='determinate' value={progress} />
+            <LinearProgress variant='determinate' value={progress}/>
           </div>
           <div className='number-end'>{this.state.lastNumber}</div>
         </div>
@@ -529,8 +536,15 @@ class WordCards extends React.Component {
   }
 }
 
-const mapStateToProps = ({ appStateReducer: { data }, authReducer: { token, userId } }) => {
-  return { data, userId, token };
+const mapStateToProps = ({appStateReducer: {data}, authReducer: {token, userId}}) => {
+  return {data, userId, token};
 };
 
-export default connect(mapStateToProps)(WordCards);
+const mapDispatchToProps = (dispatch) => ({
+  load: (userId, token) => dispatch(getSettings(userId, token)),
+  setWordToHard: (word) => dispatch(setToHard(word)),
+  setWordToLearning: (word) => dispatch(setLearned(word)),
+  setWordToDeleted: (word) => dispatch(setToDeleted(word)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WordCards);
