@@ -11,7 +11,7 @@ import {
   LETTER_CLASS,
   NOTIFICATION,
 } from './constants';
-import { LinearProgress } from '@material-ui/core';
+import { LinearProgress, Button } from '@material-ui/core';
 import { ArrowForwardIos, ArrowBackIos, VolumeUp, Flag } from '@material-ui/icons';
 import disabled from '../../assets/disabled.jpg';
 import cardground from '../../assets/cardground.JPG';
@@ -496,12 +496,20 @@ class WordCards extends React.Component {
           </div>
         </div>
         <div className='button-reactions'>
-          <div onClick={this.getAnswer} className='learning-word-button-show'>
-            Show answer
-          </div>
-          <div onClick={this.setCountPlus} className='learning-word-button-check'>
-            Next card
-          </div>
+          <Button
+            variant='contained'
+            className='learning-word-button-show'
+            color='primary'
+            onClick={this.getAnswer}>
+            <span>Show answer</span>
+          </Button>
+          <Button
+            variant='contained'
+            className='learning-word-button-check'
+            color='primary'
+            onClick={this.setCountPlus}>
+            <span>Next card</span>
+          </Button>
         </div>
         <div className='learning-word-notification'>{notification}</div>
         <div className='learning-word-stage'>
