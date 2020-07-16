@@ -7,8 +7,7 @@ import Alert from '@material-ui/lab/Alert';
 import { Check, VolumeDown } from '@material-ui/icons';
 import { MEDIA_FILES_URL } from '../../constants/constants'
 
-export function StatisticDialogWord ({props}) {
-
+export function StatisticDialogWord ({ props }) {
   const MuiAlert = withStyles((theme) => ({
     root: {
       padding: theme.spacing(1),

@@ -1,0 +1,1 @@
+export const PROMO_LINK = 'https://www.youtube.com/embed/D_fitHg-1AM';

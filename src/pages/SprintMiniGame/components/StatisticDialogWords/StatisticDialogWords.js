@@ -5,8 +5,7 @@ import {
 } from '@material-ui/core';
 import { StatisticDialogWord } from '../StatisticDialogWord/StatisticDialogWord';
 
-export function StatisticDialogWords (props) {
-
+export function StatisticDialogWords ({ props }) {
 const styles = {
   wordsContainer: {
     boxSizing: 'border-box',
@@ -18,7 +17,7 @@ const styles = {
   }
 }
 
-  const { learnedWords, wrongWords, gameWords } = props.props.sprintState.sprintReducer
+  const { learnedWords, wrongWords, gameWords } = props
 
   return (
     <div style={styles.dialogBody}>

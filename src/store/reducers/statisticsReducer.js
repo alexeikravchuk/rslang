@@ -5,7 +5,11 @@ const initialState = {
   optional: {
     speakIt: {},
     puzzle: {},
-    sprint: { scoreRecord: 0, totalScore: 0, gameCounter: 0 },
+    sprint: {
+      scoreRecord: 0,
+      totalScore: 0,
+      gameCounter: 0
+    },
   },
 };
 
