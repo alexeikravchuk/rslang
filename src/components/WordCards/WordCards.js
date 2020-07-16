@@ -120,7 +120,7 @@ class WordCards extends React.Component {
   setCountPlus = () => {
     const {counter, progress, lastNumber, dataRandom} = this.state;
     this.clearInput();
-    this.setState({colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success});
+    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success, translateMeaningShow: false, translateExampleShow: false, });
     if (counter === lastNumber - 1) {
       return this.setState(
         {
@@ -283,13 +283,12 @@ class WordCards extends React.Component {
     this.props.setWordToLearning({word: word, id: id});
     this.setState(
       {
-        learning: learning.concat([{word: word, id: id}]), //uniq need to be pushed to the store
+        learning: learning.concat([{word: word, id: id}]),
       },
       () => {
         this.toggleDropdown();
-        // let uniqueLearningCollection = [...new Set(learning)];
-        // console.log(uniqueLearningCollection);
-      },
+
+      }
     );
   };
 
@@ -298,13 +297,11 @@ class WordCards extends React.Component {
     this.props.setWordToHard({word: word, id: id});
     this.setState(
       {
-        compound: compound.concat([{word: word, id: id}]), //uniq need to be pushed to the store
+        compound: compound.concat([{word: word, id: id}]),
       },
       () => {
         this.toggleDropdown();
-        // let uniqueCompoundCollection = [...new Set(compound)];
-        // console.log(uniqueCompoundCollection);
-      },
+      }
     );
   };
 
@@ -313,14 +310,11 @@ class WordCards extends React.Component {
     this.props.setWordToDeleted({word: word, id: id});
     this.setState(
       {
-        deleted: deleted.concat([{word: word, id: id}]), //uniq need to be pushed to the store
+        deleted: deleted.concat([{word: word, id: id}]),
       },
-
       () => {
         this.toggleDropdown();
-        // let uniqueDeletedCollection = [...new Set(deleted)];
-        // console.log(uniqueDeletedCollection);
-      },
+      }
     );
   };
 
