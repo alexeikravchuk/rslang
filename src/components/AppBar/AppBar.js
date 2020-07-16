@@ -31,7 +31,7 @@ import {
 } from '../../pages';
 
 import { addToken, addUserId, authStatus } from '../../store/actions/authAction';
-
+import { loadStatistics } from '../../store/actions/statisticsActions';
 import { LIFE_TIME_TOKEN } from '../../constants/lifeTimeToken';
 
 const CheckRoute = ({ isLoggedIn, ...props }) =>
@@ -52,6 +52,7 @@ class PrimaryAppBar extends Component {
           dispatch(authStatus(true));
           dispatch(addToken(data.token));
           dispatch(addUserId(data.userId));
+          dispatch(loadStatistics(data.userId, data.token));
           return true;
         }
       } catch {
@@ -195,9 +196,7 @@ function createStyles(theme) {
 }
 
 function mapState({ authReducer: { authStatus } }) {
-  return {
-    authStatus
-  };
+  return { authStatus };
 }
 
 export default connect(mapState)(withStyles(createStyles)(PrimaryAppBar));

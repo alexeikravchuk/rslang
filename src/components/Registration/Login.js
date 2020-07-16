@@ -24,6 +24,7 @@ import {
   authStatus,
 } from '../../store/actions/authAction';
 import { withStyles } from '@material-ui/styles';
+import { loadStatistics } from '../../store/actions/statisticsActions';
 
 const styles = {
   contentDialog: {
@@ -73,6 +74,7 @@ function Alert(props) {
           props.dispatch(addEmail(emailInput));
           props.dispatch(addToken(token));
           props.dispatch(addUserId(userId));
+          props.dispatch(loadStatistics(userId, token));
         }
       });
     }
