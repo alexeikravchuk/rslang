@@ -120,7 +120,12 @@ class WordCards extends React.Component {
   setCountPlus = () => {
     const {counter, progress, lastNumber, dataRandom} = this.state;
     this.clearInput();
-    this.setState({ colorDots: DOTS_COLOR.white, description: RESULTS_DESCRIPTION.success, translateMeaningShow: false, translateExampleShow: false, });
+    this.setState({
+      colorDots: DOTS_COLOR.white,
+      description: RESULTS_DESCRIPTION.success,
+      translateMeaningShow: false,
+      translateExampleShow: false,
+    });
     if (counter === lastNumber - 1) {
       return this.setState(
         {
@@ -288,7 +293,7 @@ class WordCards extends React.Component {
       () => {
         this.toggleDropdown();
 
-      }
+      },
     );
   };
 
@@ -301,7 +306,7 @@ class WordCards extends React.Component {
       },
       () => {
         this.toggleDropdown();
-      }
+      },
     );
   };
 
@@ -314,7 +319,7 @@ class WordCards extends React.Component {
       },
       () => {
         this.toggleDropdown();
-      }
+      },
     );
   };
 
@@ -536,7 +541,7 @@ const mapStateToProps = ({appStateReducer: {data}, authReducer: {token, userId}}
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  load: (token, userId) => dispatch(getSettings(userId, token)),
+  load: (userId, token) => dispatch(getSettings(userId, token)),
   setWordToHard: (word) => dispatch(setToHard(word)),
   setWordToLearning: (word) => dispatch(setLearned(word)),
   setWordToDeleted: (word) => dispatch(setToDeleted(word)),
