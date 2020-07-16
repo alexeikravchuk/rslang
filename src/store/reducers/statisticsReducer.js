@@ -16,7 +16,7 @@ const initialState = {
 export const statisticsReducer = (state = initialState, action) => {
   switch (action.type) {
     case STATISTICS:
-      return { ...state, optional: {...state.optional, ...action.payload } };
+      return { ...state, optional: { ...state.optional, ...action.payload } };
     default:
       return state;
   }

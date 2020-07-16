@@ -5,9 +5,9 @@ const wordRequestURL = WORD_REQUEST_URL;
 const maxPage = 30;
 const maxCategory = 6;
 const cardInfo = {
-  translation: 'перевод',
-  transcription: 'транскрипция',
-  word: 'слово',
+  translation: '...',
+  transcription: '...',
+  word: '',
   image: 'картинка',
   meaning: 'значение',
   example: 'пример',
