@@ -36,15 +36,6 @@ const returnArrayItemByIndex = (array, searchId) => {
   return array.slice(index, index + 1)[0];
 };
 
-const removeArrayElement = (array, index) => {
-  return array.splice(index, 1);
-};
-
-const returnWordObj = (array, search) => {
-  const index = getSearchIndex(array, search);
-  return removeArrayElement(array, index)[0];
-};
-
 const wordReducer = (state = defaultState, action) => {
     switch (action.type) {
       case SET_HARD_WORD: {
