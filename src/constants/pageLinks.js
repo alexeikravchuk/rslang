@@ -7,6 +7,7 @@ import {
   Pets,
   Hearing,
   DirectionsRun,
+  VideoLabel,
   People,
   Slideshow,
   Settings,
@@ -60,6 +61,12 @@ export const pageLinks = [
     title: 'Sprint',
     link: '/sprint',
     icon: <DirectionsRun color='secondary' />,
+    type: 'game',
+  },
+  {
+    title: 'Word maker',
+    link: 'word-maker',
+    icon: <VideoLabel color='secondary' />,
     type: 'game',
   },
   {

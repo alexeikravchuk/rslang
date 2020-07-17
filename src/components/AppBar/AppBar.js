@@ -25,6 +25,7 @@ import {
   EnglishPuzzle,
   Savannah,
   AudioCall,
+  WordMaker,
   AboutTeamPage,
   SprintMiniGame,
   PromoPage,
@@ -32,6 +33,7 @@ import {
 
 import { addToken, addUserId, authStatus } from '../../store/actions/authAction';
 import { loadStatistics } from '../../store/actions/statisticsActions';
+
 import { LIFE_TIME_TOKEN } from '../../constants/lifeTimeToken';
 
 const CheckRoute = ({ isLoggedIn, ...props }) =>
@@ -117,6 +119,7 @@ class PrimaryAppBar extends Component {
                     <CheckRoute isLoggedIn={auth} path='/speakit' component={SpeakIt} />
                     <CheckRoute isLoggedIn={auth} path='/puzzle' component={EnglishPuzzle} />
                     <CheckRoute isLoggedIn={auth} path='/sprint' component={SprintMiniGame} />
+                    <CheckRoute isLoggedIn={auth} path='/word-maker' component={WordMaker} />
                     <CheckRoute isLoggedIn={auth} path='/audiocall' component={AudioCall} />
                     <CheckRoute isLoggedIn={auth} path='/promo' component={PromoPage} />
                     <CheckRoute isLoggedIn={auth} path='/settings' component={Settings} />
@@ -196,7 +199,9 @@ function createStyles(theme) {
 }
 
 function mapState({ authReducer: { authStatus } }) {
-  return { authStatus };
+  return {
+    authStatus,
+  };
 }
 
 export default connect(mapState)(withStyles(createStyles)(PrimaryAppBar));

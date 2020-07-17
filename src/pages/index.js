@@ -7,6 +7,7 @@ import { AboutTeamPage } from './AboutTeamPage';
 import { SprintMiniGame } from './SprintMiniGame';
 import { EnglishPuzzle } from './EnglishPuzzle';
 import { PromoPage } from './PromoPage/PromoPage';
+import { WordMaker } from './WordMaker';
 
 export {
   HomePage,
@@ -18,4 +19,5 @@ export {
   SprintMiniGame,
   AccountInfo,
   PromoPage,
+  WordMaker,
 };
