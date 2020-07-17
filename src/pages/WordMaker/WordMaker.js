@@ -45,16 +45,13 @@ class ownGame extends React.Component {
       gameLogic(dataWords);
     }
     function dataSync() {
+      let returnObj;
       if (localStorage.getItem('memoryCoef') === undefined) {
         memoryCoefArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
         localStorage.setItem('memoryCoef', JSON.stringify(memoryCoefArr));
-
-        var returnObj = JSON.parse(localStorage.getItem('memoryCoef'));
-        console.log(returnObj);
+        returnObj = JSON.parse(localStorage.getItem('memoryCoef'));
       } else {
         returnObj = JSON.parse(localStorage.getItem('memoryCoef'));
-        console.log(returnObj);
       }
       let memoryC = 1;
 
@@ -65,7 +62,6 @@ class ownGame extends React.Component {
           listNumber = i;
         }
       }
-      console.log(listNumber);
     }
     function gameLogic(dataWords) {
       word = dataWords[n].word;
