@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/static/css/main.83411c8f.chunk.css",
+    "main.js": "/static/js/main.58f75273.chunk.js",
+    "main.js.map": "/static/js/main.58f75273.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1e2373d1.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1e2373d1.js.map",
+    "static/js/2.0d1f7432.chunk.js": "/static/js/2.0d1f7432.chunk.js",
+    "static/js/2.0d1f7432.chunk.js.map": "/static/js/2.0d1f7432.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.975f55bee2f3571f23b084da9d2a5063.js": "/precache-manifest.975f55bee2f3571f23b084da9d2a5063.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.83411c8f.chunk.css.map": "/static/css/main.83411c8f.chunk.css.map",
+    "static/js/2.0d1f7432.chunk.js.LICENSE.txt": "/static/js/2.0d1f7432.chunk.js.LICENSE.txt",
+    "static/media/2.jpg": "/static/media/2.a33bde23.jpg",
+    "static/media/Card.scss": "/static/media/audio.5e75b57b.svg",
+    "static/media/audiocall-background.jpg": "/static/media/audiocall-background.275d8fc8.jpg",
+    "static/media/style.css": "/static/media/background.e2329821.jpg",
+    "static/media/bg.png": "/static/media/bg.23afba55.png",
+    "static/media/cardground.JPG": "/static/media/cardground.e0628d65.JPG",
+    "static/media/correct.mp3": "/static/media/correct.70454ee3.mp3",
+    "static/media/default-audiocall.png": "/static/media/default-audiocall.e90d2169.png",
+    "static/media/Dictionary.scss": "/static/media/dictionaryBack.08374cfe.jpg",
+    "static/media/disabled.jpg": "/static/media/disabled.b67dc663.jpg",
+    "static/media/error.mp3": "/static/media/error.32fc22b2.mp3",
+    "static/media/game-background.jpg": "/static/media/game-background.79c66246.jpg",
+    "static/media/HomePage.scss": "/static/media/homepagebg.8883f867.png",
+    "static/media/logo.png": "/static/media/logo.9d6952da.png",
+    "static/media/ImageBlock.scss": "/static/media/microphone.a9ed6cc5.svg",
+    "static/media/no_avatar.png": "/static/media/no_avatar.3c6fb25b.png",
+    "static/media/savannah.scss": "/static/media/original.5a84b4e1.png",
+    "static/media/speak_it_start_img.jpg": "/static/media/speak_it_start_img.7e8d3b88.jpg",
+    "static/media/StatusBar.scss": "/static/media/star.4cf16699.svg",
+    "static/media/statistics.jpg": "/static/media/statistics.c7cf1e65.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1e2373d1.js",
+    "static/js/2.0d1f7432.chunk.js",
+    "static/css/main.83411c8f.chunk.css",
+    "static/js/main.58f75273.chunk.js"
+  ]
+}
