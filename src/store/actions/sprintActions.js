@@ -125,6 +125,7 @@ export const loadGame = (userWords, difficulty, round, id, token) => {
     if (userWords) {
       try {
         words = await getUserWords(id, token)
+        if (!words.length) throw new Error()
       } catch (e) {
         words = await getCommonWords(difficulty, round)
       }
