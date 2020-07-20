@@ -1,0 +1,4 @@
+const MAX_LEVEL = 6;
+const STATISTICS_LENGTH = 20;
+
+export { MAX_LEVEL, STATISTICS_LENGTH };

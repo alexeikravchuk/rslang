@@ -1,0 +1,22 @@
+.root {
+  min-width: 475px;
+  @media (max-width: 600px) {
+    min-width: 90%;
+  }
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hr {
+  width: 90%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center
+}

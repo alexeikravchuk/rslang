@@ -1,0 +1,22 @@
+.account-block {
+  padding: 10% 40%;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.field {
+  margin: 5% 0;
+  width: 200px;
+  padding: 10px 0px;
+}
+
+.image-upload {
+  input {
+    display: none;
+  }
+}
+
+.image-upload:hover {
+  cursor: pointer;
+}

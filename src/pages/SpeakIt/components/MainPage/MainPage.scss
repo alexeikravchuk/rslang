@@ -1,0 +1,36 @@
+$content-width: 1197px;
+$tablet-width: 768px;
+$mobile-big-width: 414px;
+
+.main-page {
+  position: relative;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 auto;
+  min-height: calc(100vh - 56px);
+  max-width: $content-width;
+  width: 100%;
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 30px;
+
+    margin-bottom: 20px;
+    .card .translation {
+      display: none;
+    }
+
+    @media (max-width: $tablet-width) {
+      padding: 0 10px;
+      justify-content: space-around;
+    }
+    @media (max-width: $mobile-big-width) {
+      justify-content: center;
+    }
+  }
+}

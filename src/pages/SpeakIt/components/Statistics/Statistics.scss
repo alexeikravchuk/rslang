@@ -1,0 +1,74 @@
+$color-train: #90add3;
+$color-train-2: #e274fd;
+
+$mobile-big-width: 414px;
+$tablet-width: 768px;
+
+.stat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title-stat {
+    text-align: center;
+    font-size: 44px;
+    margin: 0 5px 10px;
+    color: $color-train-2;
+    text-shadow: 0 2px 4px black;
+  }
+  .table-stat {
+    font-size: 20px;
+    border-collapse: collapse;
+    min-width: 70%;
+    overflow-y: auto;
+    th {
+      background-color: #e274fd55;
+      width: 20%;
+    }
+    th,
+    td {
+      border: 2px solid $color-train;
+      text-align: center;
+      padding: 2px 4px;
+    }
+    .result-link {
+      border: none;
+      outline: none;
+      font-size: 20px;
+      background-color: transparent;
+      color: #00d;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: 0.3s ease-in;
+      &:hover {
+        color: #a07;
+        text-shadow: 0 0 1px #00f;
+      }
+    }
+  }
+
+  .message-stat {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .btn-stat {
+    height: 45px;
+    margin: 20px auto;
+  }
+
+  @media (max-width: $tablet-width) {
+    padding: 20px 10px;
+    .table-stat {
+      font-size: 18px;
+      width: 95%;
+    }
+  }
+
+  @media (max-width: $mobile-big-width) {
+    padding: 20px 5px;
+    .table-stat {
+      font-size: 14px;
+      width: 95%;
+    }
+  }
+}
