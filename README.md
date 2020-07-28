@@ -1,3 +1,5 @@
+# [look at app RS Lang](https://rslang-team19-alexeikravchuk.netlify.app)
+
 ### The project used a library of React and Material UI React components for faster and easier web development.
 Others:
 - react-redux to store data (state) of the application.
